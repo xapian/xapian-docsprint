@@ -106,12 +106,12 @@ Verifying the index using delve
 Xapian comes with a handy utility called `delve` which can be used to inspect a database, so let's look at the one you just built. If you just run ``delve db``, you'll get an overview: how many documents, average term length, and some other statistics::
 
     $ delve db
-    UUID = 4ab88abe-4fd1-42b5-9eeb-4c705d42dac7
-    number of documents = 99
-    average document length = 100.495
-    document length lower bound = 33
-    document length upper bound = 251
-    highest document id ever used = 99
+    UUID = 1820ef0a-055b-4946-ae73-67aa4ef5c226
+    number of documents = 100
+    average document length = 78.18
+    document length lower bound = 25
+    document length upper bound = 153
+    highest document id ever used = 100
     has positional information = true
 
 You can also look at an individual document, using Xapian's docid (``-d`` means output document data as well)::
@@ -123,8 +123,8 @@ You can also look at an individual document, using Xapian's docid (``-d`` means 
 
 You can also go the other way, starting with a term and finding both statistics and which documents it indexes::
 
-    $ delve -t Scompass db
-    Posting List for term `Scompass' (termfreq 5, collfreq 5, wdf_max 5): 1 26 28 29 70
+    $ delve -t Sattitude db
+    Posting List for term `Sattitude' (termfreq 3, collfreq 3, wdf_max 3): 64 65 97
 
 This means you can look documents up by identifier::
 
