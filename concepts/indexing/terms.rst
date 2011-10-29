@@ -1,7 +1,7 @@
 Terms
 =====
 
-_Terms_ are the basic unit of information retrieval used by Xapian.  At its
+`Terms` are the basic unit of information retrieval used by Xapian.  At its
 simplest, a search is a process of matching terms specified in a query
 against terms in a document, and returning the best matches. A term will
 often be generated for each word in a piece of text, possibly by applying
@@ -22,7 +22,7 @@ word count (rather than a character or byte count).
 Stemmers
 --------
 
-A common form of normalisation is _stemming_.  This process converts
+A common form of normalisation is `stemming`.  This process converts
 various different forms of words to a single form: for example, converting
 a plural (eg, "birds") and a singular form of a word ("bird") to the same
 thing (in this case, both are converted to "bird").

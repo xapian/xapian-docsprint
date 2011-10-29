@@ -1,7 +1,7 @@
 Values
 ======
 
-_Values_ are in a sense a more flexible version of terms. Each document can
+`Values` are in a sense a more flexible version of terms. Each document can
 have a set of values associated with it, which hold pieces of data which
 can be useful during a search. These pieces of data could be things such as
 keys which you want to be able to sort the results on, or numbers to be

@@ -9,14 +9,14 @@ site. However, you could instead choose to use one document for each
 paragraph of each page, or to group pages together into subjects and have
 one document for each subject.
 
-Documents have three components: _data_, _terms_ and _values_.  They are
+Documents have three components: `data`, `terms` and `values`.  They are
 identified in a database by a unique integer id.  We'll discuss terms and
 data first - values are useful for some more advanced search types.
 
 Document Data
 -------------
 
-The _document data_ is an arbitrary binary blob of data associated with the
+The `document data` is an arbitrary binary blob of data associated with the
 document.  Xapian does nothing with this data other than store it in the
 database and return it when requested. It can be used to hold a reference
 to an external piece of information about the document (such as the primary
