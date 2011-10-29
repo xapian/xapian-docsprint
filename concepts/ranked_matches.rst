@@ -1,4 +1,5 @@
 Ranked matches
+==============
 
 When you run a Query using Xapian, what you get is a list of _ranked_
 _matches_.
