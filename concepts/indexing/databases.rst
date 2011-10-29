@@ -31,14 +31,14 @@ are being written.
 
 As well as the main backend, there is a "remote" database backend which
 allows the database to be located on a different machine and accessed via a
-custom TCP protocol.
+custom TCP protocol. It is possible to perform searches across multiple
+databases at once, and Xapian will handle merging the results together
+appropriately. This can be used to handle datasets which are too large for
+a single machine, by performing searches across multiple remote databases.
 
-It is possible to perform searches across multiple databases at once, and
-Xapian will handle merging the results together appropriately; this can be
-used to handle datasets which are too large for a single machine.  Xapian
-has also special support for replicating databases to multiple machines,
-such that only the parts of the database which have been modified are
-copied; this can be useful for redundancy and load-balancing purposes.
+Xapian has also special support for replicating databases to multiple
+machines, such that only the parts of the database which have been modified
+are copied; this can be useful for redundancy and load-balancing purposes.
 
 Xapian also supports a simple file format for listing the locations of a
 set of databases (either on the local file system, or remote databases).
