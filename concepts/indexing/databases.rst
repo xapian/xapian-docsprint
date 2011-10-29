@@ -5,7 +5,7 @@ Pretty much all Xapian operations revolve around a Xapian database.  Before
 performing a search, details of the documents to be searched need to be put
 into the database; the search process then refers to the database to
 efficiently determine the best matches for a given query.  The process of
-putting documents into the database is usually referred to as _indexing_.
+putting documents into the database is usually referred to as `indexing`.
 
 The main information stored in a database is a mapping each term to a list
 of all the documents it occurs in, together with various statistics about
@@ -42,7 +42,7 @@ are copied; this can be useful for redundancy and load-balancing purposes.
 
 Xapian also supports a simple file format for listing the locations of a
 set of databases (either on the local file system, or remote databases).
-Such files are called stub-databases_, and can be used to point to a
+Such files are called `stub-databases`, and can be used to point to a
 database when the physical database location may vary; for example, because
 a new database is being built nightly, and is named according to the date
 on which it was built.
