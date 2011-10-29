@@ -8,8 +8,8 @@ into the database; the search process then refers to the database to determine
 the best matches for a given query.  The process of putting documents into the
 database is usually referred to as indexing.
 
-The main information stored in a database is a mapping from all the words in
-the documents to the list of documents those words occurred in, together with
+The main information stored in a database is a mapping from all the terms in
+the documents to the list of documents those terms occurred in, together with
 various statistics about these occurrences. It may also store the full text, or
 extracts, from the documents, so that result summaries can be displayed.
 Databases can also contain additional data such as tables for spelling
