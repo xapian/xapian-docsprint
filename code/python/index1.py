@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-import csv
 import json
 import sys
 import xapian
+from parsecsv import parse_csv_file
 
 
 def index(datapath, dbpath):
@@ -43,17 +43,4 @@ def index(datapath, dbpath):
         db.replace_document(idterm, doc)
 
 
-def parse_csv_file(datapath):
-    fd = open(datapath)
-    reader = csv.reader(fd)
-
-    titles = reader.next()
-    for row in reader:
-        yield dict(zip(titles, map(lambda x: x.decode('iso-8859-1'), row)))
-    fd.close()
-
-
-if __name__ == '__main__':
-    datapath = sys.argv[1]
-    dbpath = sys.argv[2]
-    index(datapath, dbpath)
+index(datapath = sys.argv[1], dbpath = sys.argv[2])
