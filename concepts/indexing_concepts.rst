@@ -8,13 +8,13 @@ into the database; the search process then refers to the database to
 determine the best matches for a given query.  The process of putting
 documents into the database is usually referred to as indexing.
 
-The main information stored in a database is a mapping from all the terms
-in the documents to the list of documents those terms occurred in, together
-with various statistics about these occurrences. It may also store the full
-text, or extracts, from the documents, so that result summaries can be
-displayed.  Databases can also contain additional data such as tables for
-spelling correction and synonym expansion; users can even store arbitrary
-key-value pairs in part of the database.
+The main information stored in a database is a mapping from the terms in
+all the documents to the list of documents which each term occurred in,
+together with various statistics about these occurrences. It may also store
+the full text, or extracts, from the documents, so that result summaries
+can be displayed.  Databases can also contain additional data such as
+tables for spelling correction and synonym expansion; developers can even
+store arbitrary key-value pairs in part of the database.
 
 Xapian databases store data in custom formats which allow searches to be
 performed extremely quickly; Xapian does not use a relational database as
