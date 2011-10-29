@@ -1,17 +1,17 @@
 Ranked matches
 ==============
 
-When you run a Query using Xapian, what you get is a list of _ranked_
-_matches_.
+When you run a Query using Xapian, what you get is a list of `ranked`
+`matches`.
 
 Each match is a Xapian Document which satisfies the Query, with a
-_weight_, and the list is ordered by decreasing weight, the weight
+`weight`, and the list is ordered by decreasing weight, the weight
 being an indicator of how good a match that Document is for the query
-that was run: a higher weight means a better match. The _rank_ of each
+that was run: a higher weight means a better match. The `rank` of each
 match is simply the position in the list of all matches, starting from
 0.  Some other search systems use the word "score" instead of weight.
 
-The actual weight is calculated by a _weighting scheme_; Xapian comes
+The actual weight is calculated by a `weighting scheme`; Xapian comes
 with a few different ones or you can write your own, although often
 the default is fine. (It uses a scheme called BM25, which takes into
 account things like how common a matching term is in a matching

@@ -73,7 +73,7 @@ people don't need to worry too much about exactly which words to use in
 their query.
 
 Finally, we want a way of separating the two fields. In Xapian this is done
-using _term prefixes_, basically by putting short strings at the beginning
+using `term prefixes`, basically by putting short strings at the beginning
 of terms to indicate which field the term indexes. As well as prefixed
 terms, we also want to generate unprefixed terms, so that as well as
 searching within fields you can also search for text in any field.
