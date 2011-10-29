@@ -9,7 +9,7 @@ _weight_, and the list is ordered by decreasing weight, the weight
 being an indicator of how good a match that Document is for the query
 that was run: a higher weight means a better match. The _rank_ of each
 match is simply the position in the list of all matches, starting from
-0.
+0.  Some other search systems use the word "score" instead of weight.
 
 The actual weight is calculated by a _weight scheme_; Xapian comes
 with a few different ones or you can write your own, although often
