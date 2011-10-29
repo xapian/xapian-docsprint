@@ -15,6 +15,7 @@ def index(datapath, dbpath):
     termgenerator.set_stemmer(xapian.Stem("en"))
 
     for fields in parse_csv_file(datapath):
+        # fields is a dictionary mapping from field name to value.
         # We're just going to use id_NUMBER, TITLE and DESCRIPTION
         description = fields.get('DESCRIPTION', u'')
         title = fields.get('TITLE', u'')
