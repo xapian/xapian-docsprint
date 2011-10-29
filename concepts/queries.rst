@@ -96,4 +96,8 @@ A+B+C
 
 Additional operators
 ~~~~~~~~~~~~~~~~~~~~
-Xapian also provides additional operators which can be used to form more 
+Xapian also provides additional operators which can be used to provide more
+flexibility than the operators above. For more details of these, see the
+full Xapian documentation at http://xapian.org/.
+
+
