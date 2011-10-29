@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Databases</title>
+<link rel="previous" href="alternatives.html">
+<link rel="ToC" href="index.html">
+<link rel="index" href="bookindex.html">
+<link rel="next" href="databases-creating.html">
+</head>
+<body>
+<p><a href="alternatives.html">Previous</a> | <a href="index.html">Contents</a> | <a href="bookindex.html">Index</a> | <a href="databases-creating.html">Next</a></p>
+<h1><a name="databases"></a>Chapter 2: Databases</h1>
+<p>
+Pretty much all Xapian operations revolve around a Xapian <em>database</em>. Before performing a search, details of the documents being searched need to be put into the database - the search process then refers to the database to determine the best matches for a given query. The process of putting documents into the database is usually referred to as indexing.
+</p>
+
+<ul>
+<li><a href="databases-creating.html#databases-creating">2.1 Creating and opening databases</a>
+<ul>
+<li><a href="databases-creating.html#databases-closing">2.1.1 Closing</a></li>
+</ul></li>
+<li><a href="concurrency.html#concurrency">2.2 Concurrency</a>
+<ul>
+<li><a href="concurrency.html#threading">2.2.1 Threading</a></li>
+<li><a href="concurrency.html#multi-read-single-write">2.2.2 Multiple readers, single writer</a></li>
+<li><a href="concurrency.html#locking">2.2.3 Locking</a></li>
+</ul></li>
+<li><a href="databases-multiple.html#databases-multiple">2.3 Multiple databases</a></li>
+<li><a href="databases-remote.html#databases-remote">2.4 Remote databases</a></li>
+<li><a href="databases-stub.html#databases-stub">2.5 Stub databases</a></li>
+<li><a href="databases-flipping.html#databases-flipping">2.6 Flipping databases</a></li>
+<li><a href="databases-reopening.html#databases-reopening">2.7 Reopening</a></li>
+<li><a href="metadata.html#metadata">2.8 Metadata</a></li>
+<li><a href="databases-backend-formats.html#databases-backend-formats">2.9 Database backend formats</a>
+<ul>
+<li><a href="databases-backend-formats.html#databases-flint">2.9.1 The Flint backend</a></li>
+<li><a href="databases-backend-formats.html#databases-chert">2.9.2 The Chert backend</a></li>
+<li><a href="databases-backend-formats.html#databases-brass">2.9.3 The Brass backend</a></li>
+<li><a href="databases-backend-formats.html#databases-inmemory">2.9.4 The InMemory backend</a></li>
+<li><a href="databases-backend-formats.html#databases-auto">2.9.5 Auto</a></li>
+</ul></li>
+<li><a href="databases-replication.html#databases-replication">2.10 Replication</a></li>
+</ul>
+
+<hr><address></address></body>
+</html>

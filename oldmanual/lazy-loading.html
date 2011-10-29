@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Lazy loading.</title>
+<link rel="previous" href="deleting-documents.html">
+<link rel="ToC" href="index.html">
+<link rel="index" href="bookindex.html">
+<link rel="next" href="serialising.html">
+</head>
+<body>
+<p><a href="deleting-documents.html">Previous</a> | <a href="index.html">Contents</a> | <a href="bookindex.html">Index</a> | <a href="serialising.html">Next</a></p>
+<h1><a name="lazy-loading"></a>3.7 Lazy loading.</h1>
+<p>
+In order to avoid unnecessary work, the contents of a <code>Xapian::Document</code> object derived from a database are not normally loaded from the database immediately when the document is obtained. Instead, various parts of the document are loaded on demand. This can give a nice efficiency boost in situations where only a part of the document is loaded. For example, in the following code, only the &#8216;data&#8217; part of the document will be loaded; the termlist and values will not be accessed:
+</p>
+<pre><code>Xapian::Database db("testdb");
+Xapian::Document doc = db.get_document(1);
+std::cout &lt;&lt; doc.get_data() &lt;&lt;std::endl;
+</code></pre>
+<p>
+This is normally entirely transparent to the user, but can have a visible effect in some very specific circumstances. If the database the document is read from is a <code>Xapian::WritableDatabase</code>, two copies of the document are obtained from it, one copy is modified and written back to the database, and then the contents of the second copy are accessed, the second copy will contain the data that the second copy was set to.
+</p>
+<p>
+This might be clearer with a bit of example code:
+</p>
+<pre><code>Xapian::WritableDatabase db("db", Xapian::DB_CREATE_OR_OPEN);
+Xapian::Document doc1 = db.get_document(1);
+Xapian::Document doc2 = db.get_document(1);
+doc1.set_data("hello");
+db.replace_document(1, doc1);
+std::cout &lt;&lt; doc2.get_data() &lt;&lt;std::endl;
+// Output is "hello"
+</code></pre>
+<p>
+If you want to force all the contents of a document to be read immediately, one easy way is to call the document's <code>serialise()</code> method. This leads us nicely on to the next section!
+</p>
+
+<hr><address></address></body>
+</html>

@@ -1,0 +1,571 @@
+Chapter 1: Getting started
+--------------------------
+
+       Xapian is a code library, written in C++. As such, the native
+       interface is written in C++, but thin wrappers around the C++
+       interface are provided for many popular languages. The syntax of
+       code written using these wrappers is obviously different to that
+       written in C++, but the basic concepts are the same.
+
+       In this manual, example code will generally be presented in C++. If
+       you are using one of the other languages, you should generally be
+       able to get the concepts by reading this code, even if you don't
+       know C++. There are chapters later in the book giving a specific
+       introduction for users of particular languages.
+
+   1.1 Installation
+
+   1.2 Simple example
+
+   1.3 Information Retrieval
+
+   1.4 Alternatives
+
+       eg, Why not just use RDBMS full text search options?
+
+Chapter 2: Databases
+--------------------
+
+       Pretty much all Xapian operations revolve around a Xapian
+       _database_. Before performing a search, details of the documents
+       being searched need to be put into the database - the search process
+       then refers to the database to determine the best matches for a
+       given query. The process of putting documents into the database is
+       usually referred to as indexing.
+
+   2.1 Creating and opening databases
+
+       Databases can be opened for reading only, or for reading
+       and writing. A database reader is represented by a
+       `Xapian::Database' object, and a database writer is
+       represented by a `Xapian::WritableDatabase' object. Note that
+       `Xapian::WritableDatabase' is a subclass of `Xapian::Database', so
+       it's possible to do all operations that it's possible to do on a
+       `Xapian::Database' on a `Xapian::WritableDatabase'. For example, a
+       search can be performed on a `Xapian::WritableDatabase'.
+
+       The easiest way to create a new database is simply to call the
+       `Xapian::WritableDatabase' constructor:
+
+         Xapian::WritableDatabase db("myfirstdb", Xapian::DB_CREATE);
+
+       This will create a new database, using the default database format,
+       at the path `myfirstdb' (relative to the current working directory).
+       The DB_CREATE flag tells the constructor to create a new database:
+       an exception will be raised if a database (or anything else) already
+       exists at the specified path. Other available flags are:
+
+        -  DB_CREATE_OR_OPEN: like DB_CREATE, but will simply open the
+           database at the specified path if it already exists.
+
+        -  DB_CREATE_OR_OVERWRITE: like DB_CREATE, but will overwrite the
+           database at the specfied path if it already exists.
+
+        -  DB_OPEN: the database will be opened if it already exists, but
+           if it doesn't exist an exception will be raised.
+
+       To open a database for reading, use the `Xapian::Database'
+       constructor:
+
+         Xapian::Database db_readonly("myfirstdb");
+
+       This will open the database for reading only, and raise an exception
+       if no database exists at the specified path.
+
+       There are various different formats of database; if you want a
+       format other than the default format for some reason, there are
+       special factory methods available to create such databases - see
+       section 2.9 for details. The Xapian::Database constructor will
+       automatically determine the format of the database at the path
+       supplied and open it (assuming the format is recognised). Similarly,
+       the Xapian::WritableDatabase constructors, when supplied with an
+       existing database, and appropriate flags (ie, `Xapian::DB_OPEN' or
+       `Xapian::DB_CREATE_OR_OPEN') will also automatically determine the
+       format and open it.
+
+       If you just want to get on with adding documents to a database, you
+       can skip to the next chapter now. There are lots of things to be
+       aware of about databases when building a production-ready system
+       on top of Xapian, though, so come back and read the rest of this
+       chapter later!
+
+ 2.1.1 Closing
+
+       A writable database is closed automatically when both the
+       `Xapian::WritableDatabase' object is deleted, and when any Xapian
+       objects which are derived from the database object are closed. For
+       example, if a `Xapian::PostingIterator' has been created from the
+       database, the database will not be closed until that iterator is
+       deleted as well as the database object. (See section 8.1 for more
+       details on `Xapian::PostingIterator').
+
+       This is very convenient in many situations - it means that it is
+       not necessary to keep track of whether a database object has been
+       deleted yet when using iterators or other objects derived from it.
+       However, it can result in the database remaining open longer than
+       expected, causing problems if you try and open the database for
+       writing again before the database has been closed.
+
+       For this reason, databases support an explicit `close()' method.
+       This can be called to close a database immediately, without waiting
+       for all references to the database to be deleted. If an attempt is
+       made to access the database after closing, it will usually result in
+       a `Xapian::DatabaseError' exception being raised.
+
+   2.2 Concurrency
+
+ 2.2.1 Threading
+
+       Xapian does not implement any explicit support for multi-threading,
+       and stores various pieces of state in each object. This means that
+       if you access a Xapian object, such as a `Xapian::Database' from
+       multiple threads, you are extremely likely to get a nasty error:
+       your application will probably crash. Don't do this.
+
+       On the other hand, Xapian doesn't use any global state, so as long
+       as you don't access any Xapian objects concurrently, it is safe to
+       use Xapian in a multithreaded system. Be aware, however, that some
+       Xapian objects will keep references to each other - for example, a
+       `Xapian::Document' object obtained from a `Xapian::Database' object
+       using the `get_document()' method will maintain a reference to the
+       original `Xapian::Database' object, so it is not safe to use the
+       `Xapian::Document' object in a thread if another thread might be
+       concurrently accessing the `Xapian::Database' object.
+
+       For these reasons, it is generally best to use any Xapian objects
+       only in the thread in which they were created, and not to access
+       them from multiple threads. If you must pass objects between
+       threads, consider using a mutex to ensure that only one thread
+       accesses the object at a time.
+
+       Creating a `Xapian::Database' object is generally fairly cheap, but
+       if you wish to avoid the overhead of creating one for each search,
+       you could implement a thread-local cache of databases.
+
+ 2.2.2 Multiple readers, single writer
+
+       Most Xapian backends provide `multi version concurrency'. This
+       allows only a single writer to exist for each database at any given
+       time, but allows multiple readers to exist concurrently (both with
+       the writer, and with themselves).
+
+       When a database is opened for reading, a static version of the
+       database is referenced by the reader. Updates which are made to the
+       database will not be visible to the reader.
+
+       Existing Xapian backends have a limitation to their `multi version
+       concurrency' implementation - specifically, at most two versions can
+       exist concurrently. The reader will be able to access its static
+       version of the database without limitations when only one change has
+       been made and committed by the writer, but after the writer has made
+       two changes, readers will receive a `Xapian::DatabaseModifiedError'
+       if they attempt to access a part of the database which has changed.
+       In this situation, the reader may be updated to the latest version
+       using the `reopen' method - see section 2.7.
+
+ 2.2.3 Locking
+
+       With the disk-based Xapian backends, when a database is opened
+       for writing, a lock is obtained on the database to ensure that no
+       further writers are opened concurrently. This lock will be released
+       when the database writer is closed.
+
+       One unusual feature of Xapian's locking mechanism (at least on POSIX
+       operating systems) is that Xapian creates a subprocess to hold the
+       lock, rather than holding it in the main process. FIXME - explain
+       why.
+
+   2.3 Multiple databases
+
+       - note about not being able to open multidbs for writing
+
+       - opening
+
+       - docid mapping
+
+   2.4 Remote databases
+
+       - rationale
+
+       - running the server
+
+       - note about using a stub database to serve multiple databases
+       together
+
+       - opening
+
+   2.5 Stub databases
+
+       - Description of them, and their format.
+
+       - One use is for flipping - see section below.
+
+       - Also used by the replication subsystem.
+
+       - Also for merging a small "recent changes" database with a large
+       "archive" database.
+
+       - Also for building a collection of databases for remote searching
+
+   2.6 Flipping databases
+
+       It is often useful to update a database by building a new database
+       containing an updated version of the data, and flipping from the
+       old version to the new version, so that newly opened readers start
+       picking up the new version of the database. This can be done to
+       great effect, but there are several things to be aware of if you are
+       performing searches in parallel with this change.
+
+       Obviously, deleting the old database and copying or moving a new
+       database into place would leave a window of time in which any
+       readers trying to open the database would find files missing,
+       producing Xapian::DatabaseOpeningError errors. If you simply
+       copy or replace the individual files, you may get even more
+       subtle errors; Xapian will usually notice the discrepancy if some
+       files from an old version of the database and some from a new
+       version are present, but may not always do so, and may well raise
+       Xapian::DatabaseCorruptError if it becomes confused.
+
+       There are actually very few filesystem operations which can be used
+       to allow an "atomic" change to be made to a database. Fortunately,
+       there is one such operation: moving a file to a new path, replacing
+       any copies of the database at that path, is an atomic operation on
+       almost all systems. [FIXME - check for details of any systems where
+       it isn't.] All processes will either see the filesystem as it was
+       before the move/replace, or as it was afterwards; there'll never be
+       a partial modification visible.
+
+       The recommended approach for flipping database versions is to use
+       a stub database to refer to the current version of the database.
+       One approach is be to append a timestamp to the end of each newly
+       created database, and then to create a stub database file pointing
+       to the latest database. Once the newly created database is in place
+       and ready to be used, the newly created stub database file can be
+       moved to replace the old stub database file, taking advantage of the
+       atomic nature of this operation to ensure that a reader would never
+       see a partially flipped database.
+
+       On POSIX filesystems, the contents of an open file can be accessed
+       even if the original file on disk has been unlinked. An open Xapian
+       database maintains an open filehandle to all the files holding the
+       database contents. This allows the old version of the database to be
+       unlinked immediately after the stub database file has been updated,
+       without fear that an open reader will be affected by this deletion.
+
+       On non POSIX filesystems (specifically, on Windows), an error will
+       be raised by a reader if the files it was using are deleted before
+       it completes. On such systems, you should either wait for all
+       readers using the old version to close, or be prepared to catch
+       errors due to the deletion.
+
+       Don't be tempted to use a symlink instead of a stub database to
+       switch between database versions. Xapian doesn't resolve all
+       symlinks on the path to a database before opening it, so if the
+       symlink is changed while the database is being opened, a mixture of
+       old and new files may be opened.
+
+   2.7 Reopening
+
+       Database readers access a static version of the database, and do not
+       reflect updates to the database made since they were opened. The
+       version of the database accessed by the reader can be updated to the
+       latest version by calling the `Xapian::Database::reopen()' method.
+       This is faster than closing the database and opening a fresh reader
+       - especially in the case when no changes have been made.
+
+       FIXME - talk about strategies to avoid the DatabaseModifiedError -
+       eg, calling reopen before performing each search, putting searches
+       into a loop which repeats if DatabaseModifiedError occurs, and
+       ensuring that commits() don't happen with a shorter gap than the
+       time searches take.
+
+       When a `Xapian::DatabaseModifiedError' is received the reader can be
+       updated to the latest version
+
+       FIXME - add a warning about stubs not being re-read, and a link to
+       the relevant ticket.
+
+   2.8 Metadata
+
+       Storing metadata.
+
+       Transational support.
+
+       Example uses.
+
+   2.9 Database backend formats
+
+       Xapian databases store data in custom formats which allow searches
+       to be performed extremely quickly. This typically involves storing a
+       mapping from all the words in the documents to the list of documents
+       those words occurred in, together with various statistics about
+       these occurrences. It may also involve storing the full text of the
+       documents, so that result text can be displayed.
+
+       A great deal of compression is used to store this information,
+       but the database sizes are still often comparable to the size
+       of the input data, since they hold both the original data, and
+       the "inverted" data. Database sizes depend heavily on the way in
+       which documents are processed, and what information is stored -
+       this should be matched to the types of searches which need to be
+       supported on the data, to avoid storing unwanted information. See
+       chapter 7 for details of this.
+
+       Xapian databases are usually held in the filesystem, as a set of
+       files in a database directory, but may also be held in memory, or on
+       a remote machine.
+
+       Xapian supports several different database `backends`. For any
+       particular release of Xapian, one of these backends will be the
+       default backend, and will be used when a database is created if
+       you don't choose a particular backend format. Some backends are
+       supported for backwards compatibility, some provide support for
+       distributed searching, or keeping a database in memory, and others
+       may be experimental.
+
+       At the time of writing, the current backends are available in
+       supported versions of Xapian. Note that Xapian may be compiled
+       without support for some of these databases.
+
+ 2.9.1 The Flint backend
+
+       In the 1.0.x release series, Flint was the default backend. It is
+       still supported for backwards compatibility in the 1.2.x release
+       series. Support is likely to be dropped at the end of the 1.2.x
+       release series.
+
+       To open a Flint database explicitly, use the Flint::open() method.
+
+ 2.9.2 The Chert backend
+
+       The Chert backend is the default backend in the 1.2.x release
+       series. It was based on the Flint database format, but portions
+       of it have been modified heavily to improve performance. Database
+       sizes with flint are considerably smaller, and various additional
+       statistics are stored which allow searches to be performed faster.
+       Some features, such as range searches, can be performed considerably
+       more efficiently with Chert than with Flint, due to the format
+       changes.
+
+ 2.9.3 The Brass backend
+
+       The Brass backend is currently in development - it is expected to
+       stabilise for the 1.4.x release series. Before that point, you
+       should probably only use the Brass backend if you are working on
+       development or testing of it. The format of Brass databases may be
+       changed with little or no warning until it has stabilised.
+
+ 2.9.4 The InMemory backend
+
+       As suggested by its name, the InMemory backend holds its databases
+       in memory, rather than on disk. This makes it a reasonable candidate
+       for use when you have a small number of documents, and want to build
+       a temporary database from them to perform a few searches.
+
+       Unfortunately, the current implementation is not very efficient -
+       the backend was implemented mainly for testing. This is actually the
+       oldest backend in Xapian! The backend has fairly poor performance,
+       and doesn't have support for some recently added features. It also
+       doesn't support transations at all.
+
+       If there is sufficient demand, this backend is likely to be re-
+       implemented at some point, possibly using shared memory to allow
+       multiple processes to access the database, and using the data format
+       of one of the on-disk databases. Work has not begun on this at the
+       time of writing: as ever, contact the Xapian developers if you would
+       like to help!
+
+ 2.9.5 Auto
+
+       If you look at the Xapian API documentation, you'll notice that
+       there are also "Auto::" FIXME - talk about this.
+
+  2.10 Replication
+
+Chapter 3: Documents
+--------------------
+
+       A document in Xapian is simply an item which is returned by a
+       search. When building a new search system, the first decision to
+       take is usually to decide what the documents in your system are
+       going to be. For example, for a search over a website, there might
+       be one document for each page of the site. However, you could
+       instead choose to use one document for each paragraph of each page,
+       or to group pages together into subjects and have one document
+       for each subject. Choosing the best way to divide your data up is
+       discussed in detail in chapter 7.
+
+   3.1 Terms, data, values.
+
+       Documents have three components: terms, data and values.
+
+       _Terms_ are the basic unit of information retrieval used by Xapian.
+       At its simplest, a search is a process of matching terms specified
+       in a query against terms in a document, and returning the best
+       matches. A term will often be generated for each word in a piece
+       of text, possibly by applying some form of normalisation (such as
+       applying a _stemmer_ to convert different forms of a word to a
+       standard form), but this isn't required, and there is a very wide
+       range of useful strategies for producing terms.
+
+       _Data_ is an arbitrary blob of data associated with the document.
+       Xapian does nothing with this data other than store it in the
+       database and return it when requested. It can be used to hold a
+       reference to an external piece of information about the document
+       (such as the primary key in an external database table containing
+       the document information), or could be used to store the full
+       text of the document. Generally, the best thing to do with the
+       document data is to store any information you need to display the
+       resulting document to the user (or to whatever process consumes the
+       results of searches). There is no standard serialisation scheme for
+       putting structured data into the document data: depending on your
+       application, you might want to roll a simple scheme using newlines
+       to separate values, use JSON or XML serialisation, or use some
+       language-specific method of pickling data.
+
+       _Values_ are, in a sense, a more flexible version of terms. Each
+       document can have a set of values associated with it, which hold
+       pieces of data which can be useful during a search. These pieces
+       of data could be things such as keys which you want to be able to
+       sort the results on, or numbers to be used to affect the weight
+       calculated for documents during the search. It is important to keep
+       the amount of data stored in the values to a minimum, since the data
+       for a large number of documents will be read during the search, and
+       unused data will thus slow the search down. Developers are often
+       tempted to use the value slots to hold inforamtion which should
+       really be stored in the document's data area; don't succumb to this
+       temptation.
+
+   3.2 Dos and Don'ts
+
+        -  Don't commit or flush after every modification, unless you
+           really need to. Modifications are much much faster if they're
+           grouped together. If you must flush every modification
+           immediately, consider using a small database of recent
+           modifications, merged with a larger database of earlier
+           modifications.
+
+        -  Don't put data into value slots which isn't going to be used
+           during the search process. It's often tempting to do this to get
+           an easy way to store fielded data, but storing extra data in the
+           values will crowd some of the data required for searches out of
+           the cache, producing a slower search. Use the document "data"
+           slot for this.
+
+   3.3 Building documents.
+
+   3.4 Adding documents.
+
+   3.5 Modifying documents.
+
+   3.6 Deleting documents.
+
+   3.7 Lazy loading.
+
+       In order to avoid unnecessary work, the contents of a
+       `Xapian::Document' object derived from a database are not normally
+       loaded from the database immediately when the document is obtained.
+       Instead, various parts of the document are loaded on demand. This
+       can give a nice efficiency boost in situations where only a part of
+       the document is loaded. For example, in the following code, only the
+       `data' part of the document will be loaded; the termlist and values
+       will not be accessed:
+
+         Xapian::Database db("testdb");
+         Xapian::Document doc = db.get_document(1);
+         std::cout << doc.get_data() <<std::endl;
+
+       This is normally entirely transparent to the user, but can have a
+       visible effect in some very specific circumstances. If the database
+       the document is read from is a `Xapian::WritableDatabase', two
+       copies of the document are obtained from it, one copy is modified
+       and written back to the database, and then the contents of the
+       second copy are accessed, the second copy will contain the data that
+       the second copy was set to.
+
+       This might be clearer with a bit of example code:
+
+         Xapian::WritableDatabase db("db", Xapian::DB_CREATE_OR_OPEN);
+         Xapian::Document doc1 = db.get_document(1);
+         Xapian::Document doc2 = db.get_document(1);
+         doc1.set_data("hello");
+         db.replace_document(1, doc1);
+         std::cout << doc2.get_data() <<std::endl;
+         // Output is "hello"
+
+       If you want to force all the contents of a document to be read
+       immediately, one easy way is to call the document's `serialise()'
+       method. This leads us nicely on to the next section!
+
+   3.8 Serialising.
+
+       Sometimes, it's useful to convert a `Xapian::Document' into a flat
+       binary representation. This might be so that it can be sent over a
+       network connection, or stored in a cache or a queue.
+
+       FIXME - describe serialising and deserialising. Note the lack
+       of guarantee that the format is stable across different Xapian
+       versions: shouldn't be used for long term storage. Should be endian
+       safe, though, so fine to read on different architectures.
+
+Chapter 4: Searches
+-------------------
+
+       - A basic search. - The Enquire object. - The QueryParser object.
+       - The Query object. - Mention the special "" term which matches
+       everything. - Relevance Expansion. - RSet, Expand.
+
+Chapter 5: Customising searches
+-------------------------------
+
+       - Custom sort orders - Range searches - Query independent weights
+
+Chapter 6: Text processing
+--------------------------
+
+   6.1 Stemming
+
+   6.2 Spelling correction
+
+   6.3 Synonym expansion
+
+Chapter 7: Indexing strategies
+------------------------------
+
+Chapter 8: Lower level datastructures
+-------------------------------------
+
+   8.1 Posting iterators
+
+Chapter 9: Facets
+-----------------
+
+       - When and how to use facets - String facets - Numeric facets -
+       Grouping - Selecting facets
+
+Chapter 10: Features in development
+-----------------------------------
+
+       - Geolocation searches - Clustering
+
+Chapter 11: The Python interface to Xapian
+------------------------------------------
+
+Chapter 12: The PHP interface to Xapian
+---------------------------------------
+
+Chapter 13: The Perl interface to Xapian
+----------------------------------------
+
+Chapter 14: The Ruby interface to Xapian
+----------------------------------------
+
+Chapter 15: The Java interface to Xapian
+----------------------------------------
+
+Chapter 16: The C# interface to Xapian
+--------------------------------------
+
+Chapter 17: The TCL interface to Xapian
+---------------------------------------
+

@@ -1,0 +1,23 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Serialising.</title>
+<link rel="previous" href="lazy-loading.html">
+<link rel="ToC" href="index.html">
+<link rel="index" href="bookindex.html">
+<link rel="next" href="searches.html">
+</head>
+<body>
+<p><a href="lazy-loading.html">Previous</a> | <a href="index.html">Contents</a> | <a href="bookindex.html">Index</a> | <a href="searches.html">Next</a></p>
+<h1><a name="serialising"></a>3.8 Serialising.</h1>
+<p>
+Sometimes, it's useful to convert a <code>Xapian::Document</code> into a flat binary representation. This might be so that it can be sent over a network connection, or stored in a cache or a queue.
+</p>
+<p>
+FIXME - describe serialising and deserialising. Note the lack of guarantee that the format is stable across different Xapian versions: shouldn't be used for long term storage. Should be endian safe, though, so fine to read on different architectures.
+</p>
+
+<hr><address></address></body>
+</html>

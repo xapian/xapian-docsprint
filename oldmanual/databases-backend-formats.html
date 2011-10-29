@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Database backend formats</title>
+<link rel="previous" href="metadata.html">
+<link rel="ToC" href="index.html">
+<link rel="index" href="bookindex.html">
+<link rel="next" href="databases-replication.html">
+</head>
+<body>
+<p><a href="metadata.html">Previous</a> | <a href="index.html">Contents</a> | <a href="bookindex.html">Index</a> | <a href="databases-replication.html">Next</a></p>
+<h1><a name="databases-backend-formats"></a>2.9 Database backend formats</h1>
+<p>
+Xapian databases store data in custom formats which allow searches to be performed extremely quickly. This typically involves storing a mapping from all the words in the documents to the list of documents those words occurred in, together with various statistics about these occurrences. It may also involve storing the full text of the documents, so that result text can be displayed.
+</p>
+<p>
+A great deal of compression is used to store this information, but the database sizes are still often comparable to the size of the input data, since they hold both the original data, and the "inverted" data. Database sizes depend heavily on the way in which documents are processed, and what information is stored - this should be matched to the types of searches which need to be supported on the data, to avoid storing unwanted information. See <a href="index-strategy.html#index-strategy">chapter 7</a> for details of this.
+</p>
+<p>
+Xapian databases are usually held in the filesystem, as a set of files in a database directory, but may also be held in memory, or on a remote machine.
+</p>
+<p>
+Xapian supports several different database `backends`. For any particular release of Xapian, one of these backends will be the default backend, and will be used when a database is created if you don't choose a particular backend format. Some backends are supported for backwards compatibility, some provide support for distributed searching, or keeping a database in memory, and others may be experimental.
+</p>
+<p>
+At the time of writing, the current backends are available in supported versions of Xapian. Note that Xapian may be compiled without support for some of these databases.
+</p>
+<h2><a name="databases-flint"></a>2.9.1 The Flint backend</h2>
+<p>
+In the 1.0.x release series, Flint was the default backend. It is still supported for backwards compatibility in the 1.2.x release series. Support is likely to be dropped at the end of the 1.2.x release series.
+</p>
+<p>
+To open a Flint database explicitly, use the Flint::open() method.
+</p>
+<h2><a name="databases-chert"></a>2.9.2 The Chert backend</h2>
+<p>
+The Chert backend is the default backend in the 1.2.x release series. It was based on the Flint database format, but portions of it have been modified heavily to improve performance. Database sizes with flint are considerably smaller, and various additional statistics are stored which allow searches to be performed faster. Some features, such as range searches, can be performed considerably more efficiently with Chert than with Flint, due to the format changes.
+</p>
+<h2><a name="databases-brass"></a>2.9.3 The Brass backend</h2>
+<p>
+The Brass backend is currently in development - it is expected to stabilise for the 1.4.x release series. Before that point, you should probably only use the Brass backend if you are working on development or testing of it. The format of Brass databases may be changed with little or no warning until it has stabilised.
+</p>
+<h2><a name="databases-inmemory"></a>2.9.4 The InMemory backend</h2>
+<p>
+As suggested by its name, the InMemory backend holds its databases in memory, rather than on disk. This makes it a reasonable candidate for use when you have a small number of documents, and want to build a temporary database from them to perform a few searches.
+</p>
+<p>
+Unfortunately, the current implementation is not very efficient - the backend was implemented mainly for testing. This is actually the oldest backend in Xapian! The backend has fairly poor performance, and doesn't have support for some recently added features. It also doesn't support transations at all.
+</p>
+<p>
+If there is sufficient demand, this backend is likely to be re-implemented at some point, possibly using shared memory to allow multiple processes to access the database, and using the data format of one of the on-disk databases. Work has not begun on this at the time of writing: as ever, contact the Xapian developers if you would like to help!
+</p>
+<h2><a name="databases-auto"></a>2.9.5 Auto</h2>
+<p>
+If you look at the Xapian API documentation, you'll notice that there are also "Auto::" FIXME - talk about this.
+</p>
+
+<hr><address></address></body>
+</html>

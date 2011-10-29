@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=US-ASCII">
+<title>Concurrency</title>
+<link rel="previous" href="databases-creating.html">
+<link rel="ToC" href="index.html">
+<link rel="index" href="bookindex.html">
+<link rel="next" href="databases-multiple.html">
+</head>
+<body>
+<p><a href="databases-creating.html">Previous</a> | <a href="index.html">Contents</a> | <a href="bookindex.html">Index</a> | <a href="databases-multiple.html">Next</a></p>
+<h1><a name="concurrency"></a>2.2 Concurrency</h1>
+<h2><a name="threading"></a>2.2.1 Threading</h2>
+<p>
+Xapian does not implement any explicit support for multi-threading, and stores various pieces of state in each object. This means that if you access a Xapian object, such as a <code>Xapian::Database</code> from multiple threads, you are extremely likely to get a nasty error: your application will probably crash. Don't do this.
+</p>
+<p>
+On the other hand, Xapian doesn't use any global state, so as long as you don't access any Xapian objects concurrently, it is safe to use Xapian in a multithreaded system. Be aware, however, that some Xapian objects will keep references to each other - for example, a <code>Xapian::Document</code> object obtained from a <code>Xapian::Database</code> object using the <code>get_document()</code> method will maintain a reference to the original <code>Xapian::Database</code> object, so it is not safe to use the <code>Xapian::Document</code> object in a thread if another thread might be concurrently accessing the <code>Xapian::Database</code> object.
+</p>
+<p>
+For these reasons, it is generally best to use any Xapian objects only in the thread in which they were created, and not to access them from multiple threads. If you must pass objects between threads, consider using a mutex to ensure that only one thread accesses the object at a time.
+</p>
+<p>
+Creating a <code>Xapian::Database</code> object is generally fairly cheap, but if you wish to avoid the overhead of creating one for each search, you could implement a thread-local cache of databases.
+</p>
+<h2><a name="multi-read-single-write"></a>2.2.2 Multiple readers, single writer</h2>
+<p>
+Most Xapian backends provide &#8216;multi version concurrency&#8217;. This allows only a single writer to exist for each database at any given time, but allows multiple readers to exist concurrently (both with the writer, and with themselves).
+</p>
+<p>
+When a database is opened for reading, a static version of the database is referenced by the reader. Updates which are made to the database will not be visible to the reader.
+</p>
+<p>
+Existing Xapian backends have a limitation to their &#8216;multi version concurrency&#8217; implementation - specifically, at most two versions can exist concurrently. The reader will be able to access its static version of the database without limitations when only one change has been made and committed by the writer, but after the writer has made two changes, readers will receive a <code>Xapian::DatabaseModifiedError</code> if they attempt to access a part of the database which has changed. In this situation, the reader may be updated to the latest version using the <code>reopen</code> method - see <a href="databases-reopening.html#databases-reopening">section 2.7</a>.
+</p>
+<h2><a name="locking"></a>2.2.3 Locking</h2>
+<p>
+With the disk-based Xapian backends, when a database is opened for writing, a lock is obtained on the database to ensure that no further writers are opened concurrently. This lock will be released when the database writer is closed.
+</p>
+<p>
+One unusual feature of Xapian's locking mechanism (at least on POSIX operating systems) is that Xapian creates a subprocess to hold the lock, rather than holding it in the main process. FIXME - explain why.
+</p>
+
+<hr><address></address></body>
+</html>
