@@ -35,3 +35,15 @@ if the terms fulfil the positional requirements, so if a lot of documents
 contain the required terms but not in the right places, a lot more work is
 required than for just doing an AND query.  This will be improved in a
 future release.
+
+Concurrently Open Databases
+---------------------------
+
+If you try to search many databases concurrently, you may hit the
+per-process file-descriptor limit - each chert database uses between 3 and
+7 fds depending which tables are present.  You can raise the per-process
+limit on some Unix-like platforms.
+
+Another way to avoid it (and to spread the search load) is to use the
+remote backend to search databases on a cluster of machines, which only
+needs one fd open per database on the client machine.
