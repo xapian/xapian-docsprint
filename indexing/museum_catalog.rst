@@ -94,3 +94,44 @@ To create terms, we use Xapian's TermGenerator, a built-in class to make
 turning free text into terms easier. It will split into words, apply
 stemming, and then add term prefixes as needed. It can also take care of
 term positions, including the gap between different fields.
+
+Let's write some code
+---------------------
+
+We need some code here. code/python/index1.py has it.
+
+Verifying the index using delve
+-------------------------------
+
+Xapian comes with a handy utility called `delve` which can be used to inspect a database, so let's look at the one you just built. If you just run ``delve db``, you'll get an overview: how many documents, average term length, and some other statistics::
+
+    $ delve db
+    UUID = 4ab88abe-4fd1-42b5-9eeb-4c705d42dac7
+    number of documents = 99
+    average document length = 100.495
+    document length lower bound = 33
+    document length upper bound = 251
+    highest document id ever used = 99
+    has positional information = true
+
+You can also look at an individual document, using Xapian's docid (``-d`` means output document data as well)::
+
+    $ delve -r 1 -d db
+    Data for record #1:
+    {"MEASUREMENTS": "", "DESCRIPTION": "Ansonia Sunwatch (pocket compass dial)", "PLACE_MADE": "New York county, New York state, United States", "id_NUMBER": "1974-100", "WHOLE_PART": "WHOLE", "TITLE": "Ansonia Sunwatch (pocket compass dial)", "DATE_MADE": "1922-1939", "COLLECTION": "SCM - Time Measurement", "ITEM_NAME": "Pocket horizontal sundial", "MATERIALS": "", "MAKER": "Ansonia Clock Co."}
+    Term List for record #1: Q1974-100 Sansonia Scompass Sdial Spocket Ssunwatch XDansonia XDcompass XDdial XDpocket XDsunwatch ZSansonia ZScompass ZSdial ZSpocket ZSsunwatch ZXDansonia ZXDcompass ZXDdial ZXDpocket ZXDsunwatch Zansonia Zcompass Zdial Zpocket Zsunwatch ansonia compass dial pocket sunwatch
+
+You can also go the other way, starting with a term and finding both statistics and which documents it indexes::
+
+    $ delve -t Scompass db
+    Posting List for term `Scompass' (termfreq 5, collfreq 5, wdf_max 5): 1 26 28 29 70
+
+This means you can look documents up by identifier::
+
+    $ delve -t Q1974-100 db
+    Posting List for term `Q1974-100' (termfreq 1, collfreq 1, wdf_max 1): 1
+
+``delve`` is frequently useful if you aren't getting the behaviour you
+expect from a search system, to check that the database contains the
+documents and terms you expect.
+
