@@ -26,40 +26,74 @@ a match each document is for that query. These queries can then be combined
 to produce a more complex tree-like query structure, with the operators
 acting as branches within the tree.
 
-The most basic operators are the logical operators: OR, AND and AND_NOT; in
-these examples each takes two queries (A and B) as arguments. Remembering 
-this, the effect of these operators can be described as follows:
+The most basic operators are the logical operators: OR, AND and AND_NOT. 
+These operators process documents which match certain queries (A and B), 
+which have a weight assigned for each match. As documents pass through each
+operator branch, their weight is adjusted according to the type of branch,
+for example:
 
-	* OP_OR - returns documents which match query A *or* B (or both)
-	* OP_AND - returns documents which match both query A *and* B
-	* OP_AND_NOT - returns documents which match query A but *not* B
+	* OP_OR - passes documents which match query A *or* B (or both)
+	* OP_AND - passes documents which match both query A *and* B
+	* OP_AND_NOT - passes documents which match query A but *not* B
 
+The weights of the documents are adjusted as follows:
 
-----
-All operators control the weight of the documents which are passed 
+	* OP_OR - passes documents with the sum of weights from A and B
+	* OP_AND - passes documents with the sum of weights from A and B
+	* OP_AND_NOT - passes documents with the weight from A only
 
+Maybe
+~~~~~
+In addition to the basic logical operators, there is an additional logical
+operator *OP_AND_MAYBE* which can be used to give a document which matches
+A or (A and B). When this operator is used, the document weight is
+adjusted so that:
 
-Xapian supports a wide range of operators, the most common of which are 
-normally applied to the results of two queries (A and B), for example:
+	1. Documents which match A and B are passed, with weight of A+B
+	2. Documents which match A only are passed, with weight of A
+	3. Documents which match B only are not passed
+	
+This allows you to state that you require some terms (A) and that other 
+terms (B) are useful but not required.
 
+Filtering
+~~~~~~~~~
+There are two ways to apply filters to queries: using document values or
+using a filter query (i.e. where a document matches a query or not).
 
+When using document values, there are three relevant operators:
 
-When applying logical operators, the resulting list of documents will have 
-a weight according to the logical rule applied by that operator; for 
-example: 
+	* OP_VALUE_LE - passes documents where the given value is less than or 
+equal a fixed value
+	* OP_VALUE_GE - passes documents where the given value is greater than 
+or equal to a fixed value
+	* OP_VALUE_RANGE - passes documents where the given value is within the
+given fixed range (including both endpoints)
 
-	* OR - documents will have the weight of the first match
-	* AND - documents will have the combined weight of both documents
+Note that when using these operators, they decide whether to include or
+exclude documents only and do not affect the weight of a document.
 
-Filtering Operators
-~~~~~~~~~~~~~~~~~~~
-In addition to the logical operators, there are those which apply filtering
-to the results:
+Another way to filter documents is by using the OP_FILTER operand, which
+behaves like OP_AND, but passes only the weight from match (A):
 
-	* OP_FILTER - finds all documents which match both query A and B, but
-uses only the weights from query A
-	* OP_AND_MAYBE - finds all documents which match query A and uses their
-weights. If a document also matches query B, its weight is also added to
-the resulting document.
+	* Documents which match A and B are passed, with weight of A
+	
+Near and Phrase
+~~~~~~~~~~~~~~~
+Two additional operators that are commonly used are *NEAR*, which finds 
+terms within 10 words of each other in the current document, behaving like
+OP_AND with regard to weights, so that:
 
+	* Documents which match A within 10 words of B are passed, with weight 
+of A+B
 
+The phrase operator allows for searching for a specific phrase and returns
+only matches where all terms appear in the document, in the correct order,
+giving a weight of the sum of each term. For example:
+
+	* Documents which match A followed by B followed by C gives a weight of
+A+B+C
+
+Additional operators
+~~~~~~~~~~~~~~~~~~~~
+Xapian also provides additional operators which can be used to form more 
