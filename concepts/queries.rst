@@ -1,7 +1,7 @@
 Queries
 -------
 Queries within Xapian are the mechanism by which documents are searched for 
-within its database. They can be a simple search for text-based terms or 
+within a database. They can be a simple search for text-based terms or 
 a search based on the values assigned to documents, which can be combined
 using a number of different methods to produce more complex queries.
 
@@ -23,14 +23,14 @@ Logical Operators
 ~~~~~~~~~~~~~~~~~
 Each query produces a list of documents with a weight according to how good
 a match each document is for that query. These queries can then be combined
-to provide a more complex tree-like query structure, in which the operators
-act as branches within a tree of query matched documents.
+to produce a more complex tree-like query structure, with the operators
+acting as branches within the tree.
 
 The most basic operators are the logical operators: OR, AND and AND_NOT; in
 these examples each takes two queries (A and B) as arguments. Remembering 
 this, the effect of these operators can be described as follows:
 
-	* OP_OR - returns documents which match both query A *or* B, or A *and* B
+	* OP_OR - returns documents which match query A *or* B (or both)
 	* OP_AND - returns documents which match both query A *and* B
 	* OP_AND_NOT - returns documents which match query A but *not* B
 
@@ -42,10 +42,7 @@ All operators control the weight of the documents which are passed
 Xapian supports a wide range of operators, the most common of which are 
 normally applied to the results of two queries (A and B), for example:
 
-	* OP_OR - finds all documents which match query A or query B
-	* OP_AND - finds all documents which match both query A AND query B
-	* OP_AND_NOT - finds all documents matching query A and not matching 
-query B
+
 
 When applying logical operators, the resulting list of documents will have 
 a weight according to the logical rule applied by that operator; for 
@@ -62,7 +59,7 @@ to the results:
 	* OP_FILTER - finds all documents which match both query A and B, but
 uses only the weights from query A
 	* OP_AND_MAYBE - finds all documents which match query A and uses their
-weights. If a document also matches query B, it's weight is also added to
+weights. If a document also matches query B, its weight is also added to
 the resulting document.
 
 
