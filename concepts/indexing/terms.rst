@@ -9,7 +9,7 @@ some form of normalisation, but this isn't required, and
 there is a very wide range of useful strategies for producing terms.
 
 In a piece of text, it is common for an individual word to occur multiple
-times.  To represent this, a document stores a "within document frequency"
+times.  To represent this, a document stores a `within document frequency`
 along with each term, indicating the number of times the term occurred in a
 document; this is often used when searching to give documents in which a
 term occurs more often a higher weight.
@@ -18,6 +18,12 @@ It is also possible to store a set of positions along with each term; this
 allows the positions at which the words occurred to be used when searching,
 e.g., in a phrase query.  It is usual for the positions used here to be a
 word count (rather than a character or byte count).
+
+The database keeps track of a couple of statistics about the frequency of
+terms in the database; the `collection frequency` for a term is the number
+of times the term occurs in the database (i.e., the sum of the within
+document frequencies for the term), and the `term frequency` is the number
+of documents that a term occurs in.
 
 Stemmers
 --------
