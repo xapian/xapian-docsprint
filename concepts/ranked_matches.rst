@@ -11,7 +11,7 @@ that was run: a higher weight means a better match. The _rank_ of each
 match is simply the position in the list of all matches, starting from
 0.  Some other search systems use the word "score" instead of weight.
 
-The actual weight is calculated by a _weight scheme_; Xapian comes
+The actual weight is calculated by a _weighting scheme_; Xapian comes
 with a few different ones or you can write your own, although often
 the default is fine. (It uses a scheme called BM25, which takes into
 account things like how common a matching term is in a matching
@@ -23,7 +23,7 @@ beginning, you actually ask for a sub-range of the entire list of
 matches, from an offset and extending for a given number of
 matches. Many search applications will provide the user with a way of
 "paging" through the matches, so the first page might be starting at 0
-for 10 matches, the second page starting at 11 for 10 matches, and so
+for 10 matches, the second page starting at 10 for 10 matches, and so
 on.
 
 A page of matches in Xapian is called an MSet (for "match set").
