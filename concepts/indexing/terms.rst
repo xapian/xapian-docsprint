@@ -15,8 +15,8 @@ document; this is often used when searching to give documents in which a
 term occurs more often a higher weight.
 
 It is also possible to store a set of positions along with each term; this
-allows the positions at which the words occured to be used when searching,
-eg, in a phrase query.  It is usual for the positions used here to be a
+allows the positions at which the words occurred to be used when searching,
+e.g., in a phrase query.  It is usual for the positions used here to be a
 word count (rather than a character or byte count).
 
 Stemmers
@@ -24,7 +24,7 @@ Stemmers
 
 A common form of normalisation is `stemming`.  This process converts
 various different forms of words to a single form: for example, converting
-a plural (eg, "birds") and a singular form of a word ("bird") to the same
+a plural (e.g., "birds") and a singular form of a word ("bird") to the same
 thing (in this case, both are converted to "bird").
 
 Note that the output of a stemmer is not necessarily a valid word; what is

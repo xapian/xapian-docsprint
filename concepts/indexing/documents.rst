@@ -19,13 +19,13 @@ Document Data
 The `document data` is an arbitrary binary blob of data associated with the
 document.  Xapian does nothing with this data other than store it in the
 database and return it when requested. It can be used to hold a reference
-to an external piece of information about the document (such as the primary
-key in an external database table containing the document information), or
-could be used to store the full text of the document. Generally, the best
-thing to do with the document data is to store any information you need in
-order to display the resulting document to the user (or to whatever process
-consumes the results of searches).  There is no standard serialisation
-scheme for putting structured data into the document data: depending on
-your application, you might want to implement a simple scheme using
-newlines to separate values, use JSON or XML serialisation, or use some
-other method of pickling data.
+to the document elsewhere (such as the primary key in an external database
+table), or could be used to store the full text of the document.
+
+Generally, the best thing to do with the document data is to store any
+information you need in order to display the resulting document to the user
+(or to whatever process consumes the results of searches).  Xapian doesn't
+enforce a serialisation scheme for putting structured data into the document
+data: depending on your application, you might want to implement a simple
+scheme using newlines to separate values, use JSON or XML serialisation, or
+use some other method of pickling data.
