@@ -1,5 +1,8 @@
-Using external identifiers with Xapian
-======================================
+Using identifiers with Xapian
+=============================
+
+Every document in a Xapian has a unique numeric id, either assigned
+automatically or manually.
 
 Often the documents which you're indexing with Xapian will already have
 unique ids which you want to be able to use to reindex an updated version
