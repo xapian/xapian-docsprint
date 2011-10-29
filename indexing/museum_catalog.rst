@@ -12,7 +12,7 @@ What data is there?
 
 Each row in the CSV file is an object from the catalogue, and has a number of fields. There are:
 
-ID_NUMBER:
+id_NUMBER:
     a unique identifier
 ITEM_NAME:
     a simple name, often from an established thesaurus
