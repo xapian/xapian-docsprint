@@ -87,7 +87,7 @@ When you're indexing multiple fields like this, the term positions used for
 each field when indexed unprefixed need to be kept apart. Say you have a
 title of "The Saints", and description "Don't like rabbits? Keep reading."
 If you index those fields without a gap, the phrase search "Saints don't
-like rabbits" will match, where it really shoudn't. Usually a gap of 100
+like rabbits" will match, where it really shouldn't. Usually a gap of 100
 between each field is enough.
 
 To create terms, we use Xapian's TermGenerator, a built-in class to make
