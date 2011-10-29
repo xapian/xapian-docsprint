@@ -1,4 +1,3 @@
-
 Databases
 =========
 
@@ -37,22 +36,3 @@ custom TCP protocol.
 It is possible to perform searches across multiple databases at once;
 Xapian will handle merging the results together appropriately.
 
-
-Documents
-=========
-
-
-Terms
-=====
-
-
-Uniqueness
-==========
-
-
-Values
-======
-
-
-Index limitations
-=================
