@@ -7,6 +7,7 @@ Indexing concepts
    databases
    documents
    terms
+   termgenerator
    uniqueness
    values
    limitations
