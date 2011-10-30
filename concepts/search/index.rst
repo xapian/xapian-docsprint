@@ -1,4 +1,4 @@
-Search Concepts
+Search concepts
 ===============
 
 .. toctree::
