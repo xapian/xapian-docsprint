@@ -1,7 +1,7 @@
 Terms
 =====
 
-`Terms` are the basis of more searches in Xapian.  At its simplest, a
+`Terms` are the basis of most searches in Xapian.  At its simplest, a
 search is a process of comparing the terms specified in a query against the
 terms in each document, and returning a list of the documents which match
 the best.
