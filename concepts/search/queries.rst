@@ -64,11 +64,11 @@ using a filter query (i.e. where a document matches a query or not).
 When using document values, there are three relevant operators:
 
 	* OP_VALUE_LE - passes documents where the given value is less than or 
-equal a fixed value
+	  equal a fixed value
 	* OP_VALUE_GE - passes documents where the given value is greater than 
-or equal to a fixed value
+	  or equal to a fixed value
 	* OP_VALUE_RANGE - passes documents where the given value is within the
-given fixed range (including both endpoints)
+	  given fixed range (including both endpoints)
 
 Note that when using these operators, they decide whether to include or
 exclude documents only and do not affect the weight of a document.
@@ -85,14 +85,14 @@ terms within 10 words of each other in the current document, behaving like
 OP_AND with regard to weights, so that:
 
 	* Documents which match A within 10 words of B are passed, with weight 
-of A+B
+	  of A+B
 
 The phrase operator allows for searching for a specific phrase and returns
 only matches where all terms appear in the document, in the correct order,
 giving a weight of the sum of each term. For example:
 
 	* Documents which match A followed by B followed by C gives a weight of
-A+B+C
+	  A+B+C
 
 Additional operators
 ~~~~~~~~~~~~~~~~~~~~

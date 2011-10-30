@@ -10,11 +10,11 @@ The above example shows how some of the basic modifiers are interpreted by
 the QueryParser; the operators it supports follow the operators described
 earlier, for example:
 
-	'apple AND pear' matches documents where both terms are present
-	'apple OR pear' matches documents where either term (or both) are 
-present
-	'apple NOT pear' matches documents where apple is present and pear is
-not
+	* 'apple AND pear' matches documents where both terms are present
+	* 'apple OR pear' matches documents where either term (or both) are 
+	  present
+	* 'apple NOT pear' matches documents where apple is present and pear is
+	  not
 
 Wildcards
 ~~~~~~~~~
@@ -126,13 +126,13 @@ Parser Flags
 The operation of the QueryParser can be altered through the use of bitwise
 flags, combined with a logical OR operator; these flags include:
 
-	FLAG_BOOLEAN: enables support for AND, OR, etc and bracketed 
-expressions
-	FLAG_PHRASE: enables support for phrase expressions
-	FLAG_LOVEHATE: enabled support for +/- operators
-	FLAG_BOOLEAN_ANY_CASE: enables support for lower/mixed case boolean 
-operators
-	FLAG_WILDCARD: enables support for wildcards
+	* FLAG_BOOLEAN: enables support for AND, OR, etc and bracketed 
+	  expressions
+	* FLAG_PHRASE: enables support for phrase expressions
+	* FLAG_LOVEHATE: enabled support for +/- operators
+	* FLAG_BOOLEAN_ANY_CASE: enables support for lower/mixed case boolean 
+	  operators
+	* FLAG_WILDCARD: enables support for wildcards
 	
 By default, the QueryParser enables FLAG_BOOLEAN, FLAG_PHRASE and 
 FLAG_LOVEHATE.
