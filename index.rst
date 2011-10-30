@@ -12,7 +12,7 @@ Contents:
    :maxdepth: 2
 
    concepts/index
-   indexing/museum_catalog
+   indexing/index
 
 
 Contributing

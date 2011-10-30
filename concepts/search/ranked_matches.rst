@@ -27,3 +27,19 @@ for 10 matches, the second page starting at 10 for 10 matches, and so
 on.
 
 A page of matches in Xapian is called an MSet (for "match set").
+
+Alternative sort orders
+-----------------------
+
+Sometimes, rather than getting results sorted by `weight`, it would be more
+useful to get them in some other order.  For example, it might be desirable
+to get results in order of the values stored in a date field.
+
+To do this, you first need to store the information used for the sort in a
+value slot, as described in the indexing documentation.  You can then tell
+Xapian at search time to sort by the value in that slot.  It is also
+possible to sort by the values in several slots (e.g., to sort items which
+have the same value in a particular slot by the value in a secondary slot).
+
+Finally, it is possible to ask Xapian to return the documents in order of
+the Xapian document ID numbers.
