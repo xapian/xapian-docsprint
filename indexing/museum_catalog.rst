@@ -25,7 +25,8 @@ TITLE:
 MAKER:
     the name of who made the object
 DATE_MADE:
-    when the object was made, which may be a range, approximate date or unknown
+    when the object was made, which may be a range, approximate date or 
+    unknown
 PLACE_MADE:
     where the object was made
 MATERIALS:
@@ -35,7 +36,8 @@ MEASUREMENTS:
 DESCRIPTION
     a description of the object
 COLLECTION:
-    the collection the object came from (eg: Science Museum - Space Technology)
+    the collection the object came from (eg: Science Museum - Space 
+    Technology)
 
 There are obviously a number of different types of data here: free text,
 identifiers, dates, places (which could be geocoded to geo coordinates),
@@ -105,7 +107,7 @@ term positions, including the gap between different fields.
 Let's write some code
 ---------------------
 
-We need some code here. code/python/index1.py has it.
+.. include:: code/python/index1.py
 
 Verifying the index using delve
 -------------------------------
