@@ -1,11 +1,12 @@
 Query Parser
 ------------
+
 To make searching databases simpler, Xapian provides a `QueryParser` class
-which converts a human readable query string into a Xapian Query, for 
-example:
+which converts a human readable query string into a Xapian Query object,
+for example:
 
 	apple AND a NEAR word OR "a phrase" NOT (too difficult) +eh
-	
+
 The above example shows how some of the basic modifiers are interpreted by
 the QueryParser; the operators it supports follow the operators described
 earlier, for example:
@@ -18,28 +19,31 @@ earlier, for example:
 
 Term Generation
 ~~~~~~~~~~~~~~~
-The QueryParser uses an internal process to convert the given query into 
-terms. This is similar to the processes used by the TermGenerator, which
-can be used at index time to convert a string into terms. It is often 
+
+The QueryParser uses an internal process to convert the query string into 
+terms.  This is similar to the procses used by the TermGenerator, which
+can be used at index time to convert a string into terms.  It is often 
 easiest to use QueryParser and TermGenerator on the same database.
 
 .. todo: link TermGenerator to the termgenerator page
 
 Wildcards
 ~~~~~~~~~
+
 It is also possible to use wildcards to match any number of trailing 
 characters within a term; for example:
 
-	'wild*' matches wildcard, wildcat, wilderness, etc
+	'wild*' matches wild, wildcard, wildcat, wilderness, etc
 	
-This feature is disabled by default; to enable this feature, see 'Enabling 
-Features' below. It
+This feature is disabled by default; to enable it, see 'Enabling Features'
+below.
 
 Bracketed Expressions
 ~~~~~~~~~~~~~~~~~~~~~
-When queries contain both OR and AND operators, the AND takes precendence,
-which may give rise to unexpected results. To change the precendence of 
-parts of the query, brackets can be used. For example, with the query:
+
+When queries contain both OR and AND operators, AND takes precedence.
+To change the precedence of parts of the query, brackets can be used.
+For example, with the query:
 
 	apple OR pear AND dessert
 	
@@ -47,19 +51,21 @@ The query parser will interpret this query as:
 
 	apple OR (pear AND dessert)
 	
-So to change the precendce and make the dessert a requirement, you would
+So to change the precedence and make the dessert a requirement, you would
 write the query initially as:
 
 	(apple OR pear) AND dessert
 
 Default Operator
 ~~~~~~~~~~~~~~~~
+
 When the QueryParser receives a query, it joins together its component
-queries using a `default modifider` which defaults to OP_OR but can be 
+queries using a `default operator` which defaults to OP_OR but can be 
 modified at run time.
 
 Additional operators
 ~~~~~~~~~~~~~~~~~~~~
+
 As well as the basic logical operators, QueryParser supports the additional
 operators discussed earlier and introduces some new ones, for example:
 
@@ -88,6 +94,7 @@ used.
 
 Searching with Prefixes
 ~~~~~~~~~~~~~~~~~~~~~~~
+
 When a database is populated using prefixed terms (for example, title, 
 author) it is possible to tell the QueryParser that these fields can be 
 searched for using a human-readable prefix; for example:
@@ -96,6 +103,7 @@ searched for using a human-readable prefix; for example:
 	
 Ranges
 ~~~~~~
+
 The QueryParser also supports range searches on document values, matching
 documents which have values within a given range. There are several types
 of range processors available, but the two discussed here are Date and 
@@ -117,23 +125,25 @@ or otherwise.
 
 Stop words
 ~~~~~~~~~~
-Xapian also supports a `stop words` list, which allows you to specify words
+
+Xapian also supports a `stop word` list, which allows you to specify words
 which should be removed from a query before processing. This stop list can
-be overridden within user search, so that searches can use them, for 
-example if a stop word list contained 'the' and a search was for:
+be overridden within user search, so stop words can still be searched for
+if desired, for example if a stop word list contained 'the' and a search
+was for:
 
 	+the +document
 	
 Then the search would find relevant documents which contained both 'the' 
-and 'document'. When searching for phrases, stop words do not apply, for 
-example:
+and 'document'.  Also, when searching for phrases, stop words do not apply,
+for example:
 
 	"the green space" retrieves documents with this exact phrase
 	
 Parser Flags
 ~~~~~~~~~~~~
-The operation of the QueryParser can be altered through the use of bitwise
-flags, combined with a logical OR operator; these flags include:
+The operation of the QueryParser can be altered through the use of flags,
+combined with a bitwise OR operator; these flags include:
 
 	* FLAG_BOOLEAN: enables support for AND, OR, etc and bracketed 
 	  expressions
@@ -145,4 +155,3 @@ flags, combined with a logical OR operator; these flags include:
 	
 By default, the QueryParser enables FLAG_BOOLEAN, FLAG_PHRASE and 
 FLAG_LOVEHATE.
-
