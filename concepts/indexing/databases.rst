@@ -27,7 +27,11 @@ that doesn't mean anything to you!
 Most backend formats (and certainly the main backend format for each
 release) will allow updates to be grouped into transactions, and will allow
 at least some old versions of the database to be searched while new ones
-are being written.
+are being written.  Currently, all the backend formats support only a
+single writer existing at a given time; attempting to open multiple
+concurrent writers will return an error about being unable to acquire a
+lock.  However, it is perfectly okay for multiple readers to exist at the
+same time, and to be used while updates are being performed by the writer.
 
 There's also a "remote" database backend which allows the database to be
 located on a different machine and accessed via a custom network protocol.
