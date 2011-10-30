@@ -1,16 +1,20 @@
 Building a museum catalogue
 ===========================
 
-We're going to build a simple search system based on museum catalogue data released under a Creative Commons license (By-NC-SA) by the Science Museum in London, UK.
+We're going to build a simple search system based on museum catalogue data 
+released under a Creative Commons license (By-NC-SA) by the Science Museum 
+in London, UK.
 
 http://api.sciencemuseum.org.uk/documentation/collections/
 
-To make things easier, we've extracted just the first 100 objects and provide them as a gzipped CSV file.
+To make things easier, we've extracted just the first 100 objects and 
+provide them as a gzipped CSV file.
 
 What data is there?
 -------------------
 
-Each row in the CSV file is an object from the catalogue, and has a number of fields. There are:
+Each row in the CSV file is an object from the catalogue, and has a number 
+of fields. There are:
 
 id_NUMBER:
     a unique identifier
@@ -90,6 +94,9 @@ If you index those fields without a gap, the phrase search "Saints don't
 like rabbits" will match, where it really shouldn't. Usually a gap of 100
 between each field is enough.
 
+To write to a database, we use the WritableDatabase class, which allows us 
+to create, update or overwrite a database.
+
 To create terms, we use Xapian's TermGenerator, a built-in class to make
 turning free text into terms easier. It will split into words, apply
 stemming, and then add term prefixes as needed. It can also take care of
@@ -103,7 +110,10 @@ We need some code here. code/python/index1.py has it.
 Verifying the index using delve
 -------------------------------
 
-Xapian comes with a handy utility called `delve` which can be used to inspect a database, so let's look at the one you just built. If you just run ``delve db``, you'll get an overview: how many documents, average term length, and some other statistics::
+Xapian comes with a handy utility called `delve` which can be used to 
+inspect a database, so let's look at the one you just built. If you just 
+run ``delve db``, you'll get an overview: how many documents, average term 
+length, and some other statistics::
 
     $ delve db
     UUID = 1820ef0a-055b-4946-ae73-67aa4ef5c226
@@ -114,22 +124,42 @@ Xapian comes with a handy utility called `delve` which can be used to inspect a 
     highest document id ever used = 100
     has positional information = true
 
-You can also look at an individual document, using Xapian's docid (``-d`` means output document data as well)::
+You can also look at an individual document, using Xapian's docid (``-d`` 
+means output document data as well)::
 
-    $ delve -r 1 -d db
+    $ delve -r 1 -d db		# output has been reformatted
     Data for record #1:
-    {"MEASUREMENTS": "", "DESCRIPTION": "Ansonia Sunwatch (pocket compass dial)", "PLACE_MADE": "New York county, New York state, United States", "id_NUMBER": "1974-100", "WHOLE_PART": "WHOLE", "TITLE": "Ansonia Sunwatch (pocket compass dial)", "DATE_MADE": "1922-1939", "COLLECTION": "SCM - Time Measurement", "ITEM_NAME": "Pocket horizontal sundial", "MATERIALS": "", "MAKER": "Ansonia Clock Co."}
-    Term List for record #1: Q1974-100 Sansonia Scompass Sdial Spocket Ssunwatch XDansonia XDcompass XDdial XDpocket XDsunwatch ZSansonia ZScompass ZSdial ZSpocket ZSsunwatch ZXDansonia ZXDcompass ZXDdial ZXDpocket ZXDsunwatch Zansonia Zcompass Zdial Zpocket Zsunwatch ansonia compass dial pocket sunwatch
+    {
+     "MEASUREMENTS": "", 
+     "DESCRIPTION": "Ansonia Sunwatch (pocket compass dial)", 
+     "PLACE_MADE": "New York county, New York state, United States", 
+	 "id_NUMBER": "1974-100", 
+	 "WHOLE_PART": "WHOLE", 
+	 "TITLE": "Ansonia Sunwatch (pocket compass dial)", 
+	 "DATE_MADE": "1922-1939", 
+	 "COLLECTION": "SCM - Time Measurement", 
+	 "ITEM_NAME": "Pocket horizontal sundial", 
+	 "MATERIALS": "", 
+	 "MAKER": "Ansonia Clock Co."
+	}
+    Term List for record #1: Q1974-100 Sansonia Scompass Sdial Spocket 
+    Ssunwatch XDansonia XDcompass XDdial XDpocket XDsunwatch ZSansonia 
+    ZScompass ZSdial ZSpocket ZSsunwatch ZXDansonia ZXDcompass ZXDdial 
+    ZXDpocket ZXDsunwatch Zansonia Zcompass Zdial Zpocket Zsunwatch 
+    ansonia compass dial pocket sunwatch
 
-You can also go the other way, starting with a term and finding both statistics and which documents it indexes::
+You can also go the other way, starting with a term and finding both 
+statistics and which documents it indexes::
 
     $ delve -t Sattitude db
-    Posting List for term `Sattitude' (termfreq 3, collfreq 3, wdf_max 3): 64 65 97
+    Posting List for term `Sattitude' (termfreq 3, collfreq 3, wdf_max 3): 
+    64 65 97
 
 This means you can look documents up by identifier::
 
     $ delve -t Q1974-100 db
-    Posting List for term `Q1974-100' (termfreq 1, collfreq 1, wdf_max 1): 1
+    Posting List for term `Q1974-100' (termfreq 1, collfreq 1, wdf_max 1): 
+    1
 
 ``delve`` is frequently useful if you aren't getting the behaviour you
 expect from a search system, to check that the database contains the
