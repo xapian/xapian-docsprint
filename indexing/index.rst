@@ -10,3 +10,4 @@ Indexing
    index_plan
    writing_the_code
    verifying_the_index
+   updating_the_database
