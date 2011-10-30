@@ -1,4 +1,6 @@
 Let's write some code
 ---------------------
 
-.. literalinclude:: code/python/index1.py
+Here's some example code to implement this index plan.
+
+.. literalinclude:: /code/python/index1.py
