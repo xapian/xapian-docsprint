@@ -11,6 +11,10 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+   concepts/index
+   indexing/museum_catalog
+
+
 Indices and tables
 ==================
 

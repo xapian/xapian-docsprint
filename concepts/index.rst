@@ -1,14 +1,12 @@
-Indexing concepts:
+Core Concepts
+=============
 
- - databases
- - documents
- - terms
- - uniqueness
- - values
- - limitations
+.. toctree::
+   :maxdepth: 2
 
-Search concepts
+   indexing/index
+   search/index
 
- - queries
- - ranked matches
- - search limitations
+   queries
+   ranked_matches
+   search_limitations
