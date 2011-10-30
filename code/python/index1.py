@@ -21,6 +21,7 @@ def index(datapath, dbpath):
         title = fields.get('TITLE', u'')
         identifier = fields.get('id_NUMBER', u'')
 
+		# we make a document and tell the term generator to use this
         doc = xapian.Document()
         termgenerator.set_document(doc)
 
