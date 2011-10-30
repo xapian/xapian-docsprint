@@ -6,7 +6,3 @@ Core Concepts
 
    indexing/index
    search/index
-
-   queries
-   ranked_matches
-   search_limitations
