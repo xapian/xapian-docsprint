@@ -44,6 +44,13 @@ per-process file-descriptor limit - each chert database uses between 3 and
 7 fds depending which tables are present.  You can raise the per-process
 limit on some Unix-like platforms.
 
+.. FIXME: add or link to some details of how to do this
+
+.. James says:
+.. Needs to mention ulimit, pam/syslimits & upstart for linux alone these days
+
+Needs to mention ulimit, pam/syslimits & upstart for linux alone these days…
+
 Another way to avoid it (and to spread the search load) is to use the
 remote backend to search databases on a cluster of machines, which only
 needs one fd open per database on the client machine.
