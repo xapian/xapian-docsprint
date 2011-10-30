@@ -21,3 +21,7 @@ Indices and tables
 .. we could enable an index later with: * :ref:`genindex`
 * :ref:`search`
 
+Todo list
+=========
+
+.. todolist::
