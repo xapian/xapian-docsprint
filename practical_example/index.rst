@@ -5,4 +5,4 @@ A practical example
    :maxdepth: 2
 
    indexing/index
-   search/index
+   searching/index
