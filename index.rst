@@ -18,7 +18,6 @@ Contents:
 Indices and tables
 ==================
 
-* :ref:`genindex`
-* :ref:`modindex`
+.. we could enable an index later with: * :ref:`genindex`
 * :ref:`search`
 
