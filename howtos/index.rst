@@ -8,6 +8,7 @@ How To...
    range_queries
    facets
    sorting
+   collapsing
    spelling
    synonyms
    improve_results
