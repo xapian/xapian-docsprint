@@ -13,6 +13,7 @@ Contents:
 
    concepts/index
    indexing/index
+   howtos/index
 
 
 Contributing
