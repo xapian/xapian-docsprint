@@ -16,6 +16,15 @@ earlier, for example:
 	* 'apple NOT pear' matches documents where apple is present and pear is
 	  not
 
+Term Generation
+~~~~~~~~~~~~~~~
+The QueryParser uses an internal process to convert the given query into 
+terms. This is similar to the processes used by the TermGenerator, which
+can be used at index time to convert a string into terms. It is often 
+easiest to use QueryParser and TermGenerator on the same database.
+
+.. todo: link TermGenerator to the termgenerator page
+
 Wildcards
 ~~~~~~~~~
 It is also possible to use wildcards to match any number of trailing 
