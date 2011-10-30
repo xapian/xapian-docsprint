@@ -5,7 +5,8 @@ import logging
 import sys
 import xapian
 
-
+# offset - defines starting point within result set
+# pagesize - defines number of records to retrieve
 def search(dbpath, querystring, offset=0, pagesize=10):
     # Open the database we're going to search.
     db = xapian.Database(dbpath)
