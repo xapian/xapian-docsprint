@@ -9,11 +9,12 @@ for range searches, or numbers to be used to affect the weight calculated
 for documents during the search.
 
 Each value is stored in a numbered `slot`; so for example, a document might
-have a value indicating a category in slot 1, a value indicating a price in
-slot 2, and a value indicating some measure of the importance of the
+have a value indicating a category in slot 0, a value indicating a price in
+slot 1, and a value indicating some measure of the importance of the
 document in slot 10.  It's fine to use widely separated slot numbers - the
 data isn't stored in a simple array.  Slot numbers can be any 32 bit
-unsigned integer, except for 0xffffffff which has a special internal meaning.
+unsigned integer, except for ``0xffffffff`` which has a special internal
+meaning.
 
 The core of Xapian treats the contents of value slots as opaque binary
 strings, rather than having support for numeric value types.  This becomes
