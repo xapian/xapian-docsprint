@@ -14,4 +14,4 @@ Developers are often tempted to use the value slots to hold information
 which should really be stored in the document's data area; don't succumb to
 this temptation.
 
-.. FIXME: discuss how to serialise numbers into values so they can be used for range searches, and possibly a few other types of things that might be stored.
+.. todo:: discuss how to serialise numbers into values so they can be used for range searches, and possibly a few other types of things that might be stored.

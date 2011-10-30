@@ -1,7 +1,7 @@
 Index limitations
 =================
 
-.. FIXME: add more and fill out those already here a little more
+.. todo:: add more and fill out those already here a little more
 
 Terms are limited to 245 bytes in length (at least with chert), but each
 zero byte in a term is currently internally encoded as two bytes, so the

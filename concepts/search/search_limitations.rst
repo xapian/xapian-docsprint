@@ -44,7 +44,7 @@ per-process file-descriptor limit - each chert database uses between 3 and
 7 fds depending which tables are present.  You can raise the per-process
 limit on some Unix-like platforms.
 
-.. FIXME: add or link to some details of how to do this
+.. todo:: add or link to some details of how to do this
 
 .. James says:
 .. Needs to mention ulimit, pam/syslimits & upstart for linux alone these days
