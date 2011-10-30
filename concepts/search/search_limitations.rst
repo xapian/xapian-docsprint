@@ -16,11 +16,6 @@ Also, there may be gaps in the range of used document ids, either because
 you've deleted documents, or because you're explicitly setting them to
 match an external system.
 
-Collapsing
-----------
-
-You can't perform more than one collapse operation during a search.
-
 Positional Queries
 ------------------
 
@@ -36,21 +31,26 @@ contain the required terms but not in the right places, a lot more work is
 required than for just doing an AND query.  This will be improved in a
 future release.
 
+Collapsing
+----------
+
+You can't perform more than one collapse operation during a search.
+
 Concurrently Open Databases
 ---------------------------
 
 If you try to search many databases concurrently, you may hit the
 per-process file-descriptor limit - each chert database uses between 3 and
-7 fds depending which tables are present.  You can raise the per-process
-limit on some Unix-like platforms.
+7 fds depending which tables are present, and a process can only open a
+certain number (on Linux, the default is usually 1024, so that limits you
+to a few hundred concurrently open databases).  You can raise the
+per-process limit on some Unix-like platforms, though you may need to be
+root to do so.
 
 .. todo:: add or link to some details of how to do this
-
 .. James says:
 .. Needs to mention ulimit, pam/syslimits & upstart for linux alone these days
 
-Needs to mention ulimit, pam/syslimits & upstart for linux alone these days…
-
-Another way to avoid it (and to spread the search load) is to use the
-remote backend to search databases on a cluster of machines, which only
-needs one fd open per database on the client machine.
+You can address this issue (and spread the search load) by using the remote
+backend to search databases on a cluster of machines, which only needs one
+fd open per database on the client machine.
