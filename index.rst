@@ -12,7 +12,7 @@ Contents:
    :maxdepth: 2
 
    concepts/index
-   indexing/index
+   practical_example/index
    howtos/index
 
 
