@@ -13,12 +13,13 @@ have a value indicating a category in slot 0, a value indicating a price in
 slot 1, and a value indicating some measure of the importance of the
 document in slot 10.  It's fine to use widely separated slot numbers - the
 data isn't stored in a simple array.  Slot numbers can be any 32 bit
-unsigned integer, except for ``0xffffffff`` which has a special internal
-meaning.
+unsigned integer, except for ``0xffffffff`` which has a special meaning
+(it's ``Xapian::BAD_VALUENO`` which is used to indicate things like "not
+sorting on any value slot").
 
 The core of Xapian treats the contents of value slots as opaque binary
 strings, rather than having support for numeric value types.  This becomes
-signficant if you want to perform range searches based on a value stored in
+significant if you want to perform range searches based on a value stored in
 a slot, or to sort results based on the value stored in a slot.  To allow
 this type of use of slots, Xapian provides a utility function,
 `sortable_serialise`, which serialises a numeric value into a binary string
@@ -28,6 +29,6 @@ the numeric sort order of the unserialised values.
 It is important to keep the amount of data stored in the values to a
 minimum, since the values for a large number of documents may be read
 during the search, and unused information will thus slow the search down.
-Developers are often tempted to use the value slots to hold information
+Developers are sometimes tempted to use the value slots to hold information
 which should really be stored in the document's data area; don't succumb to
-this temptation.
+this temptation!
