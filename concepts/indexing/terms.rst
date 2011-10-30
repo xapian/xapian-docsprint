@@ -1,29 +1,31 @@
 Terms
 =====
 
-`Terms` are the basic unit of information retrieval used by Xapian.  At its
-simplest, a search is a process of matching terms specified in a query
-against terms in a document, and returning the best matches. A term will
-often be generated for each word in a piece of text, possibly by applying
-some form of normalisation, but this isn't required, and
-there is a very wide range of useful strategies for producing terms.
+`Terms` are the basis of more searches in Xapian.  At its simplest, a
+search is a process of comparing the terms specified in a query against the
+terms in each document, and returning a list of the documents which match
+the best.
 
-In a piece of text, it is common for an individual word to occur multiple
-times.  To represent this, a document stores a `within document frequency`
-along with each term, indicating the number of times the term occurred in a
-document; this is often used when searching to give documents in which a
+A term will often be generated for each word in a piece of text, usually
+by applying some form of normalisation (it's usual to at least change all
+the characters to be lowercase).  There are many useful strategies for
+producing terms.
+
+Often the same word will occur multiple times in a piece of text.  Xapian
+calls this number the `within document frequency` and stores it in the
+database.  It is often used when searching to give documents in which a
 term occurs more often a higher weight.
 
 It is also possible to store a set of positions along with each term; this
-allows the positions at which the words occurred to be used when searching,
-e.g., in a phrase query.  It is usual for the positions used here to be a
-word count (rather than a character or byte count).
+allows the positions at which words occur to be used when searching, e.g.,
+in a phrase query.  These positions are usually stored as word counts
+(rather than character or byte counts).
 
-The database keeps track of a couple of statistics about the frequency of
-terms in the database; the `collection frequency` for a term is the number
-of times the term occurs in the database (i.e., the sum of the within
-document frequencies for the term), and the `term frequency` is the number
-of documents that a term occurs in.
+The database also keeps track of a couple of statistics about the frequency
+of terms in the database; the `term frequency` is the number of documents
+that a particular term occurs in,  and the `collection frequency` is the
+total number of times that term occurs (i.e., the sum of the within
+document frequencies for the term).
 
 Stemmers
 --------
@@ -41,4 +43,5 @@ document contained "happiness", a search for "happy" would find that
 document.
 
 The rules applied by a stemmer are dependent on the language of the text;
-Xapian includes stemmers for a variety of languages.
+Xapian includes stemmers for more than a dozen languages (and for some
+languages there is a choice of stemmers).
