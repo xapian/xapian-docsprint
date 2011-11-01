@@ -11,8 +11,10 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+   overview
    concepts/index
-   indexing/index
+   practical_example/index
+   howtos/index
 
 
 Contributing

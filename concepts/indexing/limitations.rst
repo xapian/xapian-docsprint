@@ -1,19 +1,31 @@
 Index limitations
 =================
 
+There are a few limitations on the data which can be stored in an index;
+these rarely get in the way, and are generally easy to work around if they
+do, but it's worth knowing about them.
+
 .. todo:: add more and fill out those already here a little more
 
 Term length
 -----------
 
-Terms are limited to 245 bytes in length (at least with chert), but each
-zero byte in a term is currently internally encoded as two bytes, so the
-limit is less for a term which contains zero bytes.
+Terms are limited to 245 bytes in length (at least with the "chert"
+backend), but each zero byte in a term is currently internally encoded as
+two bytes, so the limit is less for a term which contains zero bytes.
+
+.. todo:: actually, reference the FAQ instead of saying something here.
+
+It's rarely useful to have longer terms, but one situation where it can be
+is if you're using something like a URL as an ID term.  A workaround for
+the length limit is to use a hash of the URL insted of the ID - if a
+cryptographic hash (like SHA1) is used, the likelihood of a collision is
+low enough that it can be ignored.
 
 Document data length
 --------------------
 
-The document data length has a limit which depends on the blocksize and
+The document data has a length limit which depends on the blocksize and
 some other factors, but with the default block size of 8KB, the document
 data length limit will be somewhere over 100MB.
 
