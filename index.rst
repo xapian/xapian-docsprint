@@ -22,10 +22,11 @@ Contributing
 
 The source for this documentation is being kept on
 http://github.com/jaylett/xapian-docsprint.  The best way to contribute is
-to add issues, comments and pull requests there.  We're monitoring IRC
-during the sprint sessions so you can also contact us there:
-(server irc.freenode.net, channel #xapian - webchat link:
-http://webchat.freenode.net/?channels=%23xapian)
+to add issues, comments and pull requests there.
+
+We're monitoring IRC during the sprint sessions (and in general) so you can
+also contact us on channel #xapian on irc.freenode.net (webchat link:
+http://webchat.freenode.net/?channels=%23xapian).
 
 Indices and tables
 ==================
