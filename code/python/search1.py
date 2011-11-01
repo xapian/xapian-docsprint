@@ -6,8 +6,8 @@ import sys
 import xapian
 
 def search(dbpath, querystring, offset=0, pagesize=10):
-	# offset - defines starting point within result set
-	# pagesize - defines number of records to retrieve
+    # offset - defines starting point within result set
+    # pagesize - defines number of records to retrieve
 
     # Open the database we're going to search.
     db = xapian.Database(dbpath)
