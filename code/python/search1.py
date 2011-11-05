@@ -5,6 +5,7 @@ import logging
 import sys
 import xapian
 
+### Start of example code.
 def search(dbpath, querystring, offset=0, pagesize=10):
     # offset - defines starting point within result set
     # pagesize - defines number of records to retrieve
@@ -45,6 +46,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
         offset + pagesize,
         ' '.join([str(docid) for docid in matches]),
         )
+### End of example code.
 
 logging.basicConfig(level=logging.INFO)
 search(dbpath = sys.argv[1], querystring = " ".join(sys.argv[2:]))
