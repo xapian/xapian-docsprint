@@ -21,6 +21,9 @@ need to interoperate with omega (a web-based search engine) or other
 compatible systems. From this, we'll use 'S' to prefix title (it stands for
 'subject'), and for description we'll use 'XD'.
 
+.. todo:: Link to the documentation of what the conventions for prefixes used
+          by Omega are.
+
 When you're indexing multiple fields like this, the term positions used for
 each field when indexed unprefixed need to be kept apart. Say you have a
 title of "The Saints", and description "Don't like rabbits? Keep reading."
