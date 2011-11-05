@@ -65,6 +65,8 @@ unstemmed) and call ``remove_spelling()`` for each word.
 Searching
 =========
 
+.. todo:: Getting a correction for a single word "by hand"
+
 QueryParser Integration
 -----------------------
 
