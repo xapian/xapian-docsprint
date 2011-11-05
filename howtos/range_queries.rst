@@ -27,9 +27,9 @@ consistent; at the moment it includes years, year ranges
 1885", or "1642-1649 (original); 1883 (model)"). Additionally, some
 records have no information about when the object was made.
 
-2. Store that information in the Xapian database.
+1. Store that information in the Xapian database.
 
-3. Provide a way during search of specifying a date range to constrain
+1. Provide a way during search of specifying a date range to constrain
 to.
 
 If we look through the other fields in the data set, there are more
@@ -58,12 +58,13 @@ restrictions; the QueryParser contains support for doing this, using
 *value range processors*, subclasses of `ValueRangeProcessor`. Xapian
 comes with some standard ones itself, or you can write your own.
 
-Since document values are stored as strings in Xapian, we need a way
-of storing numbers as well. For this, Xapian provides a fair of
-utility functions: `sortable_serialise` and `sortable_unserialise`
-convert between floating point numbers (strictly, each is a `double`)
-and a string that will sort in the same way and so can be compared
-easily.
+Since document values are stored as strings in Xapian, and the
+operators provided perform string comparisons, we need a way of
+converting numbers to strings to store them. For this, Xapian provides
+a pair of utility functions: `sortable_serialise` and
+`sortable_unserialise`, which convert between floating point numbers
+(strictly, each works with a `double`) and a string that will sort in
+the same way and so can be compared easily.
 
 Creating the document values
 ----------------------------
@@ -73,13 +74,13 @@ We need a new version of our indexer. This one is
 `MEASUREMENTS` and `DATE_MADE`. We'll put the largest dimension in
 value slot 0 (fortunately the data is stored in millimetres and
 kilograms, so we can cheat a little and assume that dimensions will
-always be larger than weights), and a year taken from date made into
+always be larger than weights), and a year taken from `DATE_MADE` into
 value slot 1 (we choose the first year we can parse, since it can
 contain such a variety of date formats).
 
 .. literalinclude:: /code/python/index_ranges.py
 
-We can check this has create document values using `delve`:
+We can check this has created document values using `delve`:
 
     $ delve -V0 db
     Value 0 for each document: 5:?? 10:?F 11:?? 12:?P 15:? 19:?t 20:?? 21:? 24:?: 25:?? 26:?? 27:?X 29:?D 30: 31:?@ 33:?` 34:?0 35:?? 36:? 37:?? 38:?( 39:?T 42:?2 45:?@ 46:?P 50:?? 51:?P 52:̡ 54:è 55:?? 56:?P 59:?` 61:?( 62:?@ 64:?? 66:?? 67:?` 68:?D33333@ 69:? 70:?? 71:˨ 72:? 73:??fffff? 74:??fffff? 75:?$?????? 76:¿33333@ 77:?>33333@ 78:?? 79:? 80:?P 81:?@ 84:?? 86:?~ 87:?? 88:?(?????? 89:??33333@ 90:??33333@ 91:?| 93:?( 94:?` 97:?? 98:?h 100:? 101:?V 102:??
@@ -180,9 +181,9 @@ either signal to the user or perhaps try the query again without the
 Handling dates
 --------------
 
-TODO: write this
+.. todo:: write this
 
 Writing your own ValueRangeProcessor
 ------------------------------------
 
-TODO: write this
+.. todo:: write this
