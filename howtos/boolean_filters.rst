@@ -35,6 +35,8 @@ after splitting on semicolons, using the ``add_boolean_term()`` method.
     :start-after: Start of example code
     :end-before: End of example code
 
+A full copy of this code is available in ``code/python/index_filters.py``.
+
 If we check the resulting index with delve, we will see that documents for
 which there was a value in the ``MATERIALS`` field now contain terms with the
 ``XM`` prefix (output snipped to show the relevant lines)::

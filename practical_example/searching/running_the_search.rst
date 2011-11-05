@@ -2,7 +2,7 @@ Running a Search
 ----------------
 To search the database we're built, you just run our simple search engine::
 
-	$ python search1.py db watch
+	$ python code/python/search1.py db watch
 	1: #004 Watch with Chinese duplex escapement
 	2: #018 Solar/Sidereal verge watch with epicyclic maintaining power
 	3: #013 Watch timer by P

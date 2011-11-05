@@ -19,14 +19,14 @@ in the search query relate to those in the index::
 
 This allows us to perform a search based on either field, for example::
 
-	python search1.py db title:sunwatch
+	python code/python/search1.py db title:sunwatch
 	1: #001 Ansonia Sunwatch (pocket compas dial)
 	INFO:xapian.search:'title:sunwatch'[0:10] = 1
 
 We can also combine prefixes with the logical operators to perform more
 complex queries::
 
-	$ python search1.py db description:"silver case" AND title:sundial
+	$ python code/python/search1.py db description:"silver case" AND title:sundial
 	1: #055 Silver altitude sundial in leather case
 	2: #073 Universal pocket sundial
 	3: #084 Magnetic sundial in brass case
