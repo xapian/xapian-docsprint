@@ -31,7 +31,7 @@ We can therefore just add the identifiers to the ``Document`` directly,
 after splitting on semicolons, using the ``add_boolean_term()`` method.
 
 .. literalinclude:: /code/python/index_filters.py
-    :emphasize-lines: 10-14
+    :emphasize-lines: 29-33
     :start-after: Start of example code
     :end-before: End of example code
 
