@@ -1,3 +1,4 @@
+======
 Facets
 ======
 
@@ -35,7 +36,6 @@ Querying
 To add a spy you need to create a new `XapianValueCountMatchSpy` object,
 stating which value slot the spy is to operate on and add this to the 
 `XapianEnquire` as follows::
-
 .. literalinclude:: /code/python/index_facets.py		
 	
 The results of the spy can then be output in the same way as the matches
