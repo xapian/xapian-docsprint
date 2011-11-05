@@ -115,6 +115,8 @@ sort, depending if/how you want relevance used in the ordering:
    default BM25 weighting, which rarely assigns identical scores to
    different documents.
 
+..todo:: create simple sorting example in python
+
 Sorting by Generated Key
 ------------------------
 
@@ -134,3 +136,5 @@ geographical distance".  A subclass could take a coordinate pair - e.g.
 (latitude, longitude) - for the user's location and sort results using
 coordinates stored in a document value so that the nearest results ranked
 highest.
+
+..todo:: show more complex sorting in python
