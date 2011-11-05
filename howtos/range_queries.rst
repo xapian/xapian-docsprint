@@ -95,7 +95,7 @@ range with a suffix first::
 .. literalinclude:: /code/python/index_ranges.py
     :emphasize-lines: 21-26
     :start-after: and add in value range processors
-    :en-before: And parse the query
+    :end-before: And parse the query
 
 The first call has a final parameter of `False` to say that 'mm' is a
 suffix (the default is for it to be a prefix). When using the empty
