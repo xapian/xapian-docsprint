@@ -42,7 +42,17 @@ The results of the spy can then be output in the same way as the matches
 are displayed: by looping through the output::
 
 .. literalinclude:: /code/python/index_facets.py		
-	
+
+Restricting by Facets
+---------------------
+If you're using the facets to offer the user choices for narrowing down 
+their search results, you then need to be able to apply a suitable filter.
+
+For a single value, you could use `Xapian::Query::OP_VALUE_RANGE` with the 
+same start and end, or `Xapian::MatchDecider`, but it's probably most 
+efficient to also index the categories as suitably prefixed boolean terms 
+and use those for filtering.
+
 
 In Development
 ==============
