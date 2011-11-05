@@ -28,7 +28,7 @@ We can therefore just add the identifiers to the ``Document`` directly,
 after splitting on semicolons, using the ``add_boolean_term()`` method.
 
 .. literalinclude:: /code/python/index_filters.py
-    :emphasize-lines: 37-41
+    :emphasize-lines: 10-14
     :start-after: termgenerator.set_document(doc)
     :end-before: we use the identifier to ensure each object ends up
 
