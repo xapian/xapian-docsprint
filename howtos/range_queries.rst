@@ -1,16 +1,6 @@
 Range queries
 =============
 
-.. todo:: Write about how to do range queries.  Discuss how to index numeric
-	  values using sortable_serialise(), and probably discuss how to index
-	  dates as YYYYMMDD, too, since that's a common scheme.  Discuss
-	  ValueRangeProcessor use with query parsers.  Maybe discuss
-	  performance issues (ie, range searches can be slow because they have
-	  to run through all potential matches) - lead on to a discussion of
-	  speeding up range searches with terms covering parts of the range.
-
-.. todo:: Start from valueranges.rst.
-
 I'm only interested in the 1980s
 --------------------------------
 
@@ -102,12 +92,10 @@ numbers. For this to work, we have to tell QueryParser about the value
 range with a suffix first::
 
 
-    queryparser.add_valuerangeprocessor(
-        xapian.NumberValueRangeProcessor(0, 'mm', False)
-    )
-    queryparser.add_valuerangeprocessor(
-        xapian.NumberValueRangeProcessor(1, '')
-    )
+.. literalinclude:: /code/python/index_ranges.py
+    :emphasize-lines: 21-26
+    :start-after: and add in value range processors
+    :en-before: And parse the query
 
 The first call has a final parameter of `False` to say that 'mm' is a
 suffix (the default is for it to be a prefix). When using the empty
@@ -181,9 +169,223 @@ either signal to the user or perhaps try the query again without the
 Handling dates
 --------------
 
-.. todo:: write this
+To restrict to a date range, we need to decide how to both store the
+date in a document value, and how we want users to input the date
+range in their query. `DateValueRangeProcessor`, which is part of
+Xapian, works by storing the date as a string in the form 'YYYYMMDD',
+and can take dates in either US style (month/day/year) or European
+style (day/month/year).
+
+To show how this works, we're going to need to use a different
+dataset, because the museums data only gives years the objects were
+made in; we've built one using data on the fifty US states, taken from
+Wikipedia infoboxes on 5th November 2011 and then tidied up a small
+amount. The CSV file is `code/states.csv`, and the code that did most
+of the work is `code/python/from_wikipedia.py`, using a list of
+Wikipedia page titles in `code/us_states_on_wikipedia`. The CSV is
+licensed as Creative Commons Attribution-Share Alike 3.0, as per
+Wikipedia.
+
+We need a new indexer for this as well, which is
+`code/python/index_ranges2.py`. It stores two numbers using
+`sortable_serialise`: year of admission in value slot 1 and population
+in slot 3. It also stores the date of admission as 'YYYYMMDD' in
+slot 2. We'll look at just the date ones for now, and come back to the
+others in a minute.
+
+There isn't any new code in this indexer that's specific to Xapian,
+although there's a fair amount of work to turn the data from Wikipedia
+into the forms we need. We use the indexer in the same way as previous
+ones::
+
+    $ python code/python/index_ranges2.py code/states.csv statesdb
+
+With this done, we can change the set of value range processors we
+give to the QueryParser.
+
+.. literalinclude:: /code/python/search_ranges2.py
+    :emphasize-lines: 50-55
+    :start-after: Start of date example code
+    :end-before: End of date example code
+
+The `DateValueRangeProcessor` is working on value slot 2, with an
+"epoch" of 1860 (so two digit years will be considered as starting at
+1860 and going forward as far 1959). The second parameter is whether
+it should prefer US style dates or not; since we're looking at US
+states, we've gone for US dates. The `NumberValueRangeProcessor` is as
+we saw before.
+
+This enables us to search for any state that talks about the Spanish
+in its description::
+
+    $ python code/python/search_ranges2.py statesdb spanish
+    1: #004 State of Montana November 8, 1889 (41st)
+            Population (2010) 989,415
+    2: #019 State of Texas December 29, 1845 (28th)
+            Population 25,145,561 (2010 Census) [ 5 ]
+    INFO:xapian.search:'spanish'[0:10] = 4 19
+
+or for all states admitted in the 19th century::
+
+    $ python code/python/search_ranges2.py statesdb/ 1800..1899
+    1: #001 State of Washington November 11, 1889 (42nd)
+            Population 6,744,496 (2010 Estimate)
+    2: #002 State of Arkansas June 15, 1836 (25th)
+            Population 2,915,918 (2010 Census) [ 2 ] 2,673,400 (2000)
+    3: #003 State of Oregon February 14, 1859 (33rd)
+            Population 3,831,074 (2010) [ 2 ]
+    4: #004 State of Montana November 8, 1889 (41st)
+            Population (2010) 989,415
+    5: #005 Idaho July 3, 1890 (43rd)
+            Population 1,567,582 (2010 Census)
+    6: #006 State of Nevada October 31, 1864 (36th)
+            Population 2,700,551 (2010 Census)
+    7: #007 State of California September 9, 1850 (31st)
+            Population 37,253,956
+    8: #009 State of Utah January 4, 1896 (45th)
+            Population 2,763,885 (2010 Census) [ 2 ]
+    9: #010 State of Wyoming July 10, 1890 (44th)
+            Population (2010)563,626 [ 1 ]
+    10: #011 State of Colorado August 1, 1876 (38th)
+            Population (2010) 5,029,196
+    INFO:xapian.search:'1800..1899'[0:10] = 1 2 3 4 5 6 7 9 10 11
+
+That uses the `NumberValueRangeProcessor` on value slot 1, as in our
+previous example. Let's be more specific and ask for only those
+between November 8th 1889, when Montana became part of the Union, and
+July 10th 1890, when Wyoming joined::
+
+    $ python code/python/search_ranges2.py statesdb/ 11/08/1889..07/10/1890
+    1: #001 State of Washington November 11, 1889 (42nd)
+            Population 6,744,496 (2010 Estimate)
+    2: #004 State of Montana November 8, 1889 (41st)
+            Population (2010) 989,415
+    3: #005 Idaho July 3, 1890 (43rd)
+            Population 1,567,582 (2010 Census)
+    4: #010 State of Wyoming July 10, 1890 (44th)
+            Population (2010)563,626 [ 1 ]
+    INFO:xapian.search:'11/08/1889..07/10/1890'[0:10] = 1 4 5 10
+
+That uses the `DateValueRangeProcessor` on value slot 2; it can't cope
+with year ranges, which is why we indexed to both slots 1 and 2.
 
 Writing your own ValueRangeProcessor
 ------------------------------------
 
-.. todo:: write this
+We haven't yet done anything with population. What we want is
+something that behaves like `NumberValueRangeProcessor`, but knows
+what reason possible values are. If we insert it *before* the
+`NumberValueRangeProcessor` on slot 1 (year), it can pick up anything
+that should be treated as a population, and let everything else be
+treated as a year range.
+
+To do this, we need to know how a `ValueRangeProcessor` gets called by
+the QueryParser. What happens is that each processor in turn is passed
+the start and end of the range. If it doesn't understand the range, it
+should return ``Xapian::BAD_VALUENO``.  If it *does* understand the
+range, it should return the value number to use with
+``Xapian::Query::OP_VALUE_RANGE`` and if it wants to, it can modify
+the start and end values (to convert them to the correct format for
+the string comparison which ``OP_VALUE_RANGE`` uses).
+
+What we're going to do is to write a custom `ValueRangeProcessor` that
+accepts numbers in the range 500,000 to 50,000,000; these can't
+possibly be years in our data set, and encompass the full range of
+populations. If either number is outside that range, we will return
+`Xapian::BAD_VALUENO` and the QueryParser will move on.
+
+.. literalinclude:: /code/python/search_ranges2.py
+    :emphasize-lines: 22-47
+    :start-after: Start of custom VRP code
+    :end-before: End of custom VRP code
+
+Most of the work is in `__call__` (python's equivalent of `operator()`
+in C++), which gets called with the two strings at either end of the
+range in the query string; either but not both can be the empty
+string, which indicates an open-ended range. In python this method
+should return a tuple of the value slot and the two strings modified
+so they can be used for `OP_VALUE_RANGE`. Rather than re-implement
+`NumberValueRangeProcessor`, we wrap it to do the serialisation (due
+to the way python interacts with the API it's currently not possible
+to subclass it successfully here).
+
+Value range processors are called in the order they're added, so our
+custom one gets a chance to look at all ranges, but will only 'claim'
+ranges which use integer numbers within the 500 thousand to 50 million
+range.
+
+We can then search for states by population, such as all over 10
+million::
+
+    $ python code/python/search_ranges2.py statesdb/ 10000000..
+    1: #007 State of California September 9, 1850 (31st)
+            Population 37,253,956
+    2: #019 State of Texas December 29, 1845 (28th)
+            Population 25,145,561 (2010 Census) [ 5 ]
+    3: #027 State of Illinois December 3, 1818 (21st)
+            Population 12,830,632 (2010) [ 3 ]
+    4: #030 State of Ohio March 1, 1803 (17th)
+            Population 11,536,504 (2010 census) [ 6 ]
+    5: #035 State of Florida March 3, 1845 (27th)
+            Population 18,801,310 (2010 Census) [ 4 ]
+    6: #040 Commonwealth of Pennsylvania December 12, 1787 (2nd)
+            Population 12,702,379(2010.) [ 2 ]
+    7: #041 State of New York July 26, 1788 (11th)
+            Population 19,378,102 (2010 Census) [ 3 ]
+    INFO:xapian.search:'10000000..'[0:10] = 7 19 27 30 35 40 41
+
+Or all that joined the union in the 1780s and have a population now over 10 million::
+
+    $ python code/python/search_ranges2.py statesdb/ 1780..1789 10000000..
+    1: #040 Commonwealth of Pennsylvania December 12, 1787 (2nd)
+            Population 12,702,379(2010.) [ 2 ]
+    2: #041 State of New York July 26, 1788 (11th)
+            Population 19,378,102 (2010 Census) [ 3 ]
+    INFO:xapian.search:'1780..1789 10000000..'[0:10] = 40 41
+
+With a little more work, we could support ranges such as '..5m' to
+mean up to 5 million, or '..750k' for up to 750 thousand.
+
+Performance limitations
+-----------------------
+
+Without other terms in a query, a `ValueRangeProcessor` will cause a
+value operation to be performed across the whole database, which means
+loading all the values in a given slot. On a small database, this
+isn't a problem, but for a large one it can have performance
+implications: you may end up with very slow queries.
+
+If combined with a suitable term-based query (such as an `OP_AND`
+query over one or more terms), this performance impact will be less
+because the range operation will only have to run over the potential
+matches, which are reduced from the entire database by the term-based
+query.
+
+If, as well as using document values, you also convert groups of those
+values into terms, you can provide those term-based queries even when
+your users are only interested in a pure range search. For instance,
+consider the population information. If you divide the range of
+populations into a number of subranges, you can allocate a term to
+describe each. We'll use a prefix of `XP` (for "population") here.
+
++------------------+------+
+| Population range | Term |
++==================+======+
+| 0 - 10 million   | XP0  |
++------------------+------+
+| 10 - 20 million  | XP1  |
++------------------+------+
+| 20 - 30 million  | XP2  |
++------------------+------+
+| 30 - 40 million  | XP3  |
++------------------+------+
+
+Then you can use a custom `ValueRangeProcessor` to both generate the
+relevant information for QueryParser to construct an `OP_VALUE_RANGE`
+query and to record which subranges we're interested in. For instance,
+if the user asks for '..15000000', your processor can remember that
+and later spit out an additional `OP_AND` query with terms `XP0` and
+`XP1`, that can be combined with the query generated by the
+QueryParser using `OP_FILTER`.
+
+.. todo:: possibly implemening this example would help make it more clear.
