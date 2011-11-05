@@ -1,7 +1,16 @@
 Building the search
 -------------------
-Now we have our database populated with some values, it is time to create
-the code to search the database and display some results. There are many 
-ways to do this, but the most simple of these is to use the QueryParser.
+
+Now we have our database populated with some values, it is time for
+the code to search the database and display some results.
+
+We want to take some text from the user, and search for it in the
+database; to do that we need to convert it into a Xapian Query, which
+you will recall is a tree made up of terms (which in this case will be
+the stemmed forms of words in the text from the user), and operations
+such as AND, OR and so forth.
+
+There are many ways to go from the user's text to a Query, but the
+most simple of these is to use the QueryParser.
 
 .. literalinclude:: /code/python/search1.py
