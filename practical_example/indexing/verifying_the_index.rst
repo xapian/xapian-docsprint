@@ -9,9 +9,9 @@ length, and some other statistics::
     $ delve db
     UUID = 1820ef0a-055b-4946-ae73-67aa4ef5c226
     number of documents = 100
-    average document length = 78.18
-    document length lower bound = 25
-    document length upper bound = 153
+    average document length = 100.58
+    document length lower bound = 33
+    document length upper bound = 251
     highest document id ever used = 100
     has positional information = true
 
@@ -42,9 +42,9 @@ means output document data as well)::
 You can also go the other way, starting with a term and finding both 
 statistics and which documents it indexes::
 
-    $ delve -t Sattitude db
-    Posting List for term `Sattitude' (termfreq 3, collfreq 3, wdf_max 3): 
-    64 65 97
+    $ delve -t Stime db
+    Posting List for term `Stime' (termfreq 4, collfreq 4, wdf_max 4):
+    41 56 58 65
 
 This means you can look documents up by identifier::
 
