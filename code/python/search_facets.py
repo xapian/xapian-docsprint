@@ -41,7 +41,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
             }
         matches.append(match.docid)
 
-	# Parse and display the spy values 
+        # Parse and display the spy values 
     for facet in spy.values():
         print u"Facet: %(term)s; count: %(count)i" % {
             'term' : facet.term,
