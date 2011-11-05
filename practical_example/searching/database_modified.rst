@@ -1,7 +1,12 @@
 Database Modified
 -----------------
 
-On rare occasions, you may come across an error `Database Modified`, which
-may occur when reading a database. To resolve this error, you will need to
-open the database with the ``Database::reopen`` which ensures that you're
-using the latest revision of the database.
+If you're updating the same database you search from (rather than
+updating a separate database and then "flipping" between them, using a
+stub database), you may run into `DatabaseModifiedError`, and
+exception that can be raised while reading from the database. What
+this means is that the database has changed too much since you opened
+it for Xapian to be able to continue supplying you with
+information. The solution here is to re-open the database with its
+``reopen`` method.
+
