@@ -16,6 +16,9 @@ of as an identifier, rather than text which needs to be parsed.  In fact,
 for many records this field contains several identifiers for materials in
 the object, separated by semicolons.
 
+Indexing
+--------
+
 When indexing such fields, we don't want to perform stemming, though we may
 well want to convert the identifiers to lowercase if case is not significant.
 We also don't expect the number of times a term from these fields occurs in a
@@ -48,7 +51,13 @@ which there was a value in the ``MATERIALS`` field now contain terms with the
     ZSabbot
     ...
 
+Searching
+---------
+
 .. todo:: How to search using manually built Query objects.
+
+Using the query parser
+----------------------
 
 .. todo:: How to search using the query parser.
 
