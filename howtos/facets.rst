@@ -27,7 +27,8 @@ that slot together with a count of the number of times each value occurs.
 
 Indexing
 --------
-No additional work is needed to implement faceted searching.
+No additional work is needed to implement faceted searching, except to 
+ensure that the values you wish to use in facets are stored in value slots.
 
 Querying
 --------
