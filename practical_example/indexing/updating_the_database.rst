@@ -20,5 +20,26 @@ left untouched.
 
 Deleting documents
 ~~~~~~~~~~~~~~~~~~
-It is also possible to delete documents from the index; for more 
-information, see the documentation at http://xapian.org/ for details.
+
+It is also possible to delete documents from the index using the
+`delete_document` method on a WritableDatabase object. This can be
+done either by Xapian docid or using unique ID terms, as with
+`replace_document`.
+
+.. literalinclude:: /code/python/delete1.py
+
+Then we just run our deletion tool, giving it identifiers taken from
+the `id_NUMBER` field in the data set::
+
+    $ python code/python/delete1.py db 1953-448 1985-438
+
+After that, we expect to see two fewer documents in our database using delve::
+
+    $ delve db
+    UUID = 1820ef0a-055b-4946-ae73-67aa4ef5c226
+    number of documents = 98
+    average document length = 100.041
+    document length lower bound = 33
+    document length upper bound = 251
+    highest document id ever used = 100
+    has positional information = true
