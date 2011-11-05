@@ -1,3 +1,5 @@
+.. _a-practical-example:
+
 A practical example
 ===================
 
