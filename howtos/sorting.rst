@@ -27,7 +27,7 @@ You can order documents by comparing a specified document value.  Note that the
 comparison used compares the byte values in the value (i.e. it's a string sort
 ignoring locale), so ``1`` < ``10`` < ``2``.  If you want to encode the value
 such that it sorts numerically, use ``Xapian::sortable_serialise()`` to encode
-values at index time - this works equally will on integers and floating point
+values at index time - this works equally well on integers and floating point
 values::
 
     Xapian::Document doc;
