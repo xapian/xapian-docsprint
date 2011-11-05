@@ -73,8 +73,8 @@ QueryParser and manually constructed Query objects, which allows very flexible
 filtering of the results from parsed queries.
 
 .. literalinclude:: /code/python/search_filters.py
-    :start-after: Start of new indexing code
-    :end-before: End of new indexing code
+    :start-after: Start of example code
+    :end-before: End of example code
 
 A full copy of the this updated search code is available in
 ``code/python/search_filters.py``.  With this, we could perform a search for

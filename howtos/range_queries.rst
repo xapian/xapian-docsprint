@@ -11,16 +11,15 @@ for objects made in a particular time period. Suppose we want to
 extend our original system to allow that, we're going to have to do a
 number of things.
 
-1. Parse the field from the data set to turn it into something
-consistent; at the moment it includes years, year ranges
-("1671-1700"), approximate years ("c. 1936") and commentary ("patented
-1885", or "1642-1649 (original); 1883 (model)"). Additionally, some
-records have no information about when the object was made.
+ 1. Parse the field from the data set to turn it into something consistent;
+    at the moment it includes years, year ranges ("1671-1700"), approximate
+    years ("c. 1936") and commentary ("patented 1885", or "1642-1649
+    (original); 1883 (model)"). Additionally, some records have no
+    information about when the object was made.
 
-1. Store that information in the Xapian database.
+ 1. Store that information in the Xapian database.
 
-1. Provide a way during search of specifying a date range to constrain
-to.
+ 1. Provide a way during search of specifying a date range to constrain to.
 
 If we look through the other fields in the data set, there are more
 that could be useful for range queries: we could extract the longest
@@ -89,8 +88,7 @@ tell the QueryParser about them. The simplest value range processor is
 To distinguish between the two different ranges, we'll require that
 dimensions must be specified with the suffix 'mm', but years are just
 numbers. For this to work, we have to tell QueryParser about the value
-range with a suffix first::
-
+range with a suffix first:
 
 .. literalinclude:: /code/python/index_ranges.py
     :emphasize-lines: 21-26
