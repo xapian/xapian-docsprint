@@ -32,8 +32,8 @@ after splitting on semicolons, using the ``add_boolean_term()`` method.
 
 .. literalinclude:: /code/python/index_filters.py
     :emphasize-lines: 10-14
-    :start-after: termgenerator.set_document(doc)
-    :end-before: we use the identifier to ensure each object ends up
+    :start-after: Start of example code
+    :end-before: End of example code
 
 If we check the resulting index with delve, we will see that documents for
 which there was a value in the ``MATERIALS`` field now contain terms with the
