@@ -29,9 +29,35 @@ release) will allow updates to be grouped into transactions, and will allow
 at least some old versions of the database to be searched while new ones
 are being written.  Currently, all the backends only support a single
 writer existing at a given time; attempting to open another writer on
-the same database will return an error about being unable to acquire a
-lock.  However, it is perfectly okay for multiple readers to exist at the
-same time, and to be used while updates are being performed by the writer.
+the same database will throw ``DatabaseLockError`` to indicate that it
+wasn't possible to acquire a lock.  Multiple concurrent readers are
+supported (in addition to the writer).
+
+When a database is opened for reading, a fixed snapshot of the database is
+referenced by the reader (essentially `Multi-Version Concurrency Control`).
+Updates which are made to the database will not be visible to the reader
+unless it calls ``Xapian::Database::reopen()``.
+
+Currently there's  Xapian backends have a limitation to their
+`multi-version concurrency` implementation - specifically, at most two
+versions can exist concurrently.  So reader will be able to access its
+snapshot of the database without limitations when only one change has been
+made and committed by the writer, but after the writer has made two
+changes, readers will receive a `Xapian::DatabaseModifiedError` if they
+attempt to access a part of the database which has changed.  In this
+situation, the reader can be updated to the latest version using the
+`reopen()` method.
+
+With the disk-based Xapian backends, when a database is opened for writing,
+a lock is obtained on the database to ensure that no further writers are
+opened concurrently.  This lock will be released when the database writer
+is closed (or automatically if the writer process dies).
+
+One unusual feature of Xapian's locking mechanism (at least on POSIX
+operating systems) is that Xapian forks a subprocess to hold the lock,
+rather than holding it in the main process.  This is to avoid the lock
+being accidentally released due to the slightly unhelpful semantics of
+fcntl locks.
 
 There's also a "remote" database backend which allows the database to be
 located on a different machine and accessed via a custom network protocol.
