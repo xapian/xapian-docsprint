@@ -2,3 +2,5 @@
 .*.sw?
 *.pyc
 _build
+ENV
+db
