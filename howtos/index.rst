@@ -12,6 +12,7 @@ How To...
    spelling
    synonyms
    improve_results
+   weighting_schemes
    geospatial
    replication
    query_authorisation
