@@ -31,11 +31,11 @@ We can therefore just add the identifiers to the ``Document`` directly,
 after splitting on semicolons, using the ``add_boolean_term()`` method.
 
 .. literalinclude:: /code/python/index_filters.py
-    :emphasize-lines: 29-33
-    :start-after: Start of example code
-    :end-before: End of example code
+    :start-after: Start of new indexing code
+    :end-before: End of new indexing code
 
-A full copy of this code is available in ``code/python/index_filters.py``.
+A full copy of the indexer with this updated code is available in
+``code/python/index_filters.py``.
 
 If we check the resulting index with delve, we will see that documents for
 which there was a value in the ``MATERIALS`` field now contain terms with the

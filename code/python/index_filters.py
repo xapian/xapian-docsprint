@@ -6,7 +6,6 @@ import xapian
 from parsecsv import parse_csv_file
 
 
-### Start of example code.
 def index(datapath, dbpath):
     # Create or open the database we're going to be writing to. 
     db = xapian.WritableDatabase(dbpath, xapian.DB_CREATE_OR_OPEN)
@@ -35,11 +34,13 @@ def index(datapath, dbpath):
         termgenerator.increase_termpos()
         termgenerator.index_text(description)
 
+        ### Start of new indexing code.
         # index the MATERIALS field, splitting on semicolons
         for material in fields.get('MATERIALS', u'').split(';'):
             material = material.strip()
             if material != '':
                 doc.add_boolean_term('XM' + material)
+        ### End of new indexing code.
 
         # store all the fields for display purposes
         doc.set_data(json.dumps(fields))
@@ -50,7 +51,6 @@ def index(datapath, dbpath):
         idterm = u"Q" + identifier
         doc.add_term(idterm)
         db.replace_document(idterm, doc)
-### End of example code.
 
 
 index(datapath = sys.argv[1], dbpath = sys.argv[2])
