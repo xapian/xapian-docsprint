@@ -56,10 +56,47 @@ which there was a value in the ``MATERIALS`` field now contain terms with the
 Searching
 ---------
 
-.. todo:: How to search using manually built Query objects.
+Suppose that the interface we want to provide allows users to type a free text
+search into one form input, but also has a set of checkboxes for different
+possible materials.  We want to return documents which match the text search
+entered, but only if they also contain one of the materials for which the
+checkbox is selected.
+
+To build a query which performs this task, we can take the Query object
+returned by the query parser, and combine it with a manually built Query
+representing the checkboxes which are selected, using the ``OP_FILTER``
+operator.  If multiple checkboxes are selected, we need to combine the Query
+objects for each checkbox with an ``OP_OR`` operator.
+
+An arbitrarily complex Query tree can be built using queries returned from the
+QueryParser and manually constructed Query objects, which allows very flexible
+filtering of the results from parsed queries.
+
+.. literalinclude:: /code/python/search_filters.py
+    :start-after: Start of new indexing code
+    :end-before: End of new indexing code
+
+A full copy of the this updated search code is available in
+``code/python/search_filters.py``.  With this, we could perform a search for
+documents matching "clock", and filter the results to return only those with a
+value of ``"steel (metal)"`` as one of the semicolon separated values in the
+materials field::
+
+    $ python python/search_filters.py db clock 'steel (metal)'
+    1: #012 Assembled and unassembled EXA electric clock kit
+    2: #098 'Pond' electric clock movement (no dial)
+    3: #052 Reconstruction of Dondi's Astronomical Clock, 1974
+    4: #059 Electrically operated clock controller
+    5: #024 Regulator Clock with Gravity Escapement
+    6: #097 Bain's subsidiary electric clock
+    7: #009 Copy  of a Dwerrihouse skeleton clock with coup-perdu escape
+    8: #091 Pendulum clock designed by Galileo in 1642 and made by his son in 1649, model.
+    INFO:xapian.search:'clock'.material(['steel (metal)'])[0:10] = 12 98 52 59 24 97 9 91
+
 
 Using the query parser
 ----------------------
 
 .. todo:: How to search using the query parser.
 
+So far, we've seen how to add a restriction on the 
