@@ -18,21 +18,21 @@ length, and some other statistics::
 You can also look at an individual document, using Xapian's docid (``-d`` 
 means output document data as well)::
 
-    $ delve -r 1 -d db		# output has been reformatted
+    $ delve -r 1 -d db       # output has been reformatted
     Data for record #1:
     {
      "MEASUREMENTS": "", 
      "DESCRIPTION": "Ansonia Sunwatch (pocket compas dial)", 
      "PLACE_MADE": "New York county, New York state, United States", 
-	 "id_NUMBER": "1974-100", 
-	 "WHOLE_PART": "WHOLE", 
-	 "TITLE": "Ansonia Sunwatch (pocket compas dial)", 
-	 "DATE_MADE": "1922-1939", 
-	 "COLLECTION": "SCM - Time Measurement", 
-	 "ITEM_NAME": "Pocket horizontal sundial", 
-	 "MATERIALS": "", 
-	 "MAKER": "Ansonia Clock Co."
-	}
+     "id_NUMBER": "1974-100", 
+     "WHOLE_PART": "WHOLE", 
+     "TITLE": "Ansonia Sunwatch (pocket compas dial)", 
+     "DATE_MADE": "1922-1939", 
+     "COLLECTION": "SCM - Time Measurement", 
+     "ITEM_NAME": "Pocket horizontal sundial", 
+     "MATERIALS": "", 
+     "MAKER": "Ansonia Clock Co."
+    }
     Term List for record #1: Q1974-100 Sansonia Scompas Sdial Spocket 
     Ssunwatch XDansonia XDcompass XDdial XDpocket XDsunwatch ZSansonia 
     ZScompas ZSdial ZSpocket ZSsunwatch ZXDansonia ZXDcompas ZXDdial 
