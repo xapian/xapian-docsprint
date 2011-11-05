@@ -9,5 +9,4 @@ Sorting
 	  discussion of why that's unlikely to be useful with current schemes
 	  (because they rarely give the same weight to multiple documents).
 
-.. todo:: Check if there is existing documentation which can be used as a
-          skeleton for this.
+.. todo:: Start from sorting.rst.

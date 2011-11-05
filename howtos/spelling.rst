@@ -9,5 +9,4 @@ Spelling
 	  doesn't automatically remove spelling words added when indexing those
 	  documents).
 
-.. todo:: Check if there is existing documentation which can be used as a
-          skeleton for this.
+.. todo:: Start from spelling.rst.

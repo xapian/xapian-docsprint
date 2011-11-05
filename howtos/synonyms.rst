@@ -7,5 +7,4 @@ Synonyms
 	  synonym table be stemmed).  Also mention Query.OP_SYNONYM, and how
 	  that relates to synonym expansion.
 
-.. todo:: Check if there is existing documentation which can be used as a
-          skeleton for this.
+.. todo:: Start from synonyms.rst.

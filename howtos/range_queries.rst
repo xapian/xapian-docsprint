@@ -9,5 +9,4 @@ Range queries
 	  to run through all potential matches) - lead on to a discussion of
 	  speeding up range searches with terms covering parts of the range.
 
-.. todo:: Check if there is existing documentation which can be used as a
-          skeleton for this.
+.. todo:: Start from valueranges.rst.
