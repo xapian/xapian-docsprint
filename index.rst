@@ -28,6 +28,13 @@ We're monitoring IRC during the sprint sessions (and in general) so you can
 also contact us on channel #xapian on irc.freenode.net (webchat link:
 http://webchat.freenode.net/?channels=%23xapian).
 
+Getting started
+---------------
+
+.. todo:: mention which packages you need on debian & ubuntu; point to downloads page otherwise?
+
+.. todo:: finalise dataset(s) and link to them from here
+
 Indices and tables
 ==================
 
