@@ -4,7 +4,7 @@ How To...
 .. toctree::
    :maxdepth: 2
 
-   fielded_searches
+   boolean_filters
    range_queries
    facets
    sorting
