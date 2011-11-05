@@ -34,10 +34,19 @@ after splitting on semicolons, using the ``add_boolean_term()`` method.
 
 If we check the resulting index with delve, we will see that documents for
 which there was a value in the ``MATERIALS`` field now contain terms with the
-``XM`` prefix::
+``XM`` prefix (output snipped to show the relevant lines)::
 
-    $ delve db/ -r 3
-    Term List for record #3: 14 22 Q1953-404 S14 S22 Sabbot Sglass Shorne Sin Slog Smount Sno Ssecs Sship's Swooden XD14 XD22 XDabbot XDb XDglass XDhorne XDin XDlog XDmount XDno XDsecs XDship's XDtype XDwooden XMglass XMmounted XMsand XMtimer XMwood ZSabbot ZSglass ZShorn ZSin ZSlog ZSmount ZSno ZSsec ZSship ZSwooden ZXDabbot ZXDb ZXDglass ZXDhorn ZXDin ZXDlog ZXDmount ZXDno ZXDsec ZXDship ZXDtype ZXDwooden Zabbot Zb Zglass Zhorn Zin Zlog Zmount Zno Zsec Zship Ztype Zwooden abbot b glass horne in log mount no secs ship's type wooden
+    $ delve -r 3 -1 db
+    Term List for record #3:
+    ...
+    XDwooden
+    XMglass
+    XMmounted
+    XMsand
+    XMtimer
+    XMwood
+    ZSabbot
+    ...
 
 .. todo:: How to search using manually built Query objects.
 
