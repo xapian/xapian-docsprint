@@ -47,6 +47,8 @@ sort, depending if/how you want relevance used in the ordering:
    using BM25 with the default parameters, as that will rarely give identical
    scores to different documents).
 
+.. todo:: create simple sorting example
+
 Generated Sort Keys
 -------------------
 
@@ -64,6 +66,8 @@ sorting on more than one document value (so the first document value
 specified determines the order; amongst groups of documents where that's
 the same, the second document value determines the order, and so on).
 
+.. todo:: example
+
 Other Uses for Generated Keys
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -72,3 +76,5 @@ For example, "sort by geographical distance", where a subclass could take
 the latitude and longitude of the user's location, and coordinates of the
 document from a value slot, and sort results so that those closest to the
 user are ranked highest.
+
+.. todo:: example
