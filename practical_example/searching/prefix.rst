@@ -23,7 +23,7 @@ This allows us to perform a search based on either field, for example::
 	1: #001 Ansonia Sunwatch (pocket compas dial)
 	INFO:xapian.search:'title:sunwatch'[0:10] = 1
 
-We can also combine prefixes with of the logical operators to perform more
+We can also combine prefixes with the logical operators to perform more
 complex queries::
 
 	$ python search1.py db description:"silver case" AND title:sundial
