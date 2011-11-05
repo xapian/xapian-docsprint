@@ -28,6 +28,8 @@ done either by Xapian docid or using unique ID terms, as with
 
 .. literalinclude:: /code/python/delete1.py
 
+A copy of this code is available in ``code/python/delete1.py``.
+
 Then we just run our deletion tool, giving it identifiers taken from
 the `id_NUMBER` field in the data set::
 

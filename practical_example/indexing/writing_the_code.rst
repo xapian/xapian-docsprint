@@ -1,12 +1,16 @@
 Let's write some code
 ---------------------
 
-Here's some example code to implement this index plan.
+Here's the significant part of some example code to implement this index plan.
 
 .. literalinclude:: /code/python/index1.py
+    :start-after: Start of example code
+    :end-before: End of example code
 
-You can run this code to index a sample data file (called here
-``100-objects-v1.csv``) to a database at path ``db`` as follows::
+A full copy of this code is available in ``code/python/index1.py``.
 
-    python index1.py 100-objects-v1.csv db
+You can run this code to index a sample data file (held in
+``data/100-objects-v1.csv``) to a database at path ``db`` as follows::
+
+    python code/python/index1.py data/100-objects-v1.csv db
 
