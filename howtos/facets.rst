@@ -8,5 +8,4 @@ Facets
 	  isn't in trunk yet (bucketing + multiple values) - perhaps just note
 	  that it's currently in development.
 
-.. todo:: Check if there is existing documentation which can be used as a
-          skeleton for this.
+.. todo:: Start from facets.rst.

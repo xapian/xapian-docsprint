@@ -7,5 +7,4 @@ Collapsing
 	  result set; doesn't reorder results, or guarantee to return the top N
 	  from each category.
 
-.. todo:: Check if there is existing documentation which can be used as a
-          skeleton for this.
+.. todo:: Start from collapsing.rst.
