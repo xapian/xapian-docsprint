@@ -8,7 +8,7 @@ database.
 Reindexing the database can be done immediately using the index1.py script
 we used for the initial indexing; this is because we are using an external
 ID for each document we add to the database, taken from the `id_NUMBER` 
-field from the original data set. We then pass this to the ReplaceDocument
+field from the original data set. We then pass this to the `replace_document`
 method, which takes a document ID as the key and updates as requested.
 
 Deleting documents
