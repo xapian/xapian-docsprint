@@ -1,6 +1,12 @@
-Searching with Prefixes
------------------------
-When using the Query Parser, it is possible to refine your search to 
+Searching separate fields
+-------------------------
+
+When we built our index, we used prefixes to separate the terms generated from
+the title and description fields.  This allows us to perform searches which are
+restricted to the text in just one of those fields, by searching only terms
+with the desired prefix.
+
+When using the Query Parser, it is possible to restrict your search to 
 certain prefixed terms (e.g. title, or description). These can be searched
 for either by using a search prefix (which can correlate to an indexing 
 prefix) or as a general text document.
