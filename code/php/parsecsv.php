@@ -8,7 +8,7 @@
  */
 function get_csv_headers ($fH)
 {
-	return array_flip(fgetcsv($fH));
+	return fgetcsv($fH);
 }
 
 /**
@@ -33,12 +33,14 @@ function open_file ($file)
  * Reads a row of data from a CSV file and parses into UTF-8
  * 
  * @param resource $fH Open file handle
+ * @param array $headers Indexed array of column names
  * 
  * @return mixed False if EOF; indexed array of data otherwise
  */
-function parse_csv_row ($fH)
+function parse_csv_row ($fH, $headers)
 {
 	$row = fgetcsv($fH);
+	$data = array();
 	
 	if (is_array($row) === false)
 	{
@@ -46,9 +48,9 @@ function parse_csv_row ($fH)
 	}
 	
 	foreach ($row as $key => $value) {
-		$row[$key] = iconv('ISO-8859-1', 'UTF-8', $value);
+		$data[$headers[$key]] = iconv('ISO-8859-1', 'UTF-8', $value);
 	}
 	
-	return $row;
+	return $data;
 }
 ?>
