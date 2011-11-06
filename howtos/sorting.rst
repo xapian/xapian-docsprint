@@ -47,7 +47,7 @@ sort, depending if/how you want relevance used in the ordering:
    scores to different documents).
 
 We'll use the states dataset to demonstrate this, and the code from
-dealing with dates in the :ref:`range queries <range_queries>`_ HOWTO::
+dealing with dates in the :ref:`range queries <range_queries>` HOWTO::
 
     $ python code/python/index_ranges2.py states.csv statesdb
 
