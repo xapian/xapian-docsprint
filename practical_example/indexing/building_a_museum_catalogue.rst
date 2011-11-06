@@ -1,20 +1,35 @@
 Building a museum catalogue
 ===========================
 
-We're going to build a simple search system based on museum catalogue data 
-released under a Creative Commons license (By-NC-SA) by the Science Museum 
-in London, UK.
-
-http://api.sciencemuseum.org.uk/documentation/collections/
+We're going to build a simple search system based on `museum catalogue
+data<http://api.sciencemuseum.org.uk/documentation/collections/>`
+released under the `Creative Commons
+Attribution-NonCommercial-ShareAlike<http://creativecommons.org/licenses/by-nc-sa/3.0/>`
+license by the Science Museum in London, UK.
 
 Preparing to run the examples
 -----------------------------
 
-To make things easier, we've extracted just the first 100 objects for the
-museum catalogue data set and provide them as a gzipped CSV file,
-``100-objects-v1.csv``.  This file, and the source code for the examples, can
-be downloaded from http://xapian.org/data/muscat-data.tgz.  The following
-discussion assumes you've downloaded that, unpacked it, and changed directory
-to the top level directory in it.
+You should download both the two sample datasets and example code as
+mentioned in in the :ref:`overview`, and also check that you've
+installed Xapian as detailed there.
 
-.. todo:: Actually put the data and code in a tarball at this location.
+The code is provided as a gzipped tar file, which you should unpack
+into the directory you're going to use while working through this
+guide. The datasets are gzipped CSV files, which should be
+uncompressed into the same directory. You should then open an
+interactive shell in that directory. For instance, if you're using
+Python for the examples, run something like the following::
+
+    $ mkdir xapian-guide
+    $ cd xapian-guide
+    $ wget http://xapian.org/docs/examples/python.tgz
+    $ wget http://xapian.org/data/muscat-data.csv.gz
+    $ wget http://xapian.org/data/states-data.csv.gz
+    $ gzip -dc python.tgz | tar xvf - && rm python.tgz
+    $ gzip -d muscat-data.csv.gz
+    $ gzip -d states-data.csv.gz
+
+This will leave you with two files, `muscat.csv` and `states.csv`, and
+a directory `code` which itself contains a directory `python` which
+contains all the example code.
