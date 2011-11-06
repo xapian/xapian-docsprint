@@ -1,5 +1,9 @@
+.. Copyright (C) 2011 James Aylett
+
 Range queries
 =============
+
+.. todo:: check valueranges.rst to see if anything else needs moving across
 
 I'm only interested in the 1980s
 --------------------------------
