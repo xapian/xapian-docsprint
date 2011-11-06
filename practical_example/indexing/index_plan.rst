@@ -16,13 +16,13 @@ of terms to indicate which field the term indexes. As well as prefixed
 terms, we also want to generate unprefixed terms, so that as well as
 searching within fields you can also search for text in any field.
 
-There are some conventional prefixes used, which is helpful if you ever
-need to interoperate with omega (a web-based search engine) or other
-compatible systems. From this, we'll use 'S' to prefix title (it stands for
-'subject'), and for description we'll use 'XD'.
-
-.. todo:: Link to the documentation of what the conventions for prefixes used
-          by Omega are.
+There are some conventional prefixes used, which is helpful if you
+ever need to interoperate with omega (a web-based search engine) or
+other compatible systems. From this, we'll use 'S' to prefix title (it
+stands for 'subject'), and for description we'll use 'XD'. A full list
+of conventional prefixes is given at the top of the `omega
+documentation on
+termprefixes<http://xapian.org/docs/omega/termprefixes>`_.
 
 When you're indexing multiple fields like this, the term positions used for
 each field when indexed unprefixed need to be kept apart. Say you have a
