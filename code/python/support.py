@@ -3,6 +3,8 @@
 
 import csv
 import time
+import math
+
 
 def parse_csv_file(datapath, charset='iso-8859-1'):
     """Parse a CSV file.
@@ -74,6 +76,16 @@ def middle_coord(text):
         end = -end
     return (start + end) / 2
 
+
+def distance_between_coords(latlon1, latlon2):
+    # For simplicity we treat these as planar coordinates and use
+    # Pythagoras. Note that you should really use something like
+    # Haversine; there's an implementation in Xapian's geo support,
+    # although this is still on a branch.
+    return math.sqrt(
+        math.pow(latlon2[0] - latlon1[0], 2) +
+        math.pow(latlon2[1] - latlon1[1], 2)
+        )
 
 def parse_states(datapath):
     """Parser for the states.csv data file.
