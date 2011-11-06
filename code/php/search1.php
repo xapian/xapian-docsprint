@@ -54,7 +54,12 @@ function search($dbpath, $querystring, $offset = 0, $pagesize = 10)
 	}
 	
 	// Finally, make sure we log the query and displayed results
-	log_info("xapian.search:'{$querystring}'[".$offset.":".($offset+$pagesize)."] = ".implode(" ", $docids));
+	log_info(sprintf("xapian.search:'%s'[%d:%d] = %s",
+				$querystring,
+				$offset,
+				$offset+$pagesize,
+				implode(" ", $docids)
+			));
 }
 ## End of example code.
 
