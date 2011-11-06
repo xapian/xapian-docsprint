@@ -3,7 +3,7 @@
 import json
 import sys
 import xapian
-from parsecsv import parse_csv_file
+from support import parse_csv_file
 
 def index(datapath, dbpath):
     # Create or open the database we're going to be writing to.

@@ -3,7 +3,7 @@
 import json
 import sys
 import xapian
-from parsecsv import parse_csv_file
+from support import parse_csv_file
 
 def numbers_from_string(s):
     """Find all numbers in a string."""

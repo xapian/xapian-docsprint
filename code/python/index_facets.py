@@ -3,7 +3,7 @@
 import json
 import sys
 import xapian
-from parsecsv import parse_csv_file
+from support import parse_csv_file
 
 ### Start of example code.
 def index(datapath, dbpath):
