@@ -93,39 +93,39 @@ void index(const string & datapath, const string & dbpath)
 	cerr << "CSV format has changed!" << endl;
 	exit(1);
     }
-    
+
     while (csv_parse_line(csv, fields)) {
-        // 'fields' is a vector mapping from field number to value.
+	// 'fields' is a vector mapping from field number to value.
 	// We look up fields with the 'at' method so we get an exception
 	// if that field isn't set.
 	//
-        // We're just going to use DESCRIPTION, TITLE and id_NUMBER.
-        const string & description = fields.at(FIELD_DESCRIPTION);
-        const string & title = fields.at(FIELD_TITLE);
-        const string & identifier = fields.at(FIELD_ID_NUMBER);
+	// We're just going to use DESCRIPTION, TITLE and id_NUMBER.
+	const string & description = fields.at(FIELD_DESCRIPTION);
+	const string & title = fields.at(FIELD_TITLE);
+	const string & identifier = fields.at(FIELD_ID_NUMBER);
 
-        // We make a document and tell the term generator to use this.
-        Xapian::Document doc;
-        termgenerator.set_document(doc);
+	// We make a document and tell the term generator to use this.
+	Xapian::Document doc;
+	termgenerator.set_document(doc);
 
-        // Index each field with a suitable prefix.
-        termgenerator.index_text(title, 1, "S");
-        termgenerator.index_text(description, 1, "XD");
+	// Index each field with a suitable prefix.
+	termgenerator.index_text(title, 1, "S");
+	termgenerator.index_text(description, 1, "XD");
 
-        // Index fields without prefixes for general search.
-        termgenerator.index_text(title);
-        termgenerator.increase_termpos();
-        termgenerator.index_text(description);
+	// Index fields without prefixes for general search.
+	termgenerator.index_text(title);
+	termgenerator.increase_termpos();
+	termgenerator.index_text(description);
 
-        // Store all the fields for display purposes.
-        doc.set_data(identifier + "\n" + title + "\n" + description);
+	// Store all the fields for display purposes.
+	doc.set_data(identifier + "\n" + title + "\n" + description);
 
-        // We use the identifier to ensure each object ends up in the
-        // database only once no matter how many times we run the
-        // indexer.
-        string idterm = "Q" + identifier;
-        doc.add_boolean_term(idterm);
-        db.replace_document(idterm, doc);
+	// We use the identifier to ensure each object ends up in the
+	// database only once no matter how many times we run the
+	// indexer.
+	string idterm = "Q" + identifier;
+	doc.add_boolean_term(idterm);
+	db.replace_document(idterm, doc);
     }
 }
 // End of example code.
