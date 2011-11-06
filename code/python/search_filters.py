@@ -18,7 +18,6 @@ def search(dbpath, querystring, materials, offset=0, pagesize=10):
     queryparser.set_stemmer(xapian.Stem("en"))
     queryparser.add_prefix("title", "S")
     queryparser.add_prefix("description", "XD")
-    queryparser.add_boolean_prefix("material", "XM")
 
     # And parse the query
     query = queryparser.parse_query(querystring)
