@@ -92,3 +92,5 @@ second under `Creative Commons Attribution-Share Alike 3.0
  * `US states dataset <http://xapian.org/data/states-data.csv.gz>`_
 
 .. todo:: finalise dataset(s) and code and link to them from here
+
+.. todo:: link to here from every howto and everything that needs the data files and example code
