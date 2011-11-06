@@ -48,6 +48,9 @@ suitable for faceting::
 
 Querying
 --------
+
+.. todo:: explain what goes on here, ie why we use a MatchSpy
+
 To add a spy you need to create a new `Xapian::ValueCountMatchSpy` object,
 stating which value slot the spy is to operate on and add this to the
 `Xapian::Enquire` as follows:
