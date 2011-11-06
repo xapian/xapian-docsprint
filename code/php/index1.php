@@ -18,12 +18,12 @@ function index ($datapath, $dbpath)
 	//	Read the header row in 
 	$headers = get_csv_headers($fH);
 	
-	while (($row = parse_csv_row($fH)) !== false) {
+	while (($row = parse_csv_row($fH, $headers)) !== false) {
         // mapping from field name to value using first row headers
         // We're just going to use id_NUMBER, TITLE and DESCRIPTION
-		$description 	= $row[$headers['DESCRIPTION']];
-		$title 			= $row[$headers['TITLE']];
-		$identifier 	= $row[$headers['id_NUMBER']];
+		$description 	= $row['DESCRIPTION'];
+		$title 			= $row['TITLE'];
+		$identifier 	= $row['id_NUMBER'];
 		
         // we make a document and tell the term generator to use this
         $doc = new XapianDocument();
