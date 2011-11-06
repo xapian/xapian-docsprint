@@ -8,8 +8,8 @@ def delete(dbpath, identifiers):
     # Open the database we're going to be deleting from.
     db = xapian.WritableDatabase(dbpath, xapian.DB_CREATE_OR_OPEN)
 
-    for identifiers in identifiers:
-        idterm = u'Q' + identifiers
+    for identifier in identifiers:
+        idterm = u'Q' + identifier
         db.delete_document(idterm)
 
 
