@@ -28,7 +28,7 @@ although we're also working on full translations into PHP_ and C++.
 We'll be using Xapian 1.2 throughout, so let's get that onto your system.
 
 Installation on Debian or Ubuntu
---------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Recent versions of both Debian and Ubuntu have Xapian 1.2 packaged: if
 you're on Debian 6.0 (squeeze) or later, or Ubuntu 11.10 (Oneiric
@@ -46,7 +46,7 @@ need to install from our PPA_.
 .. _PPA: https://launchpad.net/~xapian-backports/+archive/xapian-1.2
 
 Installation on other systems
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Many operating systems have packages available to make Xapian easy to
 install; information is available on `our download page`_. This covers
