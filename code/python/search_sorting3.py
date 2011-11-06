@@ -6,7 +6,6 @@ import sys
 import xapian
 from support import distance_between_coords
 
-### Start of example code.
 def search(dbpath, querystring, offset=0, pagesize=10):
     # offset - defines starting point within result set
     # pagesize - defines number of records to retrieve
