@@ -11,6 +11,13 @@ function get_csv_headers ($fH)
 	return array_flip(fgetcsv($fH));
 }
 
+/**
+ * Handles file opening and error reporting if file in unavailable
+ * 
+ * @param string $file Path of file to open
+ * 
+ * @return resource Open file handle
+ */
 function open_file ($file)
 {
 	// Open the CSV file
@@ -22,13 +29,20 @@ function open_file ($file)
 	return $fH;
 }
 
+/**
+ * Reads a row of data from a CSV file and parses into UTF-8
+ * 
+ * @param resource $fH Open file handle
+ * 
+ * @return mixed False if EOF; indexed array of data otherwise
+ */
 function parse_csv_row ($fH)
 {
 	$row = fgetcsv($fH);
 	
 	if (is_array($row) === false)
 	{
-		return;
+		return false;
 	}
 	
 	foreach ($row as $key => $value) {
