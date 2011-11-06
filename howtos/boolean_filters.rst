@@ -82,7 +82,7 @@ documents matching "clock", and filter the results to return only those with a
 value of ``"steel (metal)"`` as one of the semicolon separated values in the
 materials field::
 
-    $ python python/search_filters.py db clock 'steel (metal)'
+    $ python code/python/search_filters.py db clock 'steel (metal)'
     1: #012 Assembled and unassembled EXA electric clock kit
     2: #098 'Pond' electric clock movement (no dial)
     3: #052 Reconstruction of Dondi's Astronomical Clock, 1974
@@ -97,6 +97,51 @@ materials field::
 Using the query parser
 ----------------------
 
-.. todo:: How to search using the query parser.
+The previous section shows how to write code to filter the results of a query
+programatically.  This can be very flexible, but sometimes you want users to be
+able to specify filters themselves, within the text query that they enter.
 
-So far, we've seen how to add a restriction on the 
+You can do this using the ``QueryParser.add_boolean_prefix()`` method.  This
+lets you tell the query parser about a field to use for filtering, and the
+prefix that terms have been stored in for that term.  For our materials search,
+we just need to a add a single line to the search code:
+
+.. literalinclude:: /code/python/search_filters2.py
+    :start-after: Start of example code
+    :end-before: End of example code
+    :emphasize-lines: 21-26
+
+Users can then perform a filtered search by preceding a word or phrase with
+"material:", similar to the syntax supported for this sort of thing by many web
+search engines::
+
+    $ python code/python/search_filters2.py db 'clock material:"steel (metal)"'
+    1: #012 Assembled and unassembled EXA electric clock kit
+    2: #098 'Pond' electric clock movement (no dial)
+    3: #052 Reconstruction of Dondi's Astronomical Clock, 1974
+    4: #059 Electrically operated clock controller
+    5: #024 Regulator Clock with Gravity Escapement
+    6: #097 Bain's subsidiary electric clock
+    7: #009 Copy  of a Dwerrihouse skeleton clock with coup-perdu escape
+    8: #091 Pendulum clock designed by Galileo in 1642 and made by his son in 1649, model.
+    INFO:xapian.search:'clock material:"steel (metal)"'[0:10] = 12 98 52 59 24 97 9 91
+
+What to supply to the query parser
+----------------------------------
+
+Often, developers seem to be tempted to apply filters to a query by modifying
+the query supplied by a user (eg, by adding things like ``material:steel`` to
+the end of it).  This is generally a bad idea, because the query parser
+contains various heuristics to handle input from users; it is very hard to
+modify the input to a query parser to reliably add a filter to the parsed
+query.
+
+The rule is that the query parser should be supplied with direct user input,
+and if you want to apply extra filters to the query, you should apply them to
+the output of the query parser.
+
+In later sections, we'll see how to tell the query parser about other types of
+searches that users might enter (for example, range searches).  In each of
+these cases, it is also possible to perform such searches and restrictions
+without using the query parser; the query parser just allows the user of the
+search system to perform such restrictions in the query string.
