@@ -204,7 +204,6 @@ With this done, we can change the set of value range processors we
 give to the QueryParser.
 
 .. literalinclude:: /code/python/search_ranges2.py
-    :emphasize-lines: 50-55
     :start-after: Start of date example code
     :end-before: End of date example code
 
@@ -295,7 +294,6 @@ populations. If either number is outside that range, we will return
 `Xapian::BAD_VALUENO` and the QueryParser will move on.
 
 .. literalinclude:: /code/python/search_ranges2.py
-    :emphasize-lines: 22-47
     :start-after: Start of custom VRP code
     :end-before: End of custom VRP code
 
