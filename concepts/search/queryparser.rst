@@ -21,7 +21,7 @@ Term Generation
 ~~~~~~~~~~~~~~~
 
 The QueryParser uses an internal process to convert the query string into 
-terms.  This is similar to the procses used by the TermGenerator, which
+terms.  This is similar to the process used by the TermGenerator, which
 can be used at index time to convert a string into terms.  It is often 
 easiest to use QueryParser and TermGenerator on the same database.
 
@@ -143,12 +143,12 @@ for example:
 Parser Flags
 ~~~~~~~~~~~~
 The operation of the QueryParser can be altered through the use of flags,
-combined with a bitwise OR operator; these flags include:
+combined with the bitwise OR operator; these flags include:
 
 	* FLAG_BOOLEAN: enables support for AND, OR, etc and bracketed 
 	  expressions
 	* FLAG_PHRASE: enables support for phrase expressions
-	* FLAG_LOVEHATE: enabled support for +/- operators
+	* FLAG_LOVEHATE: enables support for `+` and `-` operators
 	* FLAG_BOOLEAN_ANY_CASE: enables support for lower/mixed case boolean 
 	  operators
 	* FLAG_WILDCARD: enables support for wildcards
