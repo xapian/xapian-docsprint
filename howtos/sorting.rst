@@ -16,9 +16,8 @@ If you have no preference, you can tell Xapian to use whatever order is
 most efficient using ``enquire.set_docid_order(enquire.DONT_CARE);``.
 
 It is also possible to change the way that the relevance scores are calculated
-- for details, see the [link to ranking doc] document.
-
-.. todo:: write the above referenced document and link it
+- for details, see the :ref:`document on weighting schemes and
+  document scoring <weighting_scheme>` for details.
 
 Sorting by Value
 ----------------
@@ -47,7 +46,31 @@ sort, depending if/how you want relevance used in the ordering:
    using BM25 with the default parameters, as that will rarely give identical
    scores to different documents).
 
-.. todo:: create simple sorting example
+We'll use the states dataset to demonstrate this, and the code from
+dealing with dates in the :ref:`range queries <range_queries>` HOWTO::
+
+    $ python code/python/index_ranges2.py states.csv statesdb
+
+This has three document values: slot 1 has the year of admission to
+the union, slot 2 the full date (as "YYYYMMDD"), and slot 3 the latest
+population estimate. So if we want to sort by year of entry to the
+union and then within that by relevance, we want to add the following
+before we call `get_mset`:
+
+.. literalinclude:: /code/python/search_sorting.py
+    :start-after: Start of example code.
+    :end-before: End of example code.
+
+The final parameter is `False` for ascending order, `True` for
+descending. We can then run sorted searches like this::
+
+    $ python code/python/search_sorting.py statesdb spanish
+    1: #019 State of Texas December 29, 1845 (28th)
+            Population 25,145,561 (2010 Census) [ 5 ]
+    2: #004 State of Montana November 8, 1889 (41st)
+            Population 989,415 (2010)
+    INFO:xapian.search:'spanish'[0:10] = 19 4
+
 
 Generated Sort Keys
 -------------------
