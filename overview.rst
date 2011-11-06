@@ -53,9 +53,9 @@ install; information is available on `our download page`_. This covers
 most popular linux distributions, FreeBSD, Mac OS (Python and C++
 only) and Windows using Microsoft Visual Studio.
 
-.. _Xapian downloads: http://xapian.org/download
+.. _our download page: http://xapian.org/download
 
-.. compile from source_
+.. _compile from source:
 
 If you're using a different operating system, you will need to compile
 from source, which should work on any Unix-derived operating system,
@@ -77,18 +77,18 @@ are complete for now.
 .. _in C++: http://xapian.org/docs/examples/c++.tgz
 
 The first dataset is the first 100 objects taken from `museum
-catalogue data released by the Science
-Museum<http://api.sciencemuseum.org.uk/documentation/collections/>`_,
-and the second we have curated ourselves from information on Wikipedia
-about the 50 `US
-States<http://en.wikipedia.org/wiki/U.S._state>`_. Both are provided
-as gzipped CSV files. The first dataset is released under the
-`Creative Commons license
-Attribution-NonCommercial-ShareAlike<http://creativecommons.org/licenses/by-nc-sa/3.0/>`_
-license, and the second under `Creative Commons Attribution-Share
-Alike 3.0<http://creativecommons.org/licenses/by-sa/3.0/>`_.
+catalogue data released by the Science Museum
+<http://api.sciencemuseum.org.uk/documentation/collections/>`_, and
+the second we have curated ourselves from information on Wikipedia
+about the 50 `US States
+<http://en.wikipedia.org/wiki/U.S._state>`_. Both are provided as
+gzipped CSV files. The first dataset is released under the `Creative
+Commons license Attribution-NonCommercial-ShareAlike
+<http://creativecommons.org/licenses/by-nc-sa/3.0/>`_ license, and the
+second under `Creative Commons Attribution-Share Alike 3.0
+<http://creativecommons.org/licenses/by-sa/3.0/>`_.
 
- * `museum catalogue dataset<http://xapian.org/data/muscat-data.csv.gz>`_
- * `US states dataset<http://xapian.org/data/states-data.csv.gz>`_
+ * `museum catalogue dataset <http://xapian.org/data/muscat-data.csv.gz>`_
+ * `US states dataset <http://xapian.org/data/states-data.csv.gz>`_
 
 .. todo:: finalise dataset(s) and code and link to them from here
