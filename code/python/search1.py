@@ -28,10 +28,10 @@ def search(dbpath, querystring, offset=0, pagesize=10):
 
     # And print out something about each match
     matches = []
-    for index, match in enumerate(enquire.get_mset(offset, pagesize)):
+    for match in enquire.get_mset(offset, pagesize):
         fields = json.loads(match.document.get_data())
         print u"%(rank)i: #%(docid)3.3i %(title)s" % {
-            'rank': offset + index + 1,
+            'rank': match.rank + 1,
             'docid': match.docid,
             'title': fields.get('TITLE', u''),
             }
