@@ -93,7 +93,6 @@ numbers. For this to work, we have to tell QueryParser about the value
 range with a suffix first:
 
 .. literalinclude:: /code/python/search_ranges.py
-    :emphasize-lines: 21-26
     :start-after: and add in value range processors
     :end-before: And parse the query
 
