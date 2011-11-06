@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
-import json
 import sys
 import xapian
-from parsecsv import parse_csv_file
 
 
 def delete(dbpath, identifiers):
