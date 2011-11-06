@@ -7,7 +7,6 @@ import sys
 import xapian
 from parsecsv import parse_csv_file
 
-
 def numbers_from_string(s):
     """Find all numbers in a string."""
     numbers = []
@@ -33,16 +32,15 @@ def numbers_from_string(s):
 
 
 def index(datapath, dbpath):
-    # Create or open the database we're going to be writing to. 
+    # Create or open the database we're going to be writing to.
     db = xapian.WritableDatabase(dbpath, xapian.DB_CREATE_OR_OPEN)
 
-    # Set up a TermGenerator that we'll use in indexing
+    # Set up a TermGenerator that we'll use in indexing.
     termgenerator = xapian.TermGenerator()
     termgenerator.set_stemmer(xapian.Stem("en"))
 
     for fields in parse_csv_file(datapath, 'utf-8'):
-        #print "processing", fields
-        # fields is a dictionary mapping from field name to value.
+        # 'fields' is a dictionary mapping from field name to value.
         admitted = fields.get('admitted', None)
         if admitted is None:
             print "Couldn't process", fields
@@ -117,10 +115,11 @@ def index(datapath, dbpath):
         midlat = middle_coord(fields.get('latitude', None))
         midlon = middle_coord(fields.get('longitude', None))
 
-        # we make a document and tell the term generator to use this
+        # We make a document and tell the term generator to use this.
         doc = xapian.Document()
         termgenerator.set_document(doc)
 
+        # Index each field with a suitable prefix.
         name = fields.get('name', u'')
         description = fields.get('description', u'')
         motto = fields.get('motto', u'')
@@ -129,14 +128,14 @@ def index(datapath, dbpath):
         termgenerator.index_text(description, 1, 'XD')
         termgenerator.index_text(motto, 1, 'XM')
 
-        # index fields without prefixes for general search
+        # Index fields without prefixes for general search.
         termgenerator.index_text(name)
         termgenerator.increase_termpos()
         termgenerator.index_text(description)
         termgenerator.increase_termpos()
         termgenerator.index_text(motto)
 
-        # store all the fields for display purposes
+        # Store all the fields for display purposes.
         doc.set_data(json.dumps(fields))
 
         # add document values
@@ -152,6 +151,5 @@ def index(datapath, dbpath):
         idterm = u"Q" + order
         doc.add_boolean_term(idterm)
         db.replace_document(idterm, doc)
-
 
 index(datapath = sys.argv[1], dbpath = sys.argv[2])
