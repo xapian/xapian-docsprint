@@ -5,20 +5,22 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <cstring>
 
 using namespace std;
 
 static bool
 csv_parse_line(ifstream & csv, vector<string> & fields)
 {
-    // Resize to empty and back to clear all the fields.
-    size_t num_fields = fields.size();
     fields.resize(0);
-    fields.resize(num_fields);
 
     char line[4096];
     if (!csv.getline(line, sizeof(line)))
 	return false;
+
+    // If the input has \r\n line endings, drop the \r.
+    size_t len = strlen(line);
+    if (len && line[len - 1] == '\r') line[len - 1] = '\0';
 
     bool in_quotes = false;
     string field;
@@ -94,10 +96,13 @@ void index(const string & datapath, const string & dbpath)
     
     while (csv_parse_line(csv, fields)) {
         // 'fields' is a vector mapping from field number to value.
+	// We look up fields with the 'at' method so we get an exception
+	// if that field isn't set.
+	//
         // We're just going to use DESCRIPTION, TITLE and id_NUMBER.
-        const string & description = fields[FIELD_DESCRIPTION];
-        const string & title = fields[FIELD_TITLE];
-        const string & identifier = fields[FIELD_ID_NUMBER];
+        const string & description = fields.at(FIELD_DESCRIPTION);
+        const string & title = fields.at(FIELD_TITLE);
+        const string & identifier = fields.at(FIELD_ID_NUMBER);
 
         // We make a document and tell the term generator to use this.
         Xapian::Document doc;
