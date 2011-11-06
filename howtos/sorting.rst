@@ -1,5 +1,7 @@
 .. Copyright (C) 2007,2009,2011 Olly Betts
 .. Copyright (C) 2011 Justin Finkelstein
+.. Copyright (C) 2011 James Aylett
+
 
 Sorting
 =======
