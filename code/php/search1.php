@@ -1,6 +1,7 @@
 <?php
 require_once("xapian.php");
 require_once("parsecsv.php");
+require_once("logger.php");
 
 ## Start of example code.
 function search($dbpath, $querystring, $offset = 0, $pagesize = 10)
@@ -29,6 +30,9 @@ function search($dbpath, $querystring, $offset = 0, $pagesize = 10)
 	$start = $matches->begin();
 	$end = $matches->end();
 	$index = 0;
+	
+	// Use an array to record the DocIds of each match
+	$docids = array();
 
 	while (!($start->equals($end)))
 	{
@@ -36,14 +40,21 @@ function search($dbpath, $querystring, $offset = 0, $pagesize = 10)
 		$doc = $start->get_document();
 		$fields = json_decode($doc->get_data());
 		$position = $offset + $index + 1;
+
+		// record the docid
+		$docid = $start->get_docid();
+		$docids[] = $docid;
 	
 		// display the results
-		print "{$position}: ".$start->get_docid()." ".$fields->TITLE."\n";
+		print sprintf("%d: #%03d %s\n", $position, $docid, $fields->TITLE);
 
 		// increment MSet iterator and our counter
 		$start->next();
 		$index++;
 	}
+	
+	// Finally, make sure we log the query and displayed results
+	log_info("xapian.search:'{$querystring}'[".$offset.":".($offset+$pagesize)."] = ".implode(" ", $docids));
 }
 ## End of example code.
 
