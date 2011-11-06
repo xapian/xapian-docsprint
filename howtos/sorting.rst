@@ -89,7 +89,40 @@ sorting on more than one document value (so the first document value
 specified determines the order; amongst groups of documents where that's
 the same, the second document value determines the order, and so on).
 
-.. todo:: example
+We'll use this to change our sorted search above to order by year of
+entry to the union and then by decreasing population.
+
+.. literalinclude:: /code/python/search_sorting2.py
+    :start-after: Start of example code.
+    :end-before: End of example code.
+
+As with the `Enquire` methods, `add_value` has a second parameter that
+controls whether it uses an ascending or descending sort. So now we
+can run a search with a more complex sort::
+
+    $ python code/python/search_sorting2.py statesdb/ State
+    1: #040 Commonwealth of Pennsylvania December 12, 1787 (2nd)
+            Population 12,702,379(2010.) [ 2 ]
+    2: #043 State of New Jersey December 18, 1787 (3rd)
+            Population 8,791,894 (2010 Census) [ 4 ]
+    3: #049 State of Delaware December 7, 1787 (1st)
+            Population 897,934
+    4: #041 State of New York July 26, 1788 (11th)
+            Population 19,378,102 (2010 Census) [ 3 ]
+    5: #038 Commonwealth of Virginia June 25, 1788 (10th)
+            Population 8,001,024
+    6: #050 State of Maryland April 28, 1788 (7th)
+            Population 5,773,552 (2010) [ 3 ] 5,296,486 (2000)
+    7: #036 State of South Carolina May 23, 1788 (8th)
+            Population 4,625,384 (2010 census) [ 1 ]
+    8: #045 State of New Hampshire June 21, 1788 (9th)
+            Population 1,316,470 (2010 census) [ 1 ] 1,235,786 (2000)
+    9: #034 State of Georgia January 2, 1788 (4th)
+            Population (2010) 9,687,653 [ 1 ]
+    10: #048 State of Connecticut January 9, 1788 (5th)
+            Population (2010) 3,574,097 [ 7 ]
+    INFO:xapian.search:'State'[0:10] = 40 43 49 41 38 50 36 45 34 48
+
 
 Other Uses for Generated Keys
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
