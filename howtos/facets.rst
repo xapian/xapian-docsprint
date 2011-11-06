@@ -19,6 +19,11 @@ This is often referred to as `faceted search`.
 Limitations
 ===========
 
+.. todo:: Move this to later in the document, as done for other limitations
+	  sections, to be less negative, and also because it's easier to
+	  understand the limitations in the context of what is actually
+	  possible.
+
 The accuracy of Xapian's faceting capability is determined by the number
 of records that are examined by Xapian whilst it is searching. You can
 control this number by specifying the `checkatleast` value of `get_mset`;
