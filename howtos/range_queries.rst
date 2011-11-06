@@ -16,10 +16,8 @@ number of things.
     years ("c. 1936") and commentary ("patented 1885", or "1642-1649
     (original); 1883 (model)"). Additionally, some records have no
     information about when the object was made.
-
- 1. Store that information in the Xapian database.
-
- 1. Provide a way during search of specifying a date range to constrain to.
+ 2. Store that information in the Xapian database.
+ 3. Provide a way during search of specifying a date range to constrain to.
 
 If we look through the other fields in the data set, there are more
 that could be useful for range queries: we could extract the longest
