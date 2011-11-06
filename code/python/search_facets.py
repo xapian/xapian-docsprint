@@ -33,10 +33,10 @@ def search(dbpath, querystring, offset=0, pagesize=10):
     spy = xapian.ValueCountMatchSpy(1)
     enquire.add_matchspy(spy)
         
-    for index, match in enumerate(enquire.get_mset(offset, pagesize, 100)):
+    for match in enquire.get_mset(offset, pagesize, 100):
         fields = json.loads(match.document.get_data())
         print u"%(rank)i: #%(docid)3.3i %(title)s" % {
-            'rank': offset + index + 1,
+            'rank': match.rank + 1,
             'docid': match.docid,
             'title': fields.get('TITLE', u''),
             }
