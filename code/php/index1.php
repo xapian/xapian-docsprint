@@ -47,7 +47,7 @@ function index ($datapath, $dbpath)
         // database only once no matter how many times we run the
         // indexer.
         $idterm = "Q".$identifier;
-        $doc->add_term($idterm);
+        $doc->add_boolean_term($idterm);
         $db->replace_document($idterm, $doc);
     }
 }

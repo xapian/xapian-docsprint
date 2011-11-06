@@ -150,7 +150,7 @@ def index(datapath, dbpath):
         # in the database only once no matter how many times
         # we run the indexer
         idterm = u"Q" + order
-        doc.add_term(idterm)
+        doc.add_boolean_term(idterm)
         db.replace_document(idterm, doc)
 
 
