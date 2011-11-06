@@ -64,7 +64,7 @@ you get the MSet, you can ask the spy for the facets it found,
 including the frequency. Note that although we're generally only
 showing ten matches, we use a parameter to `get_mset` called
 `checkatleast`, so that the entire dataset is considered and the facet
-frequencies are correct. See `Limitation`_ for some discussion of the
+frequencies are correct. See `Limitations`_ for some discussion of the
 implications of this. Here's the output::
 
     $ python python/search_facets.py db clock
