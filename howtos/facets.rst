@@ -62,7 +62,7 @@ including the frequency. Note that although we're generally only
 showing ten matches, we use a parameter to `get_mset` called
 `checkatleast`, so that the entire dataset is considered and the facet
 frequencies are correct. See `Limitation`_ for some discussion of the
-implications of this.
+implications of this. Here's the output::
 
     $ python python/search_facets.py db clock
     1: #044 Two-dial clock by the Self-Winding Clock Co; as used on the
