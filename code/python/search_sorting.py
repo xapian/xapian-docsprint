@@ -50,7 +50,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
         querystring,
         offset,
         offset + pagesize,
-        ' '.join([str(docid) for docid in matches]),
+        ' '.join(str(docid) for docid in matches),
         )
 ### End of example code.
 
