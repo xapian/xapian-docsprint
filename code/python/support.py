@@ -2,8 +2,20 @@
 """Support code for the python examples."""
 
 import csv
-import time
+from datetime import datetime
+import logging
 import math
+
+
+def log_matches(querystring, offset, pagesize, matches):
+    logger = logging.getLogger("xapian.search")
+    logger.info(
+        "'%s'[%i:%i] = %s",
+        querystring,
+        offset,
+        offset + pagesize,
+        ' '.join(str(docid) for docid in matches),
+        )
 
 
 def parse_csv_file(datapath, charset='iso-8859-1'):
@@ -11,40 +23,28 @@ def parse_csv_file(datapath, charset='iso-8859-1'):
 
     Assumes the first row has field names.
 
-    Yields a dict keyed by field name for each other row.
+    Yields a dict keyed by field name for the remaining rows.
 
     """
-    fd = open(datapath)
-    reader = csv.reader(fd)
-    titles = reader.next()
-    for row in reader:
-        yield dict(zip(titles, map(lambda x: x.decode(charset), row)))
-    fd.close()
+    with open(datapath) as fd:
+        reader = csv.DictReader(fd)
+        for row in reader:
+            yield row
 
 
-def numbers_from_string(s):
+def numbers_from_string(string_):
     """Find all numbers in a string.
-    
+
     """
     numbers = []
-    in_number = False
-    while len(s) > 0:
-        next_in_number = (s[0].isdigit() or s[0]=='.')
-        if next_in_number != in_number:
-            in_number = not in_number
-            if in_number:
-                numbers.append(s[0])
-        else:
-            if in_number:
-                numbers[-1] = numbers[-1] + s[0]
-        s = s[1:]
-    # fix up leading or trailing '.'
-    for index, number in enumerate(numbers):
-        if number[0]=='.':
-            number = '0.' + number[1:]
-        if number[-1]=='.':
-            number += '0'
-        numbers[index] = float(number)
+    sub_char = ''
+    for char_ in string_:
+        char_ = char_.decode(errors='ignore').strip()
+        if char_ and (char_.isdigit() or char_ == u'.'):
+            sub_char += char_
+        elif sub_char:
+            numbers.append(float(sub_char))
+            sub_char = ''
     return numbers
 
 
@@ -56,18 +56,18 @@ def middle_coord(text):
     care about N/E.
 
     """
+    def tuple_to_float(numbers):
+        divisor = 1
+        result = 0
+        for num in numbers:
+            result += float(num) / divisor
+            divisor = divisor * 60
+        return result
+
     if text is None:
         return None
     pieces = text.split(' to ', 1)
     start, end = map(numbers_from_string, pieces)
-    def tuple_to_float(numbers):
-        divisor = 1
-        result = 0
-        while len(numbers) > 0:
-            result += float(numbers[0]) / divisor
-            numbers = numbers[1:]
-            divisor = divisor * 60
-        return result
     start = tuple_to_float(start)
     end = tuple_to_float(end)
     if pieces[0][-1] in ('S', 'W'):
@@ -87,6 +87,7 @@ def distance_between_coords(latlon1, latlon2):
         math.pow(latlon2[1] - latlon1[1], 2)
         )
 
+
 def parse_states(datapath):
     """Parser for the states.csv data file.
 
@@ -101,45 +102,32 @@ def parse_states(datapath):
             continue
 
         # Date (order) -- we use the order as our identifier
-        pieces = admitted.split('(', 1)
+        pieces = admitted.split(' (', 1)
         admitted = pieces[0]
-        admitted.strip()
         try:
-            admitted = time.strptime(
-                admitted,
-                "%B %d, %Y ",
-                )
-            # now a struct_time, convert to YYYYMMDD
-            admitted = "%4.4i%2.2i%2.2i" % (
-                admitted[0],
-                admitted[1],
-                admitted[2],
-                )
+            admitted = datetime.strptime(admitted, "%B %d, %Y")
+            fields['admitted'] = "%s%s%s" % (
+                admitted.year, admitted.month, str(admitted.day).zfill(2))
         except ValueError:
             print "couldn't parse admitted '%s'" % admitted
-            admitted = None
-        fields['admitted'] = admitted
+            fields['admitted'] = None
 
-        order = pieces[1]
-        if order[-1] == ')':
-            order = order[:-1]
-        if order[-2:] in ('st', 'nd', 'rd', 'th'):
+        order = pieces[1][:-1]
+        if any(x in order for x in ('st', 'nd', 'rd', 'th')):
             order = order[:-2]
-        order.strip()
-        fields['order'] = order
+        fields['order'] = int(order)
 
         population = fields.get('population', None)
         if population is not None:
             # Population-comma-formatted (comment) extra
-            pieces = population.split('(', 1)
+            pieces = population.split(' (', 1)
             population = pieces[0].replace(',', '')
-            population.strip()
             try:
                 population = int(population)
             except ValueError:
                 population = None
         fields['population'] = population
-        
+
         fields['midlat'] = middle_coord(fields.get('latitude', None))
         fields['midlon'] = middle_coord(fields.get('longitude', None))
 
