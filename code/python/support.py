@@ -2,7 +2,7 @@
 """Support code for the python examples."""
 
 import csv
-import time
+from datetime import datetime
 import math
 
 
@@ -22,7 +22,7 @@ def parse_csv_file(datapath, charset='iso-8859-1'):
 
 def numbers_from_string(string_):
     """Find all numbers in a string.
-    
+
     """
     numbers = []
     sub_char = ''
@@ -31,15 +31,8 @@ def numbers_from_string(string_):
         if char_ and (char_.isdigit() or char_ == u'.'):
             sub_char += char_
         elif sub_char:
-            numbers.append(sub_char)
+            numbers.append(float(sub_char))
             sub_char = ''
-    # fix up leading or trailing '.'
-    for index, number in enumerate(numbers):
-        if number[0] == '.':
-            number = '0.' + number[1:]
-        if number[-1] == '.':
-            number += '0'
-        numbers[index] = float(number)
     return numbers
 
 
@@ -51,18 +44,18 @@ def middle_coord(text):
     care about N/E.
 
     """
+    def tuple_to_float(numbers):
+        divisor = 1
+        result = 0
+        for num in numbers:
+            result += float(num) / divisor
+            divisor = divisor * 60
+        return result
+
     if text is None:
         return None
     pieces = text.split(' to ', 1)
     start, end = map(numbers_from_string, pieces)
-    def tuple_to_float(numbers):
-        divisor = 1
-        result = 0
-        while len(numbers) > 0:
-            result += float(numbers[0]) / divisor
-            numbers = numbers[1:]
-            divisor = divisor * 60
-        return result
     start = tuple_to_float(start)
     end = tuple_to_float(end)
     if pieces[0][-1] in ('S', 'W'):
@@ -96,24 +89,17 @@ def parse_states(datapath):
             continue
 
         # Date (order) -- we use the order as our identifier
+
         pieces = admitted.split('(', 1)
-        admitted = pieces[0]
-        admitted.strip()
+        admitted = pieces[0].strip()
         try:
-            admitted = time.strptime(
-                admitted,
-                "%B %d, %Y ",
-                )
-            # now a struct_time, convert to YYYYMMDD
-            admitted = "%4.4i%2.2i%2.2i" % (
-                admitted[0],
-                admitted[1],
-                admitted[2],
-                )
-        except ValueError:
+            admitted = datetime.strptime(admitted, "%B %d, %Y")
+        except ValueError, e:
+            print e
             print "couldn't parse admitted '%s'" % admitted
             admitted = None
-        fields['admitted'] = admitted
+        fields['admitted'] = "%s%s%s" % (
+            admitted.year, admitted.month, str(admitted.day).zfill(2))
 
         order = pieces[1]
         if order[-1] == ')':
