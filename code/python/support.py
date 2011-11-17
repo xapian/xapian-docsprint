@@ -75,6 +75,7 @@ def distance_between_coords(latlon1, latlon2):
         math.pow(latlon2[1] - latlon1[1], 2)
         )
 
+
 def parse_states(datapath):
     """Parser for the states.csv data file.
 
@@ -89,32 +90,26 @@ def parse_states(datapath):
             continue
 
         # Date (order) -- we use the order as our identifier
-
-        pieces = admitted.split('(', 1)
-        admitted = pieces[0].strip()
+        pieces = admitted.split(' (', 1)
+        admitted = pieces[0]
         try:
             admitted = datetime.strptime(admitted, "%B %d, %Y")
-        except ValueError, e:
-            print e
+        except ValueError:
             print "couldn't parse admitted '%s'" % admitted
             admitted = None
         fields['admitted'] = "%s%s%s" % (
             admitted.year, admitted.month, str(admitted.day).zfill(2))
 
-        order = pieces[1]
-        if order[-1] == ')':
-            order = order[:-1]
-        if order[-2:] in ('st', 'nd', 'rd', 'th'):
+        order = pieces[1][:-1]
+        if any(x in order for x in ('st', 'nd', 'rd', 'th')):
             order = order[:-2]
-        order.strip()
-        fields['order'] = order
+        fields['order'] = int(order)
 
         population = fields.get('population', None)
         if population is not None:
             # Population-comma-formatted (comment) extra
-            pieces = population.split('(', 1)
+            pieces = population.split(' (', 1)
             population = pieces[0].replace(',', '')
-            population.strip()
             try:
                 population = int(population)
             except ValueError:
