@@ -20,27 +20,24 @@ def parse_csv_file(datapath, charset='iso-8859-1'):
             yield row
 
 
-def numbers_from_string(s):
+def numbers_from_string(string_):
     """Find all numbers in a string.
     
     """
     numbers = []
-    in_number = False
-    while len(s) > 0:
-        next_in_number = (s[0].isdigit() or s[0]=='.')
-        if next_in_number != in_number:
-            in_number = not in_number
-            if in_number:
-                numbers.append(s[0])
-        else:
-            if in_number:
-                numbers[-1] = numbers[-1] + s[0]
-        s = s[1:]
+    sub_char = ''
+    for char_ in string_:
+        char_ = char_.decode(errors='ignore').strip()
+        if char_ and (char_.isdigit() or char_ == u'.'):
+            sub_char += char_
+        elif sub_char:
+            numbers.append(sub_char)
+            sub_char = ''
     # fix up leading or trailing '.'
     for index, number in enumerate(numbers):
-        if number[0]=='.':
+        if number[0] == '.':
             number = '0.' + number[1:]
-        if number[-1]=='.':
+        if number[-1] == '.':
             number += '0'
         numbers[index] = float(number)
     return numbers
@@ -137,7 +134,7 @@ def parse_states(datapath):
             except ValueError:
                 population = None
         fields['population'] = population
-        
+
         fields['midlat'] = middle_coord(fields.get('latitude', None))
         fields['midlon'] = middle_coord(fields.get('longitude', None))
 
