@@ -4,6 +4,7 @@ import json
 import logging
 import sys
 import xapian
+import support
 
 ### Start of example code.
 def search(dbpath, querystring, offset=0, pagesize=10):
@@ -38,14 +39,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
         matches.append(match.docid)
 
     # Finally, make sure we log the query and displayed results
-    logger = logging.getLogger("xapian.search")
-    logger.info(
-        "'%s'[%i:%i] = %s",
-        querystring,
-        offset,
-        offset + pagesize,
-        ' '.join([str(docid) for docid in matches]),
-        )
+    support.log_matches(querystring, offset, pagesize, matches)
 ### End of example code.
 
 logging.basicConfig(level=logging.INFO)

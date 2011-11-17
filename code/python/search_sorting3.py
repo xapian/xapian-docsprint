@@ -4,7 +4,7 @@ import json
 import logging
 import sys
 import xapian
-from support import distance_between_coords
+from support import distance_between_coords, log_matches
 
 def search(dbpath, querystring, offset=0, pagesize=10):
     # offset - defines starting point within result set
@@ -53,16 +53,8 @@ def search(dbpath, querystring, offset=0, pagesize=10):
             'lon': fields.get('longitude', u''),
             }
         matches.append(match.docid)
-
     # Finally, make sure we log the query and displayed results
-    logger = logging.getLogger("xapian.search")
-    logger.info(
-        "'%s'[%i:%i] = %s",
-        querystring,
-        offset,
-        offset + pagesize,
-        ' '.join([str(docid) for docid in matches]),
-        )
+    log_matches(querystring, offset, pagesize, matches)
 ### End of example code.
 
 logging.basicConfig(level=logging.INFO)

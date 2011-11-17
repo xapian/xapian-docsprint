@@ -3,7 +3,19 @@
 
 import csv
 from datetime import datetime
+import logging
 import math
+
+
+def log_matches(querystring, offset, pagesize, matches):
+    logger = logging.getLogger("xapian.search")
+    logger.info(
+        "'%s'[%i:%i] = %s",
+        querystring,
+        offset,
+        offset + pagesize,
+        ' '.join(str(docid) for docid in matches),
+        )
 
 
 def parse_csv_file(datapath, charset='iso-8859-1'):
