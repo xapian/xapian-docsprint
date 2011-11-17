@@ -94,11 +94,11 @@ def parse_states(datapath):
         admitted = pieces[0]
         try:
             admitted = datetime.strptime(admitted, "%B %d, %Y")
+            fields['admitted'] = "%s%s%s" % (
+                admitted.year, admitted.month, str(admitted.day).zfill(2))
         except ValueError:
             print "couldn't parse admitted '%s'" % admitted
-            admitted = None
-        fields['admitted'] = "%s%s%s" % (
-            admitted.year, admitted.month, str(admitted.day).zfill(2))
+            fields['admitted'] = None
 
         order = pieces[1][:-1]
         if any(x in order for x in ('st', 'nd', 'rd', 'th')):
