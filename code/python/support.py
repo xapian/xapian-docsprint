@@ -11,15 +11,13 @@ def parse_csv_file(datapath, charset='iso-8859-1'):
 
     Assumes the first row has field names.
 
-    Yields a dict keyed by field name for each other row.
+    Yields a dict keyed by field name for the remaining rows.
 
     """
-    fd = open(datapath)
-    reader = csv.reader(fd)
-    titles = reader.next()
-    for row in reader:
-        yield dict(zip(titles, map(lambda x: x.decode(charset), row)))
-    fd.close()
+    with open(datapath) as fd:
+        reader = csv.DictReader(fd)
+        for row in reader:
+            yield row
 
 
 def numbers_from_string(s):
