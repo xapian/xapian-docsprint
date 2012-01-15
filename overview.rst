@@ -76,6 +76,11 @@ are complete for now.
 .. _in PHP: http://xapian.org/docs/examples/php.tgz
 .. _in C++: http://xapian.org/docs/examples/c++.tgz
 
+Note that the above links don't yet work. For now, you'll want to grab
+the `documentation source from github`_ which contains all the examples.
+
+.. _documentation source from github: https://github.com/jaylett/xapian-docsprint
+
 The first dataset is the first 100 objects taken from `museum
 catalogue data released by the Science Museum
 <http://api.sciencemuseum.org.uk/documentation/collections/>`_, and
