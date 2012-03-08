@@ -1,4 +1,5 @@
 .. Copyright (C) 2011 Justin Finkelstein, Richard Boulton, James Aylett
+.. Copyright (C) 2012 Olly Betts
 
 Introduction
 ============
@@ -33,10 +34,9 @@ Installation on Debian or Ubuntu
 Recent versions of both Debian and Ubuntu have Xapian 1.2 packaged: if
 you're on Debian 6.0 (squeeze) or later, or Ubuntu 11.10 (Oneiric
 Ocelot) you can just do one of the following depending on whether you
-want to work through the examples in Python, PHP or C++::
+want to work through the examples in Python or C++::
 
     $ sudo apt-get install python-xapian
-    $ sudo apt-get install php5-xapian
     $ sudo apt-get install libxapian-dev
 
 If you're still on Debian 5.0 (lenny) you'll have to `compile from
@@ -44,6 +44,10 @@ source`_, and if you're on Ubuntu 11.04 (Natty Narwhal) or before you'll
 need to install from our PPA_.
 
 .. _PPA: https://launchpad.net/~xapian-backports/+archive/xapian-1.2
+
+Packages of the PHP bindings aren't available due to a licence
+compatibility issue, but you can `build your own packages
+<http://trac.xapian.org/wiki/FAQ/PHP%20Bindings%20Package>`_.
 
 Installation on other systems
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
