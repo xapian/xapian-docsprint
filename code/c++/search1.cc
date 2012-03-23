@@ -20,6 +20,7 @@ search(const string & dbpath, const string & querystring,
     // Set up a QueryParser with a stemmer and suitable prefixes.
     Xapian::QueryParser queryparser;
     queryparser.set_stemmer(Xapian::Stem("en"));
+    queryparser.set_stem_strategy(queryparser.STEM_SOME);
     queryparser.add_prefix("title", "S");
     queryparser.add_prefix("description", "XD");
 
