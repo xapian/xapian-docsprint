@@ -72,16 +72,19 @@ Datasets and example code
 
 If you want to run the code we use to demonstrate Xapian's features
 (and we recommend you do), you'll need both the code itself and the
-two datasets we use. As mentioned before, you can get the `examples in
-Python`_, `in PHP`_ and `in C++`_, although only the Python versions
-are complete for now.
+two datasets we use.
 
-.. _examples in Python: http://xapian.org/docs/examples/python.tgz
-.. _in PHP: http://xapian.org/docs/examples/php.tgz
-.. _in C++: http://xapian.org/docs/examples/c++.tgz
+.. As mentioned before, you can get the `examples in
+.. Python`_, `in PHP`_ and `in C++`_, although only the Python versions
+.. are complete for now.
 
-Note that the above links don't yet work. For now, you'll want to grab
-the `documentation source from github`_ which contains all the examples.
+.. .. _examples in Python: http://xapian.org/docs/examples/python.tgz
+.. .. _in PHP: http://xapian.org/docs/examples/php.tgz
+.. .. _in C++: http://xapian.org/docs/examples/c++.tgz
+
+For now, you'll want to grab the `documentation source from github`_ which
+contains the example code in each language, and also the data files listed
+in the next paragraph.
 
 .. _documentation source from github: https://github.com/jaylett/xapian-docsprint
 
@@ -97,8 +100,8 @@ Commons license Attribution-NonCommercial-ShareAlike
 second under `Creative Commons Attribution-Share Alike 3.0
 <http://creativecommons.org/licenses/by-sa/3.0/>`_.
 
- * `museum catalogue dataset <http://xapian.org/data/muscat-data.csv.gz>`_
- * `US states dataset <http://xapian.org/data/states-data.csv.gz>`_
+.. * `museum catalogue dataset <http://xapian.org/data/muscat-data.csv.gz>`_
+.. * `US states dataset <http://xapian.org/data/states-data.csv.gz>`_
 
 .. todo:: finalise dataset(s) and code and link to them from here
 
