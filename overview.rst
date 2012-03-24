@@ -84,7 +84,7 @@ two datasets we use.
 
 For now, you'll want to grab the `documentation source from github`_ which
 contains the example code in each language, and also the data files listed
-in the next paragraph.
+in the next paragraph (both are in the "code" subdirectory).
 
 .. _documentation source from github: https://github.com/jaylett/xapian-docsprint
 
