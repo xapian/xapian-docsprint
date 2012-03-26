@@ -12,7 +12,7 @@ Preparing to run the examples
 -----------------------------
 
 You should download both the two sample datasets and example code as
-described in the `overview <overview.html>`_,
+described in the `overview <../../overview.html>`_,
 and also check that you've installed Xapian as detailed there.
 
 .. The code is provided as a gzipped tar file, which you should unpack
