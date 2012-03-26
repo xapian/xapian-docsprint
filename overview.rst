@@ -74,6 +74,9 @@ If you want to run the code we use to demonstrate Xapian's features
 (and we recommend you do), you'll need both the code itself and the
 two datasets we use.
 
+The example code is available in Python, PHP, and C++ so far, although
+there's only a complete set of examples for Python at present.
+
 .. As mentioned before, you can get the `examples in
 .. Python`_, `in PHP`_ and `in C++`_, although only the Python versions
 .. are complete for now.
@@ -81,6 +84,8 @@ two datasets we use.
 .. .. _examples in Python: http://xapian.org/docs/examples/python.tgz
 .. .. _in PHP: http://xapian.org/docs/examples/php.tgz
 .. .. _in C++: http://xapian.org/docs/examples/c++.tgz
+
+.. todo:: finalise datasets and code and link to them from here
 
 For now, you'll want to grab the `documentation source from github`_ which
 contains the example code in each language, and also the data files listed
@@ -102,7 +107,5 @@ second under `Creative Commons Attribution-Share Alike 3.0
 
 .. * `museum catalogue dataset <http://xapian.org/data/muscat-data.csv.gz>`_
 .. * `US states dataset <http://xapian.org/data/states-data.csv.gz>`_
-
-.. todo:: finalise dataset(s) and code and link to them from here
 
 .. todo:: link to here from every howto and everything that needs the data files and example code
