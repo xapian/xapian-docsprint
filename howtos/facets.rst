@@ -43,7 +43,7 @@ so we don't have to worry about normalising the values before using
 them as facets. Let's run that to build a dataset with document values
 suitable for faceting::
 
-    $ python python/index_facets.py data/muscat.csv db
+    $ python code/python/index_facets.py data/muscat.csv db
 
 
 Querying
@@ -67,7 +67,7 @@ showing ten matches, we use a parameter to `get_mset` called
 frequencies are correct. See `Limitations`_ for some discussion of the
 implications of this. Here's the output::
 
-    $ python python/search_facets.py db clock
+    $ python code/python/search_facets.py db clock
     1: #044 Two-dial clock by the Self-Winding Clock Co; as used on the
     2: #096 Clock with Hipp pendulum (an electric driven clock with Hipp
     3: #012 Assembled and unassembled EXA electric clock kit
