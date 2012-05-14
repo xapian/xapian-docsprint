@@ -24,11 +24,9 @@ This allows us to perform a search based on either field, for example::
 	INFO:xapian.search:'title:sunwatch'[0:10] = 1
 
 We can also combine prefixes with the logical operators to perform more
-complex queries::
+complex queries (note that we need to escape quotes or else the shell
+will eat them)::
 
-	$ python code/python/search1.py db description:"silver case" AND title:sundial
+	$ python code/python/search1.py db description:\"leather case\" AND title:sundial
 	1: #055 Silver altitude sundial in leather case
-	2: #073 Universal pocket sundial
-	3: #084 Magnetic sundial in brass case
-	4: #074 Sundial, made as a locket, gilt metal, part silver
-	INFO:xapian.search:'description:silver case AND title:sundial'[0:10] = 55 73 84 74
+	INFO:xapian.search:'description:"leather case" AND title:sundial'[0:10] = 55
