@@ -19,7 +19,7 @@ in the search query relate to those in the index::
 
 This allows us to perform a search based on either field, for example::
 
-	python code/python/search1.py db title:sunwatch
+	$ python code/python/search1.py db title:sunwatch
 	1: #001 Ansonia Sunwatch (pocket compas dial)
 	INFO:xapian.search:'title:sunwatch'[0:10] = 1
 
