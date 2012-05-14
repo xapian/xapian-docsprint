@@ -69,7 +69,7 @@ results = pool.imap(
     pull,
     sys.stdin.readlines(),
     )
-with open("states.csv", "w") as fh:
+with open("data/states.csv", "w") as fh:
     w = csv.writer(fh, dialect='excel')
     w.writerow(
         [

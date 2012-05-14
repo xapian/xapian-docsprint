@@ -179,9 +179,9 @@ To show how this works, we're going to need to use a different
 dataset, because the museums data only gives years the objects were
 made in; we've built one using data on the fifty US states, taken from
 Wikipedia infoboxes on 5th November 2011 and then tidied up a small
-amount. The CSV file is `code/states.csv`, and the code that did most
+amount. The CSV file is `data/states.csv`, and the code that did most
 of the work is `code/python/from_wikipedia.py`, using a list of
-Wikipedia page titles in `code/us_states_on_wikipedia`. The CSV is
+Wikipedia page titles in `data/us_states_on_wikipedia`. The CSV is
 licensed as Creative Commons Attribution-Share Alike 3.0, as per
 Wikipedia.
 
@@ -197,7 +197,7 @@ although there's a fair amount of work to turn the data from Wikipedia
 into the forms we need. We use the indexer in the same way as previous
 ones::
 
-    $ python code/python/index_ranges2.py code/states.csv statesdb
+    $ python code/python/index_ranges2.py data/states.csv statesdb
 
 With this done, we can change the set of value range processors we
 give to the QueryParser.

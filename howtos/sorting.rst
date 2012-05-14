@@ -51,7 +51,7 @@ sort, depending if/how you want relevance used in the ordering:
 We'll use the states dataset to demonstrate this, and the code from
 dealing with dates in the :ref:`range queries <range_queries>` HOWTO::
 
-    $ python code/python/index_ranges2.py states.csv statesdb
+    $ python code/python/index_ranges2.py data/states.csv statesdb
 
 This has three document values: slot 1 has the year of admission to
 the union, slot 2 the full date (as "YYYYMMDD"), and slot 3 the latest

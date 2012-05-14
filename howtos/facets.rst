@@ -43,7 +43,7 @@ so we don't have to worry about normalising the values before using
 them as facets. Let's run that to build a dataset with document values
 suitable for faceting::
 
-    $ python python/index_facets.py muscat.csv db
+    $ python python/index_facets.py data/muscat.csv db
 
 
 Querying
