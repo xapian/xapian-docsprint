@@ -102,7 +102,7 @@ Using the query parser
 ----------------------
 
 The previous section shows how to write code to filter the results of a query
-programatically.  This can be very flexible, but sometimes you want users to be
+programmatically.  This can be very flexible, but sometimes you want users to be
 able to specify filters themselves, within the text query that they enter.
 
 You can do this using the ``QueryParser.add_boolean_prefix()`` method.  This
