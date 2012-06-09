@@ -5,3 +5,4 @@ Tutorial and Background theory
    :maxdepth: 2
 
    unigramlm_tutorial
+   bigramindexingandaccessing
