@@ -1,13 +1,13 @@
 Tutorial to Index Bigram and access Bigrams,Bigram Postings
 ==============================================================
 
-Brass backend now support bigram indexing and use it for facilitating Language Model Search.
-Bigrams usage can be extended by using them as collocation for Diversified Search results,query reformulation suggestions etc.
+Brass backend now support bigram indexing and use it for facilitate language model Search.
+Bigrams have diverse usage evident from literature.Usage of bigrams can be increased for collocation for Diversified Search results,query reformulation suggestions etc in xapian framework.
 
 Introduction to Bigram:
 -------------------------
 
-A bigram or digram is every sequence of two adjacent elements in a string of tokens:  
+A bigram is every sequence of two adjacent elements in a string of tokens:
 ::
 	Document Content:
 
@@ -22,13 +22,25 @@ A bigram or digram is every sequence of two adjacent elements in a string of tok
 Enabling Bi-gram Indexing in Xapian
 -----------------------------------
 
-API User need to call set_bigram method with argument true to enable bigram indexing:
+API user need to call set_bigram method with argument true to enable bigram indexing:
 ::
 	   indexer.set_bigrams(true);
 
 **Caution:**
 
 It is advisable to API User to set a stop word list using Stopper class, Since indexing Bigram without removing stop words will ruin the statistics of Bigram and might result in decreased performance.
+
+Enabling Bi-gram Query Parsing in Xapian
+----------------------------------------
+
+API user need to call set_bigram method with argument true to enable bigram query parsing for query:
+::
+		queryparser.set_bigram(true);
+
+**Cation:**
+
+Quey parser will parser query keywords to bigram for certain type of query currently, currently group terms(terms without any operator),phrased(gaurav.arora) , phrase("gaurav arora") are supported.More type of queries will be supported in future.
+
 
 Access to Bi-gram
 ------------------
