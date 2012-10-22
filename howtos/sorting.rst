@@ -59,7 +59,7 @@ population estimate. So if we want to sort by year of entry to the
 union and then within that by relevance, we want to add the following
 before we call `get_mset`:
 
-.. literalinclude:: /code/python/search_sorting.py
+.. xapianexample:: search_sorting
     :start-after: Start of example code.
     :end-before: End of example code.
 
@@ -94,7 +94,7 @@ the same, the second document value determines the order, and so on).
 We'll use this to change our sorted search above to order by year of
 entry to the union and then by decreasing population.
 
-.. literalinclude:: /code/python/search_sorting2.py
+.. xapianexample:: search_sorting2
     :start-after: Start of example code.
     :end-before: End of example code.
 
@@ -140,7 +140,7 @@ state stored in a value. We can use the approximate middle of the
 state for this purpose, which are calculated for us when parsing the
 `states.csv` file:
 
-.. literalinclude:: /code/python/index_values_with_geo.py
+.. xapianexample:: index_values_with_geo
     :start-after: Start of example code.
     :end-before: End of example code.
 
@@ -149,7 +149,7 @@ slot that we can easily read them out from again. Now we need a
 KeyMaker; let's have it return a key that sorts by distance from
 Washington, DC.
 
-.. literalinclude:: /code/python/search_sorting3.py
+.. xapianexample:: search_sorting3
     :start-after: Start of example code.
     :end-before: End of example code.
 

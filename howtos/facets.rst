@@ -32,7 +32,7 @@ No additional work is needed to implement faceted searching, except to
 ensure that the values you wish to use in facets are stored as
 document values.
 
-.. literalinclude:: /code/python/index_facets.py
+.. xapianexample:: index_facets
     :start-after: Start of example code.
     :end-before: End of example code.
 
@@ -55,7 +55,7 @@ To add a spy you need to create a new `Xapian::ValueCountMatchSpy` object,
 stating which value slot the spy is to operate on and add this to the
 `Xapian::Enquire` as follows:
 
-.. literalinclude:: /code/python/search_facets.py
+.. xapianexample:: search_facets
     :start-after: Start of example code.
     :end-before: End of example code.
 

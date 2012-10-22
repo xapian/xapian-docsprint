@@ -61,7 +61,7 @@ Creating the document values
 ----------------------------
 
 We need a new version of our indexer. This one is
-`code/python/index_ranges.py`, and creates document values from both
+:xapian_example_filename:`index_ranges`, and creates document values from both
 `MEASUREMENTS` and `DATE_MADE`. We'll put the largest dimension in
 value slot 0 (fortunately the data is stored in millimetres and
 kilograms, so we can cheat a little and assume that dimensions will
@@ -69,7 +69,7 @@ always be larger than weights), and a year taken from `DATE_MADE` into
 value slot 1 (we choose the first year we can parse, since it can
 contain such a variety of date formats).
 
-.. literalinclude:: /code/python/index_ranges.py
+.. xapianexample:: index_ranges
 
 We can check this has created document values using `delve`::
 
@@ -92,7 +92,7 @@ dimensions must be specified with the suffix 'mm', but years are just
 numbers. For this to work, we have to tell QueryParser about the value
 range with a suffix first:
 
-.. literalinclude:: /code/python/search_ranges.py
+.. xapianexample:: search_ranges
     :start-after: and add in value range processors
     :end-before: And parse the query
 
@@ -102,7 +102,7 @@ string, as in the second call, it doesn't matter whether you say it's
 a suffix or prefix, so it's convenient to skip that parameter.
 
 
-This is implemented in `code/python/search_ranges.py`, which also
+This is implemented in :xapian_example_filename:`^`, which also
 modifies the output to show the measurements and date made fields as
 well as the title.
 
@@ -186,7 +186,7 @@ licensed as Creative Commons Attribution-Share Alike 3.0, as per
 Wikipedia.
 
 We need a new indexer for this as well, which is
-`code/python/index_ranges2.py`. It stores two numbers using
+:xapian_example_filename:`index_ranges2`. It stores two numbers using
 `sortable_serialise`: year of admission in value slot 1 and population
 in slot 3. It also stores the date of admission as 'YYYYMMDD' in
 slot 2. We'll look at just the date ones for now, and come back to the
@@ -202,7 +202,7 @@ ones::
 With this done, we can change the set of value range processors we
 give to the QueryParser.
 
-.. literalinclude:: /code/python/search_ranges2.py
+.. xapianexample:: search_ranges2
     :start-after: Start of date example code
     :end-before: End of date example code
 
@@ -292,7 +292,7 @@ possibly be years in our data set, and encompass the full range of
 populations. If either number is outside that range, we will return
 `Xapian::BAD_VALUENO` and the QueryParser will move on.
 
-.. literalinclude:: /code/python/search_ranges2.py
+.. xapianexample:: search_ranges2
     :start-after: Start of custom VRP code
     :end-before: End of custom VRP code
 
