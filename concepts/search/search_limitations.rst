@@ -52,5 +52,5 @@ root to do so.
 .. Needs to mention ulimit, pam/syslimits & upstart for linux alone these days
 
 You can address this issue (and spread the search load) by using the remote
-backend to search databases on a cluster of machines, which only needs one
-fd open per database on the client machine.
+backend to search databases on a cluster of machines - the remote backend
+only uses one fd per database on the client machine.
