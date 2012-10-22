@@ -121,8 +121,8 @@ def parse_states(datapath):
         population = fields.get('population', None)
         if population is not None:
             # Population-comma-formatted (comment) extra
-            pieces = population.split(' (', 1)
-            population = pieces[0].replace(',', '')
+            pieces = population.split('(', 1)
+            population = pieces[0].replace(',', '').strip()
             try:
                 population = int(population)
             except ValueError:
