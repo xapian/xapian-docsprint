@@ -195,3 +195,13 @@ latex_documents = [
 
 # Cause todos to be displayed.
 todo_include_todos = True
+
+# Default to setting 'py' tag if none are set, and set highlight language
+# appropriately.
+if tags.has('php'):
+    highlight_language = 'php'
+elif tags.has('cc'):
+    highlight_language = 'c++'
+else:
+    tags.add('py')
+    highlight_language = 'python'
