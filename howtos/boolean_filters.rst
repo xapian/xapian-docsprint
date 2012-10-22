@@ -85,35 +85,8 @@ documents matching "clock", and filter the results to return only those with a
 value of ``"steel (metal)"`` as one of the semicolon separated values in the
 materials field:
 
-.. only:: py
-
-    .. code-block:: sh
-
-        $ python code/python/search_filters.py db clock 'steel (metal)'
-        1: #012 Assembled and unassembled EXA electric clock kit
-        2: #098 'Pond' electric clock movement (no dial)
-        3: #052 Reconstruction of Dondi's Astronomical Clock, 1974
-        4: #059 Electrically operated clock controller
-        5: #024 Regulator Clock with Gravity Escapement
-        6: #097 Bain's subsidiary electric clock
-        7: #009 Copy  of a Dwerrihouse skeleton clock with coup-perdu escape
-        8: #091 Pendulum clock designed by Galileo in 1642 and made by his son in 1649, model.
-        INFO:xapian.search:'clock'.material(['steel (metal)'])[0:10] = 12 98 52 59 24 97 9 91
-
-.. only:: php
-
-    .. code-block:: sh
-
-        $ php code/php/search_filters.php db clock 'steel (metal)'
-        1: #012 Assembled and unassembled EXA electric clock kit
-        2: #098 'Pond' electric clock movement (no dial)
-        3: #052 Reconstruction of Dondi's Astronomical Clock, 1974
-        4: #059 Electrically operated clock controller
-        5: #024 Regulator Clock with Gravity Escapement
-        6: #097 Bain's subsidiary electric clock
-        7: #009 Copy  of a Dwerrihouse skeleton clock with coup-perdu escape
-        8: #091 Pendulum clock designed by Galileo in 1642 and made by his son in 1649, model.
-        INFO:xapian.search:'clock'.material(['steel (metal)'])[0:10] = 12 98 52 59 24 97 9 91
+.. xapianrunexample:: search_filters
+    :args: db clock 'steel (metal)'
 
 Using the query parser
 ----------------------
@@ -134,18 +107,8 @@ Users can then perform a filtered search by preceding a word or phrase with
 "material:", similar to the syntax supported for this sort of thing by many web
 search engines:
 
-.. code-block:: sh
-
-    $ python code/python/search_filters2.py db 'clock material:"steel (metal)"'
-    1: #012 Assembled and unassembled EXA electric clock kit
-    2: #098 'Pond' electric clock movement (no dial)
-    3: #052 Reconstruction of Dondi's Astronomical Clock, 1974
-    4: #059 Electrically operated clock controller
-    5: #024 Regulator Clock with Gravity Escapement
-    6: #097 Bain's subsidiary electric clock
-    7: #009 Copy  of a Dwerrihouse skeleton clock with coup-perdu escape
-    8: #091 Pendulum clock designed by Galileo in 1642 and made by his son in 1649, model.
-    INFO:xapian.search:'clock material:"steel (metal)"'[0:10] = 12 98 52 59 24 97 9 91
+.. xapianrunexample:: search_filters2
+    :args: db 'clock material:"steel (metal)"'
 
 What to supply to the query parser
 ----------------------------------

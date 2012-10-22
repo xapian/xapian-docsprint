@@ -108,42 +108,24 @@ well as the title.
 
 We can now restrict across dimensions using queries like '..50mm'
 (everything at most 50mm in its longest dimension), and across years
-using '1980..1989'::
+using '1980..1989':
 
-    $ python code/python/search_ranges.py db ..50mm
-    1: #031 (1588) overall diameter: 50 mm
-            Portable universal equinoctial sundial, in brass, signed "A
-    2: #073 (1701-1721) overall: 15 mm x 44.45 mm, weight: 0.055kg
-            Universal pocket sundial
-    3: #074 (1596) overall: 13 mm x 44.45 mm x 44.45 mm, weight: 0.095kg
-            Sundial, made as a locket, gilt metal, part silver
-    INFO:xapian.search:'..50mm'[0:10] = 31 73 74
+.. xapianrunexample:: search_ranges
+    :args: db ..50mm
 
-    $ python code/python/search_ranges.py db 1980..1989
-    1: #050 (1984) overall: 105 mm x 75 mm x 57 mm,
-            Quartz Analogue "no battery" wristwatch by Pulsar Quartz (CA
-    2: #051 (1984) overall: 85 mm x 65 mm x 38 mm,
-            Analogue quartz clock with voice controlled alarm by Braun,
-    INFO:xapian.search:'1980..1989'[0:10] = 50 51
+.. xapianrunexample:: search_ranges
+    :args: db 1980..1989
 
 You can of course combine this with 'normal' search terms, such as all
-clocks made from 1960 onwards::
+clocks made from 1960 onwards:
 
-    $ python code/python/search_ranges.py db clock 1960..
-    1: #052 (1974) clock: 1185 x 780 mm, 122 kg; rewind unit: 460 x 640 x 350 mm
-            Reconstruction of Dondi's Astronomical Clock, 1974
-    2: #051 (1984) overall: 85 mm x 65 mm x 38 mm,
-            Analogue quartz clock with voice controlled alarm by Braun,
-    3: #102 (1973) overall: 380 mm x 300 mm x 192 mm, weight: 6.45kg
-            Copy  of a Dwerrihouse skeleton clock with coup-perdu escape
-    INFO:xapian.search:'clock 1960..'[0:10] = 52 51 102
+.. xapianrunexample:: search_ranges
+    :args: db clock 1960..
 
-and even combining both ranges at once, such as all large objects from the 19th century::
+and even combining both ranges at once, such as all large objects from the 19th century:
 
-    $ python code/python/search_ranges.py db 1000..mm 1800..1899
-    1: #024 (1845-1855) overall: 1850 mm x 350 mm x 250 mm
-            Regulator Clock with Gravity Escapement
-    INFO:xapian.search:'1000..mm 1800..1899'[0:10] = 24
+.. xapianrunexample:: search_ranges
+    :args: db 1000..mm 1800..1899
 
 Note the slightly awkward syntax *1000..mm*. The suffix must always go
 on the end of the entire range; it may also go on the beginning (so
@@ -154,15 +136,10 @@ prefixes.
 If you get the rules wrong, the QueryParser will raise a
 `QueryParserError`, which in production code you could catch and
 either signal to the user or perhaps try the query again without the
-`ValueRangeProcessor` that tripped up::
+`ValueRangeProcessor` that tripped up:
 
-    $ python code/python/search_ranges.py db 1000mm..
-    Traceback (most recent call last):
-      File "code/python/search_ranges.py", line 59, in <module>
-        search(dbpath = sys.argv[1], querystring = " ".join(sys.argv[2:]))
-      File "code/python/search_ranges.py", line 29, in search
-        query = queryparser.parse_query(querystring)
-    xapian.QueryParserError: Unknown range operation
+.. xapianrunexample:: search_ranges
+    :args: db 1000mm..
 
 
 Handling dates
@@ -195,9 +172,10 @@ others in a minute.
 There isn't any new code in this indexer that's specific to Xapian,
 although there's a fair amount of work to turn the data from Wikipedia
 into the forms we need. We use the indexer in the same way as previous
-ones::
+ones:
 
-    $ python code/python/index_ranges2.py data/states.csv statesdb
+.. xapianrunexample:: index_ranges2
+    :args: data/states.csv statesdb
 
 With this done, we can change the set of value range processors we
 give to the QueryParser.
@@ -213,55 +191,23 @@ states, we've gone for US dates. The `NumberValueRangeProcessor` is as
 we saw before.
 
 This enables us to search for any state that talks about the Spanish
-in its description::
+in its description:
 
-    $ python code/python/search_ranges2.py statesdb spanish
-    1: #004 State of Montana November 8, 1889 (41st)
-            Population (2010) 989,415
-    2: #019 State of Texas December 29, 1845 (28th)
-            Population 25,145,561 (2010 Census) [ 5 ]
-    INFO:xapian.search:'spanish'[0:10] = 4 19
+.. xapianrunexample:: search_ranges2
+    :args: statesdb spanish
 
-or for all states admitted in the 19th century::
+or for all states admitted in the 19th century:
 
-    $ python code/python/search_ranges2.py statesdb/ 1800..1899
-    1: #001 State of Washington November 11, 1889 (42nd)
-            Population 6,744,496 (2010 Estimate)
-    2: #002 State of Arkansas June 15, 1836 (25th)
-            Population 2,915,918 (2010 Census) [ 2 ] 2,673,400 (2000)
-    3: #003 State of Oregon February 14, 1859 (33rd)
-            Population 3,831,074 (2010) [ 2 ]
-    4: #004 State of Montana November 8, 1889 (41st)
-            Population (2010) 989,415
-    5: #005 Idaho July 3, 1890 (43rd)
-            Population 1,567,582 (2010 Census)
-    6: #006 State of Nevada October 31, 1864 (36th)
-            Population 2,700,551 (2010 Census)
-    7: #007 State of California September 9, 1850 (31st)
-            Population 37,253,956
-    8: #009 State of Utah January 4, 1896 (45th)
-            Population 2,763,885 (2010 Census) [ 2 ]
-    9: #010 State of Wyoming July 10, 1890 (44th)
-            Population (2010)563,626 [ 1 ]
-    10: #011 State of Colorado August 1, 1876 (38th)
-            Population (2010) 5,029,196
-    INFO:xapian.search:'1800..1899'[0:10] = 1 2 3 4 5 6 7 9 10 11
+.. xapianrunexample:: search_ranges2
+    :args: statesdb 1800.1899
 
 That uses the `NumberValueRangeProcessor` on value slot 1, as in our
 previous example. Let's be more specific and ask for only those
 between November 8th 1889, when Montana became part of the Union, and
-July 10th 1890, when Wyoming joined::
+July 10th 1890, when Wyoming joined:
 
-    $ python code/python/search_ranges2.py statesdb/ 11/08/1889..07/10/1890
-    1: #001 State of Washington November 11, 1889 (42nd)
-            Population 6,744,496 (2010 Estimate)
-    2: #004 State of Montana November 8, 1889 (41st)
-            Population (2010) 989,415
-    3: #005 Idaho July 3, 1890 (43rd)
-            Population 1,567,582 (2010 Census)
-    4: #010 State of Wyoming July 10, 1890 (44th)
-            Population (2010)563,626 [ 1 ]
-    INFO:xapian.search:'11/08/1889..07/10/1890'[0:10] = 1 4 5 10
+.. xapianrunexample:: search_ranges2
+    :args: statesdb 11/08/1889..07/10/1890
 
 That uses the `DateValueRangeProcessor` on value slot 2; it can't cope
 with year ranges, which is why we indexed to both slots 1 and 2.
@@ -310,33 +256,15 @@ ranges which use integer numbers within the 500 thousand to 50 million
 range.
 
 We can then search for states by population, such as all over 10
-million::
+million:
 
-    $ python code/python/search_ranges2.py statesdb/ 10000000..
-    1: #007 State of California September 9, 1850 (31st)
-            Population 37,253,956
-    2: #019 State of Texas December 29, 1845 (28th)
-            Population 25,145,561 (2010 Census) [ 5 ]
-    3: #027 State of Illinois December 3, 1818 (21st)
-            Population 12,830,632 (2010) [ 3 ]
-    4: #030 State of Ohio March 1, 1803 (17th)
-            Population 11,536,504 (2010 census) [ 6 ]
-    5: #035 State of Florida March 3, 1845 (27th)
-            Population 18,801,310 (2010 Census) [ 4 ]
-    6: #040 Commonwealth of Pennsylvania December 12, 1787 (2nd)
-            Population 12,702,379(2010.) [ 2 ]
-    7: #041 State of New York July 26, 1788 (11th)
-            Population 19,378,102 (2010 Census) [ 3 ]
-    INFO:xapian.search:'10000000..'[0:10] = 7 19 27 30 35 40 41
+.. xapianrunexample:: search_ranges2
+    :args: statesdb 10000000..
 
 Or all that joined the union in the 1780s and have a population now over 10 million::
 
-    $ python code/python/search_ranges2.py statesdb/ 1780..1789 10000000..
-    1: #040 Commonwealth of Pennsylvania December 12, 1787 (2nd)
-            Population 12,702,379(2010.) [ 2 ]
-    2: #041 State of New York July 26, 1788 (11th)
-            Population 19,378,102 (2010 Census) [ 3 ]
-    INFO:xapian.search:'1780..1789 10000000..'[0:10] = 40 41
+.. xapianrunexample:: search_ranges2
+    :args: statesdb 1780..1789 10000000..
 
 With a little more work, we could support ranges such as '..5m' to
 mean up to 5 million, or '..750k' for up to 750 thousand.
