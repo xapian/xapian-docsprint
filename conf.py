@@ -14,6 +14,7 @@
 import sys, os
 from docutils import nodes, utils
 from docutils.parsers.rst import roles
+from docutils.parsers.rst.roles import set_classes
 from sphinx.directives.code import LiteralInclude, directives
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -43,6 +44,8 @@ master_doc = 'index'
 project = u'Getting Started with Xapian'
 _authors = u'Olly Betts, Richard Boulton, Dan Colish, Justin Finkelstein, James Aylett'
 copyright = u'2011, 2012 ' + _authors
+
+github_project_url = 'https://github.com/jaylett/xapian-docsprint/blob/master'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -216,6 +219,25 @@ else:
     highlight_language = 'python'
     ext = '.py'
 
+
+def github_link_node(rawtext, options=()):
+    try:
+        base = github_project_url
+        if not base:
+            raise AttributeError
+    except AttributeError, err:
+        raise ValueError(
+            'github_project_url configuration value is not set (%s)' % str(err))
+    slash = '/' if base[-1] != '/' else ''
+    ref = base + slash + rawtext
+    if not options:
+        options = {}
+    set_classes(options)
+    node = nodes.reference(rawtext, utils.unescape(rawtext), refuri=ref,
+                           **options)
+    return node
+
+
 def xapian_example_filename(ex):
     return "code/%s/%s%s" % (highlight_language, ex, ext)
 
@@ -258,12 +280,13 @@ class XapianExample(LiteralInclude):
 # .. xapianexample:: search_filters2
 directives.register_directive('xapianexample', XapianExample)
 
+
 def xapian_example_filename_role(typ, rawtext, etext, lineno, inliner,
-                                 options={}, content=[]):
+                                 options=(), content=[]):
     ex = utils.unescape(etext)
     if ex == '^' and last_example:
         ex = last_example
-    return [nodes.literal(text = xapian_example_filename(ex))], []
+    return [github_link_node(xapian_example_filename(ex), options)], []
 
 # Usage:
 #
