@@ -19,7 +19,7 @@ most efficient using ``enquire.set_docid_order(enquire.DONT_CARE);``.
 
 It is also possible to change the way that the relevance scores are calculated
 - for details, see the :ref:`document on weighting schemes and
-  document scoring <weighting_scheme>` for details.
+document scoring <weighting_scheme>` for details.
 
 Sorting by Value
 ----------------
