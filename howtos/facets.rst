@@ -97,6 +97,9 @@ control this number by specifying the `checkatleast` value of
 :xapian-just-method:`get_mset`; however it is important to be aware that
 increasing this number may have an effect on overall query performance.
 
+.. todo:: It is probably worth saying that a typical database will not hit these
+          performance issues
+
 
 In Development
 ==============
