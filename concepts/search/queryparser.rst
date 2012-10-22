@@ -145,7 +145,7 @@ was for::
     +the +document
 
 Then the search would find relevant documents which contained both 'the'
-pand 'document'.  Also, when searching for phrases, stop words do not apply,
+and 'document'.  Also, when searching for phrases, stop words do not apply,
 for example::
 
     "the green space" retrieves documents with this exact phrase
