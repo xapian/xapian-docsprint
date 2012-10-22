@@ -24,16 +24,14 @@ in the search query relate to those in the index:
     queryparser.add_prefix("title", "S")
     queryparser.add_prefix("description", "XD")
 
-This allows us to perform a search based on either field, for example::
+This allows us to perform a search based on either field, for example:
 
-	$ python code/python/search1.py db title:sunwatch
-	1: #001 Ansonia Sunwatch (pocket compas dial)
-	INFO:xapian.search:'title:sunwatch'[0:10] = 1
+.. xapianrunexample:: search1
+    :args: db title:sunwatch
 
 We can also combine prefixes with the logical operators to perform more
 complex queries (note that we need to escape quotes or else the shell
-will eat them)::
+will eat them):
 
-	$ python code/python/search1.py db description:\"leather case\" AND title:sundial
-	1: #055 Silver altitude sundial in leather case
-	INFO:xapian.search:'description:"leather case" AND title:sundial'[0:10] = 55
+.. xapianrunexample:: search1
+    :args: db description:\"leather case\" AND title:sundial

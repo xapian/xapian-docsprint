@@ -31,9 +31,10 @@ done either by Xapian docid or using unique ID terms, as with
 A copy of this code is available in :xapian-code-example:`^`.
 
 Then we just run our deletion tool, giving it identifiers taken from
-the `id_NUMBER` field in the data set::
+the `id_NUMBER` field in the data set:
 
-    $ python code/python/delete1.py db 1953-448 1985-438
+.. xapianrunexample:: delete1
+    :args: db 1953-448 1985-438
 
 After that, we expect to see two fewer documents in our database using delve::
 

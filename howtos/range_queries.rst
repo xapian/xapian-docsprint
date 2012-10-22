@@ -261,7 +261,7 @@ million:
 .. xapianrunexample:: search_ranges2
     :args: statesdb 10000000..
 
-Or all that joined the union in the 1780s and have a population now over 10 million::
+Or all that joined the union in the 1780s and have a population now over 10 million:
 
 .. xapianrunexample:: search_ranges2
     :args: statesdb 1780..1789 10000000..
