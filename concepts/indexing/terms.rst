@@ -13,7 +13,7 @@ producing terms.
 
 Often the same word will occur multiple times in a piece of text.  Xapian
 calls this number the `within document frequency` and stores it in the
-database.  It is often used when searching to give documents in which a
+database.  It is often useful when searching to give documents in which a
 term occurs more often a higher weight.
 
 It is also possible to store a set of positions along with each term; this

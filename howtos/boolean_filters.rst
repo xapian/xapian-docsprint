@@ -1,9 +1,9 @@
 How to filter search results
 ============================
 
-.. todo:: point out that lowercasing by TermGenerator or similar will
-.. prevent unexpected matching of prefixes terms by "real" words in
-.. the source data
+.. todo:: point out that lowercasing by TermGenerator or similar will prevent
+          unexpected matching of prefixes terms by "real" words in the source
+          data
 
 In our earlier discussion of building an index of museum catalog data, we
 showed how to index text from the title and description fields with
