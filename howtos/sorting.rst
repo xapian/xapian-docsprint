@@ -60,8 +60,6 @@ union and then within that by relevance, we want to add the following
 before we call `get_mset`:
 
 .. xapianexample:: search_sorting
-    :start-after: Start of example code.
-    :end-before: End of example code.
 
 The final parameter is `False` for ascending order, `True` for
 descending. We can then run sorted searches like this::
@@ -95,8 +93,6 @@ We'll use this to change our sorted search above to order by year of
 entry to the union and then by decreasing population.
 
 .. xapianexample:: search_sorting2
-    :start-after: Start of example code.
-    :end-before: End of example code.
 
 As with the `Enquire` methods, `add_value` has a second parameter that
 controls whether it uses an ascending or descending sort. So now we
@@ -141,8 +137,6 @@ state for this purpose, which are calculated for us when parsing the
 `states.csv` file:
 
 .. xapianexample:: index_values_with_geo
-    :start-after: Start of example code.
-    :end-before: End of example code.
 
 We don't have to sort on these, so we've just put them both into one
 slot that we can easily read them out from again. Now we need a
@@ -150,8 +144,6 @@ KeyMaker; let's have it return a key that sorts by distance from
 Washington, DC.
 
 .. xapianexample:: search_sorting3
-    :start-after: Start of example code.
-    :end-before: End of example code.
 
 And running it is as simple as before::
 

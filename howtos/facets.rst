@@ -33,8 +33,6 @@ ensure that the values you wish to use in facets are stored as
 document values.
 
 .. xapianexample:: index_facets
-    :start-after: Start of example code.
-    :end-before: End of example code.
 
 Here we're using two value slots: 0 contains the collection, and 1
 contains the name of whoever made the object. We know from the
@@ -56,8 +54,6 @@ stating which value slot the spy is to operate on and add this to the
 `Xapian::Enquire` as follows:
 
 .. xapianexample:: search_facets
-    :start-after: Start of example code.
-    :end-before: End of example code.
 
 Here we're faceting on value slot 1, which is the object maker. After
 you get the MSet, you can ask the spy for the facets it found,

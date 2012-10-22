@@ -14,7 +14,5 @@ There are many ways to go from the user's text to a Query, but the
 most simple of these is to use the QueryParser.
 
 .. xapianexample:: search1
-    :start-after: Start of example code
-    :end-before: End of example code
 
 A full copy of this code is available in :xapian_example_filename:`^`.

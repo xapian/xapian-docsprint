@@ -35,8 +35,7 @@ We can therefore just add the identifiers to the ``Document`` directly,
 after splitting on semicolons, using the ``add_boolean_term()`` method.
 
 .. xapianexample:: index_filters
-    :start-after: Start of new indexing code
-    :end-before: End of new indexing code
+    :marker: new indexing code
 
 A full copy of the indexer with this updated code is available in
 :xapian_example_filename:`^`.
@@ -77,8 +76,6 @@ QueryParser and manually constructed Query objects, which allows very flexible
 filtering of the results from parsed queries.
 
 .. xapianexample:: search_filters
-    :start-after: Start of example code
-    :end-before: End of example code
 
 A full copy of the this updated search code is available in
 :xapian_example_filename:`^`.  With this, we could perform a search for
@@ -129,8 +126,6 @@ prefix that terms have been stored in for that term.  For our materials search,
 we just need to a add a single line to the search code:
 
 .. xapianexample:: search_filters2
-    :start-after: Start of example code
-    :end-before: End of example code
     :emphasize-lines: 21-26
 
 Users can then perform a filtered search by preceding a word or phrase with

@@ -203,8 +203,7 @@ With this done, we can change the set of value range processors we
 give to the QueryParser.
 
 .. xapianexample:: search_ranges2
-    :start-after: Start of date example code
-    :end-before: End of date example code
+    :marker: date example code
 
 The `DateValueRangeProcessor` is working on value slot 2, with an
 "epoch" of 1860 (so two digit years will be considered as starting at
@@ -293,8 +292,7 @@ populations. If either number is outside that range, we will return
 `Xapian::BAD_VALUENO` and the QueryParser will move on.
 
 .. xapianexample:: search_ranges2
-    :start-after: Start of custom VRP code
-    :end-before: End of custom VRP code
+    :marker: custom VRP code
 
 Most of the work is in `__call__` (python's equivalent of `operator()`
 in C++), which gets called with the two strings at either end of the

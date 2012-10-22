@@ -217,6 +217,21 @@ def xapian_example_filename(ex):
     return "code/%s/%s%s" % (highlight_language, ex, ext)
 
 class XapianExample(LiteralInclude):
+    option_spec = {
+        'linenos': directives.flag,
+        'tab-width': int,
+        'language': directives.unchanged_required,
+        'encoding': directives.encoding,
+        'pyobject': directives.unchanged_required,
+        'lines': directives.unchanged_required,
+        'start-after': directives.unchanged_required,
+        'end-before': directives.unchanged_required,
+        'prepend': directives.unchanged_required,
+        'append': directives.unchanged_required,
+        'emphasize-lines': directives.unchanged_required,
+        'marker': directives.unchanged_required,
+    }
+
     def run(self):
         global last_example
         last_example = self.arguments[0]
@@ -225,6 +240,14 @@ class XapianExample(LiteralInclude):
             return [nodes.literal(text = 'No version of example %s in language %s - patches welcome!'
                 % (last_example, highlight_language))]
         self.arguments[0] = "/" + filename
+        if not 'start-after' in self.options and not 'end-before' in self.options:
+            if 'marker' in self.options:
+                marker = self.options['marker']
+                del self.options['marker']
+            else:
+                marker = 'example code'
+            self.options['start-after'] = 'Start of ' + marker
+            self.options['end-before'] = 'End of ' + marker
         return super(XapianExample, self).run()
 
 # Usage:
