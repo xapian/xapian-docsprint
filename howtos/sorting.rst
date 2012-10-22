@@ -49,9 +49,10 @@ sort, depending if/how you want relevance used in the ordering:
    scores to different documents).
 
 We'll use the states dataset to demonstrate this, and the code from
-dealing with dates in the :ref:`range queries <range_queries>` HOWTO::
+dealing with dates in the :ref:`range queries <range_queries>` HOWTO:
 
-    $ python code/python/index_ranges2.py data/states.csv statesdb
+.. xapianrunexample:: index_ranges2
+    :args: data/states.csv statesdb
 
 This has three document values: slot 1 has the year of admission to
 the union, slot 2 the full date (as "YYYYMMDD"), and slot 3 the latest
@@ -62,14 +63,10 @@ before we call `get_mset`:
 .. xapianexample:: search_sorting
 
 The final parameter is `False` for ascending order, `True` for
-descending. We can then run sorted searches like this::
+descending. We can then run sorted searches like this:
 
-    $ python code/python/search_sorting.py statesdb spanish
-    1: #019 State of Texas December 29, 1845 (28th)
-            Population 25,145,561 (2010 Census) [ 5 ]
-    2: #004 State of Montana November 8, 1889 (41st)
-            Population 989,415 (2010)
-    INFO:xapian.search:'spanish'[0:10] = 19 4
+.. xapianrunexample:: search_sorting
+    :args: statesdb spanish
 
 
 Generated Sort Keys
@@ -96,31 +93,10 @@ entry to the union and then by decreasing population.
 
 As with the `Enquire` methods, `add_value` has a second parameter that
 controls whether it uses an ascending or descending sort. So now we
-can run a search with a more complex sort::
+can run a search with a more complex sort:
 
-    $ python code/python/search_sorting2.py statesdb/ State
-    1: #040 Commonwealth of Pennsylvania December 12, 1787 (2nd)
-            Population 12,702,379(2010.) [ 2 ]
-    2: #043 State of New Jersey December 18, 1787 (3rd)
-            Population 8,791,894 (2010 Census) [ 4 ]
-    3: #049 State of Delaware December 7, 1787 (1st)
-            Population 897,934
-    4: #041 State of New York July 26, 1788 (11th)
-            Population 19,378,102 (2010 Census) [ 3 ]
-    5: #038 Commonwealth of Virginia June 25, 1788 (10th)
-            Population 8,001,024
-    6: #050 State of Maryland April 28, 1788 (7th)
-            Population 5,773,552 (2010) [ 3 ] 5,296,486 (2000)
-    7: #036 State of South Carolina May 23, 1788 (8th)
-            Population 4,625,384 (2010 census) [ 1 ]
-    8: #045 State of New Hampshire June 21, 1788 (9th)
-            Population 1,316,470 (2010 census) [ 1 ] 1,235,786 (2000)
-    9: #034 State of Georgia January 2, 1788 (4th)
-            Population (2010) 9,687,653 [ 1 ]
-    10: #048 State of Connecticut January 9, 1788 (5th)
-            Population (2010) 3,574,097 [ 7 ]
-    INFO:xapian.search:'State'[0:10] = 40 43 49 41 38 50 36 45 34 48
-
+.. xapianrunexample:: search_sorting2
+    :args: statesdb State
 
 Other Uses for Generated Keys
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -145,27 +121,7 @@ Washington, DC.
 
 .. xapianexample:: search_sorting3
 
-And running it is as simple as before::
+And running it is as simple as before:
 
-    $ python code/python/search_sorting3.py statesdb/ State
-    1: #050 State of Maryland 17880428
-            Population 5773552
-    2: #040 Commonwealth of Pennsylvania 17871212
-            Population 12702379
-    3: #049 State of Delaware 17871207
-            Population 897934
-    4: #041 State of New York 17880726
-            Population 19378102
-    5: #043 State of New Jersey 17871218
-            Population 8791894
-    6: #037 State of North Carolina 17891121
-            Population 9535483
-    7: #039 State of West Virginia 18630620
-            Population 1859815
-    8: #036 State of South Carolina 17880523
-            Population 4625384
-    9: #048 State of Connecticut 17880109
-            Population 3574097
-    10: #038 Commonwealth of Virginia 17880625
-            Population 8001024
-    INFO:xapian.search:'State'[0:10] = 50 40 49 41 43 37 39 36 48 38
+.. xapianrunexample:: search_sorting3
+    :args: statesdb State

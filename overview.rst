@@ -33,7 +33,7 @@ Installation on Debian or Ubuntu
 
 Recent versions of both Debian and Ubuntu have Xapian 1.2 packaged: if
 you're on Debian 6.0 (squeeze) or later, or Ubuntu 11.10 (Oneiric
-Ocelot) you can just do one of the following depending on whether you
+Ocelot) or later you can just do one of the following depending on whether you
 want to work through the examples in Python or C++::
 
     $ sudo apt-get install python-xapian
