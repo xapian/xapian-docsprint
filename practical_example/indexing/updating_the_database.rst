@@ -8,7 +8,7 @@ document, or to re-index the entire database.
 
 Reindexing the database can be done immediately using the :xapian-basename-code-example:`index1` script
 we used for the initial indexing; this is because we are using an external
-ID for each document we add to the database, taken from the `id_NUMBER` 
+ID for each document we add to the database, taken from the `id_NUMBER`
 field from the original data set. We then pass this to the `replace_document`
 method, which updates if there's already a document under that external ID,
 or adds a document to the database otherwise.

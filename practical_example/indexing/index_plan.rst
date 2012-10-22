@@ -31,7 +31,7 @@ If you index those fields without a gap, the phrase search "Saints don't
 like rabbits" will match, where it really shouldn't. Usually a gap of 100
 between each field is enough.
 
-To write to a database, we use the WritableDatabase class, which allows us 
+To write to a database, we use the WritableDatabase class, which allows us
 to create, update or overwrite a database.
 
 To create terms, we use Xapian's TermGenerator, a built-in class to make

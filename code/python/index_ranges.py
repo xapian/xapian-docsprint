@@ -67,7 +67,7 @@ def index(datapath, dbpath):
             numbers = numbers_from_string(measurements)
             if len(numbers) > 0:
                 doc.add_value(0, xapian.sortable_serialise(max(numbers)))
-                
+
         date_made = fields.get('DATE_MADE', u'')
         years = numbers_from_string(date_made)
         if len(years) > 0:

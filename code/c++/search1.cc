@@ -67,6 +67,6 @@ int main(int argc, char** argv) {
 	if (!querystring.empty()) querystring += ' ';
 	querystring += *argv;
     }
-   
+
     search(dbpath, querystring);
 }

@@ -34,11 +34,11 @@ def index(datapath, dbpath):
         termgenerator.index_text(title)
         termgenerator.increase_termpos()
         termgenerator.index_text(description)
-        
+
 ### Start of example code.
         # add the collection as a value in slot 0
         doc.add_value(0, collection)
-        
+
         # add the maker as a value in slot 1
         doc.add_value(1, maker)
 ### End of example code.

@@ -29,12 +29,12 @@ def search(dbpath, querystring, offset=0, pagesize=10):
 
     # And print out something about each match
     matches = []
-    
+
     # Start of example code.
     # Set up a spy to inspect the MAKER value at slot 1
     spy = xapian.ValueCountMatchSpy(1)
     enquire.add_matchspy(spy)
-        
+
     for match in enquire.get_mset(offset, pagesize, 100):
         fields = json.loads(match.document.get_data())
         print u"%(rank)i: #%(docid)3.3i %(title)s" % {
@@ -44,7 +44,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
             }
         matches.append(match.docid)
 
-    # Parse and display the spy values 
+    # Parse and display the spy values
     for facet in spy.values():
         print u"Facet: %(term)s; count: %(count)i" % {
             'term' : facet.term.decode('utf-8'),

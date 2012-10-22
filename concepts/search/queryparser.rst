@@ -12,7 +12,7 @@ the QueryParser; the operators it supports follow the operators described
 earlier, for example:
 
 	* ``apple AND pear`` matches documents where both terms are present
-	* ``apple OR pear`` matches documents where either term (or both) are 
+	* ``apple OR pear`` matches documents where either term (or both) are
 	  present
 	* ``apple NOT pear`` matches documents where ``apple`` is present and
 	  ``pear`` is not
@@ -31,11 +31,11 @@ string into terms.  It is often easiest to use QueryParser and
 Wildcards
 ~~~~~~~~~
 
-It is also possible to use wildcards to match any number of trailing 
+It is also possible to use wildcards to match any number of trailing
 characters within a term; for example:
 
 	``wild*`` matches ``wild, wildcard, wildcat, wilderness``
-	
+
 This feature is disabled by default; to enable it, see 'Enabling Features'
 below.
 
@@ -47,11 +47,11 @@ To change the precedence of parts of the query, brackets can be used.
 For example, with the query::
 
 	apple OR pear AND dessert
-	
+
 The query parser will interpret this query as::
 
 	apple OR (pear AND dessert)
-	
+
 So to change the precedence and make the dessert a requirement, you would
 write the query initially as::
 
@@ -77,7 +77,7 @@ operators discussed earlier and introduces some new ones, for example::
 	"race condition" -horse
 	+recipe +apple pie cake dessert
 
-The NEAR and phrase support behaves in the same way as described earlier; 
+The NEAR and phrase support behaves in the same way as described earlier;
 the new features are the + and - operators, which select documents based on
 the presence or absence of specified terms, for example::
 
@@ -86,30 +86,30 @@ the presence or absence of specified terms, for example::
 Matches all documents with the phrase ``"race condition"`` but not ``horse``; and::
 
 	+recipe +apple pie cake desert
-	
+
 Which matches all documents which have the terms ``recipe`` and ``apple``; then
 all documents with these terms are weighted according to the weight of the
-additional terms. 
+additional terms.
 
 One thing to note is that the behaviour of the +/- operators vary depending
 on the default operator used and the above examples assume that
-:xapian-just-constant:`OP_OR` is used. 
+:xapian-just-constant:`OP_OR` is used.
 
 Searching with Prefixes
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-When a database is populated using prefixed terms (for example, title, 
-author) it is possible to tell the QueryParser that these fields can be 
+When a database is populated using prefixed terms (for example, title,
+author) it is possible to tell the QueryParser that these fields can be
 searched for using a human-readable prefix; for example::
 
 	author:"william shakespeare" title:juliet
-	
+
 Ranges
 ~~~~~~
 
 The QueryParser also supports range searches on document values, matching
 documents which have values within a given range. There are several types
-of range processors available, but the two discussed here are `Date`_ and 
+of range processors available, but the two discussed here are `Date`_ and
 `Number`_, which require that values are serialised as they are indexed.
 
 To use a range, additional programming is required to tell the QueryParser
@@ -121,7 +121,7 @@ ranges as::
 	5..10kg
 	01/01/1970..01/03/1970
 	size:3..7
-	
+
 When date ranges are configured (as a `DateValueRangeProcessor`_), you can
 configure which format dates are to be interpreted as (i.e. month-day-year)
 or otherwise.
@@ -143,23 +143,23 @@ if desired, for example if a stop word list contained 'the' and a search
 was for::
 
 	+the +document
-	
-Then the search would find relevant documents which contained both 'the' 
+
+Then the search would find relevant documents which contained both 'the'
 pand 'document'.  Also, when searching for phrases, stop words do not apply,
 for example::
 
 	"the green space" retrieves documents with this exact phrase
-	
+
 Parser Flags
 ~~~~~~~~~~~~
 The operation of the QueryParser can be altered through the use of flags,
 combined with the bitwise OR operator; these flags include:
 
-* `FLAG_BOOLEAN`_: enables support for AND, OR, etc and bracketed 
+* `FLAG_BOOLEAN`_: enables support for AND, OR, etc and bracketed
   expressions
 * `FLAG_PHRASE`_: enables support for phrase expressions
 * `FLAG_LOVEHATE`_: enables support for `+` and `-` operators
-* `FLAG_BOOLEAN_ANY_CASE`_: enables support for lower/mixed case boolean 
+* `FLAG_BOOLEAN_ANY_CASE`_: enables support for lower/mixed case boolean
   operators
 * `FLAG_WILDCARD`_: enables support for wildcards
 
@@ -169,6 +169,6 @@ combined with the bitwise OR operator; these flags include:
 .. _FLAG_BOOLEAN_ANY_CASE:
 .. _FLAG_WILDCARD: http://xapian.org/docs/apidoc/html/classXapian_1_1QueryParser.html#e96a58a8de9d219ca3214a5a66e0407e
 
-	
-By default, the QueryParser enables FLAG_BOOLEAN, FLAG_PHRASE and 
+
+By default, the QueryParser enables FLAG_BOOLEAN, FLAG_PHRASE and
 FLAG_LOVEHATE.

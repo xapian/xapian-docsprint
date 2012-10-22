@@ -1,7 +1,7 @@
 What data is there?
 -------------------
 
-Each row in the CSV file is an object from the catalogue, and has a number 
+Each row in the CSV file is an object from the catalogue, and has a number
 of fields. There are:
 
 id_NUMBER:
@@ -13,7 +13,7 @@ TITLE:
 MAKER:
     the name of who made the object
 DATE_MADE:
-    when the object was made, which may be a range, approximate date or 
+    when the object was made, which may be a range, approximate date or
     unknown
 PLACE_MADE:
     where the object was made
@@ -24,7 +24,7 @@ MEASUREMENTS:
 DESCRIPTION
     a description of the object
 COLLECTION:
-    the collection the object came from (eg: Science Museum - Space 
+    the collection the object came from (eg: Science Museum - Space
     Technology)
 
 There are obviously a number of different types of data here: free text,

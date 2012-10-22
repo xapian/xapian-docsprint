@@ -22,4 +22,4 @@ threads concurrently.
 If you want to access a Xapian object, from multiple threads then you
 need to ensure that it won't be accessed concurrently - for example, by
 using a mutex.  If you fail to do this, bad things are likely to happen -
-for example crashes or even data corruption.  
+for example crashes or even data corruption.
