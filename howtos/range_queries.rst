@@ -326,4 +326,4 @@ QueryParser using `OP_FILTER`.
 	  the generated query because it shouldn't be applied to the "york"
 	  part.
 
-.. todo:: possibly implemening this example would help make it more clear.
+.. todo:: possibly implementing this example would help make it more clear.
