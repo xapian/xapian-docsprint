@@ -12,7 +12,14 @@ for either by using a search prefix (which can correlate to an indexing
 prefix) or as a general text document.
 
 To set up a search prefix, the QueryParser needs to be told which prefixes
-in the search query relate to those in the index::
+in the search query relate to those in the index:
+
+
+.. todo:: This example should really be pulled directly from the code. There
+          seems to be a bug with line number limiting somewhere in the literal
+          include directive.
+
+.. code-block:: python
 
     queryparser.add_prefix("title", "S")
     queryparser.add_prefix("description", "XD")
