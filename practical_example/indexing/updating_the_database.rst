@@ -6,14 +6,14 @@ that the first item we have indexed has the word 'compass' spelled
 incorrectly, which means that we will need to either update just that
 document, or to re-index the entire database.
 
-Reindexing the database can be done immediately using the `index1.py` script
+Reindexing the database can be done immediately using the :xapian-basename-code-example:`index1` script
 we used for the initial indexing; this is because we are using an external
 ID for each document we add to the database, taken from the `id_NUMBER` 
 field from the original data set. We then pass this to the `replace_document`
 method, which updates if there's already a document under that external ID,
 or adds a document to the database otherwise.
 
-In fact, because of this, `index1.py` can update just part of the
+In fact, because of this, :xapian-basename-code-example:`index1` can update just part of the
 database. Just give it a file with only the rows that correspond to
 documents that need updating. Everything else in the database will be
 left untouched.
@@ -28,7 +28,7 @@ done either by Xapian docid or using unique ID terms, as with
 
 .. xapianexample:: delete1
 
-A copy of this code is available in :xapian-example-filename:`^`.
+A copy of this code is available in :xapian-code-example:`^`.
 
 Then we just run our deletion tool, giving it identifiers taken from
 the `id_NUMBER` field in the data set::

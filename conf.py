@@ -220,7 +220,7 @@ else:
     ext = '.py'
 
 
-def github_link_node(rawtext, options=()):
+def github_link_node(name, rawtext, options=()):
     try:
         base = github_project_url
         if not base:
@@ -233,7 +233,7 @@ def github_link_node(rawtext, options=()):
     if not options:
         options = {}
     set_classes(options)
-    node = nodes.reference(rawtext, utils.unescape(rawtext), refuri=ref,
+    node = nodes.reference(name, utils.unescape(name), refuri=ref,
                            **options)
     return node
 
@@ -286,19 +286,39 @@ def xapian_code_example_role(typ, rawtext, etext, lineno, inliner,
     ex = utils.unescape(etext)
     if ex == '^' and last_example:
         ex = last_example
-    return [github_link_node(xapian_code_example_filename(ex), options)], []
+    code_path = xapian_code_example_filename(ex)
+    return [github_link_node(code_path, code_path, options)], []
+
+
+def xapian_code_example_short_role(typ, rawtext, etext, lineno, inliner,
+                                 options=(), content=[]):
+    ex = utils.unescape(etext)
+    if ex == '^' and last_example:
+        ex = last_example
+    return [
+        github_link_node(
+            os.path.basename(ex) + ext,
+            xapian_code_example_filename(ex), options)
+        ], []
 
 
 def xapian_example_role(typ, rawtext, etext, lineno, inliner,
                                  options=(), content=[]):
     ex = utils.unescape(etext)
-    return [github_link_node(ex, options)], []
+    return [github_link_node(ex, ex, options)], []
+
+
+def xapian_example_short_role(typ, rawtext, etext, lineno, inliner,
+                                 options=(), content=[]):
+    ex = utils.unescape(etext)
+    return [github_link_node(os.path.basename(ex), ex, options)], []
 
 # Usage:
 #
-# The previous example was :xapian_example_filename:`^`.
+# The previous example was :xapian-code-example:`^`.
 #
-# The foo example is in :xapian_example_filename:`foo`.
+# The foo example is in :xapian-code-example:`foo`.
 roles.register_local_role('xapian-code-example', xapian_code_example_role)
-
-roles.register_local_role('xapian-example', xapian_example_role)
+roles.register_local_role('xapian-basename-code-example', xapian_code_example_short_role)
+roles.register_local_role('xapian-basename-example', xapian_example_short_role)
+roles.register_local_role('xapian-basename-example', xapian_example_role)
