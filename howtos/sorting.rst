@@ -18,8 +18,8 @@ If you have no preference, you can tell Xapian to use whatever order is
 most efficient using ``enquire.set_docid_order(enquire.DONT_CARE);``.
 
 It is also possible to change the way that the relevance scores are calculated
-- for details, see the :ref:`document on weighting schemes and
-document scoring <weighting_scheme>` for details.
+- for details, see the :doc:`document on weighting schemes and scoring
+<weighting_scheme>` for details.
 
 Sorting by Value
 ----------------
@@ -49,7 +49,7 @@ sort, depending if/how you want relevance used in the ordering:
   scores to different documents).
 
 We'll use the states dataset to demonstrate this, and the code from
-dealing with dates in the :ref:`range queries <range_queries>` HOWTO:
+dealing with dates in the :doc:`range queries <range_queries>` HOWTO:
 
 .. xapianrunexample:: index_ranges2
     :args: data/states.csv statesdb
