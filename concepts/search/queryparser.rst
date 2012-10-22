@@ -11,11 +11,11 @@ The above example shows how some of the basic modifiers are interpreted by
 the QueryParser; the operators it supports follow the operators described
 earlier, for example:
 
-	* ``apple AND pear`` matches documents where both terms are present
-	* ``apple OR pear`` matches documents where either term (or both) are
-	  present
-	* ``apple NOT pear`` matches documents where ``apple`` is present and
-	  ``pear`` is not
+* ``apple AND pear`` matches documents where both terms are present
+* ``apple OR pear`` matches documents where either term (or both) are
+  present
+* ``apple NOT pear`` matches documents where ``apple`` is present and
+  ``pear`` is not
 
 Term Generation
 ~~~~~~~~~~~~~~~

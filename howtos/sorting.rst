@@ -37,16 +37,16 @@ values::
 There are three methods which are used to specify how the value is used to
 sort, depending if/how you want relevance used in the ordering:
 
- * ``Enquire::set_sort_by_value()`` specifies the relevance doesn't affect the
-   ordering at all.
- * ``Enquire::set_sort_by_value_then_relevance()`` specifies that relevance is
-   used for ordering any groups of documents for which the value is the same.
- * ``Enquire::set_sort_by_relevance_then_value()`` specifies that documents are
-   ordered by relevance, and the value is only used to order groups of documents
-   with identical relevance values (note: the weight has to be exactly the same
-   for values to determine the order, so this method isn't very useful when
-   using BM25 with the default parameters, as that will rarely give identical
-   scores to different documents).
+* ``Enquire::set_sort_by_value()`` specifies the relevance doesn't affect the
+  ordering at all.
+* ``Enquire::set_sort_by_value_then_relevance()`` specifies that relevance is
+  used for ordering any groups of documents for which the value is the same.
+* ``Enquire::set_sort_by_relevance_then_value()`` specifies that documents are
+  ordered by relevance, and the value is only used to order groups of documents
+  with identical relevance values (note: the weight has to be exactly the same
+  for values to determine the order, so this method isn't very useful when
+  using BM25 with the default parameters, as that will rarely give identical
+  scores to different documents).
 
 We'll use the states dataset to demonstrate this, and the code from
 dealing with dates in the :ref:`range queries <range_queries>` HOWTO:

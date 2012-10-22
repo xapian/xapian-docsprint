@@ -103,10 +103,10 @@ In Development
 Some additional features currently in development may benefit users of
 facets. These are:
 
-    * Multiple values in slots: this will allow you to have a single value slot
-      (e.g. colour) which contains multiple values (e.g. red, blue).  This will
-      also allow you to create a facet by colour which is aware of these
-      multiple values, giving counts for both red and blue.
+* Multiple values in slots: this will allow you to have a single value slot
+  (e.g. colour) which contains multiple values (e.g. red, blue).  This will
+  also allow you to create a facet by colour which is aware of these
+  multiple values, giving counts for both red and blue.
 
-    * Bucketing: this provides a means to group together numeric facets, so that
-      a single facet can contain a range of values (e.g. price ranges).
+* Bucketing: this provides a means to group together numeric facets, so that
+  a single facet can contain a range of values (e.g. price ranges).
