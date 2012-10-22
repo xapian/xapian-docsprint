@@ -3,7 +3,6 @@ require_once("xapian.php");
 require_once("parsecsv.php");
 require_once("logger.php");
 
-## Start of example code.
 function search($dbpath, $querystring, $materials, $offset = 0, $pagesize = 10)
 {
     // offset - defines starting point within result set
