@@ -31,8 +31,7 @@ such that it sorts numerically, use ``Xapian::sortable_serialise()`` to encode
 values at index time - this works equally well on integers and floating point
 values::
 
-    Xapian::Document doc;
-    doc.add_value(0, Xapian::sortable_serialise(price));
+    doc.add_value(0, xapian.sortable_serialise(price));
 
 There are three methods which are used to specify how the value is used to
 sort, depending if/how you want relevance used in the ordering:
