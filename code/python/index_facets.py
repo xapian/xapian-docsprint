@@ -36,13 +36,11 @@ def index(datapath, dbpath):
         termgenerator.increase_termpos()
         termgenerator.index_text(description)
 
-### Start of example code.
         # add the collection as a value in slot 0
         doc.add_value(0, collection)
 
         # add the maker as a value in slot 1
         doc.add_value(1, maker)
-### End of example code.
 
         # Store all the fields for display purposes.
         doc.set_data(json.dumps(fields, encoding='latin1'))
@@ -53,5 +51,6 @@ def index(datapath, dbpath):
         idterm = u"Q" + identifier
         doc.add_boolean_term(idterm)
         db.replace_document(idterm, doc)
+### End of example code.
 
 index(datapath = sys.argv[1], dbpath = sys.argv[2])
