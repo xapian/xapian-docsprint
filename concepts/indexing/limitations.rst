@@ -18,7 +18,7 @@ two bytes, so the limit is less for a term which contains zero bytes.
 
 It's rarely useful to have longer terms, but one situation where it can be
 is if you're using something like a URL as an ID term.  A workaround for
-the length limit is to use a hash of the URL insted of the ID - if a
+the length limit is to use a hash of the URL instead of the ID - if a
 cryptographic hash (like SHA1) is used, the likelihood of a collision is
 low enough that it can be ignored.
 
