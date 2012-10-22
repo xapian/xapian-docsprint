@@ -2,7 +2,7 @@
 """Support code for the python examples."""
 
 import csv
-from datetime import datetime
+from datetime import date, datetime
 import logging
 import math
 
@@ -132,3 +132,27 @@ def parse_states(datapath):
         fields['midlon'] = middle_coord(fields.get('longitude', None))
 
         yield fields
+
+
+def format_numeral(numeral, sep=','):
+    if numeral and isinstance(numeral, int):
+        _numeral = []
+        numeral = str(numeral)
+        for i, j in enumerate(reversed(numeral)):
+            if i > 0 and i % 3 == 0 and i != len(numeral) - 1:
+                _numeral.append(',')
+            _numeral.append(j)
+        return ''.join(reversed(_numeral))
+    elif numeral == 0:
+        return numeral
+
+    raise ValueError("Numeral must be an int type to format")
+
+
+def format_date(datestr):
+    if datestr:
+        _date = datetime.strptime(datestr, '%Y%m%d')
+        wtf_date = date(2000, _date.month, 01)
+        return '%s %s, %s' % (wtf_date.strftime('%B'), _date.day, _date.year)
+
+    raise ValueError("Could not parse date to format 'YYYYMMDD'")

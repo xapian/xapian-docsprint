@@ -67,21 +67,17 @@ def search(dbpath, querystring, offset=0, pagesize=10):
     matches = []
     for match in enquire.get_mset(offset, pagesize):
         fields = json.loads(match.document.get_data())
-        # TODO: bring this output format into line with the example output
-        # since the example is much nicer looking.
-        #
-        # 1: #004 State of Montana November 8, 1889 (41st)
-        # 	Population (2010) 989,415
-        # 2: #019 State of Texas December 29, 1845 (28th)
-        # 	Population 25,145,561 (2010 Census) [ 5 ]
-        # INFO:xapian.search:'spanish'[0:10] = 4 19
+        population = support.format_numeral(fields.get('population', 0))
+        date = support.format_date(fields.get('admitted'))
 
-        print u"%(rank)i: #%(docid)3.3i %(name)s %(date)s\n        Population %(pop)s" % {
+        print u"""\
+%(rank)i: #%(docid)3.3i %(name)s %(date)s
+        Population %(pop)s""" % {
             'rank': match.rank + 1,
             'docid': match.docid,
             'name': fields.get('name', u''),
-            'date': fields.get('admitted', u''),
-            'pop': fields.get('population', u''),
+            'date': date,
+            'pop': population,
             'lat': fields.get('latitude', u''),
             'lon': fields.get('longitude', u''),
             }
