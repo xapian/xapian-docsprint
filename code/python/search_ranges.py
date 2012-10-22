@@ -16,7 +16,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
     # Set up a QueryParser with a stemmer and suitable prefixes
     queryparser = xapian.QueryParser()
     queryparser.set_stemmer(xapian.Stem("en"))
-    queryparser.set_stem_strategy(queryparser.STEM_SOME)
+    queryparser.set_stemming_strategy(queryparser.STEM_SOME)
     queryparser.add_prefix("title", "S")
     queryparser.add_prefix("description", "XD")
     # and add in value range processors
