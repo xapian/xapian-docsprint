@@ -155,7 +155,7 @@ Washington, DC.
 
 And running it is as simple as before::
 
-    python code/python/search_sorting3.py statesdb/ State
+    $ python code/python/search_sorting3.py statesdb/ State
     1: #050 State of Maryland 17880428
             Population 5773552
     2: #040 Commonwealth of Pennsylvania 17871212
