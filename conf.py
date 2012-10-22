@@ -202,6 +202,9 @@ todo_include_todos = True
 
 # Default to setting 'py' tag if none are set, and set highlight language
 # appropriately.
+
+last_example = None
+
 if tags.has('php'):
     highlight_language = 'php'
     ext = '.php'
@@ -215,6 +218,7 @@ else:
 
 def xapian_example_filename(ex):
     return "code/%s/%s%s" % (highlight_language, ex, ext)
+
 
 class XapianExample(LiteralInclude):
     option_spec = {
@@ -255,11 +259,11 @@ class XapianExample(LiteralInclude):
 directives.register_directive('xapianexample', XapianExample)
 
 def xapian_example_filename_role(typ, rawtext, etext, lineno, inliner,
-                     options={}, content=[]):
-   ex = utils.unescape(etext)
-   if ex == '^':
+                                 options={}, content=[]):
+    ex = utils.unescape(etext)
+    if ex == '^' and last_example:
         ex = last_example
-   return [nodes.literal(text = xapian_example_filename(ex))], []
+    return [nodes.literal(text = xapian_example_filename(ex))], []
 
 # Usage:
 #
