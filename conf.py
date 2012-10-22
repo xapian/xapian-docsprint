@@ -12,6 +12,9 @@
 # serve to show the default.
 
 import sys, os
+from docutils import nodes, utils
+from docutils.parsers.rst import roles
+from sphinx.directives.code import LiteralInclude, directives
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -201,8 +204,43 @@ todo_include_todos = True
 # appropriately.
 if tags.has('php'):
     highlight_language = 'php'
+    ext = '.php'
 elif tags.has('cc'):
     highlight_language = 'c++'
+    ext = '.cc'
 else:
     tags.add('py')
     highlight_language = 'python'
+    ext = '.py'
+
+def xapian_example_filename(ex):
+    return "code/%s/%s%s" % (highlight_language, ex, ext)
+
+class XapianExample(LiteralInclude):
+    def run(self):
+        global last_example
+        last_example = self.arguments[0]
+        filename = xapian_example_filename(last_example)
+        if not os.path.exists(filename):
+            return [nodes.literal(text = 'No version of example %s in language %s - patches welcome!'
+                % (last_example, highlight_language))]
+        self.arguments[0] = "/" + filename
+        return super(XapianExample, self).run()
+
+# Usage:
+# .. xapianexample:: search_filters2
+directives.register_directive('xapianexample', XapianExample)
+
+def xapian_example_filename_role(typ, rawtext, etext, lineno, inliner,
+                     options={}, content=[]):
+   ex = utils.unescape(etext)
+   if ex == '^':
+        ex = last_example
+   return [nodes.literal(text = xapian_example_filename(ex))], []
+
+# Usage:
+#
+# The previous example was :xapian_example_filename:`^`.
+#
+# The foo example is in :xapian_example_filename:`foo`.
+roles.register_local_role('xapian_example_filename', xapian_example_filename_role)
