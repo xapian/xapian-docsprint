@@ -28,38 +28,37 @@ a match each document is for that query. These queries can then be combined
 to produce a more complex tree-like query structure, with the operators
 acting as branches within the tree.
 
-The most basic operators are the logical operators: OR, AND and AND_NOT.
-These operators process documents which match certain queries (A and B),
-which have a weight assigned for each match. As documents pass through each
-operator branch, their weight is adjusted according to the type of branch,
-for example:
+The most basic operators are the logical operators: OR, AND and AND_NOT
+- these match documents in the following way:
 
-* :xapian-just-constant:`OP_OR` - passes documents which match query A
+* :xapian-just-constant:`OP_OR` - matches documents which match query A
   *or* B (or both)
-* :xapian-just-constant:`OP_AND` - passes documents which match both
+* :xapian-just-constant:`OP_AND` - matches documents which match both
   query A *and* B
-* :xapian-just-constant:`OP_AND_NOT` - passes documents which match
+* :xapian-just-constant:`OP_AND_NOT` - matches documents which match
   query A but *not* B
 
-The weights of the documents are adjusted as follows:
+Each operator produces a weight for each document it matches, which
+depends on the weight of one or both subqueries in the following way:
 
-* :xapian-just-constant:`OP_OR` - passes documents with the sum of
+* :xapian-just-constant:`OP_OR` - matches documents with the sum of
   weights from A and B
-* :xapian-just-constant:`OP_AND` - passes documents with the sum of
+* :xapian-just-constant:`OP_AND` - matches documents with the sum of
   weights from A and B
-* :xapian-just-constant:`OP_AND_NOT` - passes documents with the weight
+* :xapian-just-constant:`OP_AND_NOT` - matches documents with the weight
   from A only
 
 Maybe
 ~~~~~
-In addition to the basic logical operators, there is an additional logical
-operator :xapian-just-constant:`OP_AND_MAYBE` which can be used to give a
-document which matches A or (A and B). When this operator is used, the document
-weight is adjusted so that:
 
-1. Documents which match A and B are passed, with weight of A+B
-2. Documents which match A only are passed, with weight of A
-3. Documents which match B only are not passed
+In addition to the basic logical operators, there is an additional logical
+operator :xapian-just-constant:`OP_AND_MAYBE` which matches any document
+which matches A (whether or not B matches).  If only B matches, then
+:xapian-just-constant:`OP_AND_MAYBE` doesn't match.  For this operator, the
+weight is the sum of the matching subqueries, so:
+
+1. Documents which match A and B match with the weight of A+B
+2. Documents which match A only match with weight of A
 
 This allows you to state that you require some terms (A) and that other
 terms (B) are useful but not required.
@@ -71,9 +70,9 @@ A query can be filtered by another query.  There are two ways to apply
 a filter to a query depending whether you want to include or exclude
 documents:
 
-* :xapian-just-constant:`OP_FILTER` - passes documents which match both
+* :xapian-just-constant:`OP_FILTER` - matches documents which match both
   subqueries, but the weight is only taken from the left subquery
-* :xapian-just-constant:`OP_AND_NOT` - passes documents which match the
+* :xapian-just-constant:`OP_AND_NOT` - matches documents which match the
   left subquery but don't match the right hand one (with weights coming
   from the left subquery)
 
@@ -82,11 +81,11 @@ Value ranges
 
 When using document values, there are three relevant operators:
 
-* :xapian-just-constant:`OP_VALUE_LE` - passes documents where the given
+* :xapian-just-constant:`OP_VALUE_LE` - matches documents where the given
   value is less than or equal a fixed value
-* :xapian-just-constant:`OP_VALUE_GE` - passes documents where the given
+* :xapian-just-constant:`OP_VALUE_GE` - matches documents where the given
   value is greater than or equal to a fixed value
-* :xapian-just-constant:`OP_VALUE_RANGE` - passes documents where the
+* :xapian-just-constant:`OP_VALUE_RANGE` - matches documents where the
   given value is within the given fixed range (including both
   endpoints)
 
@@ -100,7 +99,7 @@ Two additional operators that are commonly used are *NEAR*, which finds
 terms within 10 words of each other in the current document, behaving like
 :xapian-just-constant:`OP_AND` with regard to weights, so that:
 
-* Documents which match A within 10 words of B are passed, with weight
+* Documents which match A within 10 words of B are matched, with weight
   of A+B
 
 The phrase operator allows for searching for a specific phrase and returns
