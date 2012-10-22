@@ -16,7 +16,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
     # Set up a QueryParser with a stemmer and suitable prefixes
     queryparser = xapian.QueryParser()
     queryparser.set_stemmer(xapian.Stem("en"))
-    queryparser.set_stem_strategy(queryparser.STEM_SOME)
+    queryparser.set_stemming_strategy(queryparser.STEM_SOME)
     queryparser.add_prefix("title", "S")
     queryparser.add_prefix("description", "XD")
 
@@ -47,7 +47,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
     # Parse and display the spy values
     for facet in spy.values():
         print u"Facet: %(term)s; count: %(count)i" % {
-            'term' : facet.term.decode('utf-8'),
+            'term' : facet.term.decode('latin-1'),
             'count' : facet.termfreq
         }
 
