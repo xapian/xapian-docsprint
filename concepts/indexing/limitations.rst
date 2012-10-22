@@ -62,8 +62,12 @@ OS file size
 
 Any operating or filing system limit on file size obviously applies to
 Xapian.  On modern platforms, you're unlikely to hit these limits (e.g. on
-Linux, ext4 allows files up to 16TB and filesystems up to 1EB, while btrfs
+Linux, `ext4`_ allows files up to 16TB and filesystems up to 1EB, while `btrfs`_
 allows files and filesystems up to 16EB (figures from Wikipedia).
+
+.. _ext4: http://en.wikipedia.org/wiki/Ext4
+
+.. _btrfs: http://en.wikipedia.org/wiki/Btrfs
 
 Total document length limit
 ---------------------------

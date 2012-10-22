@@ -19,5 +19,6 @@ convention with 'Q') to avoid collisions with other terms.  Terms have a
 limited length (245 bytes in chert), so if your unique identifiers are
 really long you'll need to do something more complicated.
 
-For more information on both techniques, see our FAQ on this:
-<http://trac.xapian.org/wiki/FAQ/UniqueIds>.
+For more information on both techniques, `see our FAQ on this`_.
+
+.. _see our FAQ on this: http://trac.xapian.org/wiki/FAQ/UniqueIds
