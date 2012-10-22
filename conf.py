@@ -366,11 +366,11 @@ def xapian_class_role(typ, rawtext, etext, lineno, inliner,
                                  options=(), content=[]):
     c = utils.unescape(etext)
     if highlight_language == 'python':
-	return [nodes.literal(text = 'xapian.' + c)], []
+        return [nodes.literal(text = 'xapian.' + c)], []
     elif highlight_language == 'php':
-	return [nodes.literal(text = 'Xapian' + c)], []
+        return [nodes.literal(text = 'Xapian' + c)], []
     elif highlight_language == 'c++':
-	return [nodes.literal(text = 'Xapian::' + c)], []
+        return [nodes.literal(text = 'Xapian::' + c)], []
     else:
         return "???"
 
@@ -385,12 +385,12 @@ def xapian_method_role(typ, rawtext, etext, lineno, inliner,
     cm = utils.unescape(etext)
     # Correct for Python, PHP and C++:
     if highlight_language == 'python':
-	cm = re.sub(r'::', r'.', cm)
-	return [nodes.literal(text = 'xapian.' + cm)], []
+        cm = re.sub(r'::', r'.', cm)
+        return [nodes.literal(text = 'xapian.' + cm)], []
     elif highlight_language == 'php':
-	return [nodes.literal(text = 'Xapian' + cm)], []
+        return [nodes.literal(text = 'Xapian' + cm)], []
     elif highlight_language == 'c++':
-	return [nodes.literal(text = 'Xapian::' + cm)], []
+        return [nodes.literal(text = 'Xapian::' + cm)], []
     else:
         return "???"
 
