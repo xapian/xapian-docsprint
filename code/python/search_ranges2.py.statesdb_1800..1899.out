@@ -1,0 +1,21 @@
+1: #001 State of Washington November 11, 1889 (42nd)
+	Population 6,744,496 (2010 Estimate)
+2: #002 State of Arkansas June 15, 1836 (25th)
+	Population 2,915,918 (2010 Census) [ 2 ] 2,673,400 (2000)
+3: #003 State of Oregon February 14, 1859 (33rd)
+	Population 3,831,074 (2010) [ 2 ]
+4: #004 State of Montana November 8, 1889 (41st)
+	Population (2010) 989,415
+5: #005 Idaho July 3, 1890 (43rd)
+	Population 1,567,582 (2010 Census)
+6: #006 State of Nevada October 31, 1864 (36th)
+	Population 2,700,551 (2010 Census)
+7: #007 State of California September 9, 1850 (31st)
+	Population 37,253,956
+8: #009 State of Utah January 4, 1896 (45th)
+	Population 2,763,885 (2010 Census) [ 2 ]
+9: #010 State of Wyoming July 10, 1890 (44th)
+	Population (2010)563,626 [ 1 ]
+10: #011 State of Colorado August 1, 1876 (38th)
+	Population (2010) 5,029,196
+INFO:xapian.search:'1800..1899'[0:10] = 1 2 3 4 5 6 7 9 10 11

@@ -1,0 +1,9 @@
+1: #001 State of Washington November 11, 1889 (42nd)
+	Population 6,744,496 (2010 Estimate)
+2: #004 State of Montana November 8, 1889 (41st)
+	Population (2010) 989,415
+3: #005 Idaho July 3, 1890 (43rd)
+	Population 1,567,582 (2010 Census)
+4: #010 State of Wyoming July 10, 1890 (44th)
+	Population (2010)563,626 [ 1 ]
+INFO:xapian.search:'11/08/1889..07/10/1890'[0:10] = 1 4 5 10

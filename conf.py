@@ -12,6 +12,7 @@
 # serve to show the default.
 
 import sys, os
+import re
 from docutils import nodes, utils
 from docutils.parsers.rst import roles
 from docutils.parsers.rst.roles import set_classes
@@ -241,6 +242,16 @@ def github_link_node(name, rawtext, options=()):
 def xapian_code_example_filename(ex):
     return "code/%s/%s%s" % (highlight_language, ex, ext)
 
+def xapian_code_example_command(ex):
+    if highlight_language == 'python':
+        return "python %s" % xapian_code_example_filename(ex)
+    elif highlight_language == 'php':
+        return "php %s" % xapian_code_example_filename(ex)
+    elif highlight_language == 'c++':
+        return "g++ `xapian-config --cxxflags` %s -o %s `xapian-config --libs`\n./%s" \
+            % (xapian_code_example_filename(ex), ex, ex)
+    else:
+        return "???"
 
 class XapianCodeExample(LiteralInclude):
     option_spec = {
@@ -280,6 +291,44 @@ class XapianCodeExample(LiteralInclude):
 # .. xapianexample:: search_filters2
 directives.register_directive('xapianexample', XapianCodeExample)
 
+class XapianRunExample(LiteralInclude):
+    option_spec = {
+        'args': directives.unchanged_required,
+    }
+
+    def run(self):
+        filename = xapian_code_example_filename(self.arguments[0])
+        if not os.path.exists(filename):
+            return [nodes.literal(text = 'No version of example %s in language %s - patches welcome!'
+                % (last_example, highlight_language))]
+        command = xapian_code_example_command(filename)
+
+        if 'args' in self.options:
+            def esc_char(match):
+                return "=%02x" % ord(match.group(0))
+            args = self.options['args']
+            command = "%s %s" % (command, args)
+            esc_args = re.sub(r'[^-A-Za-z0-9 .]', esc_char, args)
+            esc_args = re.sub(r' ', r'_', esc_args)
+            fullout = "%s.%s.out" % (filename, esc_args)
+            print "[%s]" % fullout
+            if os.path.exists(fullout):
+                filename = fullout
+            else:
+                filename = filename + ".out"
+        else:
+            filename = filename + ".out"
+
+        self.options['prepend'] = '$ ' + command
+        # FIXME: Only want this syntax highlighting for lines starting '$'.
+        # self.options['language'] = 'sh'
+        self.options['language'] = 'none'
+        self.arguments[0] = "/" + filename
+        return super(XapianRunExample, self).run()
+
+# Usage:
+# .. xapianrunexample:: search_filters2
+directives.register_directive('xapianrunexample', XapianRunExample)
 
 def xapian_code_example_role(typ, rawtext, etext, lineno, inliner,
                                  options=(), content=[]):

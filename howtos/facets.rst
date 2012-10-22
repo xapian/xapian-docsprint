@@ -39,10 +39,10 @@ contains the name of whoever made the object. We know from the
 documentation of the dataset that both from fixed and curated lists,
 so we don't have to worry about normalising the values before using
 them as facets. Let's run that to build a dataset with document values
-suitable for faceting::
+suitable for faceting:
 
-    $ python code/python/index_facets.py data/muscat.csv db
-
+.. xapianrunexample:: index_facets
+    :args: data/muscat.csv db
 
 Querying
 --------
@@ -61,42 +61,10 @@ including the frequency. Note that although we're generally only
 showing ten matches, we use a parameter to `get_mset` called
 `checkatleast`, so that the entire dataset is considered and the facet
 frequencies are correct. See `Limitations`_ for some discussion of the
-implications of this. Here's the output::
+implications of this. Here's the output:
 
-    $ python code/python/search_facets.py db clock
-    1: #044 Two-dial clock by the Self-Winding Clock Co; as used on the
-    2: #096 Clock with Hipp pendulum (an electric driven clock with Hipp
-    3: #012 Assembled and unassembled EXA electric clock kit
-    4: #098 'Pond' electric clock movement (no dial)
-    5: #005 "Ever Ready" ceiling clock
-    6: #039 Electric clock of the Bain type
-    7: #061 Van der Plancke master clock
-    8: #064 Morse electrical clock, dial mechanism
-    9: #052 Reconstruction of Dondi's Astronomical Clock, 1974
-    10: #057 Electric clock by Alexander Bain, in case
-    Facet: Bain, Alexander; count: 3
-    Facet: Bloxam, J. M.; count: 1
-    Facet: Braun (maker); count: 1
-    Facet: British Horo-Electric Ltd. (maker); count: 1
-    Facet: British Vacuum Cleaner and Engineering Co. Ltd., Magneto Time division (maker); count: 1
-    Facet: EXA; count: 1
-    Facet: Ever Ready Co. (maker); count: 2
-    Facet: Ferranti Ltd.; count: 1
-    Facet: Galilei, Galileo, 1564-1642; Galilei, Vincenzio, 1606-1649; count: 1
-    Facet: Harrison, John (maker); count: 1
-    Facet: Hipp, M.; count: 1
-    Facet: La Précision Cie; count: 1
-    Facet: Lund, J.; count: 1
-    Facet: Morse, J. S.; count: 1
-    Facet: Self Winding Clock Company; count: 1
-    Facet: Self-Winding Clock Co. (maker); count: 1
-    Facet: Synchronome Co. Ltd. (maker); count: 2
-    Facet: Thwaites and Reed Ltd.; count: 1
-    Facet: Thwaites and Reed Ltd. (maker); count: 1
-    Facet: Viviani, Vincenzo; count: 1
-    Facet: Vulliamy, Benjamin, 1747-1811; count: 1
-    Facet: Whitefriars Glass Ltd. (maker); count: 1
-    INFO:xapian.search:'clock'[0:10] = 44 96 12 98 5 39 61 64 52 57
+.. xapianrunexample:: search_facets
+    :args: db clock
 
 Note that the spy will give you facets in alphabetical order, not in
 order of frequency; if you want to show the most frequent first you
