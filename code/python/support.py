@@ -107,7 +107,8 @@ def parse_states(datapath):
         try:
             admitted = datetime.strptime(admitted, "%B %d, %Y")
             fields['admitted'] = "%s%s%s" % (
-                admitted.year, admitted.month, str(admitted.day).zfill(2))
+                admitted.year, str(admitted.month).zfill(2),
+                str(admitted.day).zfill(2))
         except ValueError:
             print "couldn't parse admitted '%s'" % admitted
             fields['admitted'] = None
@@ -139,7 +140,7 @@ def format_numeral(numeral, sep=','):
         _numeral = []
         numeral = str(numeral)
         for i, j in enumerate(reversed(numeral)):
-            if i > 0 and i % 3 == 0 and i != len(numeral) - 1:
+            if i > 0 and i % 3 == 0 and i != len(numeral):
                 _numeral.append(',')
             _numeral.append(j)
         return ''.join(reversed(_numeral))
