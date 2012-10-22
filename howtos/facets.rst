@@ -49,17 +49,17 @@ Querying
 
 .. todo:: explain what goes on here, ie why we use a MatchSpy
 
-To add a spy you need to create a new `Xapian::ValueCountMatchSpy` object,
+To add a spy you need to create a new :xapian-class:`ValueCountMatchSpy` object,
 stating which value slot the spy is to operate on and add this to the
-`Xapian::Enquire` as follows:
+:xapian-class:`Enquire` as follows:
 
 .. xapianexample:: search_facets
 
 Here we're faceting on value slot 1, which is the object maker. After
 you get the MSet, you can ask the spy for the facets it found,
 including the frequency. Note that although we're generally only
-showing ten matches, we use a parameter to `get_mset` called
-`checkatleast`, so that the entire dataset is considered and the facet
+showing ten matches, we use a parameter to :xapian-just-method:`get_mset()`
+called `checkatleast`, so that the entire dataset is considered and the facet
 frequencies are correct. See `Limitations`_ for some discussion of the
 implications of this. Here's the output:
 
@@ -68,20 +68,22 @@ implications of this. Here's the output:
 
 Note that the spy will give you facets in alphabetical order, not in
 order of frequency; if you want to show the most frequent first you
-should use the `top_values` iterator (`begin_top_values` in C++ and
-some other languages).
+should use the `top_values` iterator (:xapian-just-method:`begin_top_values()`
+in C++ and some other languages).
 
 If you want to work with multiple facets, you can register multiple
-`ValueCountMatchSpy` objects before running `get_mset`, although each
-additional one will have some performance impact.
+:xapian-class:`ValueCountMatchSpy` objects before running
+:xapian-just-method:`get_mset()`, although each additional one will have some
+performance impact.
 
 Restricting by Facets
 ---------------------
+
 If you're using the facets to offer the user choices for narrowing down
 their search results, you then need to be able to apply a suitable filter.
 
-For a single value, you could use `Xapian::Query::OP_VALUE_RANGE` with the
-same start and end, or `Xapian::MatchDecider`, but it's probably most
+For a single value, you could use :xapian-constant:`Query::OP_VALUE_RANGE` with
+the same start and end, or :xapian-class:`MatchDecider`, but it's probably most
 efficient to also index the categories as suitably prefixed boolean terms
 and use those for filtering.
 
@@ -91,9 +93,9 @@ Limitations
 
 The accuracy of Xapian's faceting capability is determined by the number
 of records that are examined by Xapian whilst it is searching. You can
-control this number by specifying the `checkatleast` value of `get_mset`;
-however it is important to be aware that increasing this number may have an
-effect on overall query performance.
+control this number by specifying the `checkatleast` value of
+:xapian-just-method:`get_mset`; however it is important to be aware that
+increasing this number may have an effect on overall query performance.
 
 
 In Development

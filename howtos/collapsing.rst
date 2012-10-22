@@ -24,9 +24,9 @@ collapsed, but otherwise documents with the same collapse key will be collapsed
 together.
 
 Currently the collapse key is taken from a value slot you specify (via the
-method ``Enquire::set_collapse_key()``), but in the future you should be able
-to build collapse keys dynamically using ``Xapian::KeyMaker`` as you already
-can for sort keys.
+method :xapian-method:`Enquire::set_collapse_key()`), but in the future you
+should be able to build collapse keys dynamically using :xapian-class:`KeyMaker`
+as you already can for sort keys.
 
 Performance
 ===========
@@ -42,18 +42,19 @@ the matcher has to consider many more potential matches.
 API
 ===
 
-To enable collapsing, call the method ``Enquire::set_collapse_key`` with the
-value slot, and optionally the number of matches with each collapse key to keep
-(this defaults to 1 if not specified), e.g.::
+To enable collapsing, call the method :xapian-method:`Enquire::set_collapse_key`
+with the value slot, and optionally the number of matches with each collapse
+key to keep (this defaults to 1 if not specified), e.g.::
 
     // Collapse on value slot 4, leaving at most 2 documents with each
     // collapse key.
     enquire.set_collapse_key(4, 2);
 
-Once you have the ``MSet`` object, you can read the collapse key for each
-match with ``MSetIterator::get_collapse_key()``, and also the "collapse count"
-with ``MSetIterator::get_collapse_count()``.  The latter is a lower bound on
-the number of documents with the same collapse key which collapsing eliminated.
+Once you have the :xapian-class:`MSet` object, you can read the collapse key for
+each match with :xapian-method:`MSetIterator::get_collapse_key()`, and also the
+"collapse count" with :xapian-method:`MSetIterator::get_collapse_count()`.  The
+latter is a lower bound on the number of documents with the same collapse key
+which collapsing eliminated.
 
 Beware that if you have a percentage cutoff active, then the collapse count
 will (at least in the current implementation) will always be either 0 or 1

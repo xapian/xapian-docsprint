@@ -362,6 +362,38 @@ def xapian_example_short_role(typ, rawtext, etext, lineno, inliner,
     ex = utils.unescape(etext)
     return [github_link_node(os.path.basename(ex), ex, options)], []
 
+def xapian_class_role(typ, rawtext, etext, lineno, inliner,
+                                 options=(), content=[]):
+    c = utils.unescape(etext)
+    if highlight_language == 'python':
+	return [nodes.literal(text = 'xapian.' + c)], []
+    elif highlight_language == 'php':
+	return [nodes.literal(text = 'Xapian' + c)], []
+    elif highlight_language == 'c++':
+	return [nodes.literal(text = 'Xapian::' + c)], []
+    else:
+        return "???"
+
+def xapian_just_method_role(typ, rawtext, etext, lineno, inliner,
+                                 options=(), content=[]):
+    m = utils.unescape(etext)
+    # Correct for Python, PHP and C++:
+    return [nodes.literal(text = m)], []
+
+def xapian_method_role(typ, rawtext, etext, lineno, inliner,
+                                 options=(), content=[]):
+    cm = utils.unescape(etext)
+    # Correct for Python, PHP and C++:
+    if highlight_language == 'python':
+	cm = re.sub(r'::', r'.', cm)
+	return [nodes.literal(text = 'xapian.' + cm)], []
+    elif highlight_language == 'php':
+	return [nodes.literal(text = 'Xapian' + cm)], []
+    elif highlight_language == 'c++':
+	return [nodes.literal(text = 'Xapian::' + cm)], []
+    else:
+        return "???"
+
 # Usage:
 #
 # The previous example was :xapian-code-example:`^`.
@@ -371,3 +403,9 @@ roles.register_local_role('xapian-code-example', xapian_code_example_role)
 roles.register_local_role('xapian-basename-code-example', xapian_code_example_short_role)
 roles.register_local_role('xapian-basename-example', xapian_example_short_role)
 roles.register_local_role('xapian-example', xapian_example_role)
+roles.register_local_role('xapian-class', xapian_class_role)
+roles.register_local_role('xapian-just-method', xapian_just_method_role)
+roles.register_local_role('xapian-method', xapian_method_role)
+# Currently these just do the same as the method versions:
+roles.register_local_role('xapian-just-constant', xapian_just_method_role)
+roles.register_local_role('xapian-constant', xapian_method_role)

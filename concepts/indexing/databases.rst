@@ -29,13 +29,13 @@ will allow updates to be grouped into transactions, and will allow at least some
 old versions of the database to be searched while new ones are being written.
 Currently, all the backends only support a single writer existing at a given
 time; attempting to open another writer on the same database will throw
-``Xapian::DatabaseLockError`` to indicate that it wasn't possible to acquire a
+:xapian-class:`DatabaseLockError` to indicate that it wasn't possible to acquire a
 lock.  Multiple concurrent readers are supported (in addition to the writer).
 
 When a database is opened for reading, a fixed snapshot of the database is
 referenced by the reader, (essentially `Multi-Version Concurrency Control`_).
 Updates which are made to the database will not be visible to the reader unless
-it calls ``Xapian::Database::reopen()``.
+it calls :xapian-method:`Database::reopen()`.
 
 .. _Multi-Version Concurrency Control: http://en.wikipedia.org/wiki/Multiversion_concurrency_control
 
@@ -44,9 +44,9 @@ concurrency* implementation - specifically, at most two versions can exist
 concurrently.  Therefore a reader will be able to access its snapshot of the
 database without limitations when only one change has been made and committed by
 the writer, but after the writer has made two changes, readers will receive a
-``Xapian::DatabaseModifiedError`` if they attempt to access a part of the database
+:xapian-class:`DatabaseModifiedError` if they attempt to access a part of the database
 which has changed.  In this situation, the reader can be updated to the latest
-version using the ``Xapian::Database::reopen()`` method.
+version using the :xapian-method:`Database::reopen()` method.
 
 With the disk-based Xapian backends, when a database is opened for writing,
 a lock is obtained on the database to ensure that no further writers are

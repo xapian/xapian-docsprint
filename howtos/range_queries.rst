@@ -38,16 +38,16 @@ How Xapian supports range queries
 
 If you think back to when we introduced the query concepts behind
 Xapian, you'll remember that one group of query operators is
-responsible for handling *value ranges*: `OP_VALUE_LE`, `OP_VALUE_GE`
-and `OP_VALUE_RANGE`. So we'll be tackling range queries by using
-document values, and constructing queries using these operators to
-restrict matches suitably.
+responsible for handling *value ranges*: :xapian-just-constant:`OP_VALUE_LE`,
+:xapian-just-constant:`OP_VALUE_GE` and :xapian-just-constant:`OP_VALUE_RANGE`.
+So we'll be tackling range queries by using document values, and constructing
+queries using these operators to restrict matches suitably.
 
 Since we want to expose this functionality generally to users, we want
 them to be able to type in a query that will include one or more range
 restrictions; the QueryParser contains support for doing this, using
-*value range processors*, subclasses of `ValueRangeProcessor`. Xapian
-comes with some standard ones itself, or you can write your own.
+*value range processors*, subclasses of :xapian-class:`ValueRangeProcessor`.
+Xapian comes with some standard ones itself, or you can write your own.
 
 Since document values are stored as strings in Xapian, and the
 operators provided perform string comparisons, we need a way of
@@ -84,8 +84,8 @@ Searching with ranges
 
 All we need to do once we've got the document values in place is to
 tell the QueryParser about them. The simplest value range processor is
-`StringValueRangeProcessor`, but here we need two
-`NumberValueRangeProcessor` instances.
+:xapian-class:`StringValueRangeProcessor`, but here we need two
+:xapian-class:`NumberValueRangeProcessor` instances.
 
 To distinguish between the two different ranges, we'll require that
 dimensions must be specified with the suffix 'mm', but years are just
@@ -147,7 +147,7 @@ Handling dates
 
 To restrict to a date range, we need to decide how to both store the
 date in a document value, and how we want users to input the date
-range in their query. `DateValueRangeProcessor`, which is part of
+range in their query. :xapian-class:`DateValueRangeProcessor`, which is part of
 Xapian, works by storing the date as a string in the form 'YYYYMMDD',
 and can take dates in either US style (month/day/year) or European
 style (day/month/year).
@@ -183,12 +183,12 @@ give to the QueryParser.
 .. xapianexample:: search_ranges2
     :marker: date example code
 
-The `DateValueRangeProcessor` is working on value slot 2, with an
+The :xapian-class:`DateValueRangeProcessor` is working on value slot 2, with an
 "epoch" of 1860 (so two digit years will be considered as starting at
 1860 and going forward as far 1959). The second parameter is whether
 it should prefer US style dates or not; since we're looking at US
-states, we've gone for US dates. The `NumberValueRangeProcessor` is as
-we saw before.
+states, we've gone for US dates. The :xapian-class:`NumberValueRangeProcessor`
+is as we saw before.
 
 This enables us to search for any state that talks about the Spanish
 in its description:
@@ -201,41 +201,41 @@ or for all states admitted in the 19th century:
 .. xapianrunexample:: search_ranges2
     :args: statesdb 1800.1899
 
-That uses the `NumberValueRangeProcessor` on value slot 1, as in our
-previous example. Let's be more specific and ask for only those
+That uses the :xapian-class:`NumberValueRangeProcessor` on value slot 1, as in
+our previous example. Let's be more specific and ask for only those
 between November 8th 1889, when Montana became part of the Union, and
 July 10th 1890, when Wyoming joined:
 
 .. xapianrunexample:: search_ranges2
     :args: statesdb 11/08/1889..07/10/1890
 
-That uses the `DateValueRangeProcessor` on value slot 2; it can't cope
-with year ranges, which is why we indexed to both slots 1 and 2.
+That uses the :xapian-class:`DateValueRangeProcessor` on value slot 2; it can't
+cope with year ranges, which is why we indexed to both slots 1 and 2.
 
 Writing your own ValueRangeProcessor
 ------------------------------------
 
 We haven't yet done anything with population. What we want is
-something that behaves like `NumberValueRangeProcessor`, but knows
+something that behaves like :xapian-class:`NumberValueRangeProcessor`, but knows
 what reason possible values are. If we insert it *before* the
-`NumberValueRangeProcessor` on slot 1 (year), it can pick up anything
-that should be treated as a population, and let everything else be
+:xapian-class:`NumberValueRangeProcessor` on slot 1 (year), it can pick up
+anything that should be treated as a population, and let everything else be
 treated as a year range.
 
-To do this, we need to know how a `ValueRangeProcessor` gets called by
-the QueryParser. What happens is that each processor in turn is passed
-the start and end of the range. If it doesn't understand the range, it
-should return ``Xapian::BAD_VALUENO``.  If it *does* understand the
-range, it should return the value number to use with
-``Xapian::Query::OP_VALUE_RANGE`` and if it wants to, it can modify
-the start and end values (to convert them to the correct format for
-the string comparison which ``OP_VALUE_RANGE`` uses).
+To do this, we need to know how a :xapian-class:`ValueRangeProcessor` gets
+called by the QueryParser. What happens is that each processor in turn is
+passed the start and end of the range. If it doesn't understand the range, it
+should return :xapian-constant:`Xapian::BAD_VALUENO`.  If it *does* understand
+the range, it should return the value number to use with
+:xapian-constant:`Xapian::Query::OP_VALUE_RANGE` and if it wants to, it can
+modify the start and end values (to convert them to the correct format for
+the string comparison which :xapian-constant:`OP_VALUE_RANGE` uses).
 
-What we're going to do is to write a custom `ValueRangeProcessor` that
-accepts numbers in the range 500,000 to 50,000,000; these can't
+What we're going to do is to write a custom :xapian-class:`ValueRangeProcessor`
+that accepts numbers in the range 500,000 to 50,000,000; these can't
 possibly be years in our data set, and encompass the full range of
 populations. If either number is outside that range, we will return
-`Xapian::BAD_VALUENO` and the QueryParser will move on.
+:xapian-constant:`Xapian::BAD_VALUENO` and the QueryParser will move on.
 
 .. xapianexample:: search_ranges2
     :marker: custom VRP code
@@ -245,10 +245,10 @@ in C++), which gets called with the two strings at either end of the
 range in the query string; either but not both can be the empty
 string, which indicates an open-ended range. In python this method
 should return a tuple of the value slot and the two strings modified
-so they can be used for `OP_VALUE_RANGE`. Rather than re-implement
-`NumberValueRangeProcessor`, we wrap it to do the serialisation (due
-to the way python interacts with the API it's currently not possible
-to subclass it successfully here).
+so they can be used for :xapian-just-constant:`OP_VALUE_RANGE`. Rather than
+re-implement :xapian-class:`NumberValueRangeProcessor`, we wrap it to do the
+serialisation (due to the way python interacts with the API it's currently not
+possible to subclass it successfully here).
 
 Value range processors are called in the order they're added, so our
 custom one gets a chance to look at all ranges, but will only 'claim'
@@ -272,8 +272,8 @@ mean up to 5 million, or '..750k' for up to 750 thousand.
 Performance limitations
 -----------------------
 
-Without other terms in a query, a `ValueRangeProcessor` will cause a
-value operation to be performed across the whole database, which means
+Without other terms in a query, a :xapian-class:`ValueRangeProcessor` will cause
+a value operation to be performed across the whole database, which means
 loading all the values in a given slot. On a small database, this
 isn't a problem, but for a large one it can have performance
 implications: you may end up with very slow queries.
@@ -312,13 +312,14 @@ describe each. We'll use a prefix of `XP` (for "population") here.
 | 30 - 40 million  | XP3  |
 +------------------+------+
 
-Then you can use a custom `ValueRangeProcessor` to both generate the
-relevant information for QueryParser to construct an `OP_VALUE_RANGE`
-query and to record which subranges we're interested in. For instance,
-if the user asks for '..15000000', your processor can remember that
-and later spit out an additional `OP_AND` query with terms `XP0` and
-`XP1`, that can be combined with the query generated by the
-QueryParser using `OP_FILTER`.
+Then you can use a custom :xapian-class:`ValueRangeProcessor` to both generate
+the relevant information for QueryParser to construct an
+:xapian-just-constant:`OP_VALUE_RANGE` query and to record which subranges we're
+interested in. For instance, if the user asks for '..15000000', your processor
+can remember that and later spit out an additional
+:xapian-just-constant:`OP_AND` query with terms `XP0` and `XP1`, that can be
+combined with the query generated by the QueryParser using
+:xapian-just-constant:`OP_FILTER`.
 
 .. todo:: actually, you can't safely combine the query with an external filter,
 	  because other bits of the query might be higher level.  For example,

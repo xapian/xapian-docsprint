@@ -14,9 +14,9 @@ multi-threaded program provided you don't share objects between threads
 (and in practice this restriction is often not a problem).
 
 Be aware that some Xapian objects will keep internal references to others
-- for example, if you call ``Xapian::Database::get_document()``, the
-resulting ``Xapian::Document`` object will keep a reference to the
-``Xapian::Database`` object, and so it isn't safe to use them in different
+- for example, if you call :xapian-method:`Database::get-document()`, the
+resulting :xapian-class:`Document` object will keep a reference to the
+:xapian-class:`Database` object, and so it isn't safe to use them in different
 threads concurrently.
 
 If you want to access a Xapian object, from multiple threads then you

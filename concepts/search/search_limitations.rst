@@ -19,17 +19,18 @@ match an external system.
 Positional Queries
 ------------------
 
-Currently ``OP_PHRASE`` and ``OP_NEAR`` don't really support non-term
-subqueries, though simple cases get rearranged (so for example, ``A PHRASE
-(B OR C)`` becomes ``(A PHRASE B) OR (A PHRASE C)``).
+Currently :xapian-just-constant:`OP_PHRASE` and :xapian-just-constant:`OP_NEAR`
+don't really support non-term subqueries, though simple cases get rearranged
+(so for example, ``A PHRASE (B OR C)`` becomes ``(A PHRASE B) OR (A PHRASE
+C)``).
 
-Queries which use positional information (``OP_PHRASE`` and ``OP_NEAR``)
-can be significantly slower to process.  The way these are implemented is
-to find documents which have all the necessary terms in, and then to check
-if the terms fulfil the positional requirements, so if a lot of documents
-contain the required terms but not in the right places, a lot more work is
-required than for just doing an AND query.  This will be improved in a
-future release.
+Queries which use positional information (:xapian-just-constant:`OP_PHRASE` and
+:xapian-just-constant:`OP_NEAR`) can be significantly slower to process.  The
+way these are implemented is to find documents which have all the necessary
+terms in, and then to check if the terms fulfil the positional requirements, so
+if a lot of documents contain the required terms but not in the right places, a
+lot more work is required than for just doing an AND query.  This will be
+improved in a future release.
 
 Collapsing
 ----------

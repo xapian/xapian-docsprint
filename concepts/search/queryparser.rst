@@ -61,8 +61,8 @@ Default Operator
 ~~~~~~~~~~~~~~~~
 
 When the QueryParser receives a query, it joins together its component
-queries using a `default operator`_ which defaults to OP_OR but can be 
-modified at run time.
+queries using a `default operator`_ which defaults to
+:xapian-just-constant:`OP_OR` but can be modified at run time.
 
 .. _default operator: http://xapian.org/docs/apidoc/html/classXapian_1_1QueryParser.html#2efe48be88c4872afec4bc963f417ea5
 
@@ -92,8 +92,8 @@ all documents with these terms are weighted according to the weight of the
 additional terms. 
 
 One thing to note is that the behaviour of the +/- operators vary depending
-on the default operator used and the above examples assume that OP_OR is 
-used. 
+on the default operator used and the above examples assume that
+:xapian-just-constant:`OP_OR` is used. 
 
 Searching with Prefixes
 ~~~~~~~~~~~~~~~~~~~~~~~

@@ -31,8 +31,9 @@ don't need to store "within document frequency" information.  A field like
 this, which we're using to restrict the results returned from a search rather
 than as part of the weighted search, is referred to as a `boolean term`.
 
-We can therefore just add the identifiers to the ``Document`` directly,
-after splitting on semicolons, using the ``add_boolean_term()`` method.
+We can therefore just add the identifiers to the :xapian-class:`Document`
+directly, after splitting on semicolons, using the
+:xapian-just-method:`add_boolean_term()` method.
 
 .. xapianexample:: index_filters
     :marker: new indexing code
@@ -71,9 +72,10 @@ checkbox is selected.
 
 To build a query which performs this task, we can take the Query object
 returned by the query parser, and combine it with a manually built Query
-representing the checkboxes which are selected, using the ``OP_FILTER``
-operator.  If multiple checkboxes are selected, we need to combine the Query
-objects for each checkbox with an ``OP_OR`` operator.
+representing the checkboxes which are selected, using the
+:xapian-just-constant:`OP_FILTER` operator.  If multiple checkboxes are
+selected, we need to combine the Query objects for each checkbox with an
+:xapian-just-constant:`OP_OR` operator.
 
 An arbitrarily complex Query tree can be built using queries returned from the
 QueryParser and manually constructed Query objects, which allows very flexible

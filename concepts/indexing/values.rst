@@ -14,7 +14,7 @@ slot 1, and a value indicating some measure of the importance of the
 document in slot 10.  It's fine to use widely separated slot numbers - the
 data isn't stored in a simple array.  Slot numbers can be any 32 bit
 unsigned integer, except for ``0xffffffff`` which has a special meaning
-(it's ``Xapian::BAD_VALUENO`` which is used to indicate things like "not
+(it's :xapian-constant:`BAD_VALUENO` which is used to indicate things like "not
 sorting on any value slot").
 
 The core of Xapian treats the contents of value slots as opaque binary
