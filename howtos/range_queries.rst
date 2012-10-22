@@ -61,7 +61,7 @@ Creating the document values
 ----------------------------
 
 We need a new version of our indexer. This one is
-:xapian-code-example:`index_ranges`, and creates document values from both
+:xapian-basename-code-example:`index_ranges`, and creates document values from both
 `MEASUREMENTS` and `DATE_MADE`. We'll put the largest dimension in
 value slot 0 (fortunately the data is stored in millimetres and
 kilograms, so we can cheat a little and assume that dimensions will
@@ -102,7 +102,7 @@ string, as in the second call, it doesn't matter whether you say it's
 a suffix or prefix, so it's convenient to skip that parameter.
 
 
-This is implemented in :xapian-code-example:`^`, which also
+This is implemented in :xapian-basename-code-example:`^`, which also
 modifies the output to show the measurements and date made fields as
 well as the title.
 
@@ -186,7 +186,7 @@ licensed as Creative Commons Attribution-Share Alike 3.0, as per
 Wikipedia.
 
 We need a new indexer for this as well, which is
-:xapian-code-example:`index_ranges2`. It stores two numbers using
+:xapian-basename-code-example:`index_ranges2`. It stores two numbers using
 `sortable_serialise`: year of admission in value slot 1 and population
 in slot 3. It also stores the date of admission as 'YYYYMMDD' in
 slot 2. We'll look at just the date ones for now, and come back to the

@@ -42,7 +42,9 @@ A full copy of the indexer with this updated code is available in
 
 If we check the resulting index with delve, we will see that documents for
 which there was a value in the ``MATERIALS`` field now contain terms with the
-``XM`` prefix (output snipped to show the relevant lines)::
+``XM`` prefix (output snipped to show the relevant lines):
+
+.. code-block:: sh
 
     $ delve -r 3 -1 db
     Term List for record #3:
@@ -78,14 +80,14 @@ filtering of the results from parsed queries.
 .. xapianexample:: search_filters
 
 A full copy of the this updated search code is available in
-:xapian-code-example:`^`.  With this, we could perform a search for
+:xapian-basename-code-example:`^`.  With this, we could perform a search for
 documents matching "clock", and filter the results to return only those with a
 value of ``"steel (metal)"`` as one of the semicolon separated values in the
 materials field:
 
 .. only:: py
 
-    .. code-block:: none
+    .. code-block:: sh
 
         $ python code/python/search_filters.py db clock 'steel (metal)'
         1: #012 Assembled and unassembled EXA electric clock kit
@@ -100,7 +102,7 @@ materials field:
 
 .. only:: php
 
-    .. code-block:: none
+    .. code-block:: sh
 
         $ php code/php/search_filters.php db clock 'steel (metal)'
         1: #012 Assembled and unassembled EXA electric clock kit
@@ -130,7 +132,9 @@ we just need to a add a single line to the search code:
 
 Users can then perform a filtered search by preceding a word or phrase with
 "material:", similar to the syntax supported for this sort of thing by many web
-search engines::
+search engines:
+
+.. code-block:: sh
 
     $ python code/python/search_filters2.py db 'clock material:"steel (metal)"'
     1: #012 Assembled and unassembled EXA electric clock kit
