@@ -370,4 +370,4 @@ def xapian_example_short_role(typ, rawtext, etext, lineno, inliner,
 roles.register_local_role('xapian-code-example', xapian_code_example_role)
 roles.register_local_role('xapian-basename-code-example', xapian_code_example_short_role)
 roles.register_local_role('xapian-basename-example', xapian_example_short_role)
-roles.register_local_role('xapian-basename-example', xapian_example_role)
+roles.register_local_role('xapian-example', xapian_example_role)
