@@ -28,7 +28,7 @@ done either by Xapian docid or using unique ID terms, as with
 
 .. xapianexample:: delete1
 
-A copy of this code is available in :xapian_example_filename:`^`.
+A copy of this code is available in :xapian-example-filename:`^`.
 
 Then we just run our deletion tool, giving it identifiers taken from
 the `id_NUMBER` field in the data set::

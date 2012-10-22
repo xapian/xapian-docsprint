@@ -38,7 +38,7 @@ after splitting on semicolons, using the ``add_boolean_term()`` method.
     :marker: new indexing code
 
 A full copy of the indexer with this updated code is available in
-:xapian_example_filename:`^`.
+:xapian-code-example:`^`.
 
 If we check the resulting index with delve, we will see that documents for
 which there was a value in the ``MATERIALS`` field now contain terms with the
@@ -78,7 +78,7 @@ filtering of the results from parsed queries.
 .. xapianexample:: search_filters
 
 A full copy of the this updated search code is available in
-:xapian_example_filename:`^`.  With this, we could perform a search for
+:xapian-code-example:`^`.  With this, we could perform a search for
 documents matching "clock", and filter the results to return only those with a
 value of ``"steel (metal)"`` as one of the semicolon separated values in the
 materials field:

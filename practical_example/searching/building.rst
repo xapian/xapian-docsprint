@@ -15,4 +15,4 @@ most simple of these is to use the QueryParser.
 
 .. xapianexample:: search1
 
-A full copy of this code is available in :xapian_example_filename:`^`.
+A full copy of this code is available in :xapian-example-filename:`^`.

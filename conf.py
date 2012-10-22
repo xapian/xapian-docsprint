@@ -238,11 +238,11 @@ def github_link_node(rawtext, options=()):
     return node
 
 
-def xapian_example_filename(ex):
+def xapian_code_example_filename(ex):
     return "code/%s/%s%s" % (highlight_language, ex, ext)
 
 
-class XapianExample(LiteralInclude):
+class XapianCodeExample(LiteralInclude):
     option_spec = {
         'linenos': directives.flag,
         'tab-width': int,
@@ -261,7 +261,7 @@ class XapianExample(LiteralInclude):
     def run(self):
         global last_example
         last_example = self.arguments[0]
-        filename = xapian_example_filename(last_example)
+        filename = xapian_code_example_filename(last_example)
         if not os.path.exists(filename):
             return [nodes.literal(text = 'No version of example %s in language %s - patches welcome!'
                 % (last_example, highlight_language))]
@@ -274,23 +274,31 @@ class XapianExample(LiteralInclude):
                 marker = 'example code'
             self.options['start-after'] = 'Start of ' + marker
             self.options['end-before'] = 'End of ' + marker
-        return super(XapianExample, self).run()
+        return super(XapianCodeExample, self).run()
 
 # Usage:
 # .. xapianexample:: search_filters2
-directives.register_directive('xapianexample', XapianExample)
+directives.register_directive('xapianexample', XapianCodeExample)
 
 
-def xapian_example_filename_role(typ, rawtext, etext, lineno, inliner,
+def xapian_code_example_role(typ, rawtext, etext, lineno, inliner,
                                  options=(), content=[]):
     ex = utils.unescape(etext)
     if ex == '^' and last_example:
         ex = last_example
-    return [github_link_node(xapian_example_filename(ex), options)], []
+    return [github_link_node(xapian_code_example_filename(ex), options)], []
+
+
+def xapian_example_role(typ, rawtext, etext, lineno, inliner,
+                                 options=(), content=[]):
+    ex = utils.unescape(etext)
+    return [github_link_node(ex, options)], []
 
 # Usage:
 #
 # The previous example was :xapian_example_filename:`^`.
 #
 # The foo example is in :xapian_example_filename:`foo`.
-roles.register_local_role('xapian_example_filename', xapian_example_filename_role)
+roles.register_local_role('xapian-code-example', xapian_code_example_role)
+
+roles.register_local_role('xapian-example', xapian_example_role)
