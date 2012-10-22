@@ -301,7 +301,7 @@ class XapianRunExample(LiteralInclude):
         if not os.path.exists(filename):
             return [nodes.literal(text = 'No version of example %s in language %s - patches welcome!'
                 % (last_example, highlight_language))]
-        command = xapian_code_example_command(filename)
+        command = xapian_code_example_command(self.arguments[0])
 
         if 'args' in self.options:
             def esc_char(match):
