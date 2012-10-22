@@ -239,8 +239,8 @@ The wtsource would be a class like this one::
 	def get_weight(self, doc):
 	    return some_func(doc.get_docid())
 
-.. FIXME: Provide some more examples!
-.. FIXME "why you might want to do this" (e.g. scenario) too
+.. todo:: Provide some more examples!
+.. todo:: "why you might want to do this" (e.g. scenario) too
 
 Multiple databases, and remote databases
 ========================================

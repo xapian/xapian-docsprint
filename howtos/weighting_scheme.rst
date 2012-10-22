@@ -68,5 +68,5 @@ term scores one point::
 	bool get_sumpart_needs_doclength() const { return false; }
     };
 
-.. FIXME: add a more complex example now that user-defined weight classes
-   can see the statistics.
+.. todo:: add a more complex example now that user-defined weight classes
+          can see the statistics.

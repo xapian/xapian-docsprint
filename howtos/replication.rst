@@ -57,7 +57,7 @@ would probably be easy to support replication of inmemory databases.
 Setting up replicated databases
 ===============================
 
-.. FIXME - expand this section.
+.. todo:: expand this section.
 
 To replicate a database efficiently from one master machine to other machines,
 there is one configuration step to be performed on the master machine, and two

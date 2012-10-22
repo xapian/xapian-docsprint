@@ -2,7 +2,7 @@
 .. Copyright (C) 2006 Lemur Consulting Ltd
 .. Copyright (C) 2007,2008,2009,2010,2011 Olly Betts
 
-.. FIXME: Once brass settles down, update this for brass
+.. todo:: Once brass settles down, update this for brass
 
 ============================
 Xapian Administrator's Guide
@@ -25,7 +25,7 @@ reading for Xapian application developers.
 
 The document is up-to-date for Xapian version 1.3.0 (probably!)
 
-.. FIXME:1.3.0: ensure this is up to date for 1.3.0
+.. todo:: ensure this really is up to date for 1.3.0
 
 Databases
 =========
