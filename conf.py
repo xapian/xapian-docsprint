@@ -38,7 +38,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Getting Started with Xapian'
-copyright = u'2011, 2012 Olly Betts, Richard Boulton, Dan Colish, Justin Finkelstein, James Aylett'
+_authors = u'Olly Betts, Richard Boulton, Dan Colish, Justin Finkelstein, James Aylett'
+copyright = u'2011, 2012 ' + _authors
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -173,7 +174,7 @@ htmlhelp_basename = 'GettingStartedwithXapiandoc'
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
   ('index', 'GettingStartedwithXapian.tex', u'Getting Started with Xapian Documentation',
-   u'Olly Betts, Richard Boulton, Justin Finkelstein, James Aylett', 'manual'),
+   _authors, 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
