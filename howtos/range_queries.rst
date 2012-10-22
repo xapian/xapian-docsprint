@@ -152,15 +152,15 @@ Xapian, works by storing the date as a string in the form 'YYYYMMDD',
 and can take dates in either US style (month/day/year) or European
 style (day/month/year).
 
-To show how this works, we're going to need to use a different
-dataset, because the museums data only gives years the objects were
-made in; we've built one using data on the fifty US states, taken from
-Wikipedia infoboxes on 5th November 2011 and then tidied up a small
-amount. The CSV file is `data/states.csv`, and the code that did most
-of the work is `code/python/from_wikipedia.py`, using a list of
-Wikipedia page titles in `data/us_states_on_wikipedia`. The CSV is
-licensed as Creative Commons Attribution-Share Alike 3.0, as per
-Wikipedia.
+To show how this works, we're going to need to use a different dataset, because
+the museums data only gives years the objects were made in; we've built one
+using data on the fifty US states, taken from Wikipedia infoboxes on 5th
+November 2011 and then tidied up a small amount. The CSV file is
+:xapian-basename-example:`data/states.csv`, and the code that did most of the
+work is :xapian-basename-code-example:`from_wikipedia`, using a
+list of Wikipedia page titles in
+:xapian-basename-example:`data/us_states_on_wikipedia`. The CSV is licensed as
+Creative Commons Attribution-Share Alike 3.0, as per Wikipedia.
 
 We need a new indexer for this as well, which is
 :xapian-basename-code-example:`index_ranges2`. It stores two numbers using
