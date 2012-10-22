@@ -38,7 +38,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Getting Started with Xapian'
-copyright = u'2011, Olly Betts, Richard Boulton, Justin Finkelstein, James Aylett'
+copyright = u'2011, 2012 Olly Betts, Richard Boulton, Dan Colish, Justin Finkelstein, James Aylett'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
