@@ -274,6 +274,8 @@ class XapianCodeExample(LiteralInclude):
         last_example = self.arguments[0]
         filename = xapian_code_example_filename(last_example)
         if not os.path.exists(filename):
+            print '*** No version of example %s in language %s - patches welcome!' \
+                % (last_example, highlight_language)
             return [nodes.literal(text = 'No version of example %s in language %s - patches welcome!'
                 % (last_example, highlight_language))]
         self.arguments[0] = "/" + filename
@@ -318,6 +320,9 @@ class XapianRunExample(LiteralInclude):
                 filename = filename + ".out"
         else:
             filename = filename + ".out"
+        if not os.path.exists(filename):
+            print '*** No output file %s in language %s - patches welcome!' \
+                % (filename, highlight_language)
 
         self.options['prepend'] = re.sub(r'^', r'$ ', command, 0, re.MULTILINE)
         # FIXME: Only want this syntax highlighting for lines starting '$'.
