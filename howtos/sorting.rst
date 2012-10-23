@@ -114,8 +114,12 @@ state for this purpose, which are calculated for us when parsing the
 .. xapianexample:: index_values_with_geo
 
 We don't have to sort on these, so we've just put them both into one
-slot that we can easily read them out from again. Now we need a
-KeyMaker; let's have it return a key that sorts by distance from
+slot that we can easily read them out from again:
+
+.. xapianrunexample:: index_values_with_geo
+   :args: data/states.csv statesdb
+
+Now we need a KeyMaker; let's have it return a key that sorts by distance from
 Washington, DC.
 
 .. xapianexample:: search_sorting3
