@@ -41,8 +41,8 @@ def search(dbpath, querystring, offset=0, pagesize=10):
             'rank': offset + index + 1,
             'docid': match.docid,
             'name': fields.get('name', u''),
-            'date': fields.get('admitted', u''),
-            'pop': fields.get('population', u''),
+            'date': support.format_date(fields.get('admitted', u'')),
+            'pop': support.format_numeral(fields.get('population', 0)),
             'lat': fields.get('latitude', u''),
             'lon': fields.get('longitude', u''),
             }
