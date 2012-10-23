@@ -204,22 +204,30 @@ latex_documents = [
 # Cause todos to be displayed.
 todo_include_todos = True
 
-# Default to setting 'py' tag if none are set, and set highlight language
+# Default to setting 'python' tag if none are set, and set highlight language
 # appropriately.
 
 last_example = None
 
-if tags.has('php'):
-    highlight_language = 'php'
-    ext = '.php'
-elif tags.has('cc'):
-    highlight_language = 'c++'
+highlight_language = None
+for t in ['php', 'c++', 'python']:
+    if tags.has(t):
+        if not highlight_language is None:
+            print "Multiple language tags set (at least %s and %s)" % (found, t)
+            sys.exit(1)
+        highlight_language = t
+
+if highlight_language is None:
+    tags.add('python')
+    highlight_language = 'python'
+
+if highlight_language == 'python':
+    ext = '.py'
+elif highlight_language == 'c++':
     ext = '.cc'
 else:
-    tags.add('py')
-    highlight_language = 'python'
-    ext = '.py'
-
+    # php:
+    ext = '.' + highlight_language
 
 def github_link_node(name, rawtext, options=()):
     try:
