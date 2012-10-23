@@ -46,8 +46,8 @@ def search(dbpath, querystring, offset=0, pagesize=10):
 
     # Parse and display the spy values
     for facet in spy.values():
-        print u"Facet: %(term)s; count: %(count)i" % {
-            'term' : facet.term.decode('latin-1'),
+        print "Facet: %(term)s; count: %(count)i" % {
+            'term' : facet.term,
             'count' : facet.termfreq
         }
 

@@ -18,7 +18,7 @@ def log_matches(querystring, offset, pagesize, matches):
         )
 
 
-def parse_csv_file(datapath, charset='iso-8859-1'):
+def parse_csv_file(datapath, charset='utf8'):
     """Parse a CSV file.
 
     Assumes the first row has field names.
