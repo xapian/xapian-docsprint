@@ -199,7 +199,7 @@ in its description:
 or for all states admitted in the 19th century:
 
 .. xapianrunexample:: search_ranges2
-    :args: statesdb 1800.1899
+    :args: statesdb 1800..1899
 
 That uses the :xapian-class:`NumberValueRangeProcessor` on value slot 1, as in
 our previous example. Let's be more specific and ask for only those

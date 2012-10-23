@@ -204,22 +204,30 @@ latex_documents = [
 # Cause todos to be displayed.
 todo_include_todos = True
 
-# Default to setting 'py' tag if none are set, and set highlight language
+# Default to setting 'python' tag if none are set, and set highlight language
 # appropriately.
 
 last_example = None
 
-if tags.has('php'):
-    highlight_language = 'php'
-    ext = '.php'
-elif tags.has('cc'):
-    highlight_language = 'c++'
+highlight_language = None
+for t in ['php', 'c++', 'python']:
+    if tags.has(t):
+        if not highlight_language is None:
+            print "Multiple language tags set (at least %s and %s)" % (found, t)
+            sys.exit(1)
+        highlight_language = t
+
+if highlight_language is None:
+    tags.add('python')
+    highlight_language = 'python'
+
+if highlight_language == 'python':
+    ext = '.py'
+elif highlight_language == 'c++':
     ext = '.cc'
 else:
-    tags.add('py')
-    highlight_language = 'python'
-    ext = '.py'
-
+    # php:
+    ext = '.' + highlight_language
 
 def github_link_node(name, rawtext, options=()):
     try:
@@ -251,7 +259,8 @@ def xapian_code_example_command(ex):
         return "g++ `xapian-config --cxxflags` %s -o %s `xapian-config --libs`\n./%s" \
             % (xapian_code_example_filename(ex), ex, ex)
     else:
-        return "???"
+        print "Unhandled highlight_language"
+        sys.exit(1)
 
 class XapianCodeExample(LiteralInclude):
     option_spec = {
@@ -274,6 +283,8 @@ class XapianCodeExample(LiteralInclude):
         last_example = self.arguments[0]
         filename = xapian_code_example_filename(last_example)
         if not os.path.exists(filename):
+            print '*** No version of example %s in language %s - patches welcome!' \
+                % (last_example, highlight_language)
             return [nodes.literal(text = 'No version of example %s in language %s - patches welcome!'
                 % (last_example, highlight_language))]
         self.arguments[0] = "/" + filename
@@ -318,6 +329,9 @@ class XapianRunExample(LiteralInclude):
                 filename = filename + ".out"
         else:
             filename = filename + ".out"
+        if not os.path.exists(filename):
+            print '*** No output file %s in language %s - patches welcome!' \
+                % (filename, highlight_language)
 
         self.options['prepend'] = re.sub(r'^', r'$ ', command, 0, re.MULTILINE)
         # FIXME: Only want this syntax highlighting for lines starting '$'.
@@ -372,7 +386,8 @@ def xapian_class_role(typ, rawtext, etext, lineno, inliner,
     elif highlight_language == 'c++':
         return [nodes.literal(text = 'Xapian::' + c)], []
     else:
-        return "???"
+        print "Unhandled highlight_language"
+        sys.exit(1)
 
 def xapian_just_method_role(typ, rawtext, etext, lineno, inliner,
                                  options=(), content=[]):
@@ -392,7 +407,8 @@ def xapian_method_role(typ, rawtext, etext, lineno, inliner,
     elif highlight_language == 'c++':
         return [nodes.literal(text = 'Xapian::' + cm)], []
     else:
-        return "???"
+        print "Unhandled highlight_language"
+        sys.exit(1)
 
 # Usage:
 #
