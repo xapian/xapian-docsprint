@@ -41,8 +41,8 @@ search(const string & dbpath, const string & querystring,
 	cout << m.get_rank() + 1 << ": #" << buf << " ";
 
 	const string & data = m.get_document().get_data();
-	size_t m = data.rfind('\n');
-	cout << data.substr(m + 1) << endl;
+	size_t nl = data.rfind('\n');
+	cout << data.substr(nl + 1) << endl;
 	if (!matches.empty()) matches += ' ';
 	sprintf(buf, "%u", did);
 	matches += buf;
