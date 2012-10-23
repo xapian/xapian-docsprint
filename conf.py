@@ -259,7 +259,8 @@ def xapian_code_example_command(ex):
         return "g++ `xapian-config --cxxflags` %s -o %s `xapian-config --libs`\n./%s" \
             % (xapian_code_example_filename(ex), ex, ex)
     else:
-        return "???"
+        print "Unhandled highlight_language"
+        sys.exit(1)
 
 class XapianCodeExample(LiteralInclude):
     option_spec = {
@@ -385,7 +386,8 @@ def xapian_class_role(typ, rawtext, etext, lineno, inliner,
     elif highlight_language == 'c++':
         return [nodes.literal(text = 'Xapian::' + c)], []
     else:
-        return "???"
+        print "Unhandled highlight_language"
+        sys.exit(1)
 
 def xapian_just_method_role(typ, rawtext, etext, lineno, inliner,
                                  options=(), content=[]):
@@ -405,7 +407,8 @@ def xapian_method_role(typ, rawtext, etext, lineno, inliner,
     elif highlight_language == 'c++':
         return [nodes.literal(text = 'Xapian::' + cm)], []
     else:
-        return "???"
+        print "Unhandled highlight_language"
+        sys.exit(1)
 
 # Usage:
 #
