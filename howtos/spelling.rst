@@ -22,8 +22,8 @@ words from a static word list, or a combination of the two.
 Static spelling data
 --------------------
 
-If ``db`` is a Xapian::WritableDatabase, you can add to the spelling dictionary
-using::
+If ``db`` is a :xapian-class:`WritableDatabase`, you can add to the spelling
+dictionary using::
 
     db.add_spelling(word, frequency_inc);
 
@@ -40,16 +40,16 @@ removed.
 Dynamic spelling data
 ---------------------
 
-``Xapian::TermGenerator`` can be configured to automatically add words from
-indexed documents to the spelling dictionary::
+:xapian-class:`Xapian::TermGenerator` can be configured to automatically add
+words from indexed documents to the spelling dictionary::
 
     Xapian::TermGenerator indexer;
     indexer.set_database(db);
     indexer.set_flags(indexer.FLAG_SPELLING);
 
-Note that you must call the ``set_database()`` method as well as setting
-``FLAG_SPELLING`` so that Xapian knows where to add the spelling dictionary
-entries.
+Note that you must call the :xapian-method:`TermGenerator::set_database()`
+method as well as setting :xapian-method:`TermGenerator::FLAG_SPELLING` so that
+Xapian knows where to add the spelling dictionary entries.
 
 If a document is removed or replaced, any spelling dictionary entries that
 were added when it was originally indexed won't be automatically removed.
@@ -60,7 +60,8 @@ of the document collection as a source of spelling data.
 
 If you really want these entries removed, you can run through the termlist of
 each document you are about to remove or replace (if you indexed terms
-unstemmed) and call ``remove_spelling()`` for each word.
+unstemmed) and call :xapian-method:`TermGenerator::remove_spelling()` for each
+word.
 
 Searching
 =========
@@ -70,17 +71,18 @@ Searching
 QueryParser Integration
 -----------------------
 
-If FLAG_SPELLING_CORRECTION is passed to QueryParser::parse_query() and
-QueryParser::set_database() has been called, the QueryParser will look for
-corrections for words in the query.  In Xapian 1.2.2 and earlier, it only
-did this for terms which aren't found in the database.
+If :xapian-method:`QueryParser::FLAG_SPELLING_CORRECTION` is passed to
+:xapian-method:`QueryParser::parse_query()` and
+:xapian-method:`QueryParser::set_database()` has been called, the QueryParser
+will look for corrections for words in the query.  In Xapian 1.2.2 and earlier,
+it only did this for terms which aren't found in the database.
 
 If a correction is found, then a modified version of the query string will be
 generated which can be obtained by calling
-QueryParser::get_corrected_query_string().  However, the original query string
-will still be parsed, since you'll often want to ask the user "Did you mean:
-[...] ?" - if you want to automatically use the corrected form, just call
-QueryParser::parse_query() on it.
+:xapian-method:`QueryParser::get_corrected_query_string()`.  However, the
+original query string will still be parsed, since you'll often want to ask the
+user "Did you mean: [...] ?" - if you want to automatically use the corrected
+eform, just call :xapian-method:`QueryParser::parse_query()` on it.
 
 Omega
 =====
