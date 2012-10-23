@@ -71,6 +71,11 @@ contain such a variety of date formats).
 
 .. xapianexample:: index_ranges
 
+We run this like so:
+
+.. xapianrunexample:: index_ranges
+    :args: 100-objects-v1.csv db
+
 We can check this has created document values using `delve`::
 
     $ delve -V0 db
