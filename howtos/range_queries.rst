@@ -171,13 +171,14 @@ We need a new indexer for this as well, which is
 :xapian-basename-code-example:`index_ranges2`. It stores two numbers using
 `sortable_serialise`: year of admission in value slot 1 and population
 in slot 3. It also stores the date of admission as 'YYYYMMDD' in
-slot 2. We'll look at just the date ones for now, and come back to the
+slot 2.  Here's the code which does this:
+
+.. xapianexample:: index_ranges2
+
+We'll look at just the date ones for now, and come back to the
 others in a minute.
 
-There isn't any new code in this indexer that's specific to Xapian,
-although there's a fair amount of work to turn the data from Wikipedia
-into the forms we need. We use the indexer in the same way as previous
-ones:
+We use the indexer in the same way as previous ones:
 
 .. xapianrunexample:: index_ranges2
     :args: data/states.csv statesdb
