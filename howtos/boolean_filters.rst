@@ -41,7 +41,10 @@ directly, after splitting on semicolons, using the
 A full copy of the indexer with this updated code is available in
 :xapian-code-example:`^`.
 
-.. todo:: It might be worth having the shell command to re-run the indexer here.
+We run this like so:
+
+.. xapianrunexample:: index_filters
+    :args: 100-objects-v1.csv db
 
 If we check the resulting index with delve, we will see that documents for
 which there was a value in the ``MATERIALS`` field now contain terms with the
