@@ -34,7 +34,7 @@ def index(datapath, dbpath):
         termgenerator.index_text(description)
 
         ### Start of new indexing code.
-        # index the MATERIALS field, splitting on semicolons
+        # Index the MATERIALS field, splitting on semicolons.
         for material in fields.get('MATERIALS', u'').split(';'):
             material = material.strip().lower()
             if material != '':
@@ -50,6 +50,5 @@ def index(datapath, dbpath):
         idterm = u"Q" + identifier
         doc.add_boolean_term(idterm)
         db.replace_document(idterm, doc)
-
 
 index(datapath = sys.argv[1], dbpath = sys.argv[2])
