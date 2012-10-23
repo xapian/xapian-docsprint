@@ -71,6 +71,9 @@ To replicate a database efficiently from one master machine to other machines,
 there is one configuration step to be performed on the master machine, and two
 servers to run.
 
+.. todo:: XAPIAN_MAX_CHANGESETS is not irrelevant in brass. We should talk about
+          that here but only if we are clear what version it was added in.
+
 Firstly, on the master machine, the indexer must be run with the environment
 variable `XAPIAN_MAX_CHANGESETS` set to a non-zero value.  (Currently, the
 actual value it is set to is irrelevant, but I suggest using a value of 10).
@@ -141,12 +144,12 @@ you were using the original database have finished.
 Calling reopen
 --------------
 
-`Database::reopen()` is usually an efficient way to ensure that a database is
-up-to-date with the latest changes.  Unfortunately, it does not currently work
-as you might expect with databases which are being updated by the replication
-client.  The workaround is simple; don't use the reopen() method on such
-databases: instead, you should close the database and open it
-again from scratch.
+:xapian-method:`Database::reopen()` is usually an efficient way to ensure that a
+database is up-to-date with the latest changes.  Unfortunately, it does not
+currently work as you might expect with databases which are being updated by the
+replication client.  The workaround is simple; don't use the reopen() method on
+such databases: instead, you should close the database and open it again from
+scratch.
 
 Briefly, the issue is that the databases created by the replication client are
 created in a subdirectory of the target path supplied to the client, rather
