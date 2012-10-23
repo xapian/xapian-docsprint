@@ -42,6 +42,9 @@ This document gives an overview of how and why to use the replication protocol.
 For technical details of the implementation of the replication protocol, see
 the separate `Replication Protocol <replication_protocol.html>`_ document.
 
+.. todo:: Make the old docs link correctly
+
+
 Backend Support
 ===============
 
@@ -49,10 +52,15 @@ Replication is supported by the chert, and brass database backends,
 and can cleanly handle the
 master switching database type (a full copy is sent in this situation).  It
 doesn't make a lot of sense to support replication for the remote backend.
-Replication of inmemory databases isn't currently available.  We have a longer
-term aim to replace the current inmemory backend with the current disk based
-backend (e.g. chert) but storing its data in memory.  Once this is done, it
-would probably be easy to support replication of inmemory databases.
+Replication of inmemory databases isn't currently available. 
+
+.. This is commented out because speculation is not a good thing in a how to
+   document. Further handling of the topic might be appropriate in the future
+
+   We have a longer term aim to replace the current inmemory backend with the
+   current disk based backend (e.g. chert) but storing its data in memory.  Once
+   this is done, it would probably be easy to support replication of inmemory
+   databases.
 
 Setting up replicated databases
 ===============================

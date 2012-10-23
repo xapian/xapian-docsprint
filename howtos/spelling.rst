@@ -136,17 +136,19 @@ If the word passed in is in the spelling dictionary, then a candidate will
 still be returned if one is found with the same or greater frequency.
 
 The maximum edit distance to consider can be specified as an optional parameter
-to Xapian::Database::get_spelling_suggestion().  If not specified, the default
-is 2, which generally does a good job.  3 is also a reasonable choice in many
-cases.  For most uses, 1 is probably too low, and 4 or more probably too high.
+to :xapian-method:`Database::get_spelling_suggestion()`.  If not specified, the
+default is 2, which generally does a good job.  3 is also a reasonable choice in
+many cases.  For most uses, 1 is probably too low, and 4 or more probably too
+high.
 
 Unicode Support
 ---------------
 
 Trigrams are generated at the byte level, but the edit distance calculation
-currently works with Unicode characters, so get_spelling_suggestion() should
-suggest suitable spelling corrections respecting the specified (or default)
-edit distance threshold.
+currently works with Unicode characters, so
+:xapian-method:`Database::get_spelling_suggestion()` should suggest suitable
+spelling corrections respecting the specified (or default) edit distance
+threshold.
 
 Current Limitations
 ===================
@@ -163,11 +165,11 @@ search would be prohibitively expensive for many uses.
 Backend Support
 ---------------
 
-Currently spelling correction is supported for chert, and brass
-databases.  It works with a single database or multiple databases (use
-Database::add_database() as usual).  We've no plans to support it for the
-InMemory backend, but we do intend to support it for
-the remote backend in the future.
+Currently spelling correction is supported for chert, and brass databases.  It
+works with a single database or multiple databases (use
+:xapian-method:`Database::add_database()` as usual).  We've no plans to support
+it for the InMemory backend, but we do intend to support it for the remote
+backend in the future.
 
 Prefixed Terms
 --------------
@@ -190,11 +192,11 @@ nice to be able to get a ranked list.
 Spelling data from deleted documents
 ------------------------------------
 
-If you're adding spelling data using TermGenerator, then spelling data from
-deleted (or updated) documents doesn't automatically get removed from the
-spelling dictionary when documents are deleted.  This is usually not a
-problem, can be if the topic area covered by a database moves significantly
-with time.
+If you're adding spelling data using :xapian-class:`TermGenerator`, then
+spelling data from deleted (or updated) documents doesn't automatically get
+removed from the spelling dictionary when documents are deleted.  This is
+usually not a problem, can be if the topic area covered by a database moves
+significantly with time.
 
 References
 ==========
