@@ -108,7 +108,7 @@ user are ranked highest.
 
 For this, we're going to want the geographical coordinates of each
 state stored in a value. We can use the approximate middle of the
-state for this purpose, which are calculated for us when parsing the
+state for this purpose, which is calculated for us when parsing the
 `states.csv` file:
 
 .. xapianexample:: index_values_with_geo
