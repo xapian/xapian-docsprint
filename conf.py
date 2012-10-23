@@ -211,6 +211,7 @@ todo_include_todos = True
 last_example = None
 examples = set()
 examples_used = {}
+examples_in_order = []
 
 highlight_language = None
 for t in ['php', 'c++', 'python']:
@@ -306,6 +307,11 @@ class XapianCodeExample(LiteralInclude):
 # .. xapianexample:: search_filters2
 directives.register_directive('xapianexample', XapianCodeExample)
 
+def xapian_escape_args(args):
+    def esc_char(match):
+        return "=%02x" % ord(match.group(0))
+    return re.sub(r' ', r'_', re.sub(r'[^-A-Za-z0-9 .]', esc_char, args))
+
 class XapianRunExample(LiteralInclude):
     option_spec = {
         'args': directives.unchanged_required,
@@ -319,12 +325,9 @@ class XapianRunExample(LiteralInclude):
         command = xapian_code_example_command(self.arguments[0])
 
         if 'args' in self.options:
-            def esc_char(match):
-                return "=%02x" % ord(match.group(0))
             args = self.options['args']
             command = "%s %s" % (command, args)
-            esc_args = re.sub(r'[^-A-Za-z0-9 .]', esc_char, args)
-            esc_args = re.sub(r' ', r'_', esc_args)
+            esc_args = xapian_escape_args(args)
             fullout = "%s.%s.out" % (filename, esc_args)
             print "[%s]" % fullout
             if os.path.exists(fullout):
@@ -332,12 +335,14 @@ class XapianRunExample(LiteralInclude):
             else:
                 filename = filename + ".out"
         else:
+            args = ''
             filename = filename + ".out"
         if not os.path.exists(filename):
             print '*** No output file %s in language %s - patches welcome!' \
                 % (filename, highlight_language)
 
-        global examples_used
+        global examples_used, examples_in_order
+        examples_in_order.append((self.arguments[0], args))
         if self.arguments[0] in examples_used:
             examples_used[self.arguments[0]].append(args)
         else:
@@ -437,21 +442,46 @@ roles.register_local_role('xapian-just-constant', xapian_just_method_role)
 roles.register_local_role('xapian-constant', xapian_method_role)
 
 def xapian_check_examples():
-    global examples, examples_used
+    global examples, examples_used, examples_in_order
     bad = False
-    for ex in examples_used:
-        print "Example %s:" % ex
-        for a in examples_used[ex]:
-            print '\t' + a
     for ex in examples:
-        if not ex in examples_used:
-            print "Example %s isn't shown to be run anywhere" % ex
-            bad = True
-        else:
+        if ex in examples_used:
             del examples_used[ex]
+            continue
+        print "Example %s isn't shown to be run anywhere" % ex
+        bad = True
+
     for ex in examples_used:
         print "Example %s is used but never shown anywhere" % ex
         bad = True
+
+    # Process the commands in order so that the correct databases have been
+    # created when they are used.
+    os.system("rm -rf db filtersdb statesdb")
+    for (ex, args) in examples_in_order:
+        command = xapian_code_example_command(ex)
+        filename = xapian_code_example_filename(ex)
+        if ex.startswith("index"):
+            os.system("rm -rf db filtersdb statesdb")
+        print "$ %s %s" % (command, args)
+        os.system("%s %s > tmp.out 2> tmp2.out;cat tmp2.out >> tmp.out" % (command, args))
+        esc_args = xapian_escape_args(args)
+        fullout = "%s.%s.out" % (filename, esc_args)
+        print "[%s]" % fullout
+        tmp_out = "%s.%s.tmp" % (filename, esc_args)
+        os.rename("tmp.out", tmp_out)
+        if os.path.exists(fullout):
+            filename = fullout
+        else:
+            filename = filename + ".out"
+        if not os.path.exists(filename):
+            print '*** No output file %s in language %s - patches welcome!' \
+                % (filename, highlight_language)
+        else:
+            sys.stdout.flush()
+            print "vimdiff %s %s" % (tmp_out, filename)
+            os.system("diff -u %s %s 2>&1" % (tmp_out, filename))
+
     if bad:
         raise SystemExit()
 
