@@ -453,6 +453,6 @@ def xapian_check_examples():
         print "Example %s is used but never shown anywhere" % ex
         bad = True
     if bad:
-        raise SystemExit
+        raise SystemExit()
 
 atexit.register(xapian_check_examples)

@@ -31,7 +31,7 @@ as you already can for sort keys.
 Performance
 ===========
 
-The collapsing is performed during the match process, so is pretty efficient.
+The collapsing is performed during the match process, so it is pretty efficient.
 In particular, this approach is much better than generating a larger MSet and
 post-processing it.
 
