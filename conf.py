@@ -13,6 +13,7 @@
 
 import sys, os
 import re
+import atexit
 from docutils import nodes, utils
 from docutils.parsers.rst import roles
 from docutils.parsers.rst.roles import set_classes
@@ -208,6 +209,8 @@ todo_include_todos = True
 # appropriately.
 
 last_example = None
+examples = set()
+examples_used = {}
 
 highlight_language = None
 for t in ['php', 'c++', 'python']:
@@ -279,8 +282,9 @@ class XapianCodeExample(LiteralInclude):
     }
 
     def run(self):
-        global last_example
+        global last_example, examples
         last_example = self.arguments[0]
+        examples.add(last_example)
         filename = xapian_code_example_filename(last_example)
         if not os.path.exists(filename):
             print '*** No version of example %s in language %s - patches welcome!' \
@@ -332,6 +336,12 @@ class XapianRunExample(LiteralInclude):
         if not os.path.exists(filename):
             print '*** No output file %s in language %s - patches welcome!' \
                 % (filename, highlight_language)
+
+        global examples_used
+        if self.arguments[0] in examples_used:
+            examples_used[self.arguments[0]].append(args)
+        else:
+            examples_used[self.arguments[0]] = [args]
 
         self.options['prepend'] = re.sub(r'^', r'$ ', command, 0, re.MULTILINE)
         # FIXME: Only want this syntax highlighting for lines starting '$'.
@@ -425,3 +435,24 @@ roles.register_local_role('xapian-method', xapian_method_role)
 # Currently these just do the same as the method versions:
 roles.register_local_role('xapian-just-constant', xapian_just_method_role)
 roles.register_local_role('xapian-constant', xapian_method_role)
+
+def xapian_check_examples():
+    global examples, examples_used
+    bad = False
+    for ex in examples_used:
+        print "Example %s:" % ex
+        for a in examples_used[ex]:
+            print '\t' + a
+    for ex in examples:
+        if not ex in examples_used:
+            print "Example %s isn't shown to be run anywhere" % ex
+            bad = True
+        else:
+            del examples_used[ex]
+    for ex in examples_used:
+        print "Example %s is used but never shown anywhere" % ex
+        bad = True
+    if bad:
+        raise SystemExit
+
+atexit.register(xapian_check_examples)
