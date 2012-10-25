@@ -95,8 +95,6 @@ void index(const string & datapath, const string & dbpath)
 	// 'fields' is a vector mapping from field number to value.
 	// We look up fields with the 'at' method so we get an exception
 	// if that field isn't set.
-	//
-	// We're just going to use DESCRIPTION, TITLE and id_NUMBER.
 	const string & description = fields.at(FIELD_DESCRIPTION);
 	const string & title = fields.at(FIELD_TITLE);
 	const string & identifier = fields.at(FIELD_ID_NUMBER);
