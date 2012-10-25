@@ -41,28 +41,25 @@ csv_parse_line(ifstream & csv, vector<string> & fields)
 	} else if (ch == '"') {
 	    // In double quotes, '"' either ends double quotes, or
 	    // if followed by another '"', means a literal '"'.
-	    if (++i == Xapian::Utf8Iterator()) {
-		ch = END_OF_FIELD;
-	    } else {
-		ch = *i;
-		if (ch != '"') {
-		    in_quotes = false;
-		    if (ch == ',')
-			ch = END_OF_FIELD;
-		}
+	    if (++i == Xapian::Utf8Iterator())
+		break;
+	    ch = *i;
+	    if (ch != '"') {
+		in_quotes = false;
+		if (ch == ',')
+		    ch = END_OF_FIELD;
 	    }
 	}
 
 	if (ch == END_OF_FIELD) {
 	    fields.push_back(field);
 	    field.resize(0);
-	    if (i == Xapian::Utf8Iterator())
-		break;
 	    continue;
 	}
 
 	field += ch;
     }
+    fields.push_back(field);
     return true;
 }
 
