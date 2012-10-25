@@ -5,6 +5,7 @@ import csv
 from datetime import date, datetime
 import logging
 import math
+import re
 
 
 def log_matches(querystring, offset, pagesize, matches):
@@ -32,20 +33,9 @@ def parse_csv_file(datapath, charset='utf8'):
             yield row
 
 
-def numbers_from_string(string_):
-    """Find all numbers in a string.
-
-    """
-    numbers = []
-    sub_char = ''
-    for char_ in string_:
-        char_ = char_.decode(errors='ignore').strip()
-        if char_ and (char_.isdigit() or char_ == u'.'):
-            sub_char += char_
-        elif sub_char:
-            numbers.append(float(sub_char))
-            sub_char = ''
-    return numbers
+def numbers_from_string(s):
+    """Find all numbers in a string."""
+    return [float(n) for n in re.findall(r'[\d.]*\d[\d.]*', s)]
 
 
 def middle_coord(text):
