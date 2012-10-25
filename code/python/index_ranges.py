@@ -3,31 +3,7 @@
 import json
 import sys
 import xapian
-from support import parse_csv_file
-
-def numbers_from_string(s):
-    """Find all numbers in a string."""
-    numbers = []
-    in_number = False
-    while len(s) > 0:
-        next_in_number = (s[0].isdigit() or s[0]=='.')
-        if next_in_number != in_number:
-            in_number = not in_number
-            if in_number:
-                numbers.append(s[0])
-        else:
-            if in_number:
-                numbers[-1] = numbers[-1] + s[0]
-        s = s[1:]
-    # fix up leading or trailing '.'
-    for index, number in enumerate(numbers):
-        if number[0]=='.':
-            number = '0.' + number[1:]
-        if number[-1]=='.':
-            number += '0'
-        numbers[index] = float(number)
-    return numbers
-
+from support import numbers_from_string, parse_csv_file
 
 def index(datapath, dbpath):
     # Create or open the database we're going to be writing to.
