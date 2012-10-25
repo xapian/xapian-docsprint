@@ -6,4 +6,4 @@
 6: #097 Bain's subsidiary electric clock
 7: #009 Copy  of a Dwerrihouse skeleton clock with coup-perdu escape
 8: #091 Pendulum clock designed by Galileo in 1642 and made by his son in 1649, model.
-INFO:xapian.search:'clock'.material(['steel (metal)'])[0:10] = 12 98 52 59 24 97 9 91
+'clock'[0:10] = 12 98 52 59 24 97 9 91

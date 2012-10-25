@@ -1,11 +1,26 @@
 #include <xapian.h>
 
 #include <cstdio>
+#include <iomanip>
 #include <iostream>
 #include <string>
 #include <vector>
 
 using namespace std;
+
+static string
+get_field(const string & data, size_t field)
+{
+    size_t start = 0;
+    while (true) {
+	size_t end = data.find('\n', start);
+	if (field == 0)
+	    return string(data, start, end - start);
+	start = end;
+	if (start != string::npos) ++start;
+	--field;
+    }
+}
 
 static void
 search(const string & dbpath, const string & querystring,
@@ -57,25 +72,21 @@ search(const string & dbpath, const string & querystring,
     enquire.set_query(query);
 
     // And print out something about each match.
-    string matches;
     Xapian::MSet mset = enquire.get_mset(offset, pagesize);
+
+    clog << "'" << querystring << "'[" << offset << ":" << offset + pagesize
+	 << "] =";
     for (Xapian::MSetIterator m = mset.begin(); m != mset.end(); ++m) {
-	char buf[16];
 	Xapian::docid did = *m;
-	sprintf(buf, "%3.3u", did);
-	cout << m.get_rank() + 1 << ": #" << buf << " ";
+	cout << m.get_rank() + 1 << ": #" << setfill('0') << setw(3) << did
+	     << ' ';
 
 	const string & data = m.get_document().get_data();
-	size_t nl = data.rfind('\n');
-	cout << data.substr(nl + 1) << endl;
-	if (!matches.empty()) matches += ' ';
-	sprintf(buf, "%u", did);
-	matches += buf;
+	cout << get_field(data, 1) << endl;
+	// Log the document id.
+	clog << ' ' << did;
     }
-
-    // Finally, make sure we log the query and displayed results.
-    clog << "'" << querystring << "'[" << offset << ":" << offset + pagesize
-	 << "] = " << matches << endl;
+    clog << endl;
 }
 
 int main(int argc, char** argv) {
