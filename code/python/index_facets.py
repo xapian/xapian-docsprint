@@ -36,10 +36,10 @@ def index(datapath, dbpath):
         termgenerator.increase_termpos()
         termgenerator.index_text(description)
 
-        # add the collection as a value in slot 0
+        # Add the collection as a value in slot 0.
         doc.add_value(0, collection)
 
-        # add the maker as a value in slot 1
+        # Add the maker as a value in slot 1.
         doc.add_value(1, maker)
 
         # Store all the fields for display purposes.
