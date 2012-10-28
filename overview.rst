@@ -26,22 +26,23 @@ although we're also working on full translations into PHP_ and C++.
 .. _Python: http://www.python.org/
 .. _PHP: http://www.php.net/
 
-We'll be using Xapian 1.2 throughout, so let's get that onto your system.
+This guide documents Xapian 1.2 (except where a different version is explicitly
+mentioned) so you'll find it easier to follow if you use a version from the 1.2
+release series.  So let's get that onto your system.
 
 Installation on Debian or Ubuntu
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Recent versions of both Debian and Ubuntu have Xapian 1.2 packaged: if
-you're on Debian 6.0 (squeeze) or later, or Ubuntu 11.10 (Oneiric
+you're using Debian 6.0 (squeeze) or later, or Ubuntu 11.10 (Oneiric
 Ocelot) or later you can just do one of the following depending on whether you
 want to work through the examples in Python or C++::
 
     $ sudo apt-get install python-xapian
     $ sudo apt-get install libxapian-dev
 
-If you're still on Debian 5.0 (lenny) you'll have to `compile from
-source`_, and if you're on Ubuntu 11.04 (Natty Narwhal) or before you'll
-need to install from our PPA_.
+If you're using Ubuntu 11.04 (Natty Narwhal) or earlier, you'll need to
+install from our PPA_.
 
 .. _PPA: https://launchpad.net/~xapian-backports/+archive/xapian-1.2
 
@@ -62,7 +63,7 @@ only) and Windows using Microsoft Visual Studio.
 .. _compile from source:
 
 If you're using a different operating system, you will need to compile
-from source, which should work on any Unix-derived operating system,
+from source, which should work on any Unix-like operating system,
 and Windows using any one of Cygwin, MSYS+mingw or MSVC. Source code
 is again available from our download page, as are additional Makefiles
 for building using MSVC on Windows.
