@@ -93,13 +93,13 @@ statistics ,refer :
 http://xapian.org/docs/sourcedoc/html/weight_8h_source.html#l00277  
 
 Example:- Consider a simple weighting scheme such as a pseudo Tf-Idf weighting 
-scheme which returns the term weight as the product of the within document
+scheme which returns the document weight as the product of the within document
 frequency of the term and the inverse of the document frequency
 of the term (Inverse of the number of documents the term appears in) .
 
 The implementation will be as follows::
 
-     class TfIdfWeight : public Xapian::Weight {
+    class TfIdfWeight : public Xapian::Weight {
       public:
 	TfIdfWeight * clone() const { return new TfIdfWeight; }
 	TfIdfWeight() {need_stat(WDF);need_stat(TERMFREQ);need_stat(WDF_MAX); }
