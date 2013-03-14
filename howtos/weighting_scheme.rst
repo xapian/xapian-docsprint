@@ -133,6 +133,6 @@ The implementation will be as follows::
     };
 
 
-  Note:-The get_maxpart() function returns an upperbound on the weight returned
-        by get_sumpart().In order to do that ,it  requires the WDF_MAX
-        statistic (the maximum wdf of the term among all documents) . 
+Note: The get_maxpart() function returns an upperbound on the weight returned
+by get_sumpart().In order to do that ,it  requires the WDF_MAX
+statistic (the maximum wdf of the term among all documents) . 
