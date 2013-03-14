@@ -102,7 +102,11 @@ The implementation will be as follows::
     class TfIdfWeight : public Xapian::Weight {
       public:
 	TfIdfWeight * clone() const { return new TfIdfWeight; }
-	TfIdfWeight() {need_stat(WDF);need_stat(TERMFREQ);need_stat(WDF_MAX); }
+	TfIdfWeight() {
+	    need_stat(WDF);
+	    need_stat(TERMFREQ);
+	    need_stat(WDF_MAX);
+	}
 	~TfIdfWeight() { }
 
 	std::string name() const { return "TfIdf"; }
@@ -112,17 +116,17 @@ The implementation will be as follows::
 	}
 
 	Xapian::weight get_sumpart(Xapian::termcount wdf, Xapian::doclength) const {
-            Xapian::doccount df=get_termfreq();
+            Xapian::doccount df = get_termfreq();
             double wdf_double(wdf);
-            Xapian::weight wt=wdf_double/df;
+            Xapian::weight wt = wdf_double / df;
             return wt; 
 	}    
 
 	Xapian::weight get_maxpart() const {
-        Xapian::doccount df=get_termfreq();
-        double max_wdf(get_wdf_upper_bound());
-        Xapian::weight max_weight=max_wdf/df;
-        return max_weight;
+	    Xapian::doccount df = get_termfreq();
+	    double max_wdf(get_wdf_upper_bound());
+	    Xapian::weight max_weight = max_wdf / df;
+	    return max_weight;
         }
 	Xapian::weight get_sumextra(Xapian::doclength) const { return 0; }
 	Xapian::weight get_maxextra() const { return 0; }	
