@@ -71,31 +71,32 @@ term scores one point::
 
 Implement a custom weighting scheme that requires various statistics
 --------------------------------------------------------------------
+
 The Coordinate scheme given above does not require any statistics. However,
 custom weighting schemes that require various statistics such as average
-document length in the database, the query length , total number of
+document length in the database, the query length, total number of
 documents in the collection etc. can also be implemented.
 
 For that, the weighting scheme subclassed from Xapian::Weight simply needs 
 to "tell" Xapian::Weight which statistics it will be needing. This is done by
-calling the need_stat(STATISTIC REQUIRED) function  in the constructor of the
+calling the need_stat(STATISTIC REQUIRED) function in the constructor of the
 subclassed weighting scheme. Note however, that only those statistics which are
 absolutely required must be asked for as collecting statistics is expensive.
 For a full list of statistics currently available from Xapian::Weight and the
-enumerators required to access them, please refer to : 
+enumerators required to access them, please refer to: 
 http://xapian.org/docs/sourcedoc/html/classXapian_1_1Weight.html#e3c11f1d2d96a18e0eb9b9b31c5c5479
 
 The statistics can then be obtained by the subclass by simply calling the
 corresponding function of the Xapian::Weight class. For eg:- The document
 frequency (Term frequency) of the term can be obtained by calling
-get_termfreq().For a full list of functions required to obtain various 
-statistics ,refer :
-http://xapian.org/docs/sourcedoc/html/weight_8h_source.html#l00277  
+get_termfreq(). For a full list of functions required to obtain various 
+statistics, refer:
+http://xapian.org/docs/sourcedoc/html/weight_8h_source.html#l00277
 
 Example:- Consider a simple weighting scheme such as a pseudo Tf-Idf weighting 
 scheme which returns the document weight as the product of the within document
 frequency of the term and the inverse of the document frequency
-of the term (Inverse of the number of documents the term appears in) .
+of the term (Inverse of the number of documents the term appears in).
 
 The implementation will be as follows::
 
@@ -133,6 +134,6 @@ The implementation will be as follows::
     };
 
 
-Note: The get_maxpart() function returns an upperbound on the weight returned
-by get_sumpart().In order to do that ,it  requires the WDF_MAX
-statistic (the maximum wdf of the term among all documents) . 
+Note: The get_maxpart() function returns an upper bound on the weight returned
+by get_sumpart(). In order to do that, it requires the WDF_MAX
+statistic (the maximum wdf of the term among all documents). 
