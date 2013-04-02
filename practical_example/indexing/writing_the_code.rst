@@ -1,3 +1,9 @@
+.. only:: notsphinx
+
+    This document uses special macros which won't show up as intended unless
+    processed using sphinx - you can see the processed output at:
+    http://getting-started-with-xapian.readthedocs.org/en/latest/
+
 Let's write some code
 ---------------------
 
