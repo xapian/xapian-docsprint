@@ -16,3 +16,4 @@ How To...
    geospatial
    replication
    query_authorisation
+   iterate_all_docs
