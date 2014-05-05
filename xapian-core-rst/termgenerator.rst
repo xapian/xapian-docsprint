@@ -27,7 +27,7 @@ Both the normal and R-prefixed terms were indexed with positional information.
 
 Now we index all words lowercased with positional information, and also stemmed with a
 'Z' prefix (unless they start with a digit), but without positional information.  By default
-a Xapian::Stopper is used to avoid indexed stemmed forms of stopwords (tests show this shaves
+a xapian-class:`Stopper` is used to avoid indexed stemmed forms of stopwords (tests show this shaves
 around 1% off the database size).
 
 The new scheme allows exact phrase searching (which the old scheme didn't).  ``NEAR``

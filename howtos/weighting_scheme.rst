@@ -77,17 +77,17 @@ custom weighting schemes that require various statistics such as average
 document length in the database, the query length, total number of
 documents in the collection etc. can also be implemented.
 
-For that, the weighting scheme subclassed from Xapian::Weight simply needs 
-to "tell" Xapian::Weight which statistics it will be needing. This is done by
+For that, the weighting scheme subclassed from xapian-class:`Weight` simply needs 
+to "tell" xapian-class:`Weight` which statistics it will be needing. This is done by
 calling the need_stat(STATISTIC REQUIRED) function in the constructor of the
 subclassed weighting scheme. Note however, that only those statistics which are
 absolutely required must be asked for as collecting statistics is expensive.
-For a full list of statistics currently available from Xapian::Weight and the
+For a full list of statistics currently available from xapian-class:`Weight` and the
 enumerators required to access them, please refer to: 
 http://xapian.org/docs/sourcedoc/html/classXapian_1_1Weight.html#e3c11f1d2d96a18e0eb9b9b31c5c5479
 
 The statistics can then be obtained by the subclass by simply calling the
-corresponding function of the Xapian::Weight class. For eg:- The document
+corresponding function of the xapian-class:`Weight` class. For eg:- The document
 frequency (Term frequency) of the term can be obtained by calling
 get_termfreq(). For a full list of functions required to obtain various 
 statistics, refer:

@@ -7,29 +7,29 @@ Value Ranges
 Introduction
 ============
 
-The ``Xapian::ValueRangeProcessor`` was introduced in Xapian 1.0.0.  It
+The xapian-class:`ValueRangeProcessor` was introduced in Xapian 1.0.0.  It
 provides a powerful and flexible way to parse range queries in the users'
 query string.
 
-This document describes the ``Xapian::ValueRangeProcessor`` class and
+This document describes the xapian-class:`ValueRangeProcessor` class and
 its standard subclasses, how to create your own subclasses, and how
-these classes are used with ``Xapian::QueryParser``.
+these classes are used with xapian-class:`QueryParser`.
 
-``Xapian::ValueRangeProcessor`` is a virtual base class, so you need to
-use a subclass of it.  ``Xapian::QueryParser`` maintains a list of
-``Xapian::ValueRangeProcessor`` objects which it tries in order for
+xapian-class:`ValueRangeProcessor` is a virtual base class, so you need to
+use a subclass of it.  xapian-class:`QueryParser` maintains a list of
+xapian-class:`ValueRangeProcessor` objects which it tries in order for
 each range search in the query until one accepts it, or all have been
 tried (in which case an error is reported).
 
-Each ``Xapian::ValueRangeProcessor`` is passed the start and end of the
+Each xapian-class:`ValueRangeProcessor` is passed the start and end of the
 range.  If it doesn't understand the range, it should return
-``Xapian::BAD_VALUENO``.  If it does understand the range, it should return
-the value number to use with ``Xapian::Query::OP_VALUE_RANGE`` and if it
+xapian-constant:`BAD_VALUENO`.  If it does understand the range, it should return
+the value number to use with xapian-constant:`Query::OP_VALUE_RANGE` and if it
 wants to, it can modify the start and end values (to convert them to the
 correct format so that for the string comparison which ``OP_VALUE_RANGE``
 uses).
 
-In Xapian 1.2.1 and later, ``Xapian::QueryParser`` supports open-ended
+In Xapian 1.2.1 and later, xapian-class:`QueryParser` supports open-ended
 ranges - if the start of the range is empty, that means any value less than
 the end, and similarly if the end is empty, that means any value greater
 than the start.  The start and end can't both be empty.
@@ -121,7 +121,7 @@ value)::
 Custom subclasses
 =================
 
-You can easily create your own subclasses of ``Xapian::ValueRangeProcessor``.
+You can easily create your own subclasses of xapian-class:`ValueRangeProcessor`.
 Your subclass needs to implement a method
 ``Xapian::valueno operator()(std::string &begin, std::string &end)``
 so for example you could implement a better version of the author range
@@ -142,7 +142,7 @@ described above which only matches ranges with a prefix (e.g.
     };
 
 If you want to support open-ended ranges, you need to handle begin or end
-being empty suitably.  ``Xapian::QueryParser`` won't call your subclass
+being empty suitably.  xapian-class:`QueryParser` won't call your subclass
 with both begin and end being empty.
 
 Using Several ValueRangeProcessors

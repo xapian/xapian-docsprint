@@ -33,7 +33,7 @@ value slot.  As described elsewhere in the documentation, each Xapian document
 has a set of "value slots", each of which is addressed by a number, and can
 contain a value which is an arbitrary string.
 
-The ``Xapian::Document::add_value()`` method can be used to put values into a
+The xapian-method:`Document::add_value()` method can be used to put values into a
 particular slot.  So, if you had a database of books, you might put "price"
 facet values in slot 0, say (serialised to strings using
 ``Xapian::sortable_serialise``, or some similar function), "author" facet
@@ -51,8 +51,8 @@ the number of times each facet value occurs in each slot; for the example
 above, if you wanted to get facets for "price", "author" and "publication type"
 you'd want to get the counts from slots 0, 1 and 3.
 
-This can be done by calling ``Xapian::Enquire::add_matchspy()`` with a pointer
-to a ``Xapian::ValueCountMatchSpy`` object for each value slot you want to
+This can be done by calling xapian-method:`Enquire::add_matchspy()` with a pointer
+to a xapian-class:`ValueCountMatchSpy` object for each value slot you want to
 get facet counts for, like so::
 
     Xapian::ValueCountMatchSpy spy0(0);
@@ -91,7 +91,7 @@ Restricting by Facet Values
 If you're using the facets to offer the user choices for narrowing down
 their search results, you then need to be able to apply a suitable filter.
 
-For a single value, you could use ``Xapian::Query::OP_VALUE_RANGE`` with the
-same start and end, or ``Xapian::MatchDecider``, but it's probably most
+For a single value, you could use xapian-constant:`Query::OP_VALUE_RANGE` with the
+same start and end, or xapian-class:`MatchDecider`, but it's probably most
 efficient to also index the categories as suitably prefixed boolean terms and
 use those for filtering.

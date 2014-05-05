@@ -40,7 +40,7 @@ removed.
 Dynamic spelling data
 ---------------------
 
-:xapian-class:`Xapian::TermGenerator` can be configured to automatically add
+:xapian-class:`TermGenerator` can be configured to automatically add
 words from indexed documents to the spelling dictionary::
 
     Xapian::TermGenerator indexer;

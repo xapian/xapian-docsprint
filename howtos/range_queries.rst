@@ -231,9 +231,9 @@ treated as a year range.
 To do this, we need to know how a :xapian-class:`ValueRangeProcessor` gets
 called by the QueryParser. What happens is that each processor in turn is
 passed the start and end of the range. If it doesn't understand the range, it
-should return :xapian-constant:`Xapian::BAD_VALUENO`.  If it *does* understand
+should return :xapian-constant:`BAD_VALUENO`.  If it *does* understand
 the range, it should return the value number to use with
-:xapian-constant:`Xapian::Query::OP_VALUE_RANGE` and if it wants to, it can
+:xapian-constant:`Query::OP_VALUE_RANGE` and if it wants to, it can
 modify the start and end values (to convert them to the correct format for
 the string comparison which :xapian-constant:`OP_VALUE_RANGE` uses).
 
@@ -241,7 +241,7 @@ What we're going to do is to write a custom :xapian-class:`ValueRangeProcessor`
 that accepts numbers in the range 500,000 to 50,000,000; these can't
 possibly be years in our data set, and encompass the full range of
 populations. If either number is outside that range, we will return
-:xapian-constant:`Xapian::BAD_VALUENO` and the QueryParser will move on.
+:xapian-constant:`BAD_VALUENO` and the QueryParser will move on.
 
 .. xapianexample:: search_ranges2
     :marker: custom VRP code

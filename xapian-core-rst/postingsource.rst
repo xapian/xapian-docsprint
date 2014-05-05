@@ -11,7 +11,7 @@ Xapian::PostingSource
 Introduction
 ============
 
-Xapian::PostingSource is an API class which you can subclass to feed data to
+xapian-class:`PostingSource` is an API class which you can subclass to feed data to
 Xapian's matcher.  This feature can be made use of in a number of ways - for
 example:
 
@@ -24,8 +24,8 @@ be used to prefer documents based on some external factor, such as age,
 price, proximity to a physical location, link analysis score, etc.
 
 As an alternative way of ranking documents - if the weighting scheme is set
-to Xapian::BoolWeight, then the ranking will be entirely by the weight
-returned by Xapian::PostingSource.
+to xapian-class:`BoolWeight`, then the ranking will be entirely by the weight
+returned by xapian-class:`PostingSource`.
 
 Anatomy
 =======
@@ -113,7 +113,7 @@ If you want to read the currently set upper bound, you can call::
     Xapian::weight get_maxweight() const;
 
 This is just a getter method for a member variable in the
-``Xapian::PostingSource`` class, and is inlined from the API headers, so
+xapian-class:`PostingSource` class, and is inlined from the API headers, so
 there's no point storing this yourself in your subclass - it should be just as
 efficient to call ``get_maxweight()`` whenever you want to use it.
 
@@ -128,7 +128,7 @@ position::
     virtual Xapian::docid get_docid() const = 0;
 
 There are three methods which advance the current position.  All of these take
-a Xapian::Weight parameter ``min_wt``, which indicates the minimum weight
+a xapian-class:`Weight` parameter ``min_wt``, which indicates the minimum weight
 contribution which the matcher is interested in.  The matcher still checks
 the weight of documents so it's OK to ignore this parameter completely, or to
 use it to discard only some documents.  But it can be useful for optimising
@@ -247,7 +247,7 @@ Multiple databases, and remote databases
 
 In order to work with searches across multiple databases, or in remote
 databases, some additional methods need to be implemented in your
-Xapian::PostingSource subclass.  The first of these is ``clone()``, which is
+xapian-class:`PostingSource` subclass.  The first of these is ``clone()``, which is
 used for multi database searches.  This method should just return a newly
 allocated instance of the same posting source class, initialised in the same
 way as the source that clone() was called on.  The returned source will be

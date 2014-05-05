@@ -8,7 +8,7 @@ Introduction
 ============
 
 Xapian provides support for storing a synonym dictionary, or thesaurus.  This
-can be used by the Xapian::QueryParser class to expand terms in user query
+can be used by the xapian-class:`QueryParser` class to expand terms in user query
 strings, either automatically, or when requested by the user with an explicit
 synonym operator (``~``).
 

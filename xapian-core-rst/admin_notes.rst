@@ -433,7 +433,7 @@ databases non-portable between platforms, we had to make an incompatible
 change in the flint format.  It's not easy to write an upgrader, but you
 can convert a database using the following procedure (although it might
 be better to rebuild from scratch if you want to use the new UTF-8 support
-in Xapian::QueryParser, Xapian::Stem, and Xapian::TermGenerator).
+in xapian-class:`QueryParser`, xapian-class:`Stem`, and xapian-class:`TermGenerator`).
 
 Run the following command in your Xapian 0.9.x installation to copy your
 0.9.x flint database "SOURCE" to a new quartz database "INTERMEDIATE"::
