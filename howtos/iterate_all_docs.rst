@@ -9,7 +9,7 @@ MatchAll Queries
 The `Xapian::Query::MatchAll` query is a special static query which will match all documents in the database.
 If you run this query on its own, with appropriate start and end parameters, you could retrieve all the documents.
 However be aware that even if you paged through the result sets, when you try to access a page deep in the result
-set a lot of processing and memory will be used even if the page is small, so running a plain `MatchAll()` query is
+set a lot of processing and memory will be used even if the page is small, so running a plain `MatchAll` query is
 rarely a good idea.
 
 However, this method *is* appropriate if you're constructing a complicated query, and one of the components of that
