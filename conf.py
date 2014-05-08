@@ -348,7 +348,7 @@ class XapianRunExample(LiteralInclude):
         else:
             examples_used[self.arguments[0]] = [args]
 
-        self.options['prepend'] = re.sub(r'^', r'$ ', command, 0, re.MULTILINE)
+        self.options['prepend'] = re.sub(r'(?m)^', r'$ ', command)
         # FIXME: Only want this syntax highlighting for lines starting '$'.
         # self.options['language'] = 'sh'
         self.options['language'] = 'none'
