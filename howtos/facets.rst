@@ -47,11 +47,15 @@ suitable for faceting:
 Querying
 --------
 
-.. todo:: explain what goes on here, ie why we use a MatchSpy
+To query, Xapian uses the concept of spies to observe
+slots of matched documents during a search.
 
-To add a spy you need to create a new :xapian-class:`ValueCountMatchSpy` object,
-stating which value slot the spy is to operate on and add this to the
-:xapian-class:`Enquire` as follows:
+The procedure works in three steps: first, you create a spy
+(instance of :xapian-class:`ValueCountMatchSpy`)
+for each slot you want the facets; second, you bind each spy to the
+:xapian-class:`Enquire` using :xapian-just-method:`add_matchspy(spy)`;
+third, after the search was performed, you retrive the results that
+each spy observed. This is an example of how this is done:
 
 .. xapianexample:: search_facets
 
