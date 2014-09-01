@@ -26,9 +26,33 @@ this type of use of slots, Xapian provides a utility function,
 in such a way that the sort order of the resulting binary string matches
 the numeric sort order of the unserialised values.
 
-It is important to keep the amount of data stored in the values to a
-minimum, since the values for a large number of documents may be read
-during the search, and unused information will thus slow the search down.
+In chert and later backends, the values for each slot are stored as a
+separate stream, so the cost of accessing values doesn't depend on how
+many slots are in use (unlike with the older flint backend, where all
+the values for a particular document were stored together).
+
+This stream is stored as a series of chunks; the chunks are indexed primarily
+by the value slot number, and then by the document id of the first entry in the
+chunk - this means that the data for a particular slot will be stored together
+and it also provides the ability to efficiently skip ahead in a stream.  So
+access to many values from a particular slot in ascending docid order is
+fairly efficient, which is the access pattern that you will generally get
+when values are used during the match.
+
+Within a chunk, any common prefix between a value and the previous value in
+that chunk is compressed away by simply storing how much of the previous value
+to reuse, which typically saves a lot of space.  Finding an entry within a
+chunk will require decoding the chunk up to that point, but this decoding is
+fairly cheap.
+
+For performance it is important to keep the amount of data stored in the
+values to a minimum, since the values for a large number of documents may be
+read during the search - the more data that has to be read, the slower the
+search will be.
+
 Developers are sometimes tempted to use the value slots to hold information
-which should really be stored in the document's data area; don't succumb to
-this temptation!
+needed to display a result.  This means that loading that information will
+have to read values from several different slots - if you have ten fields
+stored in this way, that will mean approximately ten times as many blocks will
+need to be read for each result shown.  So resist this temptation - information
+needed to display a result should be stored in the document's data area.
