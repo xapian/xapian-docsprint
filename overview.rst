@@ -20,8 +20,9 @@ Installation
 
 There are two pieces of Xapian you need to following this guide: the
 library itself, and support for the language you're going to be
-using. We've written this guide mostly using Python_ for the examples,
-although we're also working on full translations into PHP_ and C++.
+using.  This guide was originally written with examples in Python_,
+and we're also working on full translations into PHP_ and C++.  Help with
+translating the examples into other languages would be most welcome.
 
 .. _Python: http://www.python.org/
 .. _PHP: http://www.php.net/
