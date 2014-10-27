@@ -35,6 +35,16 @@ fiddly process to tune them so people tend not to bother.
 
 See the `BM25 documentation <bm25.html>`_ for more details of BM25.
 
+UnigramLMWeight
+---------------
+
+The UnigramLM weighing formula is based on orignal approach proposed bruce coft
+and rank the documents based on ability of document language collection to build 
+the query.Since document language sample tends to be sparse so smoothing is 
+inevitable.Xapian provides four type of smoothing and parameter to control effect of
+smoothing.We have picked some default parameter values which do a good job.
+Default smoothing scheme for Xapian is Two stage smoothing.
+
 Custom Weighting Schemes
 ------------------------
 
