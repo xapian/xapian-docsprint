@@ -15,6 +15,8 @@ If you just want to follow our code examples, you can skip the chapter on "Core
 Concepts" and go straight to :ref:`a-practical-example` - but you should
 probably make sure you have Xapian installed first!
 
+.. todo:: Mention Omega here and link to its documentation
+
 Installation
 ------------
 
