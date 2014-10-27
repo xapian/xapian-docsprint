@@ -76,6 +76,8 @@ documents:
   left subquery but don't match the right hand one (with weights coming
   from the left subquery)
 
+.. todo:: Note on difference between OP_FILTER and OP_AND?
+
 Value ranges
 ~~~~~~~~~~~~
 

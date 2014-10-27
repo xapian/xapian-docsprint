@@ -15,6 +15,20 @@ can also contain additional data for spelling correction and synonym
 expansion, and developers can even store arbitrary key-value pairs in part
 of the database.
 
+.. todo:: split into sections
+
+.. todo:: list backends
+
+.. todo:: disk-based brass/chert/(flint quartz how to upgrade); autodetecton
+
+.. todo:: inmemory; use ram disk for serious use
+
+.. todo:: remotes
+
+.. todo:: multiple databases
+
+.. todo:: stubs
+
 Xapian databases store data in custom formats which allow searches to be
 performed extremely quickly; Xapian does not use a relational database as
 its datastore.  There are several database backends; the main backend in
