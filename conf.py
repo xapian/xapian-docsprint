@@ -45,7 +45,7 @@ master_doc = 'index'
 # General information about the project.
 project = u'Getting Started with Xapian'
 _authors = u'Olly Betts, Richard Boulton, Dan Colish, Justin Finkelstein, James Aylett'
-copyright = u'2011, 2012 ' + _authors
+copyright = u'2011, 2012, 2013, 2014 ' + _authors
 
 github_project_url = 'https://github.com/jaylett/xapian-docsprint/blob/master'
 
