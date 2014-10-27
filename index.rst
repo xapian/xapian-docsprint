@@ -15,6 +15,7 @@ Contents:
    concepts/index
    practical_example/index
    howtos/index
+   advanced/index
    glossary
    deprecation/index
    deprecation/deprecated
