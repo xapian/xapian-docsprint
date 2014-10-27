@@ -5,5 +5,3 @@ Tutorial and Background theory
    :maxdepth: 2
 
    lmweight_tutorial
-   bigramindexingandaccessing
-   evaluation_tutorial
