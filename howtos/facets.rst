@@ -24,6 +24,7 @@ Faceting works against information stored in document value slots [link to
 value slots] and, when executed, provides a list of the unique values for
 that slot together with a count of the number of times each value occurs.
 
+.. todo:: add the link above
 
 Indexing
 --------

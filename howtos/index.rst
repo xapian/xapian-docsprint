@@ -17,3 +17,5 @@ How To...
    replication
    query_authorisation
    iterate_all_docs
+
+.. todo:: relevance feedback and query expansion
