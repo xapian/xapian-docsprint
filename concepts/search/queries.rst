@@ -116,4 +116,4 @@ Additional operators
 
 Xapian also provides additional operators which can be used to provide more
 flexibility than the operators above. For more details of these, see the
-full Xapian documentation at http://xapian.org/docs/.
+`Xapian API documentation <http://xapian.org/docs/apidoc/html/classXapian_1_1Query.html#a7e7b6b8ad0c915c2364578dfaaf6100b>`_.
