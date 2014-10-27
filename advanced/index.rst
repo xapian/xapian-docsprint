@@ -6,6 +6,7 @@ Advanced features
 
    postingsource
    remote
+   unigramlm
    admin_notes
    scalability
    geospatial

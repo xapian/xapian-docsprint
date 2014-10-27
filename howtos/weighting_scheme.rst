@@ -33,7 +33,21 @@ fiddly process to tune them so people tend not to bother.
 
 .. todo:: Say something more useful about tuning the parameters!
 
-See the `BM25 documentation <bm25.html>`_ for more details of BM25.
+LMWeight (Unigram language modelling)
+--------------------------------------
+
+An important aspect of language model-based weighting is that, since not all
+terms appear in all documents (and hence the wdf of some terms is zero with
+respect to a given document), we have to employ smoothing to avoid problems.
+
+Xapian provides :ref:`four different smoothing types<unigramlmweight>`, which take further parameters
+to control the effects of smoothing; we have picked some default parameter
+values which do a good job, using two stage smoothing.
+
+The UnigramLM weighting formula is based on an original approach by Bruce Coft.
+It uses statistical language modelling; 'unigram' in this case means that
+words are considered to occur independently.
+
 
 Custom Weighting Schemes
 ------------------------
