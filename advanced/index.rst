@@ -5,3 +5,4 @@ Advanced features
    :maxdepth: 2
 
    postingsource
+   remote
