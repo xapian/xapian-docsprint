@@ -8,3 +8,6 @@ Advanced features
    remote
    admin_notes
    scalability
+   geospatial
+   replication
+   query_authorisation

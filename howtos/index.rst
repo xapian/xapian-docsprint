@@ -11,11 +11,7 @@ How To...
    collapsing
    spelling
    synonyms
-   improve_results
    weighting_scheme
-   geospatial
-   replication
-   query_authorisation
    iterate_all_docs
 
 .. todo:: relevance feedback and query expansion
