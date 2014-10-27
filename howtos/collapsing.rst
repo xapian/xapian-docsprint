@@ -57,8 +57,8 @@ latter is a lower bound on the number of documents with the same collapse key
 which collapsing eliminated.
 
 Beware that if you have a percentage cutoff active, then the collapse count
-will (at least in the current implementation) will always be either 0 or 1
-as it is hard to tell if the collapsed documents would have failed the cutoff.
+will always be either 0 or 1 as it is hard to tell if the collapsed documents
+would have failed the cutoff.
 
 Statistics
 ==========
@@ -104,7 +104,7 @@ When displaying the results, you can use the collapse count of each match
 to inform the user that there are at least that many other matches for this
 host (unless you are also using a percentage cutoff - see above).  If it is
 non-zero it means you can usefully provide a "show all documents for host
-<get_collapse_key()>" button which reruns the search without collapsing and
+<COLLAPSE KEY>" button which reruns the search without collapsing and
 with a boolean filter for a prefixed term containing the hostname (though note
 that this may not always give a button when there are collapsed documents
 because the collapse count is a lower bound and may be zero when there are
