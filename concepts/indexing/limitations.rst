@@ -1,3 +1,6 @@
+.. _index-limitations:
+
+=================
 Index limitations
 =================
 

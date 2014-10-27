@@ -1,3 +1,6 @@
+.. _search-limitations:
+
+=======================
 Search-time Limitations
 =======================
 

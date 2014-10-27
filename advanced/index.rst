@@ -6,3 +6,5 @@ Advanced features
 
    postingsource
    remote
+   admin_notes
+   scalability
