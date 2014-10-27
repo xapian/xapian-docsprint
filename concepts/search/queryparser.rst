@@ -139,7 +139,48 @@ characters within a term; for example:
     ``wild*`` matches ``wild, wildcard, wildcat, wilderness``
 
 This feature is disabled by default; to enable it, see 'Parser Flags'
-below.
+below.  It also requires a database to be set on the QueryParser (so
+that it can find the list of terms to expand the wildcard to).
+
+By default the wildcard will expand to as many terms as there are with
+the specified prefix.  This can cause performance problems, so you can limit
+the number of terms a wildcard will expand to by calling
+:xapian-method:`QueryParser::set_max_wildcard_expansion()`.  If this limit
+would be exceeded then an exception will be thrown.  The exception may
+be thrown by the QueryParser, or later when Enquire handles the query.
+
+Searching for Partially Entered Queries
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The QueryParser also supports performing a search with a query which has
+only been partially entered. This is intended for use with "incremental
+search" systems, which don't wait for the user to finish typing their
+search before displaying an initial set of results. For example, in such
+a system a user would enter a search, and the system would display a new
+set of results after each letter, or whenever the user pauses for a
+short period of time (or some other similar strategy).
+
+The problem with this kind of search is that the last word in a
+partially entered query often has no semantic relation to the completed
+word. For example, a search for "dynamic cat" would return a quite
+different set of results to a search for "dynamic categorisation". This
+results in the set of results displayed flicking rapidly as each new
+character is entered. A much smoother result can be obtained if the
+final word is treated as having an implicit terminating wildcard, so
+that it matches all words starting with the entered characters - thus,
+as each letter is entered, the set of results displayed narrows down to
+the desired subject.
+
+A similar effect could be obtained simply by enabling the wildcard
+matching option, and appending a "\*" character to each query string.
+However, this would be confused by searches which ended with punctuation
+or other characters.
+
+This feature is disabled by default - pass
+:xapian-just-constant:`FLAG_PARTIAL` flag in the flags argument of
+:xapian-method:`QueryParser::parse_query(query_string, flags)` to enable it,
+and tell the QueryParser which database to expand wildcards from using
+the :xapian-method:`QueryParser::set_database(database)` method.
 
 Default Operator
 ~~~~~~~~~~~~~~~~
@@ -155,20 +196,17 @@ Parser Flags
 The operation of the QueryParser can be altered through the use of flags,
 combined with the bitwise OR operator; these flags include:
 
-* `FLAG_BOOLEAN`_: enables support for AND, OR, etc and bracketed
+* :xapian-just-constant:`FLAG_BOOLEAN`: enables support for AND, OR, etc and bracketed
   expressions
-* `FLAG_PHRASE`_: enables support for phrase expressions
-* `FLAG_LOVEHATE`_: enables support for `+` and `-` operators
-* `FLAG_BOOLEAN_ANY_CASE`_: enables support for lower/mixed case boolean
+* :xapian-just-constant:`FLAG_PHRASE`: enables support for phrase expressions
+* :xapian-just-constant:`FLAG_LOVEHATE`: enables support for `+` and `-` operators
+* :xapian-just-constant:`FLAG_BOOLEAN_ANY_CASE`: enables support for lower/mixed case boolean
   operators
-* `FLAG_WILDCARD`_: enables support for wildcards
+* :xapian-just-constant:`FLAG_WILDCARD`: enables support for wildcards
 
-.. _FLAG_BOOLEAN:
-.. _FLAG_PHRASE:
-.. _FLAG_LOVEHATE:
-.. _FLAG_BOOLEAN_ANY_CASE:
-.. _FLAG_WILDCARD: http://xapian.org/docs/apidoc/html/classXapian_1_1QueryParser.html#e96a58a8de9d219ca3214a5a66e0407e
+You can find more information about the available flags in the
+`API documentation
+<http://xapian.org/docs/apidoc/html/classXapian_1_1QueryParser.html#ae96a58a8de9d219ca3214a5a66e0407e>`_.
 
-
-By default, the QueryParser enables FLAG_BOOLEAN, FLAG_PHRASE and
-FLAG_LOVEHATE.
+By default, the QueryParser enables :xapian-just-constant:`FLAG_BOOLEAN`,
+:xapian-just-constant:`FLAG_PHRASE` and :xapian-just-constant:`FLAG_LOVEHATE`.
