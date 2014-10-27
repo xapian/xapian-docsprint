@@ -137,7 +137,7 @@ Stop words
 ~~~~~~~~~~
 
 Xapian also supports a `stop word` list, which allows you to specify words
-which should be removed from a query before processing. This stop list can
+which should be removed from a query before processing. This list can
 be overridden within user search, so stop words can still be searched for
 if desired, for example if a stop word list contained 'the' and a search
 was for::
@@ -146,9 +146,10 @@ was for::
 
 Then the search would find relevant documents which contained both 'the'
 and 'document'.  Also, when searching for phrases, stop words do not apply,
-for example::
+for example here we will retrieve documents with the exact phrase including
+'the'::
 
-    "the green space" retrieves documents with this exact phrase
+    "the green space"
 
 Parser Flags
 ~~~~~~~~~~~~
