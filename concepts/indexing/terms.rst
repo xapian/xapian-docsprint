@@ -43,5 +43,8 @@ document contained "happiness", a search for "happy" would find that
 document.
 
 The rules applied by a stemmer are dependent on the language of the text;
-Xapian includes stemmers for more than a dozen languages (and for some
-languages there is a choice of stemmers).
+Xapian includes `stemmers for more than a dozen languages <http://xapian.org/docs/apidoc/html/classXapian_1_1Stem.html>`_
+(and for some languages there is a choice of stemmers), built using the
+`Snowball language <http://snowball.tartarus.org/>`_. We'd like to add
+stemmers for more languages - see the Snowball site for information on how
+to contribute.
