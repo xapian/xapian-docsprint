@@ -63,7 +63,7 @@ Retrieval, while others have a specific meaning in the context of Xapian.
  The document data is one of several types of information that can be
  associated with each document, the contents can be set to be anything in any
  format, examples include fields such as URL, document title, and an excerpt of
- text from the document.  If you wish to interpolate with Omega, it should
+ text from the document.  If you wish to interoperate with Omega, it should
  contain name=value pairs, one per line (recent versions of Omega also support
  one field value per line, and can assign names to line numbers in the
  query template).
