@@ -5,10 +5,10 @@ Advanced features
    :maxdepth: 2
 
    postingsource
-   remote
    unigramlm
    admin_notes
    scalability
-   geospatial
    replication
+   remote
+   geospatial
    query_authorisation
