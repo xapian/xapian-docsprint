@@ -16,6 +16,8 @@ Contents:
    practical_example/index
    howtos/index
    glossary
+   deprecation/index
+   deprecation/deprecated
 
 
 Contributing
