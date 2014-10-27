@@ -28,46 +28,8 @@ string into terms.  It is often easiest to use QueryParser and
 
 .. todo: link TermGenerator to the termgenerator page
 
-Wildcards
+Operators
 ~~~~~~~~~
-
-It is also possible to use wildcards to match any number of trailing
-characters within a term; for example:
-
-    ``wild*`` matches ``wild, wildcard, wildcat, wilderness``
-
-This feature is disabled by default; to enable it, see 'Enabling Features'
-below.
-
-Bracketed Expressions
-~~~~~~~~~~~~~~~~~~~~~
-
-When queries contain both OR and AND operators, AND takes precedence.
-To change the precedence of parts of the query, brackets can be used.
-For example, with the query::
-
-    apple OR pear AND dessert
-
-The query parser will interpret this query as::
-
-    apple OR (pear AND dessert)
-
-So to change the precedence and make the dessert a requirement, you would
-write the query initially as::
-
-    (apple OR pear) AND dessert
-
-Default Operator
-~~~~~~~~~~~~~~~~
-
-When the QueryParser receives a query, it joins together its component
-queries using a `default operator`_ which defaults to
-:xapian-just-constant:`OP_OR` but can be modified at run time.
-
-.. _default operator: http://xapian.org/docs/apidoc/html/classXapian_1_1QueryParser.html#2efe48be88c4872afec4bc963f417ea5
-
-Additional operators
-~~~~~~~~~~~~~~~~~~~~
 
 As well as the basic logical operators, QueryParser supports the additional
 operators discussed earlier and introduces some new ones, for example::
@@ -94,6 +56,42 @@ additional terms.
 One thing to note is that the behaviour of the +/- operators vary depending
 on the default operator used and the above examples assume that
 :xapian-just-constant:`OP_OR` is used.
+
+Bracketed Expressions
+~~~~~~~~~~~~~~~~~~~~~
+
+When queries contain both OR and AND operators, AND takes precedence.
+To change the precedence of parts of the query, brackets can be used.
+For example, with the query::
+
+    apple OR pear AND dessert
+
+The query parser will interpret this query as::
+
+    apple OR (pear AND dessert)
+
+So to change the precedence and make the dessert a requirement, you would
+write the query initially as::
+
+    (apple OR pear) AND dessert
+
+Stop words
+~~~~~~~~~~
+
+Xapian also supports a `stop word` list, which allows you to specify words
+which should be removed from a query before processing. This list can
+be overridden within user search, so stop words can still be searched for
+if desired, for example if a stop word list contained 'the' and a search
+was for::
+
+    +the +document
+
+Then the search would find relevant documents which contained both 'the'
+and 'document'.  Also, when searching for phrases, stop words do not apply,
+for example here we will retrieve documents with the exact phrase including
+'the'::
+
+    "the green space"
 
 Searching with Prefixes
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -132,24 +130,25 @@ or otherwise.
 .. _Number:
 .. _NumericValueRangeProcessor: http://xapian.org/docs/apidoc/html/classXapian_1_1NumberValueRangeProcessor.html
 
+Wildcards
+~~~~~~~~~
 
-Stop words
-~~~~~~~~~~
+It is also possible to use wildcards to match any number of trailing
+characters within a term; for example:
 
-Xapian also supports a `stop word` list, which allows you to specify words
-which should be removed from a query before processing. This list can
-be overridden within user search, so stop words can still be searched for
-if desired, for example if a stop word list contained 'the' and a search
-was for::
+    ``wild*`` matches ``wild, wildcard, wildcat, wilderness``
 
-    +the +document
+This feature is disabled by default; to enable it, see 'Parser Flags'
+below.
 
-Then the search would find relevant documents which contained both 'the'
-and 'document'.  Also, when searching for phrases, stop words do not apply,
-for example here we will retrieve documents with the exact phrase including
-'the'::
+Default Operator
+~~~~~~~~~~~~~~~~
 
-    "the green space"
+When the QueryParser receives a query, it joins together its component
+queries using a `default operator`_ which defaults to
+:xapian-just-constant:`OP_OR` but can be modified at run time.
+
+.. _default operator: http://xapian.org/docs/apidoc/html/classXapian_1_1QueryParser.html#2efe48be88c4872afec4bc963f417ea5
 
 Parser Flags
 ~~~~~~~~~~~~
