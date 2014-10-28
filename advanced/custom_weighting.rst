@@ -21,7 +21,7 @@ term scores one point:
 	~CoordinateWeight() { }
 
 	std::string name() const { return "Coord"; }
-	std::string serialise() const { return ""; }
+	std::string serialise() const { return std::string(); }
 	CoordinateWeight * unserialise(const std::string &) const {
 	    return new CoordinateWeight;
 	}
@@ -86,7 +86,7 @@ The implementation will be as follows:
 	~TfIdfWeight() { }
 
 	std::string name() const { return "TfIdf"; }
-	std::string serialise() const { return ""; }
+	std::string serialise() const { return std::string(); }
 	TfIdfWeight * unserialise(const std::string &) const {
             return new TfIdfWeight;
 	}
