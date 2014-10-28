@@ -17,7 +17,7 @@ import atexit
 from docutils import nodes, utils
 from docutils.parsers.rst import roles
 from docutils.parsers.rst.roles import set_classes
-from sphinx.directives.code import LiteralInclude, directives
+from sphinx.directives.code import CodeBlock, LiteralInclude, directives
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -384,6 +384,21 @@ class XapianRunExample(LiteralInclude):
 # Usage:
 # .. xapianrunexample:: search_filters2
 directives.register_directive('xapianrunexample', XapianRunExample)
+
+
+class XapianCodeSnippet(CodeBlock):
+    option_spec = { }
+
+    def run(self):
+	print "[%s] vs [%s]" % (highlight_language, self.arguments[0])
+        if highlight_language != self.arguments[0]:
+	    return []
+        return super(XapianCodeSnippet, self).run()
+
+# Usage:
+# .. xapiancodesnippet::
+#    :language: python
+directives.register_directive('xapiancodesnippet', XapianCodeSnippet)
 
 def xapian_code_example_role(typ, rawtext, etext, lineno, inliner,
                                  options=(), content=[]):
