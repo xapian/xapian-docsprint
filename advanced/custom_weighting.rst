@@ -60,8 +60,8 @@ The statistics can then be obtained by the subclass by simply calling the
 corresponding function of the :xapian-class:`Weight` class. For eg:- The document
 frequency (Term frequency) of the term can be obtained by calling
 get_termfreq(). For a full list of functions required to obtain various 
-statistics, refer to the
-`API documentation
+statistics, refer to
+`the xapian/weight.h header file
 <http://xapian.org/docs/sourcedoc/html/weight_8h_source.html#l00277>`_.
 
 Example:- Consider a simple weighting scheme such as a pseudo Tf-Idf weighting 
