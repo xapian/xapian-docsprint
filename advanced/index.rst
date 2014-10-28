@@ -10,8 +10,12 @@ Advanced features
    admin_notes
    scalability
    replication
-   remote
    serialisation
+
+.. toctree::
+   :hidden:
+
+   remote
    eset
    geospatial
    query_authorisation
