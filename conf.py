@@ -254,6 +254,7 @@ def github_link_node(name, rawtext, options=()):
 def xapian_code_example_filename(ex):
     return "code/%s/%s%s" % (highlight_language, ex, ext)
 
+# Return the command to show in the generated docs.
 def xapian_code_example_command(ex):
     if highlight_language == 'python':
         return "python %s" % xapian_code_example_filename(ex)
@@ -262,6 +263,30 @@ def xapian_code_example_command(ex):
     elif highlight_language == 'c++':
         return "g++ `xapian-config --cxxflags` %s -o %s `xapian-config --libs`\n./%s" \
             % (xapian_code_example_filename(ex), ex, ex)
+    else:
+        print "Unhandled highlight_language"
+        sys.exit(1)
+
+def get_tool_name(envvar, default):
+    tool = os.environ.get(envvar, default)
+    if re.search(r'[^-/_+A-Za-z]', tool):
+        # Or we could actually escape it...
+        print("Bad characters in $%s" % envvar)
+        sys.exit(1)
+    return tool
+
+# Return the command to actually test run examples using.
+def xapian_run_example_command(ex):
+    if highlight_language == 'python':
+        python = get_tool_name('PYTHON', 'python')
+        return "%s %s" % (python, xapian_code_example_filename(ex))
+    elif highlight_language == 'php':
+        php = get_tool_name('PHP', 'php')
+        return "%s %s" % (php, xapian_code_example_filename(ex))
+    elif highlight_language == 'c++':
+        cxx = get_tool_name('CXX', 'g++')
+        return "%s `xapian-config --cxxflags` %s -o %s `xapian-config --libs`\n./%s" \
+            % (cxx, xapian_code_example_filename(ex), ex, ex)
     else:
         print "Unhandled highlight_language"
         sys.exit(1)
@@ -464,7 +489,8 @@ def xapian_check_examples():
         if ex.startswith("index"):
             os.system("rm -rf db filtersdb statesdb")
         print "$ %s %s" % (command, args)
-        os.system("%s %s > tmp.out 2> tmp2.out;cat tmp2.out >> tmp.out" % (command, args))
+        run_command = xapian_run_example_command(ex)
+        os.system("%s %s > tmp.out 2> tmp2.out;cat tmp2.out >> tmp.out" % (run_command, args))
         esc_args = xapian_escape_args(args)
         fullout = "%s.%s.out" % (filename, esc_args)
         print "[%s]" % fullout
