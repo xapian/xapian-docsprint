@@ -505,7 +505,7 @@ def xapian_check_examples():
             sys.stdout.flush()
             print "vimdiff %s %s" % (tmp_out, filename)
             if os.system("diff -u %s %s 2>&1" % (tmp_out, filename)) == 0:
-		os.unlink(tmp_out)
+                os.unlink(tmp_out)
 
     if bad:
         raise SystemExit()
