@@ -1,6 +1,8 @@
 Range queries
 =============
 
+.. contents:: Table of contents
+
 I'm only interested in the 1980s
 --------------------------------
 
