@@ -449,7 +449,11 @@ def xapian_class_role(typ, rawtext, etext, lineno, inliner,
 def xapian_just_method_role(typ, rawtext, etext, lineno, inliner,
                                  options=(), content=[]):
     m = utils.unescape(etext)
-    # Correct for Python, PHP and C++:
+    if highlight_language == 'php' or highlight_language == 'perl':
+        # Add a $ in front of each parameter.
+        m = re.sub(r'([\(,]\s*)(\w)', r'\1$\2', m)
+        return [nodes.literal(text = m)], []
+    # Correct for Python and C++:
     return [nodes.literal(text = m)], []
 
 def xapian_method_role(typ, rawtext, etext, lineno, inliner,
