@@ -13,5 +13,3 @@ How To...
    synonyms
    weighting_scheme
    iterate_all_docs
-
-.. todo:: relevance feedback and query expansion

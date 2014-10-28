@@ -1,8 +1,6 @@
 Range queries
 =============
 
-.. todo:: check valueranges.rst to see if anything else needs moving across
-
 I'm only interested in the 1980s
 --------------------------------
 

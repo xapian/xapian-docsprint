@@ -8,8 +8,6 @@ There are a few limitations on the data which can be stored in an index;
 these rarely get in the way, and are generally easy to work around if they
 do, but it's worth knowing about them.
 
-.. todo:: add more and fill out those already here a little more
-
 Term length
 -----------
 
