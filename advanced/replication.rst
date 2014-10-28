@@ -53,8 +53,6 @@ Replication of inmemory databases isn't currently available.
 Setting up replicated databases
 ===============================
 
-.. todo:: expand this section.
-
 To replicate a database efficiently from one master machine to other machines,
 there is one configuration step to be performed on the master machine, and two
 servers to run.
