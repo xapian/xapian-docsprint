@@ -39,7 +39,7 @@ Xapian provides :ref:`four different smoothing types<unigramlmweight>`, which ta
 to control the effects of smoothing; we have picked some default parameter
 values which do a good job, using two stage smoothing.
 
-The UnigramLM weighting formula is based on an original approach by Bruce Coft.
+The UnigramLM weighting formula is based on an original approach by Bruce Croft.
 It uses statistical language modelling; 'unigram' in this case means that
 words are considered to occur independently.
 
