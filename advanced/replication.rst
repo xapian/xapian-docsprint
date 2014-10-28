@@ -57,15 +57,18 @@ To replicate a database efficiently from one master machine to other machines,
 there is one configuration step to be performed on the master machine, and two
 servers to run.
 
-.. todo:: XAPIAN_MAX_CHANGESETS is not irrelevant in brass. We should talk about
-          that here but only if we are clear what version it was added in.
-
 Firstly, on the master machine, the indexer must be run with the environment
-variable `XAPIAN_MAX_CHANGESETS` set to a non-zero value.  (Currently, the
-actual value it is set to is irrelevant, but I suggest using a value of 10).
-This will cause changeset files to be created whenever a transaction is
-performed, which allow the transaction to be replayed efficiently on a replica
+variable `XAPIAN_MAX_CHANGESETS` set to a non-zero value, which will cause
+changeset files to be created whenever a transaction is committed.  A
+changeset file allows the transaction to be replayed efficiently on a replica
 of the database.
+
+The value which `XAPIAN_MAX_CHANGESETS` is set to determines the maximum number
+of changeset files which will be kept.  The best number to keep depends on how
+frequently you run replication and how big your transactions are - if not all
+the changeset files needed to update a replica are present, a full copy of
+the database will be sent, but at some point this becomes more efficient
+anyway.  `10` is probably a good value to start with.
 
 Secondly, also on the master machine, run the `xapian-replicate-server` server
 to serve the databases which are to be replicated.  This takes various
