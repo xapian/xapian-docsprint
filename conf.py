@@ -500,6 +500,7 @@ def xapian_check_examples():
         if not os.path.exists(filename):
             print '*** No output file %s in language %s - patches welcome!' \
                 % (filename, highlight_language)
+            os.unlink("tmp2.out")
         else:
             sys.stdout.flush()
             if os.system("diff -u %s %s 2>&1" % (tmp_out, filename)):
@@ -507,6 +508,7 @@ def xapian_check_examples():
                 print "vimdiff %s %s" % (tmp_out, filename)
             else:
                 os.unlink(tmp_out)
+                os.unlink("tmp2.out")
 
     if bad:
         raise SystemExit()
