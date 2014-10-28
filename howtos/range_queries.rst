@@ -74,7 +74,7 @@ contain such a variety of date formats).
 We run this like so:
 
 .. xapianrunexample:: index_ranges
-    :args: 100-objects-v1.csv db
+    :args: data/100-objects-v1.csv db
 
 We can check this has created document values using `delve`::
 
