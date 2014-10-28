@@ -11,7 +11,10 @@ the stemmed forms of words in the text from the user), and operations
 such as AND, OR and so forth.
 
 There are many ways to go from the user's text to a Query, but the
-most simple of these is to use the QueryParser.
+most simple of these is to use the QueryParser. We then pass this to
+an Enquire object, which also needs setting up with a database, and is
+where you'd set various other options that affect how the query is run
+(such as sorting, for instance) which we won't address here.
 
 .. xapianexample:: search1
 
