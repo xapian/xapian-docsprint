@@ -2,8 +2,8 @@
 Introduction to IR
 ==================
 
-Information retrieval system retrieves relevent documents based on information need  from a document collection. 
-Generally document is a piece of text, described as collection of terms. Information need can often be described as collection of few terms. If you are searching for  "golf", Aim of an IR system would be to return all the document containing golf.
+An information retrieval system retrieves relevant documents based on information need from a document collection.
+Generally each *document* is a piece of text, described as collection of *terms*. The *information need* can often be described as a small collection of terms. If you are searching for "golf", the aim of an IR system would be to return all the documents talking about golf.
 
 
 ----------------------------
@@ -11,26 +11,26 @@ Indexing: Offline processing
 ----------------------------
 
 In order to retrieve all the document with query terms, there are two methods.
+
 * Linear scan of all the documents to see if term is in the document. (Inefficient)
 * Offline process all the document in a special format to get list of all document with term for all terms. (Used in IR)
 
-Linear scan is highly inefficient due to scanning of  all the docuemnt in collection to serve the information need. It would take huge time to return document.
+Linear scan is highly inefficient due to scanning of all the document in collection to serve the information need. It would take huge time to return document.
 
-In modern information retrieval systems, documents are processed offline to arrange it in special format called index to avoid linear scan. Special format is index.
+In modern information retrieval systems, documents are processed offline to arrange it in special format called an index, in to avoid having to do linear scans.
 
 Indexing
 --------
 
-Indexing is a process of converting the text documents into a special format(index) for efficient retrieval of document.
-It's a list of documents(referenced by document id) containing particular term, it is know as posting list.
+*Indexing* is the process of converting the documents into a special format for efficient searching and retrieval later. One main component is a list of documents (referenced by document id) in which we can find each term; each list of documents, for a particular term, is called a *posting list*.
 
-| **Documents:**
+| **Documents**
 
 | D[0] = {This is a book}
 | D[1] = {Books are worth reading}
 | D[2] = {This book is worth buying}
 
-| **Index:**
+| **Index**
 
 | This - {0,2}
 | book - {0,1,2}
@@ -44,15 +44,14 @@ It's a list of documents(referenced by document id) containing particular term, 
 Stemming
 --------
 
-Some words are used in there inflected form in the document, for example connect can be used as connecting, connected , connection . 
-Since all the terms(connecting, connected) are similar, but as per design of index, we will not get documents containing connected with query  connect using posting list of connect.
-Therefore before we store the term in index, term is stemmed to reduce the inflected word to their word stem form or root form.
-For example buying will be stored as buy in the index.
+Some words are used in their inflected form in the document, for example "connect" can be used as *connecting*, *connected* and *connection*.
+Although all the terms (*connecting*, *connected*) are similar, we would not find documents containing "connected" when processing a query for "connect" if we only looked at the posting list of "connect".
+Therefore, before we store the term in the index, it is *stemmed* to reduce the inflected word ("connected") to its word stem or root form ("connect").
 
 
------------------------------
+----------------------------
 Retrieval: Online processing
------------------------------
+----------------------------
 
 Given a information need, generally given as search query (terms), we try to retrieve relevant documents from the collection using the index formed in the offline processing stage.
 There are two major paradigm to retrieve document.
@@ -60,7 +59,7 @@ There are two major paradigm to retrieve document.
 
 Boolean retrieval, retrieve the documents by doing union, intersection or difference  on the posting list of terms in the query.
 
-**Posting list of query term's:**
+**Posting list of query terms**
 
 | book -> {1,4,10}
 | work -> {1,2,4,9}
@@ -78,26 +77,27 @@ Probabilistic Retrieval
 Probabilistic retrieval model is based on the Probability Ranking Principle, which states that an information retrieval system is supposed to rank the documents based on their probability of relevance to the query, given all the evidence available [Belkin and Croft 1992]. The principle takes into account that there is uncertainty in the representation of the information need and the documents. There can be a variety of sources of evidence that are used by the probabilistic retrieval methods, and the most common one is the statistical distribution of the terms in both the relevant and non-relevant documents.
 
 
-Posting list stores the frequency of occurance of word in document.
-Posting list for work:
+A posting list stores the frequency of terms in different documents, such as in this posting list for the term "work":
 
 | work -> {1:3,2:1,4:2,9:10}
 
-document 1 contains work 3 times, where as document id 2 constains 1 time.
+document 1 contains work three times, whereas document id 2 contains it only once.
 
 In probabilistic model we give score to the documents based on frequency of the query words in document.
 
-Query Expansion:
-----------------
+Query Expansion
+---------------
 
 Query expansion is a process where query provided by the user is expanded with extra terms to improve the search results. Aim of query expansion is to generate alternative or expanded queries for the user.
 There are two broad approaches to do this:
+
 * Relevance feedback - Users give additional input on documents (by marking documents in the results set as relevant or not), and this input is used to reweight the terms or add new term in the query for documents.
-* Pseudo Relevance feeback  -  Top ranking document of the search are considered to be relevant and used to reweight the terms or add new term.
+* Pseudo Relevance feedback - top ranking document of the search are considered to be relevant and used to reweight the terms or add new term.
 
 
-References:
------------
+References
+----------
+
 * "Information Retrieval" by C. J. van Rijsbergen is well worth reading. It's out of print, but is available for free from the author's website (in HTML or PDF).
 * "Readings in Information Retrieval" (published by Morgan Kaufmann, edited by Karen Sparck Jones and Peter Willett) is a collection of published papers covering many aspects of the subject.
 * "Managing Gigabytes" (also published by Morgan Kaufmann, written by Ian H. Witten, Alistair Moffat and Timothy C. Bell) describes information retrieval and compression techniques.
