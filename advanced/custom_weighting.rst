@@ -10,7 +10,9 @@ on term-independent statistics (such as the normalised document length).
 Currently it is only possible to implement custom weighting schemes in C++.
 
 For example, here's an implementation of "coordinate matching" - each matching
-term scores one point::
+term scores one point:
+
+.. code-block:: c++
 
     class CoordinateWeight : public Xapian::Weight {
       public:
@@ -69,7 +71,9 @@ scheme which returns the document weight as the product of the within document
 frequency of the term and the inverse of the document frequency
 of the term (Inverse of the number of documents the term appears in).
 
-The implementation will be as follows::
+The implementation will be as follows:
+
+.. code-block:: c++
 
     class TfIdfWeight : public Xapian::Weight {
       public:
