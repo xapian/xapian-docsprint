@@ -1,3 +1,5 @@
+.. Original content was taken from xapian-core/docs/spelling.rst with
+.. a copyright statement of:
 .. Copyright (C) 2007,2008,2009,2010,2011 Olly Betts
 
 ===================

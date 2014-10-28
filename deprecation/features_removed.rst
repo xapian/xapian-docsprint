@@ -1,3 +1,5 @@
+.. Original content was taken from xapian-core/docs/deprecation.rst with
+.. a copyright statement of:
 
 .. This document was originally written by Richard Boulton.
 

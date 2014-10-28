@@ -28,6 +28,8 @@ string into terms.  It is often easiest to use QueryParser and
 
 .. todo: link TermGenerator to the termgenerator page
 
+.. todo: stemming and Z prefix discussion
+
 Operators
 ~~~~~~~~~
 

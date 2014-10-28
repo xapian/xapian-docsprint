@@ -1,3 +1,5 @@
+.. Original content was taken from xapian-core/docs/synonyms.rst with
+.. a copyright statement of:
 .. Copyright (C) 2007,2008,2011 Olly Betts
 
 ========

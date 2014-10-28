@@ -10,5 +10,6 @@ Advanced features
    scalability
    replication
    remote
+   serialisation
    geospatial
    query_authorisation

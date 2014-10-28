@@ -1,8 +1,8 @@
+.. Original content was taken from xapian-core/docs/facets.rst with
+.. a copyright statement of:
 .. Copyright (C) 2007,2010,2011 Olly Betts
 .. Copyright (C) 2009 Lemur Consulting Ltd
 .. Copyright (C) 2011 Richard Boulton
-.. Copyright (C) 2011 Justin Finkelstein
-.. Copyright (C) 2011 James Aylett
 
 ======
 Facets
@@ -55,7 +55,7 @@ The procedure works in three steps: first, you create a spy
 (instance of :xapian-class:`ValueCountMatchSpy`)
 for each slot you want the facets; second, you bind each spy to the
 :xapian-class:`Enquire` using :xapian-just-method:`add_matchspy(spy)`;
-third, after the search was performed, you retrive the results that
+third, after the search was performed, you retrieve the results that
 each spy observed. This is an example of how this is done:
 
 .. xapianexample:: search_facets

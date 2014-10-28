@@ -44,7 +44,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Getting Started with Xapian'
-_authors = u'Gaurav Arora, James Aylett, Olly Betts, Richard Boulton, Dan Colish, Justin Finkelstein'
+_authors = u'Gaurav Arora, James Aylett, Jenny Black, Olly Betts, Richard Boulton, Jorge Carleitao, Dan Colish, Justin Finkelstein, Lemur Consulting Ltd, Deron Meranda, Aarsh Shah'
 copyright = u'2011, 2012, 2013, 2014 ' + _authors
 
 github_project_url = 'https://github.com/jaylett/xapian-docsprint/blob/master'
@@ -217,7 +217,7 @@ highlight_language = None
 for t in ['php', 'c++', 'python']:
     if tags.has(t):
         if not highlight_language is None:
-            print "Multiple language tags set (at least %s and %s)" % (found, t)
+            print "Multiple language tags set (at least %s and %s)" % (highlight_language, t)
             sys.exit(1)
         highlight_language = t
 
@@ -251,9 +251,11 @@ def github_link_node(name, rawtext, options=()):
     return node
 
 
+# Return filename for example ex in the current language.
 def xapian_code_example_filename(ex):
     return "code/%s/%s%s" % (highlight_language, ex, ext)
 
+# Return the command to show in the generated docs.
 def xapian_code_example_command(ex):
     if highlight_language == 'python':
         return "python %s" % xapian_code_example_filename(ex)
@@ -262,6 +264,31 @@ def xapian_code_example_command(ex):
     elif highlight_language == 'c++':
         return "g++ `xapian-config --cxxflags` %s -o %s `xapian-config --libs`\n./%s" \
             % (xapian_code_example_filename(ex), ex, ex)
+    else:
+        print "Unhandled highlight_language"
+        sys.exit(1)
+
+# Lookup tool name in the environment with default.
+def get_tool_name(envvar, default):
+    tool = os.environ.get(envvar, default)
+    if re.search(r'[^-/_+.A-Za-z0-9]', tool):
+        # Or we could actually escape it...
+        print("Bad characters in $%s" % envvar)
+        sys.exit(1)
+    return tool
+
+# Return the command to actually test run examples using.
+def xapian_run_example_command(ex):
+    if highlight_language == 'python':
+        python = get_tool_name('PYTHON', 'python')
+        return "%s %s" % (python, xapian_code_example_filename(ex))
+    elif highlight_language == 'php':
+        php = get_tool_name('PHP', 'php')
+        return "%s %s" % (php, xapian_code_example_filename(ex))
+    elif highlight_language == 'c++':
+        cxx = get_tool_name('CXX', 'g++')
+        return "%s `xapian-config --cxxflags` %s -o %s `xapian-config --libs`\n./%s" \
+            % (cxx, xapian_code_example_filename(ex), ex, ex)
     else:
         print "Unhandled highlight_language"
         sys.exit(1)
@@ -329,7 +356,6 @@ class XapianRunExample(LiteralInclude):
             command = "%s %s" % (command, args)
             esc_args = xapian_escape_args(args)
             fullout = "%s.%s.out" % (filename, esc_args)
-            print "[%s]" % fullout
             if os.path.exists(fullout):
                 filename = fullout
             else:
@@ -434,11 +460,19 @@ roles.register_local_role('xapian-code-example', xapian_code_example_role)
 roles.register_local_role('xapian-basename-code-example', xapian_code_example_short_role)
 roles.register_local_role('xapian-basename-example', xapian_example_short_role)
 roles.register_local_role('xapian-example', xapian_example_role)
+# e.g. :xapian-class:`Database`
 roles.register_local_role('xapian-class', xapian_class_role)
+# e.g. :xapian-just-method:`add_matchspy(spy)`
 roles.register_local_role('xapian-just-method', xapian_just_method_role)
+# e.g. :xapian-method:`Database::reopen()`
 roles.register_local_role('xapian-method', xapian_method_role)
-# Currently these just do the same as the method versions:
+# e.g. :xapian-just-constant:`OP_OR`
+# (Currently this just does the same as the method version, but when more
+# languages are added this may change).
 roles.register_local_role('xapian-just-constant', xapian_just_method_role)
+# e.g. :xapian-constant:`Query::OP_OR`
+# (Currently this just does the same as the method version, but when more
+# languages are added this may change).
 roles.register_local_role('xapian-constant', xapian_method_role)
 
 def xapian_check_examples():
@@ -463,11 +497,10 @@ def xapian_check_examples():
         filename = xapian_code_example_filename(ex)
         if ex.startswith("index"):
             os.system("rm -rf db filtersdb statesdb")
-        print "$ %s %s" % (command, args)
-        os.system("%s %s > tmp.out 2> tmp2.out;cat tmp2.out >> tmp.out" % (command, args))
+        run_command = xapian_run_example_command(ex)
+        os.system("%s %s > tmp.out 2> tmp2.out;cat tmp2.out >> tmp.out" % (run_command, args))
         esc_args = xapian_escape_args(args)
         fullout = "%s.%s.out" % (filename, esc_args)
-        print "[%s]" % fullout
         tmp_out = "%s.%s.tmp" % (filename, esc_args)
         os.rename("tmp.out", tmp_out)
         if os.path.exists(fullout):
@@ -477,10 +510,15 @@ def xapian_check_examples():
         if not os.path.exists(filename):
             print '*** No output file %s in language %s - patches welcome!' \
                 % (filename, highlight_language)
+            os.unlink("tmp2.out")
         else:
             sys.stdout.flush()
-            print "vimdiff %s %s" % (tmp_out, filename)
-            os.system("diff -u %s %s 2>&1" % (tmp_out, filename))
+            if os.system("diff -u %s %s 2>&1" % (tmp_out, filename)):
+                print "$ %s %s" % (command, args)
+                print "vimdiff %s %s" % (tmp_out, filename)
+            else:
+                os.unlink(tmp_out)
+                os.unlink("tmp2.out")
 
     if bad:
         raise SystemExit()
