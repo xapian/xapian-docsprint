@@ -15,6 +15,10 @@ Contents:
    glossary
    LICENSE
 
+.. toctree::
+   :hidden:
+
+   attic/range_performance
 
 Contributing
 ------------
