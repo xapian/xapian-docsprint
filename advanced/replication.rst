@@ -136,9 +136,9 @@ Calling reopen
 :xapian-method:`Database::reopen()` is usually an efficient way to ensure that a
 database is up-to-date with the latest changes.  Unfortunately, it does not
 currently work as you might expect with databases which are being updated by the
-replication client.  The workaround is simple; don't use the reopen() method on
-such databases: instead, you should close the database and open it again from
-scratch.
+replication client.  The workaround is simple; don't use the
+:xapian-just-method:`reopen()` method on such databases: instead, you should
+close the database and open it again from scratch.
 
 Briefly, the issue is that the databases created by the replication client are
 created in a subdirectory of the target path supplied to the client, rather
