@@ -1,4 +1,5 @@
-
+.. Original content was taken from xapian-core/docs/scalability.rst.
+.. It didn't have a copyright statement, but from VCS logs:
 .. Copyright (C) 2003,2004,2006,2007,2008,2011,2012 Olly Betts
 
 ===========

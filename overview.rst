@@ -1,6 +1,3 @@
-.. Copyright (C) 2011 Justin Finkelstein, Richard Boulton, James Aylett
-.. Copyright (C) 2012 Olly Betts
-
 Introduction
 ============
 

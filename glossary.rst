@@ -1,3 +1,5 @@
+.. Original content was taken from xapian-core/docs/glossary.rst with
+.. a copyright statement of:
 .. Copyright (C) 2007 Jenny Black
 .. Copyright (C) 2007,2008,2009,2011 Olly Betts
 .. Copyright (C) 2007 Deron Meranda

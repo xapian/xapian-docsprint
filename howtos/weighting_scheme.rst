@@ -1,3 +1,5 @@
+.. Original content was taken from xapian-core/docs/sorting.rst with
+.. a copyright statement of:
 .. Copyright (C) 2007,2009,2011 Olly Betts
 
 How to change how documents are scored

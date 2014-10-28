@@ -1,3 +1,11 @@
+.. Original content was taken from xapian-core/docs/deprecation.rst with
+.. a copyright statement of:
+
+.. This document was originally written by Richard Boulton.
+
+.. Copyright (C) 2007 Lemur Consulting Ltd
+.. Copyright (C) 2007,2008,2009,2010,2011,2012,2013 Olly Betts
+
 Features currently marked for deprecation
 =========================================
 

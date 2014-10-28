@@ -1,5 +1,3 @@
-.. Copyright (C) 2011 James Aylett
-
 Range queries
 =============
 

@@ -1,3 +1,5 @@
+.. Original content was taken from xapian-core/docs/collapsing.rst with
+.. a copyright statement of:
 .. Copyright (C) 2009,2011 Olly Betts
 
 ============================

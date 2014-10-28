@@ -1,8 +1,8 @@
+.. Original content was taken from xapian-core/docs/facets.rst with
+.. a copyright statement of:
 .. Copyright (C) 2007,2010,2011 Olly Betts
 .. Copyright (C) 2009 Lemur Consulting Ltd
 .. Copyright (C) 2011 Richard Boulton
-.. Copyright (C) 2011 Justin Finkelstein
-.. Copyright (C) 2011 James Aylett
 
 ======
 Facets

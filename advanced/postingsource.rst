@@ -1,3 +1,5 @@
+.. Original content was taken from xapian-core/docs/postingsource.rst with
+.. a copyright statement of:
 
 .. Copyright (C) 2008,2009,2010,2011,2013 Olly Betts
 .. Copyright (C) 2008,2009 Lemur Consulting Ltd
