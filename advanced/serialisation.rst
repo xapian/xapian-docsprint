@@ -53,8 +53,8 @@ serialised representation::
 However, there is a wrinkle.  Queries can contain arbitrary user-defined
 PostingSource subqueries.  In order to serialise and unserialise such queries,
 all the PostingSource subclasses used in the query must implement the
-``name()``, ``serialise()`` and ``unserialise()`` methods (see the
-`postingsource topic document <postingsource.html>`_ for details of these).
+``name()``, ``serialise()`` and ``unserialise()`` methods (see
+:ref:`postingsource` for details).
 In addition, a special form of unserialise must be used::
 
     static Query unserialise(const std::string & s, const Registry & registry);

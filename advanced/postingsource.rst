@@ -4,6 +4,8 @@
 .. Copyright (C) 2008,2009,2010,2011,2013 Olly Betts
 .. Copyright (C) 2008,2009 Lemur Consulting Ltd
 
+.. _postingsource:
+
 ===============
 Posting sources
 ===============
