@@ -8,8 +8,7 @@ understanding of your authorisation scheme into the search system.
 
 .. todo:: list up front the various methods
 
-.. todo:: Check if there is existing documentation which can be used as a
-          skeleton for this.
+.. todo:: mention that omindex now indexes Unix user and group permissions.
 
 Filtering results
 -----------------

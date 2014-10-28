@@ -48,3 +48,10 @@ Xapian includes `stemmers for more than a dozen languages <http://xapian.org/doc
 `Snowball language <http://snowball.tartarus.org/>`_. We'd like to add
 stemmers for more languages - see the Snowball site for information on how
 to contribute.
+
+.. todo::
+
+   Introduction of prefixes (and possibly probabilistic / boolean usage) to
+   implement fields; this is then referred to in the practical example.
+
+   See: http://thread.gmane.org/gmane.comp.search.xapian.general/6779

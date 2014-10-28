@@ -17,6 +17,8 @@ synonym operator (``~``).
 .. note::
    Xapian doesn't offer automated generation of the synonym dictionary.
 
+.. todo:: write an example using one of our data sets.
+
 Model
 =====
 
