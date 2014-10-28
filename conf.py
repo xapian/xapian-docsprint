@@ -269,7 +269,7 @@ def xapian_code_example_command(ex):
 
 def get_tool_name(envvar, default):
     tool = os.environ.get(envvar, default)
-    if re.search(r'[^-/_+A-Za-z]', tool):
+    if re.search(r'[^-/_+A-Za-z0-9]', tool):
         # Or we could actually escape it...
         print("Bad characters in $%s" % envvar)
         sys.exit(1)
