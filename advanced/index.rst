@@ -11,5 +11,6 @@ Advanced features
    replication
    remote
    serialisation
+   eset
    geospatial
    query_authorisation
