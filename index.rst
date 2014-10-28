@@ -18,6 +18,7 @@ Contents:
    advanced/index
    deprecation/index
    glossary
+   LICENSE
 
 
 Contributing
