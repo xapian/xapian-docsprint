@@ -467,6 +467,14 @@ def xapian_method_role(typ, rawtext, etext, lineno, inliner,
         print "Unhandled highlight_language"
         sys.exit(1)
 
+def xapian_variable_role(typ, rawtext, etext, lineno, inliner,
+                                 options=(), content=[]):
+    m = utils.unescape(etext)
+    if highlight_language == 'php' or highlight_language == 'perl':
+        return [nodes.literal(text = '$' + m)], []
+    # Correct for Python and C++:
+    return [nodes.literal(text = m)], []
+
 # Usage:
 #
 # The previous example was :xapian-code-example:`^`.
@@ -482,6 +490,8 @@ roles.register_local_role('xapian-class', xapian_class_role)
 roles.register_local_role('xapian-just-method', xapian_just_method_role)
 # e.g. :xapian-method:`Database::reopen()`
 roles.register_local_role('xapian-method', xapian_method_role)
+# e.g. :xapian-variable:`spy`
+roles.register_local_role('xapian-variable', xapian_variable_role)
 # e.g. :xapian-just-constant:`OP_OR`
 # (Currently this just does the same as the method version, but when more
 # languages are added this may change).
