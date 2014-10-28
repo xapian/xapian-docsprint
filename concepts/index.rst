@@ -7,3 +7,4 @@ Core concepts
    concurrency
    indexing/index
    search/index
+   introduction
