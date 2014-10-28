@@ -460,6 +460,8 @@ def xapian_method_role(typ, rawtext, etext, lineno, inliner,
         cm = re.sub(r'::', r'.', cm)
         return [nodes.literal(text = 'xapian.' + cm)], []
     elif highlight_language == 'php':
+        # Add a $ in front of each parameter.
+        cm = re.sub(r'([\(,]\s*)(\w)', r'\1$\2', cm)
         return [nodes.literal(text = 'Xapian' + cm)], []
     elif highlight_language == 'c++':
         return [nodes.literal(text = 'Xapian::' + cm)], []
