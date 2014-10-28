@@ -395,8 +395,10 @@ class XapianCodeSnippet(CodeBlock):
         return super(XapianCodeSnippet, self).run()
 
 # Usage:
-# .. xapiancodesnippet::
-#    :language: python
+# .. xapiancodesnippet:: python
+#
+#     def foo():
+#          return 42
 directives.register_directive('xapiancodesnippet', XapianCodeSnippet)
 
 def xapian_code_example_role(typ, rawtext, etext, lineno, inliner,
