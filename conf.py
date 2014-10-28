@@ -391,7 +391,7 @@ class XapianCodeSnippet(CodeBlock):
 
     def run(self):
         if highlight_language != self.arguments[0]:
-	    return []
+            return []
         return super(XapianCodeSnippet, self).run()
 
 # Usage:
