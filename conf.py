@@ -251,6 +251,7 @@ def github_link_node(name, rawtext, options=()):
     return node
 
 
+# Return filename for example ex in the current language.
 def xapian_code_example_filename(ex):
     return "code/%s/%s%s" % (highlight_language, ex, ext)
 
@@ -267,6 +268,7 @@ def xapian_code_example_command(ex):
         print "Unhandled highlight_language"
         sys.exit(1)
 
+# Lookup tool name in the environment with default.
 def get_tool_name(envvar, default):
     tool = os.environ.get(envvar, default)
     if re.search(r'[^-/_+.A-Za-z0-9]', tool):
@@ -458,11 +460,19 @@ roles.register_local_role('xapian-code-example', xapian_code_example_role)
 roles.register_local_role('xapian-basename-code-example', xapian_code_example_short_role)
 roles.register_local_role('xapian-basename-example', xapian_example_short_role)
 roles.register_local_role('xapian-example', xapian_example_role)
+# e.g. :xapian-class:`Database`
 roles.register_local_role('xapian-class', xapian_class_role)
+# e.g. :xapian-just-method:`add_matchspy(spy)`
 roles.register_local_role('xapian-just-method', xapian_just_method_role)
+# e.g. :xapian-method:`Database::reopen()`
 roles.register_local_role('xapian-method', xapian_method_role)
-# Currently these just do the same as the method versions:
+# e.g. :xapian-just-constant:`OP_OR`
+# (Currently this just does the same as the method version, but when more
+# languages are added this may change).
 roles.register_local_role('xapian-just-constant', xapian_just_method_role)
+# e.g. :xapian-constant:`Query::OP_OR`
+# (Currently this just does the same as the method version, but when more
+# languages are added this may change).
 roles.register_local_role('xapian-constant', xapian_method_role)
 
 def xapian_check_examples():
