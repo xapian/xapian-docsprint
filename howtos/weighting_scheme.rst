@@ -2,26 +2,19 @@
 .. a copyright statement of:
 .. Copyright (C) 2007,2009,2011 Olly Betts
 
+======================================
 How to change how documents are scored
 ======================================
 
-The document weighting schemes which Xapian includes by default are
-``BM25Weight``, ``TradWeight`` and ``BoolWeight``.  The default is
-BM25Weight.
+.. contents:: Table of contents
 
-BoolWeight
-----------
+The easiest way to change document scoring is to change, or tune,
+the weighting scheme in use; Xapian provides a number of weighting schemes,
+including ``BM25Weight``, ``LMWeight``, ``TradWeight`` and ``BoolWeight``,
+and you can also implement your own. The default is BM25Weight.
 
-BoolWeight assigns a weight of 0 to all documents, so the ordering is
-determined solely by other factors.
-
-TradWeight
-----------
-
-TradWeight implements the original probabilistic weighting formula, which
-is essentially a special case of BM25 (it's BM25 with k2 = 0, k3 = 0, b =
-1, and min_normlen = 0, except that all the weights are scaled by a
-constant factor).
+Built-in weighting schemes
+==========================
 
 BM25Weight
 ----------
@@ -36,7 +29,7 @@ fiddly process to tune them so people tend not to bother.
 .. todo:: Say something more useful about tuning the parameters!
 
 LMWeight (Unigram language modelling)
---------------------------------------
+-------------------------------------
 
 An important aspect of language model-based weighting is that, since not all
 terms appear in all documents (and hence the wdf of some terms is zero with
@@ -50,9 +43,22 @@ The UnigramLM weighting formula is based on an original approach by Bruce Coft.
 It uses statistical language modelling; 'unigram' in this case means that
 words are considered to occur independently.
 
+TradWeight
+----------
+
+TradWeight implements the original probabilistic weighting formula, which
+is essentially a special case of BM25 (it's BM25 with k2 = 0, k3 = 0, b =
+1, and min_normlen = 0, except that all the weights are scaled by a
+constant factor).
+
+BoolWeight
+----------
+
+BoolWeight assigns a weight of 0 to all documents, so the ordering is
+determined solely by other factors.
 
 Custom Weighting Schemes
-------------------------
+========================
 
 You can also implement your own weighting scheme, provided it can be expressed
 in the form of a sum over the matching terms, plus an extra term which depends
@@ -153,3 +159,24 @@ The implementation will be as follows::
 Note: The get_maxpart() function returns an upper bound on the weight returned
 by get_sumpart(). In order to do that, it requires the WDF_MAX
 statistic (the maximum wdf of the term among all documents). 
+
+Other approaches
+================
+
+Using an RSet to modify weights
+-------------------------------
+
+.. todo::
+
+   This needs writing; it's also somewhat esoteric, and perhaps should be an
+   advanced document or at least down-played.
+
+Using a ValueWeightPostingSource
+--------------------------------
+
+.. todo::
+
+   Combine ValueWeightPostingSource with OP_AND_MAYBE to add a constant weight
+   for a particular (set of) document(s). This could be considered an advanced
+   topic, so just a brief mention here and a complete document in advanced
+   could be the best approach.
