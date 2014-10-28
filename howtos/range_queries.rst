@@ -276,18 +276,8 @@ mean up to 5 million, or '..750k' for up to 750 thousand.
 Performance limitations
 -----------------------
 
-Without other terms in a query, a :xapian-class:`ValueRangeProcessor` will cause
+Without other terms in a query, a :xapian-class:`ValueRangeProcessor` can cause
 a value operation to be performed across the whole database, which means
 loading all the values in a given slot. On a small database, this
 isn't a problem, but for a large one it can have performance
 implications: you may end up with very slow queries.
-
-.. todo:: the above paragraph isn't entirely inaccurate; the processor is
-	  unweighted, so if there's no other query, and the docid ordering is
-	  don't care or ascending, then the search can terminate early.  If the
-	  VRP isn't matching many documents, that could still be slow, but
-	  might not be.  If it's not matching any documents, it might be fast
-	  because the bounds on stored values may show that it can't match
-	  anything.  Oh, it's all quite complicated really.  It would be nice
-	  to explain how this is done somewhere, but probably not here.
-
