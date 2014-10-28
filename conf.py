@@ -390,7 +390,6 @@ class XapianCodeSnippet(CodeBlock):
     option_spec = { }
 
     def run(self):
-	print "[%s] vs [%s]" % (highlight_language, self.arguments[0])
         if highlight_language != self.arguments[0]:
 	    return []
         return super(XapianCodeSnippet, self).run()
