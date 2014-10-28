@@ -6,6 +6,7 @@ Advanced features
 
    postingsource
    unigramlm
+   custom_weighting
    admin_notes
    scalability
    replication
