@@ -217,7 +217,7 @@ highlight_language = None
 for t in ['php', 'c++', 'python']:
     if tags.has(t):
         if not highlight_language is None:
-            print "Multiple language tags set (at least %s and %s)" % (found, t)
+            print "Multiple language tags set (at least %s and %s)" % (highlight_language, t)
             sys.exit(1)
         highlight_language = t
 
