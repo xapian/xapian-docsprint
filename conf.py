@@ -354,7 +354,6 @@ class XapianRunExample(LiteralInclude):
             command = "%s %s" % (command, args)
             esc_args = xapian_escape_args(args)
             fullout = "%s.%s.out" % (filename, esc_args)
-            print "[%s]" % fullout
             if os.path.exists(fullout):
                 filename = fullout
             else:
@@ -493,7 +492,6 @@ def xapian_check_examples():
         os.system("%s %s > tmp.out 2> tmp2.out;cat tmp2.out >> tmp.out" % (run_command, args))
         esc_args = xapian_escape_args(args)
         fullout = "%s.%s.out" % (filename, esc_args)
-        print "[%s]" % fullout
         tmp_out = "%s.%s.tmp" % (filename, esc_args)
         os.rename("tmp.out", tmp_out)
         if os.path.exists(fullout):
