@@ -487,7 +487,6 @@ def xapian_check_examples():
         filename = xapian_code_example_filename(ex)
         if ex.startswith("index"):
             os.system("rm -rf db filtersdb statesdb")
-        print "$ %s %s" % (command, args)
         run_command = xapian_run_example_command(ex)
         os.system("%s %s > tmp.out 2> tmp2.out;cat tmp2.out >> tmp.out" % (run_command, args))
         esc_args = xapian_escape_args(args)
@@ -503,8 +502,10 @@ def xapian_check_examples():
                 % (filename, highlight_language)
         else:
             sys.stdout.flush()
-            print "vimdiff %s %s" % (tmp_out, filename)
-            if os.system("diff -u %s %s 2>&1" % (tmp_out, filename)) == 0:
+            if os.system("diff -u %s %s 2>&1" % (tmp_out, filename)):
+                print "$ %s %s" % (command, args)
+                print "vimdiff %s %s" % (tmp_out, filename)
+            else:
                 os.unlink(tmp_out)
 
     if bad:
