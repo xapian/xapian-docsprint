@@ -1,5 +1,5 @@
-Getting Started with Xapian
-===========================
+Getting Started with Xapian |version|
+=====================================
 
 Contents:
 
