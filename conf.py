@@ -43,9 +43,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Getting Started with Xapian'
+project = u'Getting Started with Xapian 1.2'
 _authors = u'Xapian Documentation Team & Contributors'
-copyright = u'2011, 2012, 2013, 2014 ' + _authors
+copyright = u'2003, 2004, 2006-2014 ' + _authors
 
 github_project_url = 'https://github.com/jaylett/xapian-docsprint/blob/master'
 
@@ -181,7 +181,7 @@ htmlhelp_basename = 'GettingStartedwithXapiandoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'GettingStartedwithXapian.tex', u'Getting Started with Xapian Documentation',
+  ('index', 'GettingStartedwithXapian.tex', project,
    _authors, 'manual'),
 ]
 
