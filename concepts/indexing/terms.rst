@@ -54,9 +54,34 @@ to contribute.
 Fields and term prefixes
 ------------------------
 
-.. todo::
+It's common to think of a document as consisting, rather than just a single
+quantity of text, of a number of *fields*, each of which itself is made up
+of terms. These could be actual fields from a structured document, such as
+the title, or they could be metadata such as colour of fruit
+(so you could search for only red fruit). The first allows normal free text
+searching, but constrained to a particular field -- perhaps you want to
+search for all documents whose author is called "Sam"; the second can be used
+for :doc:`filtering documents </howtos/boolean_filters>`, a technique
+referred to as *boolean filtering* (and hence those prefixed terms are called
+*boolean terms*).
 
-   Introduction of prefixes (and possibly probabilistic / boolean usage) to
-   implement fields; this is then referred to in the practical example.
+Xapian supports a convention for representing fields in the database by
+mapping each field to a *term prefix*, which are one or more capital letters;
+this is to avoid confusion
+(which could adversely affect search results) with normal terms generated
+from words, which are lowercased by the :doc:`/concepts/indexing/termgenerator`.
+(If you need a capital letter after the prefix of your term, you can separate
+it from the prefix using a colon ':'.)
 
-   See: http://thread.gmane.org/gmane.comp.search.xapian.general/6779
+When using the :doc:`/concepts/search/queryparser`, you can map from "human
+understandable" prefixes (which act as field names) in the query to the term
+prefixes used in the database, and you can specify a default prefix to control
+any parts of the query that don't specify a field.
+You can map one field name to multiple term prefixes, so if you want to search
+across multiple fields by default, instead of setting a default prefix you can
+map an empty field name to several term prefixes.
+
+Xapian has `conventions for term prefixes
+<http://xapian.org/docs/omega/termprefixes.html>`_ used for common fields,
+which originally came from Omega. For instance, 'A' is used for author, 'S'
+for subject/title, and so forth.
