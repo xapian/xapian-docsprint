@@ -1,10 +1,6 @@
 How to filter search results
 ============================
 
-.. todo:: point out that lowercasing by TermGenerator or similar will prevent
-          unexpected matching of prefixes terms by "real" words in the source
-          data
-
 In our earlier discussion of building an index of museum catalog data, we
 showed how to index text from the title and description fields with
 separate prefixes, allowing searches to be performed across just one of
@@ -30,6 +26,15 @@ document to be significant (we only expect it to occur 0 or 1 times), so we
 don't need to store "within document frequency" information.  A field like
 this, which we're using to restrict the results returned from a search rather
 than as part of the weighted search, is referred to as a `boolean term`.
+
+.. note::
+
+   Since :ref:`term prefixes <term-prefixes>`
+   start with an uppercase letter or letters, and
+   the :doc:`term generator </concepts/indexing/termgenerator>`
+   lowercases words in order to build
+   terms, there's no chance of the boolean terms we're generating here matching
+   against "real" words from the source data.
 
 We can therefore just add the identifiers to the :xapian-class:`Document`
 directly, after splitting on semicolons, using the

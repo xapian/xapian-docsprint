@@ -49,6 +49,11 @@ Xapian includes `stemmers for more than a dozen languages <http://xapian.org/doc
 stemmers for more languages - see the Snowball site for information on how
 to contribute.
 
+.. _term-prefixes:
+
+Fields and term prefixes
+------------------------
+
 .. todo::
 
    Introduction of prefixes (and possibly probabilistic / boolean usage) to
