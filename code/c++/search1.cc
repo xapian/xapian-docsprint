@@ -36,8 +36,10 @@ search(const string & dbpath, const string & querystring,
     Xapian::QueryParser queryparser;
     queryparser.set_stemmer(Xapian::Stem("en"));
     queryparser.set_stemming_strategy(queryparser.STEM_SOME);
+    // Start of prefix configuration.
     queryparser.add_prefix("title", "S");
     queryparser.add_prefix("description", "XD");
+    // End of prefix configuration.
 
     // And parse the query.
     Xapian::Query query = queryparser.parse_query(querystring);

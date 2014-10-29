@@ -16,8 +16,10 @@ function search($dbpath, $querystring, $offset = 0, $pagesize = 10)
     $queryparser = new XapianQueryParser();
     $queryparser->set_stemmer(new XapianStem("english"));
     $queryparser->set_stemming_strategy(XapianQueryParser::STEM_SOME);
+    // Start of prefix configuration.
     $queryparser->add_prefix("title", "S");
     $queryparser->add_prefix("description", "XD");
+    // End of prefix configuration.
 
     // And parse the query
     $query = $queryparser->parse_query($querystring);

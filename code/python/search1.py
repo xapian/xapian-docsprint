@@ -18,8 +18,10 @@ def search(dbpath, querystring, offset=0, pagesize=10):
     queryparser = xapian.QueryParser()
     queryparser.set_stemmer(xapian.Stem("en"))
     queryparser.set_stemming_strategy(queryparser.STEM_SOME)
+    # Start of prefix configuration.
     queryparser.add_prefix("title", "S")
     queryparser.add_prefix("description", "XD")
+    # End of prefix configuration.
 
     # And parse the query
     query = queryparser.parse_query(querystring)
