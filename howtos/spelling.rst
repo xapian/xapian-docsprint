@@ -219,7 +219,6 @@ References
 ==========
 
 The algorithm used to calculate the edit distance is based on that described in
-the paper "An extension of Ukkonen's enhanced dynamic programming ASM
-algorithm" by Hal Berghel, University of Arkansas, and David Roach, Acxiom
-Corporation.  It's available online at:
-http://berghel.net/publications/asm/asm.php
+the paper "`An extension of Ukkonen's enhanced dynamic programming ASM
+algorithm <http://berghel.net/publications/asm/asm.php>`_" by Hal Berghel,
+University of Arkansas, and David Roach, Acxiom Corporation.
