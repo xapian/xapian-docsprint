@@ -48,12 +48,12 @@ documents in the collection etc. can also be implemented.
 
 For that, the weighting scheme subclassed from :xapian-class:`Weight` simply needs
 to "tell" :xapian-class:`Weight` which statistics it will be needing. This is done by
-calling the need_stat(STATISTIC REQUIRED) function in the constructor of the
-subclassed weighting scheme. Note however, that only those statistics which are
-absolutely required must be asked for as collecting statistics is expensive.
-For a full list of statistics currently available from :xapian-class:`Weight` and the
-enumerators required to access them, please refer to the
-`API documentation
+calling the :xapian-just-method:`need_stat(STATISTIC REQUIRED)` method in the
+constructor of the subclassed weighting scheme. Note however, that only those
+statistics which are absolutely required must be asked for as collecting
+statistics is expensive.  For a full list of statistics currently available
+from :xapian-class:`Weight` and the enumerators required to access them, please
+refer to the `API documentation
 <http://xapian.org/docs/sourcedoc/html/classXapian_1_1Weight.html#e3c11f1d2d96a18e0eb9b9b31c5c5479>`_.
 
 .. todo:: Sort out doxygen visibility of protected stat_flags so the link above can be to the apidocs
@@ -61,8 +61,8 @@ enumerators required to access them, please refer to the
 The statistics can then be obtained by the subclass by simply calling the
 corresponding function of the :xapian-class:`Weight` class. For eg:- The document
 frequency (Term frequency) of the term can be obtained by calling
-get_termfreq(). For a full list of functions required to obtain various 
-statistics, refer to
+:xapian-just-method:`get_termfreq()`. For a full list of functions required to
+obtain various statistics, refer to
 `the xapian/weight.h header file
 <http://xapian.org/docs/sourcedoc/html/weight_8h_source.html#l00277>`_.
 
@@ -109,6 +109,7 @@ The implementation will be as follows:
     };
 
 
-Note: The get_maxpart() function returns an upper bound on the weight returned
-by get_sumpart(). In order to do that, it requires the WDF_MAX
-statistic (the maximum wdf of the term among all documents). 
+Note: The :xapian-just-method:`get_maxpart()` method returns an upper bound on
+the weight returned by :xapian-just-method:`get_sumpart()`. In order to do
+that, it requires the :xapian-just-constant:`WDF_MAX` statistic (the maximum
+wdf of the term among all documents).
