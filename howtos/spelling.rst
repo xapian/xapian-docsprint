@@ -6,6 +6,8 @@
 Spelling Correction
 ===================
 
+.. contents:: Table of contents
+
 Introduction
 ============
 
@@ -68,7 +70,18 @@ word.
 Searching
 =========
 
-.. todo:: Getting a correction for a single word "by hand"
+Getting a spelling suggestion directly
+--------------------------------------
+
+If you aren't using the :xapian-class:`QueryParser`, or for other reasons you
+need direct access to spelling corrections, you can get a suggestion for a
+single word using :xapian-method:`Database::get_spelling_suggestion()`. This
+will return the best matching word in the spelling dictionary.
+
+There's an
+optional second parameter which controls the maximum edit distance it will
+consider; see :ref:`details of the algorithm <spelling-correction-algorithm>`
+for more information.
 
 QueryParser Integration
 -----------------------
@@ -92,6 +105,8 @@ Omega
 As of Omega 1.1.1, omindex and scriptindex support indexing spelling correction
 data and omega supports suggesting corrected spellings at search time.  See the
 `Omega documentation <http://xapian.org/docs/omega/>`_ for more details.
+
+.. _spelling-correction-algorithm:
 
 Algorithm
 =========
