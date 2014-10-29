@@ -348,7 +348,9 @@ Currently, the only way to do this is to modify the source slightly, and
 compile your own xapian-tcpsrv.  To do this, you need to edit
 ``xapian-core/bin/xapian-tcpsrv.cc`` and find the
 ``register_user_weighting_schemes()`` function.  If ``MyPostingSource`` is your
-posting source, at the end of this function, add these lines::
+posting source, at the end of this function, add these lines:
+
+.. code-block:: c++
 
     Xapian::Registry registry;
     registry.register_postingsource(MyPostingSource());
