@@ -446,14 +446,23 @@ def xapian_class_role(typ, rawtext, etext, lineno, inliner,
         print "Unhandled highlight_language"
         sys.exit(1)
 
+def decorate_param(m):
+    # Avoid decorating literals or constants.
+    # FIXME: Doesn't really handle expressions.
+    if not re.match(r'^[a-z][a-z0-9_]+$', m.group(2)):
+	return m.group(0)
+    return m.group(1) + '$' + m.group(2)
+
+def decorate_variables(t):
+    if highlight_language == 'php' or highlight_language == 'perl':
+        # Add a $ in front of each parameter which is a variable
+        return re.sub(r'([(,]\s*)([^),]+)', decorate_param, t)
+    # Correct for Python and C++:
+    return t
+
 def xapian_just_method_role(typ, rawtext, etext, lineno, inliner,
                                  options=(), content=[]):
-    m = utils.unescape(etext)
-    if highlight_language == 'php' or highlight_language == 'perl':
-        # Add a $ in front of each parameter.
-        m = re.sub(r'([\(,]\s*)(\w)', r'\1$\2', m)
-        return [nodes.literal(text = m)], []
-    # Correct for Python and C++:
+    m = decorate_variables(utils.unescape(etext))
     return [nodes.literal(text = m)], []
 
 def xapian_method_role(typ, rawtext, etext, lineno, inliner,
@@ -465,7 +474,7 @@ def xapian_method_role(typ, rawtext, etext, lineno, inliner,
         return [nodes.literal(text = 'xapian.' + cm)], []
     elif highlight_language == 'php':
         # Add a $ in front of each parameter.
-        cm = re.sub(r'([\(,]\s*)(\w)', r'\1$\2', cm)
+        cm = decorate_variables(cm)
         return [nodes.literal(text = 'Xapian' + cm)], []
     elif highlight_language == 'c++':
         return [nodes.literal(text = 'Xapian::' + cm)], []
