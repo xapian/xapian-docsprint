@@ -8,6 +8,8 @@
 Facets
 ======
 
+.. contents:: Table of contents
+
 Xapian provides functionality which allows you to dynamically generate
 complete lists of values which feature in matching documents. For example,
 colour, manufacturer, size values are good candidates for faceting.
@@ -20,11 +22,10 @@ This is often referred to as `faceted search`.
 
 Implementation
 ==============
-Faceting works against information stored in document value slots [link to
-value slots] and, when executed, provides a list of the unique values for
+Faceting works against information stored in :doc:`document value slots
+</concepts/indexing/values>`
+and, when executed, provides a list of the unique values for
 that slot together with a count of the number of times each value occurs.
-
-.. todo:: add the link above
 
 Indexing
 --------
@@ -100,10 +101,8 @@ The accuracy of Xapian's faceting capability is determined by the number
 of records that are examined by Xapian whilst it is searching. You can
 control this number by specifying the `checkatleast` value of
 :xapian-just-method:`get_mset`; however it is important to be aware that
-increasing this number may have an effect on overall query performance.
-
-.. todo:: It is probably worth saying that a typical database will not hit these
-          performance issues
+increasing this number may have an effect on overall query performance,
+although a typical sized database is unlikely to see adverse affects.
 
 
 In Development
