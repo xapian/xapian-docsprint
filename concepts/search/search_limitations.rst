@@ -47,14 +47,15 @@ If you try to search many databases concurrently, you may hit the
 per-process file-descriptor limit - each chert database uses between 3 and
 7 fds depending which tables are present, and a process can only open a
 certain number (on Linux, the default is usually 1024, so that limits you
-to a few hundred concurrently open databases).  You can raise the
-per-process limit on some Unix-like platforms, though you may need to be
-root to do so.
+to a few hundred concurrently open databases).  You can `raise the
+per-process limit <https://wiki.debian.org/Limits>` on some Unix-like
+platforms, though you may need to be root to do so; if you're doing this
+from a service (for instance if you're using a :doc:`remote backend
+</advanced/remote>`) then you may need to do this `via a limit stanza
+for upstart <http://upstart.ubuntu.com/wiki/Stanzas#limit>`_, or `the
+LimitNOFILE= option for systemd
+<http://www.freedesktop.org/software/systemd/man/systemd.exec.html#LimitCPU=>`_.
 
-.. todo:: add or link to some details of how to do this
-.. James says:
-.. Needs to mention ulimit, pam/syslimits & upstart for linux alone these days
-
-You can address this issue (and spread the search load) by using the remote
-backend to search databases on a cluster of machines - the remote backend
-only uses one fd per database on the client machine.
+You can also address this issue (and spread the search load) by using the
+remote backend to search databases on a cluster of machines - the remote
+backend only uses one fd per database on the client machine.
