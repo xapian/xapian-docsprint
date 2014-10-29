@@ -490,6 +490,45 @@ def xapian_variable_role(typ, rawtext, etext, lineno, inliner,
     # Correct for Python and C++:
     return [nodes.literal(text = m)], []
 
+def xapian_literal_role(typ, rawtext, etext, lineno, inliner,
+                                 options=(), content=[]):
+    t = utils.unescape(etext)
+    # Correct for Python, PHP and C++:
+    if highlight_language == 'python':
+	if t == 'DBL_MAX':
+	    # Doesn't seem to a simple way to get this in Python
+	    t = t
+	elif t == 'false':
+	    t = 'False'
+	elif t == 'true':
+	    t = 'True'
+	elif t == 'NULL':
+	    t = 'None'
+	else:
+	    print "Unhandled literal '%s' for %s" % (t, highlight_language)
+	    sys.exit(1)
+        return [nodes.literal(text = t)], []
+    elif highlight_language == 'php':
+	if t == 'DBL_MAX':
+	    # Doesn't seem to a simple way to get this in PHP.
+	    # INF is infinity though.
+	    t = t
+	elif t == 'false':
+	    t = 'FALSE'
+	elif t == 'true':
+	    t = 'TRUE'
+	elif t == 'NULL':
+	    t = 'NULL'
+	else:
+	    print "Unhandled literal '%s' for %s" % (t, highlight_language)
+	    sys.exit(1)
+        return [nodes.literal(text = t)], []
+    elif highlight_language == 'c++':
+        return [nodes.literal(text = t)], []
+    else:
+        print "Unhandled highlight_language '%s'" % highlight_language
+        sys.exit(1)
+
 # Usage:
 #
 # The previous example was :xapian-code-example:`^`.
@@ -515,6 +554,9 @@ roles.register_local_role('xapian-just-constant', xapian_just_method_role)
 # (Currently this just does the same as the method version, but when more
 # languages are added this may change).
 roles.register_local_role('xapian-constant', xapian_method_role)
+# e.g. :xapian-literal:`DBL_MAX`
+# Currently handles true, false, NULL, DBL_MAX.
+roles.register_local_role('xapian-literal', xapian_literal_role)
 
 def xapian_check_examples():
     global examples, examples_used, examples_in_order
