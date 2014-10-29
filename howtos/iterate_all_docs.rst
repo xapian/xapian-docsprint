@@ -3,6 +3,8 @@ Iterate through all documents
 
 Sometimes you want to access all the documents in a Xapian database.  This can actually be done in two ways:
 
+.. _match-all:
+
 MatchAll Queries
 ----------------
 

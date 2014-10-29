@@ -117,4 +117,6 @@ Xapian also provides additional operators which can be used to provide more
 flexibility than the operators above. For more details of these, see the
 `Xapian API documentation <http://xapian.org/docs/apidoc/html/classXapian_1_1Query.html#a7e7b6b8ad0c915c2364578dfaaf6100b>`_.
 
-.. todo:: MatchAll MatchNothing
+There are also a pair of predefined query objects which can provide handy:
+:ref:`MatchAll <match-all>` matches all the documents in the database, and
+MatchNothing matches none of them.
