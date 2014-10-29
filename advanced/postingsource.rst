@@ -326,9 +326,11 @@ multiple databases will raise an exception::
 
     virtual PostingSource * clone() const;
 
-To work with searches across remote databases, you need to implement a few more
-methods.  Firstly, you need to implement the :xapian-just-method:`name()`
-method.  This simply returns the name of your posting source (fully qualified
+Currently using custom :xapian-class:`PostingSource` subclasses with the remote
+backend is only possible if the subclasses are implemented directly in C++.
+To get this to work, you need to implement a few more methods.  Firstly, you
+need to implement the :xapian-just-method:`name()` method.  This simply returns
+the name of your posting source (fully qualified
 with any namespace)::
 
     virtual std::string name() const;
