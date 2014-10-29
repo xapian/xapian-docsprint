@@ -3,6 +3,8 @@
 .. Copyright (C) 2008 Lemur Consulting Ltd
 .. Copyright (C) 2008,2010,2011 Olly Betts
 
+.. _replication:
+
 ===========
 Replication
 ===========

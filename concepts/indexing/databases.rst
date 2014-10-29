@@ -1,5 +1,8 @@
+=========
 Databases
 =========
+
+.. contents:: Table of contents
 
 Pretty much all Xapian operations revolve around a Xapian database.  Before
 searches can be performed, details of the documents to be searched need to
@@ -15,28 +18,65 @@ can also contain additional data for spelling correction and synonym
 expansion, and developers can even store arbitrary key-value pairs in part
 of the database.
 
-.. todo:: split into sections
-
-.. todo:: list backends
-
-.. todo:: disk-based brass/chert/(flint quartz how to upgrade); autodetecton
-
-.. todo:: inmemory; use ram disk for serious use
-
-.. todo:: remotes
-
-.. todo:: multiple databases
-
-.. todo:: stubs
+Backends
+========
 
 Xapian databases store data in custom formats which allow searches to be
 performed extremely quickly; Xapian does not use a relational database as
 its datastore.  There are several database backends; the main backend in
 the 1.2 release series of Xapian is called the *Chert* backend.  This
-stores information in the filesystem (under a given path).  If you're
+stores information in the filesystem (under a given path).
+
+It is possible to perform searches across multiple databases at once, and
+Xapian will handle merging the results together appropriately.  This
+feature can be combined with remote databases to handle datasets which are
+too large for a single machine, by performing searches across multiple
+remote databases.
+
+On-disk databases
+-----------------
+
+As mentioned, Xapian 1.2 has a default database type called *Chert*;
+:ref:`earlier formats can be upgraded using Xapian's copydatabase utility
+<upgrading-databases>`. When opening an existing database, Xapian will
+automatically figure out the backend to use.
+
+If you're
 familiar with data storage structures, you might be interested to know that
-this backend uses a copy-on-write B+-tree structure, but don't worry if
-that doesn't mean anything to you!
+Chert and Brass both use a copy-on-write B+-tree structure - but don't worry
+if that doesn't mean anything to you!
+
+Stub database files
+-------------------
+
+Xapian supports a simple text file format for listing the locations of
+a set of databases (either on the local file system, or remote databases).
+Such files are called *stub-databases*, and can be used to point to a
+database when the physical database location may vary; for example, because
+a new database is being built nightly, and is named according to the date
+on which it was built.
+
+In-memory databases
+-------------------
+
+Xapian has an *inmemory* database type, which may be useful for testing and
+perhaps some short-term usage. However it is inefficient, and does not support
+all of Xapian's features (such as spelling correction, synonyms or replication),
+so for production systems it is often better to use an on-disk database such
+as *Chert*, with the files stored in a RAM disk.
+
+Remote databases and replication
+--------------------------------
+
+Xapian's *remote* database backend allows the database to be
+located on a different machine and accessed via a custom protocol.
+
+There is also special support for :ref:`replicating databases <replication>`
+to multiple machines, such that only the parts of the database which have been
+modified are copied; this can be useful for redundancy and load-balancing purposes.
+
+Concurrent access
+=================
 
 Most backend formats (and certainly the main backend format for each release)
 will allow updates to be grouped into transactions, and will allow at least some
@@ -62,6 +102,9 @@ the writer, but after the writer has made two changes, readers will receive a
 which has changed.  In this situation, the reader can be updated to the latest
 version using the :xapian-method:`Database::reopen()` method.
 
+Locking
+-------
+
 With the disk-based Xapian backends, when a database is opened for writing,
 a lock is obtained on the database to ensure that no further writers are
 opened concurrently.  This lock will be released when the database writer
@@ -72,23 +115,3 @@ operating systems) is that Xapian forks a subprocess to hold the lock,
 rather than holding it in the main process.  This is to avoid the lock
 being accidentally released due to the slightly unhelpful semantics of
 fcntl locks.
-
-There's also a *remote* database backend which allows the database to be
-located on a different machine and accessed via a custom network protocol.
-
-It is possible to perform searches across multiple databases at once, and
-Xapian will handle merging the results together appropriately.  This
-feature can be combined with remote databases to handle datasets which are
-too large for a single machine, by performing searches across multiple
-remote databases.
-
-Xapian also has special support for replicating databases to multiple
-machines, such that only the parts of the database which have been modified
-are copied; this can be useful for redundancy and load-balancing purposes.
-
-Xapian also supports a simple text file format for listing the locations of
-a set of databases (either on the local file system, or remote databases).
-Such files are called *stub-databases*, and can be used to point to a
-database when the physical database location may vary; for example, because
-a new database is being built nightly, and is named according to the date
-on which it was built.

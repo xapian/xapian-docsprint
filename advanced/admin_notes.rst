@@ -4,8 +4,6 @@
 .. Copyright (C) 2006 Lemur Consulting Ltd
 .. Copyright (C) 2007,2008,2009,2010,2011 Olly Betts
 
-.. FIXME: Once brass settles down, update this for brass
-
 ============================
 Xapian Administrator's Guide
 ============================
@@ -368,6 +366,7 @@ of database "foo"::
 
   xapian-check foo/termlist.DB
 
+.. _upgrading-databases:
 
 Converting a flint database to a chert database
 ------------------------------------------------
