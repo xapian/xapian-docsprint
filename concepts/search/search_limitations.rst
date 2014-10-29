@@ -48,7 +48,7 @@ per-process file-descriptor limit - each chert database uses between 3 and
 7 fds depending which tables are present, and a process can only open a
 certain number (on Linux, the default is usually 1024, so that limits you
 to a few hundred concurrently open databases).  You can `raise the
-per-process limit <https://wiki.debian.org/Limits>` on some Unix-like
+per-process limit <https://wiki.debian.org/Limits>`_ on some Unix-like
 platforms, though you may need to be root to do so; if you're doing this
 from a service (for instance if you're using a :doc:`remote backend
 </advanced/remote>`) then you may need to do this `via a limit stanza
