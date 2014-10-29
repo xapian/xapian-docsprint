@@ -31,10 +31,34 @@ As an alternative way of ranking documents - if the weighting scheme is set
 to :xapian-class:`BoolWeight`, then the ranking will be entirely by the weight
 returned by :xapian-class:`PostingSource`.
 
-Anatomy
+Example
 =======
 
-.. todo:: turn this into a worked example
+.. todo:: clean up the example to better show what we're trying to do
+
+:xapian-class:`ExternalWeightPostingSource` doesn't restrict which documents
+match - it's intended to be combined with an existing query using
+:xapian-just-constant:`OP_AND_MAYBE` like so::
+
+    extwtps = xapian.ExternalWeightPostingSource(db, wtsource)
+    query = xapian.Query(query.OP_AND_MAYBE, query, xapian.Query(extwtps))
+
+The wtsource would be a class like this one::
+
+    class WeightSource(object):
+        def get_maxweight(self):
+            return 12.34;
+
+        def get_weight(self, doc):
+            return some_func(doc.get_docid())
+
+We'll work through an example of a :xapian-class:`PostingSource` which
+contributes additional weight from some external source (note that in Python,
+you call ``next()`` on an iterator to get each item, including the first, which
+is exactly the semantics we need to implement here).
+
+.. xapianexample:: postingsource
+    :marker: class header and constructor
 
 When first constructed, a :xapian-class:`PostingSource` is not tied to a
 particular database.  Before Xapian can get any postings (or statistics) from
@@ -45,107 +69,22 @@ information about the postings in the list.  If a posting source is used for
 multiple searches, the :xapian-just-method:`init()` method will be called
 before each search; implementations must cope with :xapian-just-method:`init()`
 being called multiple times, and should always use the database provided in the
-most recent call:
+most recent call.
 
-.. xapiancodesnippet:: c++
+Here we store the passed database, initialise an iterator to iterate over
+the documents we want the :xapian-class:`PostingSource` to match, and tell
+the base class what the maximum weight we can return is:
 
-    virtual void init(const Xapian::Database & db) = 0;
+.. xapianexample:: postingsource
+    :marker: init
 
-.. xapiancodesnippet:: php
+If your :xapian-class:`PostingSource` class always returns 0 from
+:xapian-just-method:`get_weight()`, then there's no need to call
+:xapian-just-method:`set_maxweight()`.
 
-    function init(XapianDatabase $db) {
-	// ...
-    }
-
-.. xapiancodesnippet:: python
-
-    def init(db):
-        # ...
-
-Three methods return statistics independent of the iteration position.
-These are upper and lower bounds for the number of documents which can
-be returned, and an estimate of this number:
-
-.. xapiancodesnippet:: c++
-
-    virtual Xapian::doccount get_termfreq_min() const = 0;
-    virtual Xapian::doccount get_termfreq_max() const = 0;
-    virtual Xapian::doccount get_termfreq_est() const = 0;
-
-.. xapiancodesnippet:: php
-
-    function get_termfreq_min() {
-	return ...;
-    }
-    function get_termfreq_max() {
-	return ...;
-    }
-    function get_termfreq_est() {
-	return ...;
-    }
-
-.. xapiancodesnippet:: python
-
-    def get_termfreq_min():
-	return ...
-    def get_termfreq_max():
-	return ...
-    def get_termfreq_est():
-	return ...
-
-These methods are pure-virtual in the base class, so you have to define
-them when deriving your subclass.
-
-It must always be true that::
-
-    get_termfreq_min() <= get_termfreq_est() <= get_termfreq_max()
-
-PostingSources must always return documents in increasing document ID order.
-
-After construction, a PostingSource points to a position *before* the first
-document id - so before a docid can be read, the position must be advanced
-by calling :xapian-just-method:`next()`, :xapian-just-method:`skip_to()` or
-:xapian-just-method:`check()`.
-
-The :xapian-just-method:`get_weight()` method returns the weight that you want to contribute
-to the current document.  This weight must always be >= 0:
-
-.. xapiancodesnippet:: c++
-
-    virtual Xapian::weight get_weight() const;
-
-.. xapiancodesnippet:: php
-
-    function get_weight() {
-	return ...;
-    }
-
-.. xapiancodesnippet:: python
-
-    def get_weight():
-	return ...
-
-The default implementation of :xapian-just-method:`get_weight()` returns 0, for
-convenience when deriving "weight-less" subclasses.
-
-You also need to specify an upper bound on the value which
-:xapian-just-method:`get_weight()` can return, which is used by the matcher to
-perform various optimisations:
-
-.. xapiancodesnippet:: c++
-
-    postingsource.set_maxweight(42.0);
-
-.. xapiancodesnippet:: php
-
-    postingsource->set_maxweight(42.0);
-
-.. xapiancodesnippet:: python
-
-    postingsource.set_maxweight(42.0)
-
-You should try hard to find a bound for efficiency, but if there really isn't
-one then you can set ``DBL_MAX``.
+If you are returning weights you should try hard to find a bound for
+efficiency, but if there really isn't one then you can set
+:xapian-literal:`DBL_MAX`.
 
 This method specifies an upper bound on what :xapian-just-method:`get_weight()`
 will return *from now on* (until the next call to
@@ -187,26 +126,70 @@ the API headers, so there's no point storing this yourself in your subclass -
 it should be just as efficient to call :xapian-just-method:`get_maxweight()`
 whenever you want to use it.
 
-The :xapian-just-method:`at_end()` method checks if the current iteration
-position is past the last entry.
+Three methods return statistics independent of the iteration position.
+These are upper and lower bounds for the number of documents which can
+be returned, and an estimate of this number.  In this case, we know this
+exactly, as it is just the number of documents in the database:
+
+.. xapianexample:: postingsource
+    :marker: termfreq methods
+
+These methods aren't implemented in the base class, so you have to define them
+when deriving your subclass.
+
+It must always be true that
+:xapian-method:`get_termfreq_min()` <= :xapian-method:`get_termfreq_est()` and
+:xapian-method:`get_termfreq_est()` <= :xapian-method:`get_termfreq_max()`.
+
+PostingSources must always return documents in increasing document ID order.
+
+After construction, a PostingSource points to a position *before* the first
+document id - so before a docid can be read, the position must be advanced
+by calling :xapian-just-method:`next()`, :xapian-just-method:`skip_to()` or
+:xapian-just-method:`check()`.
+
+The :xapian-just-method:`get_weight()` method returns the weight that you want to contribute
+to the current document.  This weight must always be >= 0:
+
+.. xapianexample:: postingsource
+    :marker: get_weight
+
+The default implementation of :xapian-just-method:`get_weight()` returns 0, for
+convenience when deriving "weight-less" subclasses.
 
 The :xapian-just-method:`get_docid()` method returns the document id at the
-current iteration position.
+current iteration position:
+
+.. xapianexample:: postingsource
+    :marker: get_docid
+
+And the :xapian-just-method:`at_end()` method checks if the current iteration
+position is past the last entry - we signal that in our subclass by setting
+the current position to an invalid value:
+
+.. xapianexample:: postingsource
+    :marker: at_end
 
 There are three methods which advance the current position.  All of these take
-a Xapian::weight parameter :xapian-variable:`min_wt`, which indicates the
-minimum weight contribution which the matcher is interested in.  The matcher
-still checks the weight of documents so it's OK to ignore this parameter
-completely, or to use it to discard only some documents.  But it can be useful
-for optimising in some cases.
+a parameter :xapian-variable:`min_wt`, which indicates the minimum weight
+contribution which the matcher is interested in.  The matcher still checks the
+weight of documents so it's OK to ignore this parameter completely, or to use
+it to discard only some documents.  But it can be useful for optimising in some
+cases.
 
 The simplest of these three methods is :xapian-just-method:`next(min_wt)`,
 which simply advances the iteration position to the next document (possibly
-skipping documents with weight contribution < min_wt).
+skipping documents with weight contribution < min_wt):
+
+.. xapianexample:: postingsource
+    :marker: next
 
 Then there's :xapian-just-method:`skip_to(did, min_wt)`.  This advances the
 iteration position to the next document with document id >= did, possibly also
 skipping documents with weight contribution < min_wt.
+
+.. xapianexample:: postingsource
+    :marker: skip_to
 
 A default implementation of :xapian-just-method:`skip_to()` is provided which
 just calls :xapian-just-method:`next()` repeatedly.  This works but
@@ -220,16 +203,18 @@ might require linear scanning of document ids).  To avoid this where possible,
 the :xapian-just-method:`check()` method allows the matcher to just check if a
 given document matches.
 
-The return value is ``true`` if the method leaves the iteration position valid,
-and ``false`` if it doesn't.  In the latter case, :xapian-just-method:`next()`
-will advance to the first matching position after document id
-:xapian-variable:`did`, and :xapian-just-method:`skip_to()` will act as it
-would if the iteration position was the first matching position after
+The return value is :xapian-literal:`true` if the method leaves the iteration
+position valid, and :xapian-literal:`false` if it doesn't.  In the latter case,
+:xapian-just-method:`next()` will advance to the first matching position after
+document id :xapian-variable:`did`, and :xapian-just-method:`skip_to()` will
+act as it would if the iteration position was the first matching position after
 :xapian-variable:`did`.
 
 The default implementation of :xapian-just-method:`check()` is just a thin
-wrapper around :xapian-just-method:`skip_to()` which returns true - you should
-use this if :xapian-just-method:`skip_to()` incurs only a small extra cost.
+wrapper around :xapian-just-method:`skip_to()` which returns
+:xapian-literal:`true` - you should use this if :xapian-just-method:`skip_to()`
+incurs only a small extra cost.  For our example, we match all documents so
+there's no advantage to implementing :xapian-just-method:`check()`.
 
 There's also a method :xapian-just-method:`get_description()` which returns
 a string describing this object.  The default implementation returns a generic
@@ -237,73 +222,8 @@ answer.  This default is provided to avoid forcing you to provide an
 implementation if you don't really care what
 :xapian-just-method:`get_description()` gives for your sub-class.
 
-Examples
-========
-
-Here is an example of a Python :xapian-class:`PostingSource` which contributes
-additional weight from some external source (note that in Python, you call
-``next()`` on an iterator to get each item, including the first, which is
-exactly the semantics we need to implement here)::
-
-    class ExternalWeightPostingSource(xapian.PostingSource):
-	"""
-	A Xapian posting source returning weights from an external source.
-	"""
-	def __init__(self, db, wtsource):
-	    xapian.PostingSource.__init__(self)
-	    self.db = db
-	    self.wtsource = wtsource
-
-	def init(self, db):
-	    self.alldocs = db.postlist('')
-
-	def get_termfreq_min(self): return 0
-	def get_termfreq_est(self): return self.db.get_doccount()
-	def get_termfreq_max(self): return self.db.get_doccount()
-
-	def next(self, minweight):
-	    try:
-		self.current = self.alldocs.next()
-	    except StopIteration:
-		self.current = None
-
-	def skip_to(self, docid, minweight):
-	    try:
-		self.current = self.alldocs.skip_to(docid)
-	    except StopIteration:
-		self.current = None
-
-	def at_end(self):
-	    return self.current is None
-
-	def get_docid(self):
-	    return self.current.docid
-
-	def get_maxweight(self):
-	    return self.wtsource.get_maxweight()
-
-	def get_weight(self):
-	    doc = self.db.get_document(self.current.docid)
-	    return self.wtsource.get_weight(doc)
-
-:xapian-class:`ExternalWeightPostingSource` doesn't restrict which documents
-match - it's intended to be combined with an existing query using
-:xapian-just-constant:`OP_AND_MAYBE` like so::
-
-    extwtps = xapian.ExternalWeightPostingSource(db, wtsource)
-    query = xapian.Query(query.OP_AND_MAYBE, query, xapian.Query(extwtps))
-
-The wtsource would be a class like this one::
-
-    class WeightSource(object):
-	def get_maxweight(self):
-	    return 12.34;
-
-	def get_weight(self, doc):
-	    return some_func(doc.get_docid())
-
-.. FIXME: Provide some more examples!
-.. FIXME "why you might want to do this" (e.g. scenario) too
+.. todo:: Provide some more examples!
+.. todo:: "why you might want to do this" (e.g. scenario) too
 
 Multiple databases, and remote databases
 ========================================
@@ -322,7 +242,9 @@ If you don't care about supporting searches across multiple databases, you can
 simply return NULL from this method.  In fact, the default implementation does
 this, so you can just leave the default implementation in place.  If
 :xapian-just-method:`clone()` returns NULL, an attempt to perform a search with
-multiple databases will raise an exception::
+multiple databases will raise an exception:
+
+.. code-block:: c++
 
     virtual PostingSource * clone() const;
 
@@ -330,8 +252,9 @@ Currently using custom :xapian-class:`PostingSource` subclasses with the remote
 backend is only possible if the subclasses are implemented directly in C++.
 To get this to work, you need to implement a few more methods.  Firstly, you
 need to implement the :xapian-just-method:`name()` method.  This simply returns
-the name of your posting source (fully qualified
-with any namespace)::
+the name of your posting source (fully qualified with any namespace):
+
+.. code-block:: c++
 
     virtual std::string name() const;
 
@@ -340,7 +263,9 @@ Next, you need to implement the serialise and unserialise methods.  The
 PostingSource to a string, and the :xapian-just-method:`unserialise()` method
 converts one of these strings back into a PostingSource.  Note that the
 serialised string doesn't need to include any information about the current
-iteration position of the PostingSource::
+iteration position of the PostingSource:
+
+.. code-block:: c++
 
     virtual std::string serialise() const;
     virtual PostingSource * unserialise(const std::string &s) const;
