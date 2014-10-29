@@ -11,11 +11,3 @@ Advanced features
    scalability
    replication
    serialisation
-
-.. toctree::
-   :hidden:
-
-   remote
-   eset
-   geospatial
-   query_authorisation
