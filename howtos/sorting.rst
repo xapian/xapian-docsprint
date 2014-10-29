@@ -72,8 +72,9 @@ before we call `get_mset`:
 
 .. xapianexample:: search_sorting
 
-The final parameter is `False` for ascending order, `True` for
-descending. We can then run sorted searches like this:
+The final parameter is :xapian-literal:`false` for ascending order,
+:xapian-literal:`true` for descending.  We can then run sorted searches like
+this:
 
 .. xapianrunexample:: search_sorting
     :args: statesdb spanish
