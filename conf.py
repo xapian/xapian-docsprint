@@ -493,11 +493,9 @@ def xapian_variable_role(typ, rawtext, etext, lineno, inliner,
 def xapian_literal_role(typ, rawtext, etext, lineno, inliner,
                                  options=(), content=[]):
     t = utils.unescape(etext)
-    # Correct for Python, PHP and C++:
     if highlight_language == 'python':
 	if t == 'DBL_MAX':
-	    # Doesn't seem to a simple way to get this in Python
-	    t = t
+	    t = 'sys.float_info.max'
 	elif t == 'false':
 	    t = 'False'
 	elif t == 'true':
@@ -511,8 +509,8 @@ def xapian_literal_role(typ, rawtext, etext, lineno, inliner,
     elif highlight_language == 'php':
 	if t == 'DBL_MAX':
 	    # Doesn't seem to a simple way to get this in PHP.
-	    # INF is infinity though.
-	    t = t
+	    # INF is infinity though.  FIXME: check this works.
+	    t = 'INF'
 	elif t == 'false':
 	    t = 'FALSE'
 	elif t == 'true':
