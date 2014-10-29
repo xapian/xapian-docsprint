@@ -29,15 +29,3 @@ Assuming you're on Debian or Ubuntu or another Debian-derived distro, you'll
 need to install either the `python-sphinx` or `python3-sphinx` package in
 order to be able to generate this documentation from a git checkout.  Once
 you've done that, you can generate HTML output with `make html`.
-
-Indices and tables
-==================
-
-.. we could enable an index later with: * :ref:`genindex`
-
-* :ref:`search`
-
-Todo list
-=========
-
-.. todolist::
