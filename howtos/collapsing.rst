@@ -6,40 +6,30 @@
 Collapsing of Search Results
 ============================
 
-.. todo:: Write about how to use collapsing with searches.  Discuss collapsing
-          to return only a unique item for each value, and collapsing to return
-          multiple.  Make clear that it simply excludes some items from the
-          result set; doesn't reorder results, or guarantee to return the top N
-          from each category. Also add a code example.
+.. contents:: Table of contents
+
+.. todo:: code example
 
 Xapian provides the ability to eliminate "duplicate" documents from the MSet.
 This feature is known as "collapsing" - think of a pile of duplicates being
-collapsed down to leave a single result (or a small number of results).
-
-The collapsing always removes the worse ranked documents (if ranking by
-relevance, those with the lowest weight; if ranking by sorting, those which
-sort lowest).
+collapsed down to leave either a single result, or a small number of results.
 
 Whether two documents count as duplicates of one another is determined by their
 "collapse key".  If a document has an empty collapse key, it will never be
-collapsed, but otherwise documents with the same collapse key will be collapsed
-together.
+collapsed, but otherwise documents with the same collapse key will be removed
+after the MSet contains enough duplicates for this key; you can decide how
+many duplicates you want.
+
+Collapsing always removes the worse ranked documents (if ranking by
+relevance, those with the lowest weight; if ranking by sorting, those which
+sort lowest). However because this doesn't reorder results, multiple documents
+with the same collapse key may not appear next to each other in the ranked
+results.
 
 Currently the collapse key is taken from a value slot you specify (via the
 method :xapian-method:`Enquire::set_collapse_key()`), but in the future you
 should be able to build collapse keys dynamically using :xapian-class:`KeyMaker`
 as you already can for sort keys.
-
-Performance
-===========
-
-The collapsing is performed during the match process, so it is pretty efficient.
-In particular, this approach is much better than generating a larger MSet and
-post-processing it.
-
-However, if the collapsing eliminates a lot of documents then the collapsed
-search will typically take rather longer than the uncollapsed search because
-the matcher has to consider many more potential matches.
 
 API
 ===
@@ -116,3 +106,14 @@ This approach isn't just useful for web search - the "source" can be defined
 usefully in many applications.  For example, a forum or mailing list search
 could collapse on a topic or thread identifier, an index at the chapter level
 could collapse on a book identifier (such as an ISBN), etc.
+
+Performance
+===========
+
+The collapsing is performed during the match process, so it is pretty efficient.
+In particular, this approach is much better than generating a larger MSet and
+post-processing it.
+
+However, if the collapsing eliminates a lot of documents then the collapsed
+search will typically take rather longer than the uncollapsed search because
+the matcher has to consider many more potential matches.
