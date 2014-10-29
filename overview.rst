@@ -15,7 +15,15 @@ If you just want to follow our code examples, you can skip the chapter on "Core
 Concepts" and go straight to :ref:`a-practical-example` - but you should
 probably make sure you have Xapian installed first!
 
-.. todo:: Mention Omega here and link to its documentation
+.. note::
+
+   If you're looking for a way of getting a search system running without
+   having to write any code, you may want to look at `Omega
+   <http://xapian.org/docs/omega/>`_, Xapian's pre-packaged web search
+   application. It's designed so that as your needs grow, you can extend or
+   even replace it without having to change your database; the structure
+   that Omega sets up will work when you start writing code directly
+   against Xapian.
 
 Installation
 ------------
