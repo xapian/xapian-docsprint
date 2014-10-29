@@ -10,14 +10,14 @@ Generally each *document* is a piece of text, described as collection of *terms*
 Indexing: Offline processing
 ----------------------------
 
-In order to retrieve all the document with query terms, there are two methods.
+In order to retrieve all the documents with query terms, there are two methods.
 
 * Linear scan of all the documents to see if term is in the document. (Inefficient)
 * Offline process all the document in a special format to get list of all document with term for all terms. (Used in IR)
 
-Linear scan is highly inefficient due to scanning of all the document in collection to serve the information need. It would take huge time to return document.
+Linear scan is highly inefficient due to scanning of all the document in collection to serve the information need. If you have a lot of documents, it would take huge time to complete such the scan.
 
-In modern information retrieval systems, documents are processed offline to arrange it in special format called an index, in to avoid having to do linear scans.
+In modern information retrieval systems, documents are processed offline to arrange it in special format called an index, in order to avoid having to do linear scans.
 
 Indexing
 --------
@@ -54,10 +54,12 @@ Retrieval: Online processing
 ----------------------------
 
 Given a information need, generally given as search query (terms), we try to retrieve relevant documents from the collection using the index formed in the offline processing stage.
-There are two major paradigm to retrieve document.
-* Boolean Retrieval
+There are two major paradigms to retrieving documents.
 
-Boolean retrieval, retrieve the documents by doing union, intersection or difference  on the posting list of terms in the query.
+Boolean Retrieval
+-----------------
+
+Boolean retrieval, retrieve the documents by doing union, intersection or difference on the posting lists of terms in the query.
 
 **Posting list of query terms**
 
@@ -88,7 +90,7 @@ In probabilistic model we give score to the documents based on frequency of the 
 Query Expansion
 ---------------
 
-Query expansion is a process where query provided by the user is expanded with extra terms to improve the search results. Aim of query expansion is to generate alternative or expanded queries for the user.
+Query expansion is a process where query provided by the user is expanded with extra terms to improve the search results. The aim of query expansion is to generate alternative or expanded queries for the user.
 There are two broad approaches to do this:
 
 * Relevance feedback - Users give additional input on documents (by marking documents in the results set as relevant or not), and this input is used to reweight the terms or add new term in the query for documents.
@@ -102,4 +104,4 @@ References
 * "Readings in Information Retrieval" (published by Morgan Kaufmann, edited by Karen Sparck Jones and Peter Willett) is a collection of published papers covering many aspects of the subject.
 * "Managing Gigabytes" (also published by Morgan Kaufmann, written by Ian H. Witten, Alistair Moffat and Timothy C. Bell) describes information retrieval and compression techniques.
 * "Modern Information Retrieval" (published by Addison Wesley, written by Ricardo Baeza-Yates and Berthier Ribeiro-Neto) gives a good overview of the field. It was published more recently than the books above, and so covers some more recent developments.
-* Introduction to Information Retrieval (published by Cambridge University Press, written by Christopher D. Manning, Prabhakar Raghavan and Hinrich )
+* Introduction to Information Retrieval (published by Cambridge University Press, written by Christopher D. Manning, Prabhakar Raghavan and Hinrich)
