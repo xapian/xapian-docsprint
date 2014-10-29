@@ -310,10 +310,11 @@ Multiple databases, and remote databases
 
 In order to work with searches across multiple databases, or in remote
 databases, some additional methods need to be implemented in your
-Xapian::PostingSource subclass.  The first of these is :xapian-just-method:`clone()`, which is
-used for multi database searches.  This method should just return a newly
-allocated instance of the same posting source class, initialised in the same
-way as the source that clone() was called on.  The returned source will be
+:xapian-class:`PostingSource` subclass.  The first of these is
+:xapian-just-method:`clone()`, which is used for multi database searches.  This
+method should just return a newly allocated instance of the same posting source
+class, initialised in the same way as the source that
+:xapian-just-method:`clone()` was called on.  The returned source will be
 deallocated by the caller (using "delete" - so you should allocate it with
 "new").
 
