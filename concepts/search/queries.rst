@@ -71,12 +71,11 @@ a filter to a query depending whether you want to include or exclude
 documents:
 
 * :xapian-just-constant:`OP_FILTER` - matches documents which match both
-  subqueries, but the weight is only taken from the left subquery
+  subqueries, but the weight is only taken from the left subquery (in
+  other respects it acts like :xapian-just-constant:`OP_AND`)
 * :xapian-just-constant:`OP_AND_NOT` - matches documents which match the
   left subquery but don't match the right hand one (with weights coming
   from the left subquery)
-
-.. todo:: Note on difference between OP_FILTER and OP_AND?
 
 Value ranges
 ~~~~~~~~~~~~
