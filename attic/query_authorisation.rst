@@ -14,23 +14,23 @@ Filtering results
 -----------------
 
 .. todo:: Discuss filtering results coming back from a query, and the problems
-	  with just doing that.
+          with just doing that.
 
 Putting authorisation data into the search index
 ------------------------------------------------
 
 .. todo:: Discuss implementing auth schemes by indexing
-	  appropriate data.
+          appropriate data.
 
 Hybrid schemes
 --------------
 
 .. todo:: Discuss hybrid schemes (implementing auth using
-	  indexed terms, and also filtering results).
+          indexed terms, and also filtering results).
 
 Timeliness of index authorisation
 ---------------------------------
 
 .. todo:: Discuss issues relating
-	  to updates (in particular, how fast does something need to be hidden
-	  if it is changed to being private).
+          to updates (in particular, how fast does something need to be hidden
+          if it is changed to being private).

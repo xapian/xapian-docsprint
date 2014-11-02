@@ -196,17 +196,17 @@ Removed Feature name                        Upgrade suggestion and comments
         ``Enquire::get_mset()``
 ------- ----------------------------------- ----------------------------------------------------------------------------------
 1.3.0   ``Xapian::timeout`` typedef         Use POSIX ``useconds_t`` (from ``<sys/types.h>``) instead, which should also work
-					    with older Xapian releases.
+                                            with older Xapian releases.
 ------- ----------------------------------- ----------------------------------------------------------------------------------
 1.3.0   ``Xapian::percent`` typedef         Use ``int`` instead, which should also work with older Xapian releases.
 ------- ----------------------------------- ----------------------------------------------------------------------------------
 1.3.0   ``Xapian::weight`` typedef          Use ``double`` instead, which should also work with older Xapian releases.
 ------- ----------------------------------- ----------------------------------------------------------------------------------
 1.3.0   ``Xapian::Query::unserialise()``    To be compatible with older and newer Xapian, you can catch both exceptions.
-	throws
-	``Xapian::SerialisationError`` not
-	``Xapian::InvalidArgumentError``
-	for errors in serialised data
+        throws
+        ``Xapian::SerialisationError`` not
+        ``Xapian::InvalidArgumentError``
+        for errors in serialised data
 ------- ----------------------------------- ----------------------------------------------------------------------------------
 1.3.1   ``Xapian::ErrorHandler``            We feel the current ErrorHandler API doesn't work at the right level (it only
                                             works in Enquire, whereas you should be able to handle errors at the Database

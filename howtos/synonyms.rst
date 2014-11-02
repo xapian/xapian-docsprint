@@ -28,7 +28,7 @@ specified in the dictionary by simply joining them with a single space between
 each one.
 
 .. todo:: Discuss interactions with stemming (ie, should the input and/or
-	  output values in the synonym table be stemmed).
+          output values in the synonym table be stemmed).
 
 Adding Synonyms
 ===============

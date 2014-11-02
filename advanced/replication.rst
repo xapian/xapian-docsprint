@@ -50,7 +50,7 @@ Replication is supported by the chert, and brass database backends,
 and can cleanly handle the
 master switching database type (a full copy is sent in this situation).  It
 doesn't make a lot of sense to support replication for the remote backend.
-Replication of inmemory databases isn't currently available. 
+Replication of inmemory databases isn't currently available.
 
 Setting up replicated databases
 ===============================

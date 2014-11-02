@@ -6,18 +6,18 @@ Tuning the Unigram Language Model: LMWeight
 
 .. contents:: Table of Contents
 
-Unigram language modeling weighing scheme ranks document based on ability
-to generate query from document language model. Unigram language model is 
-intuitive for user as they can think of term possible in document and add them 
+Unigram language modelling weighing scheme ranks document based on ability
+to generate query from document language model. Unigram language model is
+intuitive for user as they can think of term possible in document and add them
 to query which will increase performance of weighing scheme in this setting.
 
 Clamping Negative value
 -----------------------
 
-Since unigram language model differs from xapian way of weighing scheme as xapian 
-only support sum of various individual parts. Unigram language model have accommodated 
-product of probabilities by summing log of individual parts. Due to introduction of log 
-in probabilities a clamping factor to clamp negative value of log to positive is also 
+Since unigram language model differs from xapian way of weighing scheme as xapian
+only support sum of various individual parts. Unigram language model have accommodated
+product of probabilities by summing log of individual parts. Due to introduction of log
+in probabilities a clamping factor to clamp negative value of log to positive is also
 introduced.
 
 The default value for the clamping parameter is the document length upper bound,
@@ -32,14 +32,14 @@ document language model are usually sparse and affect the weight calculation for
 hence smoothing with collection frequency and document length is done. Xapian Implements
 following Smoothing techniques:-
 
-Dirichlet Prior Smoothing: 
+Dirichlet Prior Smoothing:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Smoothing based on document size, because longer document require less smoothing 
+Smoothing based on document size, because longer document require less smoothing
 as they more accurately estimate language model.
 Dirichlet Prior Smoothing is better at Estimation Role.
 
-DP Smoothing technique is better for title or smaller queries as it is better 
+DP Smoothing technique is better for title or smaller queries as it is better
 in estimation role.
 
 Optimal Smoothing parameter
@@ -50,7 +50,7 @@ Jelinek Mercer Smoothing:
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Combine relative frequency of query term with relative frequency in collection.
-Address small sample problem and explain unobserved words in document. 
+Address small sample problem and explain unobserved words in document.
 JM Smoothing is better at explaining common and noisy words in query.
 JM smoothing outperforms other smoothing schemes in Query Modelling.
 
@@ -61,7 +61,7 @@ Optimal Smoothing parameter
 
 **param_smoothing1**  - Parameter range (0-1)
 
-Small Query - 0.1 {Conjunctive interpolation of Query Term} 
+Small Query - 0.1 {Conjunctive interpolation of Query Term}
 Longer Query - 0.7 {Disjunctive interpolation of Query Term}
 
 Absolute Discounting Smoothing:
@@ -86,7 +86,7 @@ Optimal Smoothing parameter
 **param_smoothing1**
 
 Parameter range (0-1)
-Small Query - 0.1 {Conjunctive interpolation of Query Term} 
+Small Query - 0.1 {Conjunctive interpolation of Query Term}
 Longer Query - 0.7 {Disjunctive interpolation of Query Term}
 
 **param_smoothing2**
@@ -114,4 +114,4 @@ Selecting Weighting scheme:
 
 Add following line in your code to select Unigram Language Model Weighting scheme::
 
-	enquire.set_weighting_scheme(Xapian::LMWeight(700.0,Xapian::Weight::JELINEK_MERCER_SMOOTHING,0.4,2000,0.9));
+    enquire.set_weighting_scheme(Xapian::LMWeight(700.0,Xapian::Weight::JELINEK_MERCER_SMOOTHING,0.4,2000,0.9));

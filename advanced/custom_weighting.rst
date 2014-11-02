@@ -16,25 +16,25 @@ term scores one point:
 
     class CoordinateWeight : public Xapian::Weight {
       public:
-	CoordinateWeight * clone() const { return new CoordinateWeight; }
-	CoordinateWeight() { }
-	~CoordinateWeight() { }
+        CoordinateWeight * clone() const { return new CoordinateWeight; }
+        CoordinateWeight() { }
+        ~CoordinateWeight() { }
 
-	std::string name() const { return "Coord"; }
-	std::string serialise() const { return std::string(); }
-	CoordinateWeight * unserialise(const std::string &) const {
-	    return new CoordinateWeight;
-	}
+        std::string name() const { return "Coord"; }
+        std::string serialise() const { return std::string(); }
+        CoordinateWeight * unserialise(const std::string &) const {
+            return new CoordinateWeight;
+        }
 
-	Xapian::weight get_sumpart(Xapian::termcount, Xapian::doclength) const {
+        Xapian::weight get_sumpart(Xapian::termcount, Xapian::doclength) const {
             return 1;
         }
-	Xapian::weight get_maxpart() const { return 1; }
+        Xapian::weight get_maxpart() const { return 1; }
 
-	Xapian::weight get_sumextra(Xapian::doclength) const { return 0; }
-	Xapian::weight get_maxextra() const { return 0; }
+        Xapian::weight get_sumextra(Xapian::doclength) const { return 0; }
+        Xapian::weight get_maxextra() const { return 0; }
 
-	bool get_sumpart_needs_doclength() const { return false; }
+        bool get_sumpart_needs_doclength() const { return false; }
     };
 
 
@@ -66,7 +66,7 @@ obtain various statistics, refer to
 `the xapian/weight.h header file
 <http://xapian.org/docs/sourcedoc/html/weight_8h_source.html#l00277>`_.
 
-Example:- Consider a simple weighting scheme such as a pseudo Tf-Idf weighting 
+Example:- Consider a simple weighting scheme such as a pseudo Tf-Idf weighting
 scheme which returns the document weight as the product of the within document
 frequency of the term and the inverse of the document frequency
 of the term (Inverse of the number of documents the term appears in).
@@ -77,35 +77,35 @@ The implementation will be as follows:
 
     class TfIdfWeight : public Xapian::Weight {
       public:
-	TfIdfWeight * clone() const { return new TfIdfWeight; }
-	TfIdfWeight() {
-	    need_stat(WDF);
-	    need_stat(TERMFREQ);
-	    need_stat(WDF_MAX);
-	}
-	~TfIdfWeight() { }
+        TfIdfWeight * clone() const { return new TfIdfWeight; }
+        TfIdfWeight() {
+            need_stat(WDF);
+            need_stat(TERMFREQ);
+            need_stat(WDF_MAX);
+        }
+        ~TfIdfWeight() { }
 
-	std::string name() const { return "TfIdf"; }
-	std::string serialise() const { return std::string(); }
-	TfIdfWeight * unserialise(const std::string &) const {
+        std::string name() const { return "TfIdf"; }
+        std::string serialise() const { return std::string(); }
+        TfIdfWeight * unserialise(const std::string &) const {
             return new TfIdfWeight;
-	}
+        }
 
-	Xapian::weight get_sumpart(Xapian::termcount wdf, Xapian::doclength) const {
+        Xapian::weight get_sumpart(Xapian::termcount wdf, Xapian::doclength) const {
             Xapian::doccount df = get_termfreq();
             double wdf_double(wdf);
             Xapian::weight wt = wdf_double / df;
-            return wt; 
-	}    
-
-	Xapian::weight get_maxpart() const {
-	    Xapian::doccount df = get_termfreq();
-	    double max_wdf(get_wdf_upper_bound());
-	    Xapian::weight max_weight = max_wdf / df;
-	    return max_weight;
+            return wt;
         }
-	Xapian::weight get_sumextra(Xapian::doclength) const { return 0; }
-	Xapian::weight get_maxextra() const { return 0; }	
+
+        Xapian::weight get_maxpart() const {
+            Xapian::doccount df = get_termfreq();
+            double max_wdf(get_wdf_upper_bound());
+            Xapian::weight max_weight = max_wdf / df;
+            return max_weight;
+        }
+        Xapian::weight get_sumextra(Xapian::doclength) const { return 0; }
+        Xapian::weight get_maxextra() const { return 0; }
     };
 
 
