@@ -26,7 +26,9 @@ We're monitoring IRC during the sprint sessions (and in general) so you can
 also contact us on channel #xapian on irc.freenode.net [`webchat link
 <http://webchat.freenode.net/?channels=%23xapian>`_].
 
-Assuming you're on Debian or Ubuntu or another Debian-derived distro, you'll
-need to install either the `python-sphinx` or `python3-sphinx` package in
-order to be able to generate this documentation from a git checkout.  Once
-you've done that, you can generate HTML output with `make html`.
+To be able to generate this documentation from a git checkout, you'll need
+the `Sphinx documentation tool <http://sphinx-doc.org/>`_.  If you're using
+Debian or Ubuntu or another Debian-derived distro, you can get this by
+installing either the `python-sphinx` or `python3-sphinx` package.  Once
+you have Sphinx installed, you can generate HTML output with ``make html``
+(for a full list of available formats, see ``make``).
