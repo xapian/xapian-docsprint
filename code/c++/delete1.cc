@@ -11,9 +11,9 @@ static void delete_docs(const string &dbpath, char ** identifiers)
     Xapian::WritableDatabase db(dbpath, Xapian::DB_CREATE_OR_OPEN);
 
     while (*identifiers) {
-        string idterm = "Q";
+	string idterm = "Q";
 	idterm += *identifiers;
-        db.delete_document(idterm);
+	db.delete_document(idterm);
 	++identifiers;
     }
 }
