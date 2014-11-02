@@ -97,7 +97,7 @@ generated which can be obtained by calling
 :xapian-method:`QueryParser::get_corrected_query_string()`.  However, the
 original query string will still be parsed, since you'll often want to ask the
 user "Did you mean: [...] ?" - if you want to automatically use the corrected
-eform, just call :xapian-method:`QueryParser::parse_query()` on it.
+form, just call :xapian-method:`QueryParser::parse_query()` on it.
 
 Omega
 =====

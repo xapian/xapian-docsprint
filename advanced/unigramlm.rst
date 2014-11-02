@@ -8,20 +8,21 @@ Tuning the Unigram Language Model: LMWeight
 
 Unigram language modeling weighing scheme ranks document based on ability
 to generate query from document language model. Unigram language model is 
-intutive for user as they can think of term possible in document and add them 
-to query which will increase performace of weighing scheme in this setting.
+intuitive for user as they can think of term possible in document and add them 
+to query which will increase performance of weighing scheme in this setting.
 
 Clamping Negative value
 -----------------------
 
 Since unigram language model differs from xapian way of weighing scheme as xapian 
-only support sum of various individual parts. Unigram language model have accomodated 
+only support sum of various individual parts. Unigram language model have accommodated 
 product of probabilities by summing log of individual parts. Due to introduction of log 
 in probabilities a clamping factor to clamp negative value of log to positive is also 
 introduced.
 
-Default value for clamping parameter is document length upper bound. whereas API user can
-adjust this value using param_log parameter of LMWeight constructor.
+The default value for the clamping parameter is the document length upper bound,
+but the API user can adjust this value using the param_log parameter of the LMWeight
+constructor.
 
 Smoothing
 ---------
@@ -50,17 +51,17 @@ Jelinek Mercer Smoothing:
 
 Combine relative frequency of query term with relative frequency in collection.
 Address small sample problem and explain unobserved words in document. 
-JM Smoothing is better at explaing common and noisy words in query.
-JM smoothing outperforms other smoothing scheme in Query Modelling.
+JM Smoothing is better at explaining common and noisy words in query.
+JM smoothing outperforms other smoothing schemes in Query Modelling.
 
 This smoothing work better in case of noisy and long query as it DP smoothing is better in
-Query Modeling.
+Query Modelling.
 
 Optimal Smoothing parameter
 
 **param_smoothing1**  - Parameter range (0-1)
 
-Small Query - 0.1 {Conjuctive interpolation of Query Term} 
+Small Query - 0.1 {Conjunctive interpolation of Query Term} 
 Longer Query - 0.7 {Disjunctive interpolation of Query Term}
 
 Absolute Discounting Smoothing:
@@ -85,7 +86,7 @@ Optimal Smoothing parameter
 **param_smoothing1**
 
 Parameter range (0-1)
-Small Query - 0.1 {Conjuctive interpolation of Query Term} 
+Small Query - 0.1 {Conjunctive interpolation of Query Term} 
 Longer Query - 0.7 {Disjunctive interpolation of Query Term}
 
 **param_smoothing2**
@@ -95,7 +96,7 @@ Small,Long Query - 2000
 Constructor Parameters
 ----------------------
 
-User can select parameters to clamp negetive value and select smoothing scheme using. Xapian manages a enum for selection of smoothing technique:Following values need to be assigned to select_smoothing parameter to select smoothing type:
+User can select parameters to clamp negative value and select smoothing scheme using. Xapian manages a enum for selection of smoothing technique:Following values need to be assigned to select_smoothing parameter to select smoothing type:
 
 *Jelinek Mercer Smoothing - JELINEK_MERCER_SMOOTHING*
 
@@ -106,7 +107,7 @@ User can select parameters to clamp negetive value and select smoothing scheme u
 *Two Stage Smoothing - TWO_STAGE_SMOOTHING*
 
 
-Following are Constructor provided by UnigramLM Weighting class. User can select constructor based on there requirement and number of paramter they want to provide. Refer generated documentation for constructor.
+Following are Constructor provided by UnigramLM Weighting class. User can select constructor based on there requirement and number of parameter they want to provide. Refer generated documentation for constructor.
 
 Selecting Weighting scheme:
 ---------------------------
