@@ -461,7 +461,7 @@ def decorate_param(m):
     # Avoid decorating literals or constants.
     # FIXME: Doesn't really handle expressions.
     if not re.match(r'^[a-z][a-z0-9_]+$', m.group(2)):
-	return m.group(0)
+        return m.group(0)
     return m.group(1) + '$' + m.group(2)
 
 def decorate_variables(t):
@@ -505,32 +505,32 @@ def xapian_literal_role(typ, rawtext, etext, lineno, inliner,
                                  options=(), content=[]):
     t = utils.unescape(etext)
     if highlight_language == 'python':
-	if t == 'DBL_MAX':
-	    t = 'sys.float_info.max'
-	elif t == 'false':
-	    t = 'False'
-	elif t == 'true':
-	    t = 'True'
-	elif t == 'NULL':
-	    t = 'None'
-	else:
-	    print "Unhandled literal '%s' for %s" % (t, highlight_language)
-	    sys.exit(1)
+        if t == 'DBL_MAX':
+            t = 'sys.float_info.max'
+        elif t == 'false':
+            t = 'False'
+        elif t == 'true':
+            t = 'True'
+        elif t == 'NULL':
+            t = 'None'
+        else:
+            print "Unhandled literal '%s' for %s" % (t, highlight_language)
+            sys.exit(1)
         return [nodes.literal(text = t)], []
     elif highlight_language == 'php':
-	if t == 'DBL_MAX':
-	    # Doesn't seem to a simple way to get this in PHP.
-	    # INF is infinity though.  FIXME: check this works.
-	    t = 'INF'
-	elif t == 'false':
-	    t = 'FALSE'
-	elif t == 'true':
-	    t = 'TRUE'
-	elif t == 'NULL':
-	    t = 'NULL'
-	else:
-	    print "Unhandled literal '%s' for %s" % (t, highlight_language)
-	    sys.exit(1)
+        if t == 'DBL_MAX':
+            # Doesn't seem to a simple way to get this in PHP.
+            # INF is infinity though.  FIXME: check this works.
+            t = 'INF'
+        elif t == 'false':
+            t = 'FALSE'
+        elif t == 'true':
+            t = 'TRUE'
+        elif t == 'NULL':
+            t = 'NULL'
+        else:
+            print "Unhandled literal '%s' for %s" % (t, highlight_language)
+            sys.exit(1)
         return [nodes.literal(text = t)], []
     elif highlight_language == 'c++':
         return [nodes.literal(text = t)], []
