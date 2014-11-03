@@ -146,9 +146,10 @@ Briefly, the issue is that the databases created by the replication client are
 created in a subdirectory of the target path supplied to the client, rather
 than at that path.  A "stub database" file is then created in that directory,
 pointing to the database.  This allows the database which readers open to be
-switched atomically after a database copy has occurred.  The reopen() method
-doesn't re-read the stub database file in this situation, so ends up
-attempting to read the old database which has been deleted.
+switched atomically after a database copy has occurred.  The
+:xapian-just-method:`reopen()` method doesn't re-read the stub database file in
+this situation, so ends up attempting to read the old database which has been
+deleted.
 
 We intend to fix this issue in the Brass backend (currently under development
 by eliminating this hidden use of a stub database file).
