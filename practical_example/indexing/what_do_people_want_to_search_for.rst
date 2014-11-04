@@ -15,6 +15,5 @@ In order to support all of this we'll need to use many of the features of
 Xapian, but to get started we'll just look at one: free text search of the
 title and description.
 
-In later sections of this guide (if we ever write them), and in guides to
-do specific things (if we ever convert them) we'll use the same data and
-build on the system we create here.
+In later sections of this guide we'll use the same data and build on the
+system we create here.
