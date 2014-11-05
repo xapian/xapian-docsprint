@@ -289,7 +289,7 @@ def xapian_run_example_command(ex):
         return "%s %s" % (php, xapian_code_example_filename(ex))
     elif highlight_language == 'c++':
         cxx = get_tool_name('CXX', 'g++')
-        return "%s `xapian-config --cxxflags` %s -o %s `xapian-config --libs`\n./%s" \
+        return "%s `xapian-config --cxxflags` %s -o code/c++/%s `xapian-config --libs`\ncode/c++/%s" \
             % (cxx, xapian_code_example_filename(ex), ex, ex)
     else:
         print "Unhandled highlight_language '%s'" % highlight_language
