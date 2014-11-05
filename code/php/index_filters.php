@@ -66,7 +66,7 @@ function index ($datapath, $dbpath)
 }
 // End of example code
 
-if ($argc != 2) {
+if ($argc != 3) {
     print "Usage: php index_facets.php <source.csv> <target_db_path>\n";
     die();
 }
