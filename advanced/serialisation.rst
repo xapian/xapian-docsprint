@@ -14,12 +14,16 @@ Introduction
 
 In order to pass :xapian-class:`Query` and :xapian-class:`Document` objects to
 or from remote databases, Xapian includes support for serialising these objects
-to strings, and then converting these strings back into objects.  This support
-may be accessed directly, and used for storing persistent representations of
-such objects.
+to binary strings, and then converting these strings back into objects.  This
+support may be accessed directly, and used for storing persistent
+representations of such objects.  The representations used are not architecture
+dependent, so you can successfully unserialise an object on a machine with a
+different word size or endianness to the machine it was serialised on.
 
-Be aware that the serialised representation may occasionally change between
-releases.  This will be clearly noted in the release notes.
+Be aware that the serialised representation may change between release series,
+so if you're using serialised objects for long term storage you will need a
+strategy for dealing with this.  Changes to the representation will be clearly
+noted in the release notes.
 
 Serialising Documents
 =====================
