@@ -55,7 +55,6 @@ function search($dbpath, $querystring, $materials, $offset = 0, $pagesize = 10)
     $matches = $enquire->get_mset($offset, $pagesize);
     $start = $matches->begin();
     $end = $matches->end();
-    $index = 0;
 
     // Use an array to record the DocIds of each match
     $docids = array();
@@ -65,7 +64,7 @@ function search($dbpath, $querystring, $materials, $offset = 0, $pagesize = 10)
         // retrieve the document and its data
         $doc = $start->get_document();
         $fields = json_decode($doc->get_data());
-        $position = $offset + $index + 1;
+        $position = $start->get_rank() + 1;
 
         // record the docid
         $docid = $start->get_docid();
@@ -76,7 +75,6 @@ function search($dbpath, $querystring, $materials, $offset = 0, $pagesize = 10)
 
         // increment MSet iterator and our counter
         $start->next();
-        $index++;
     }
 
     // Parse and display the spy values
