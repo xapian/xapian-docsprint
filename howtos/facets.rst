@@ -102,7 +102,7 @@ of records that are examined by Xapian whilst it is searching. You can
 control this number by specifying the `checkatleast` value of
 :xapian-just-method:`get_mset()`; however it is important to be aware that
 increasing this number may have an effect on overall query performance,
-although a typical sized database is unlikely to see adverse affects.
+although a typical sized database is unlikely to see adverse effects.
 
 
 In Development
