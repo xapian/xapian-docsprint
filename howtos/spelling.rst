@@ -52,8 +52,8 @@ words from indexed documents to the spelling dictionary::
     indexer.set_flags(indexer.FLAG_SPELLING);
 
 Note that you must call the :xapian-method:`TermGenerator::set_database()`
-method as well as setting :xapian-method:`TermGenerator::FLAG_SPELLING` so that
-Xapian knows where to add the spelling dictionary entries.
+method as well as setting :xapian-constant:`TermGenerator::FLAG_SPELLING` so
+that Xapian knows where to add the spelling dictionary entries.
 
 If a document is removed or replaced, any spelling dictionary entries that
 were added when it was originally indexed won't be automatically removed.
@@ -86,7 +86,7 @@ for more information.
 QueryParser Integration
 -----------------------
 
-If :xapian-method:`QueryParser::FLAG_SPELLING_CORRECTION` is passed to
+If :xapian-constant:`QueryParser::FLAG_SPELLING_CORRECTION` is passed to
 :xapian-method:`QueryParser::parse_query()` and
 :xapian-method:`QueryParser::set_database()` has been called, the QueryParser
 will look for corrections for words in the query.  In Xapian 1.2.2 and earlier,
