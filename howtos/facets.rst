@@ -99,7 +99,7 @@ Limitations
 
 The accuracy of Xapian's faceting capability is determined by the number
 of records that are examined by Xapian whilst it is searching. You can
-control this number by specifying the `checkatleast` value of
+control this number by specifying the `checkatleast` parameter to
 :xapian-just-method:`get_mset()`; however it is important to be aware that
 increasing this number may have an effect on overall query performance,
 although a typical sized database is unlikely to see adverse effects.
