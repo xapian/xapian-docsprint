@@ -58,7 +58,7 @@ function search($dbpath, $querystring, $offset = 0, $pagesize = 10)
         $index++;
     }
 
-    // Parse and display the spy values
+    // Fetch and display the spy values
     $spy_start = $spy->values_begin();
     $spy_end = $spy->values_end();
 
