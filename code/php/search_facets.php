@@ -82,10 +82,10 @@ function search($dbpath, $querystring, $offset = 0, $pagesize = 10)
 }
 ## End of example code.
 
-if ($argc != 2) {
+if ($argc < 3) {
     print "Usage: php search_facets.php <db_path> <query_string>\n";
     die();
 }
 
-search($argv[1], $argv[2]);
+search($argv[1], join(' ', array_slice($argv, 2)));
 ?>
