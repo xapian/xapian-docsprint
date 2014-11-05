@@ -1,24 +1,6 @@
 Chapter 1: Getting started
 --------------------------
 
-       Xapian is a code library, written in C++. As such, the native
-       interface is written in C++, but thin wrappers around the C++
-       interface are provided for many popular languages. The syntax of
-       code written using these wrappers is obviously different to that
-       written in C++, but the basic concepts are the same.
-
-       In this manual, example code will generally be presented in C++. If
-       you are using one of the other languages, you should generally be
-       able to get the concepts by reading this code, even if you don't
-       know C++. There are chapters later in the book giving a specific
-       introduction for users of particular languages.
-
-   1.1 Installation
-
-   1.2 Simple example
-
-   1.3 Information Retrieval
-
    1.4 Alternatives
 
        eg, Why not just use RDBMS full text search options?
@@ -112,77 +94,6 @@ Chapter 2: Databases
        made to access the database after closing, it will usually result in
        a `Xapian::DatabaseError' exception being raised.
 
-   2.2 Concurrency
-
- 2.2.1 Threading
-
-       Xapian does not implement any explicit support for multi-threading,
-       and stores various pieces of state in each object. This means that
-       if you access a Xapian object, such as a `Xapian::Database' from
-       multiple threads, you are extremely likely to get a nasty error:
-       your application will probably crash. Don't do this.
-
-       On the other hand, Xapian doesn't use any global state, so as long
-       as you don't access any Xapian objects concurrently, it is safe to
-       use Xapian in a multithreaded system. Be aware, however, that some
-       Xapian objects will keep references to each other - for example, a
-       `Xapian::Document' object obtained from a `Xapian::Database' object
-       using the `get_document()' method will maintain a reference to the
-       original `Xapian::Database' object, so it is not safe to use the
-       `Xapian::Document' object in a thread if another thread might be
-       concurrently accessing the `Xapian::Database' object.
-
-       For these reasons, it is generally best to use any Xapian objects
-       only in the thread in which they were created, and not to access
-       them from multiple threads. If you must pass objects between
-       threads, consider using a mutex to ensure that only one thread
-       accesses the object at a time.
-
-       Creating a `Xapian::Database' object is generally fairly cheap, but
-       if you wish to avoid the overhead of creating one for each search,
-       you could implement a thread-local cache of databases.
-
- 2.2.2 Multiple readers, single writer
-
-       Most Xapian backends provide `multi version concurrency'. This
-       allows only a single writer to exist for each database at any given
-       time, but allows multiple readers to exist concurrently (both with
-       the writer, and with themselves).
-
-       When a database is opened for reading, a static version of the
-       database is referenced by the reader. Updates which are made to the
-       database will not be visible to the reader.
-
-       Existing Xapian backends have a limitation to their `multi version
-       concurrency' implementation - specifically, at most two versions can
-       exist concurrently. The reader will be able to access its static
-       version of the database without limitations when only one change has
-       been made and committed by the writer, but after the writer has made
-       two changes, readers will receive a `Xapian::DatabaseModifiedError'
-       if they attempt to access a part of the database which has changed.
-       In this situation, the reader may be updated to the latest version
-       using the `reopen' method - see section 2.7.
-
- 2.2.3 Locking
-
-       With the disk-based Xapian backends, when a database is opened
-       for writing, a lock is obtained on the database to ensure that no
-       further writers are opened concurrently. This lock will be released
-       when the database writer is closed.
-
-       One unusual feature of Xapian's locking mechanism (at least on POSIX
-       operating systems) is that Xapian creates a subprocess to hold the
-       lock, rather than holding it in the main process. FIXME - explain
-       why.
-
-   2.3 Multiple databases
-
-       - note about not being able to open multidbs for writing
-
-       - opening
-
-       - docid mapping
-
    2.4 Remote databases
 
        - rationale
@@ -193,19 +104,6 @@ Chapter 2: Databases
        together
 
        - opening
-
-   2.5 Stub databases
-
-       - Description of them, and their format.
-
-       - One use is for flipping - see section below.
-
-       - Also used by the replication subsystem.
-
-       - Also for merging a small "recent changes" database with a large
-       "archive" database.
-
-       - Also for building a collection of databases for remote searching
 
    2.6 Flipping databases
 
@@ -284,14 +182,6 @@ Chapter 2: Databases
 
        FIXME - add a warning about stubs not being re-read, and a link to
        the relevant ticket.
-
-   2.8 Metadata
-
-       Storing metadata.
-
-       Transational support.
-
-       Example uses.
 
    2.9 Database backend formats
 
@@ -375,90 +265,12 @@ Chapter 2: Databases
        time of writing: as ever, contact the Xapian developers if you would
        like to help!
 
- 2.9.5 Auto
-
-       If you look at the Xapian API documentation, you'll notice that
-       there are also "Auto::" FIXME - talk about this.
-
-  2.10 Replication
-
 Chapter 3: Documents
 --------------------
-
-       A document in Xapian is simply an item which is returned by a
-       search. When building a new search system, the first decision to
-       take is usually to decide what the documents in your system are
-       going to be. For example, for a search over a website, there might
-       be one document for each page of the site. However, you could
-       instead choose to use one document for each paragraph of each page,
-       or to group pages together into subjects and have one document
-       for each subject. Choosing the best way to divide your data up is
-       discussed in detail in chapter 7.
-
-   3.1 Terms, data, values.
-
-       Documents have three components: terms, data and values.
-
-       _Terms_ are the basic unit of information retrieval used by Xapian.
-       At its simplest, a search is a process of matching terms specified
-       in a query against terms in a document, and returning the best
-       matches. A term will often be generated for each word in a piece
-       of text, possibly by applying some form of normalisation (such as
-       applying a _stemmer_ to convert different forms of a word to a
-       standard form), but this isn't required, and there is a very wide
-       range of useful strategies for producing terms.
-
-       _Data_ is an arbitrary blob of data associated with the document.
-       Xapian does nothing with this data other than store it in the
-       database and return it when requested. It can be used to hold a
-       reference to an external piece of information about the document
-       (such as the primary key in an external database table containing
-       the document information), or could be used to store the full
-       text of the document. Generally, the best thing to do with the
-       document data is to store any information you need to display the
-       resulting document to the user (or to whatever process consumes the
-       results of searches). There is no standard serialisation scheme for
-       putting structured data into the document data: depending on your
-       application, you might want to roll a simple scheme using newlines
-       to separate values, use JSON or XML serialisation, or use some
-       language-specific method of pickling data.
-
-       _Values_ are, in a sense, a more flexible version of terms. Each
-       document can have a set of values associated with it, which hold
-       pieces of data which can be useful during a search. These pieces
-       of data could be things such as keys which you want to be able to
-       sort the results on, or numbers to be used to affect the weight
-       calculated for documents during the search. It is important to keep
-       the amount of data stored in the values to a minimum, since the data
-       for a large number of documents will be read during the search, and
-       unused data will thus slow the search down. Developers are often
-       tempted to use the value slots to hold inforamtion which should
-       really be stored in the document's data area; don't succumb to this
-       temptation.
-
-   3.2 Dos and Don'ts
-
-        -  Don't commit or flush after every modification, unless you
-           really need to. Modifications are much much faster if they're
-           grouped together. If you must flush every modification
-           immediately, consider using a small database of recent
-           modifications, merged with a larger database of earlier
-           modifications.
-
-        -  Don't put data into value slots which isn't going to be used
-           during the search process. It's often tempting to do this to get
-           an easy way to store fielded data, but storing extra data in the
-           values will crowd some of the data required for searches out of
-           the cache, producing a slower search. Use the document "data"
-           slot for this.
 
    3.3 Building documents.
 
    3.4 Adding documents.
-
-   3.5 Modifying documents.
-
-   3.6 Deleting documents.
 
    3.7 Lazy loading.
 
@@ -497,75 +309,7 @@ Chapter 3: Documents
        immediately, one easy way is to call the document's `serialise()'
        method. This leads us nicely on to the next section!
 
-   3.8 Serialising.
-
-       Sometimes, it's useful to convert a `Xapian::Document' into a flat
-       binary representation. This might be so that it can be sent over a
-       network connection, or stored in a cache or a queue.
-
-       FIXME - describe serialising and deserialising. Note the lack
-       of guarantee that the format is stable across different Xapian
-       versions: shouldn't be used for long term storage. Should be endian
-       safe, though, so fine to read on different architectures.
-
-Chapter 4: Searches
--------------------
-
-       - A basic search. - The Enquire object. - The QueryParser object.
-       - The Query object. - Mention the special "" term which matches
-       everything. - Relevance Expansion. - RSet, Expand.
-
-Chapter 5: Customising searches
--------------------------------
-
-       - Custom sort orders - Range searches - Query independent weights
-
-Chapter 6: Text processing
---------------------------
-
-   6.1 Stemming
-
-   6.2 Spelling correction
-
-   6.3 Synonym expansion
-
-Chapter 7: Indexing strategies
-------------------------------
-
 Chapter 8: Lower level datastructures
 -------------------------------------
 
    8.1 Posting iterators
-
-Chapter 9: Facets
------------------
-
-       - When and how to use facets - String facets - Numeric facets -
-       Grouping - Selecting facets
-
-Chapter 10: Features in development
------------------------------------
-
-       - Geolocation searches - Clustering
-
-Chapter 11: The Python interface to Xapian
-------------------------------------------
-
-Chapter 12: The PHP interface to Xapian
----------------------------------------
-
-Chapter 13: The Perl interface to Xapian
-----------------------------------------
-
-Chapter 14: The Ruby interface to Xapian
-----------------------------------------
-
-Chapter 15: The Java interface to Xapian
-----------------------------------------
-
-Chapter 16: The C# interface to Xapian
---------------------------------------
-
-Chapter 17: The TCL interface to Xapian
----------------------------------------
-

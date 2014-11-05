@@ -282,3 +282,5 @@ posting source, at the end of this function, add these lines:
     Xapian::Registry registry;
     registry.register_postingsource(MyPostingSource());
     server.set_registry(registry);
+
+.. todo:: Cover using a query-independent weight (e.g. from link analysis)

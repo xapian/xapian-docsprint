@@ -33,6 +33,12 @@ feature can be combined with remote databases to handle datasets which are
 too large for a single machine, by performing searches across multiple
 remote databases.
 
+.. todo:: Document using add_database() to achieve this
+
+.. todo:: trunk supports writable multi databases
+
+.. todo:: mapping of docids
+
 On-disk databases
 -----------------
 
@@ -55,6 +61,14 @@ Such files are called *stub-databases*, and can be used to point to a
 database when the physical database location may vary; for example, because
 a new database is being built nightly, and is named according to the date
 on which it was built.
+
+.. todo:: document format, or link to documentation of it
+
+.. todo:: allows atomic switching between databases
+
+.. todo:: provides a way to have pre-canned sets of databases to search
+
+.. todo:: uses e.g. keeping latest changes in a small DB you merge periodically
 
 In-memory databases
 -------------------

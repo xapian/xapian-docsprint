@@ -11,3 +11,5 @@ Indexing concepts
    uniqueness
    values
    limitations
+
+.. todo:: cover user metadata; note it is included in transactions

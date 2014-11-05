@@ -19,6 +19,9 @@ to offer the user the ability to narrow down their search by filtering it
 to only include documents with a particular value of a particular category.
 This is often referred to as `faceted search`.
 
+.. todo:: string and numeric facets
+.. todo:: grouping
+.. todo:: selecting which facets to show
 
 Implementation
 ==============

@@ -36,3 +36,5 @@ enforce a serialisation scheme for putting structured information into the
 document data: depending on your application, you might want to implement a
 simple scheme using newlines to separate values, use JSON or XML
 serialisation, or use some other method of pickling data.
+
+.. todo:: Talk about the importance of batching changes where feasible
