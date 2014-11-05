@@ -14,7 +14,7 @@ function search($dbpath, $querystring, $materials, $offset = 0, $pagesize = 10)
 ### Start of example code.
     // Set up a QueryParser with a stemmer and suitable prefixes
     $queryparser = new XapianQueryParser();
-    $queryparser->set_stemmer(new XapianStem("english"));
+    $queryparser->set_stemmer(new XapianStem("en"));
     $queryparser->set_stemming_strategy(XapianQueryParser::STEM_SOME);
     $queryparser->add_prefix("title", "S");
     $queryparser->add_prefix("description", "XD");

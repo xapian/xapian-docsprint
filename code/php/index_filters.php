@@ -10,7 +10,7 @@ function index ($datapath, $dbpath)
 
     // Set up a TermGenerator that we'll use in indexing
     $termgenerator = new XapianTermGenerator();
-    $termgenerator->set_stemmer(new XapianStem('english'));
+    $termgenerator->set_stemmer(new XapianStem('en'));
 
     // open the file
     $fH = open_file($datapath);
