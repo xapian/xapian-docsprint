@@ -49,7 +49,7 @@ function search($dbpath, $querystring, $offset = 0, $pagesize = 10)
         $docids[] = $docid;
 
         // display the results
-        print sprintf("%d: #%03d %s\n", $position, $docid, $fields->TITLE);
+        printf("%d: #%03d %s\n", $position, $docid, $fields->TITLE);
 
         // increment MSet iterator and our counter
         $start->next();

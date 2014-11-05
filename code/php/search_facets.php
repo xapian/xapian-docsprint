@@ -51,7 +51,7 @@ function search($dbpath, $querystring, $offset = 0, $pagesize = 10)
         $docids[] = $docid;
 
         // display the results
-        print sprintf("%d: #%03d %s\n", $position, $docid, $fields->TITLE);
+        printf("%d: #%03d %s\n", $position, $docid, $fields->TITLE);
 
         // increment MSet iterator and our counter
         $start->next();
@@ -64,7 +64,7 @@ function search($dbpath, $querystring, $offset = 0, $pagesize = 10)
 
     while (!($spy_start->equals($spy_end)))
     {
-        print sprintf("Facet: %s; count: %d\n",
+        printf("Facet: %s; count: %d\n",
             $spy_start->get_term(),
             $spy_start->get_termfreq()
         );
