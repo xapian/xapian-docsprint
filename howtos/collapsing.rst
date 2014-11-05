@@ -34,7 +34,7 @@ as you already can for sort keys.
 API
 ===
 
-To enable collapsing, call the method :xapian-method:`Enquire::set_collapse_key`
+To enable collapsing, call the method :xapian-method:`Enquire::set_collapse_key()`
 with the value slot, and optionally the number of matches with each collapse
 key to keep (this defaults to 1 if not specified), e.g.::
 
