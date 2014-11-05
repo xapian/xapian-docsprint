@@ -590,7 +590,8 @@ def xapian_check_examples():
         if ex.startswith("index"):
             os.system("rm -rf db filtersdb statesdb")
         run_command = xapian_run_example_command(ex)
-        os.system("%s %s > tmp.out 2> tmp2.out;cat tmp2.out >> tmp.out" % (run_command, args))
+        os.system("%s %s > tmp.out 2> tmp2.out || echo '%s failed';cat tmp2.out >> tmp.out" \
+		  % (run_command, args, ex))
         esc_args = xapian_escape_args(args)
         fullout = "%s.%s.out" % (filename, esc_args)
         tmp_out = "%s.%s.tmp" % (filename, esc_args)
