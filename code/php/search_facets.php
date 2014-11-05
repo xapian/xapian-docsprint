@@ -31,7 +31,7 @@ function search($dbpath, $querystring, $offset = 0, $pagesize = 10)
     $enquire->add_matchspy($spy);
 
     // Retrieve the matches and compute start and end points
-    $matches = $enquire->get_mset($offset, $pagesize);
+    $matches = $enquire->get_mset($offset, $pagesize, 100);
     $start = $matches->begin();
     $end = $matches->end();
     $index = 0;
