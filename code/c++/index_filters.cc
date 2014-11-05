@@ -57,7 +57,7 @@ csv_parse_line(ifstream & csv, vector<string> & fields)
 	    continue;
 	}
 
-	field += ch;
+	Xapian::Unicode::append_utf8(field, ch);
     }
     fields.push_back(field);
     return true;
