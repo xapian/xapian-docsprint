@@ -5,21 +5,9 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
+#include "support.h"
 
-static string
-get_field(const string & data, size_t field)
-{
-    size_t start = 0;
-    while (true) {
-	size_t end = data.find('\n', start);
-	if (field == 0)
-	    return string(data, start, end - start);
-	start = end;
-	if (start != string::npos) ++start;
-	--field;
-    }
-}
+using namespace std;
 
 // Start of example code.
 static void

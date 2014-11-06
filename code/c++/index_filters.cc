@@ -3,65 +3,12 @@
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
-#include <vector>
 #include <string>
-#include <cstring>
+#include <vector>
+
+#include "support.h"
 
 using namespace std;
-
-static bool
-csv_parse_line(ifstream & csv, vector<string> & fields)
-{
-    fields.resize(0);
-
-    char line[4096];
-    if (!csv.getline(line, sizeof(line)))
-	return false;
-
-    // If the input has \r\n line endings, drop the \r.
-    size_t len = strlen(line);
-    if (len && line[len - 1] == '\r') line[len - 1] = '\0';
-
-    bool in_quotes = false;
-    string field;
-
-    const unsigned END_OF_FIELD = 0x100;
-    for (Xapian::Utf8Iterator i(line); i != Xapian::Utf8Iterator(); ++i) {
-	unsigned ch = *i;
-
-	if (!in_quotes) {
-	    // If not already in double quotes, '"' starts quoting and
-	    // ',' starts a new field.
-	    if (ch == '"') {
-		in_quotes = true;
-		continue;
-	    }
-	    if (ch == ',')
-		ch = END_OF_FIELD;
-	} else if (ch == '"') {
-	    // In double quotes, '"' either ends double quotes, or
-	    // if followed by another '"', means a literal '"'.
-	    if (++i == Xapian::Utf8Iterator())
-		break;
-	    ch = *i;
-	    if (ch != '"') {
-		in_quotes = false;
-		if (ch == ',')
-		    ch = END_OF_FIELD;
-	    }
-	}
-
-	if (ch == END_OF_FIELD) {
-	    fields.push_back(field);
-	    field.resize(0);
-	    continue;
-	}
-
-	Xapian::Unicode::append_utf8(field, ch);
-    }
-    fields.push_back(field);
-    return true;
-}
 
 void index(const string & datapath, const string & dbpath)
 {
