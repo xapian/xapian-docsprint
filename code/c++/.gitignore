@@ -2,6 +2,7 @@ delete1
 index1
 index_facets
 index_filters
+index_ranges
 search1
 search_facets
 search_filters

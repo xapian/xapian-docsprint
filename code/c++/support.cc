@@ -1,6 +1,7 @@
 #include <xapian.h>
 
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -73,4 +74,38 @@ get_field(const string & data, size_t field)
 	if (start != string::npos) ++start;
 	--field;
     }
+}
+
+bool max_number_in_string(const string & s, double *n_ptr)
+{
+    istringstream is(s);
+    bool found = false;
+    double max = 0;
+    while (!is.eof()) {
+	double n;
+        if (is >> n) {
+	    if (!found || n > max) {
+		max = n;
+		found = true;
+	    }
+	} else {
+	    is.clear();
+	}
+	// Skip character.
+	(void)is.get();
+    }
+    *n_ptr = max;
+    return found;
+}
+
+bool first_number_in_string(const string & s, double *n_ptr)
+{
+    istringstream is(s);
+    while (!(is >> *n_ptr)) {
+	is.clear();
+	// Skip character.
+	(void)is.get();
+	if (is.eof()) return false;
+    }
+    return true;
 }
