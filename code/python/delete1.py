@@ -4,7 +4,7 @@ import sys
 import xapian
 
 ### Start of example code.
-def delete(dbpath, identifiers):
+def delete_docs(dbpath, identifiers):
     # Open the database we're going to be deleting from.
     db = xapian.WritableDatabase(dbpath, xapian.DB_OPEN)
 
@@ -13,4 +13,4 @@ def delete(dbpath, identifiers):
         db.delete_document(idterm)
 ### End of example code.
 
-delete(dbpath = sys.argv[1], identifiers=sys.argv[2:])
+delete_docs(dbpath = sys.argv[1], identifiers=sys.argv[2:])

@@ -2,7 +2,7 @@
 require_once("xapian.php");
 
 // Start of example code.
-function delete1 ($dbpath, $identifiers)
+function delete_docs ($dbpath, $identifiers)
 {
     // Open the database we're going to be deleting from.
     $db = new XapianWritableDatabase($dbpath, Xapian::DB_OPEN);
@@ -20,6 +20,6 @@ if ($argc < 3) {
     die();
 }
 
-// Call the index function.
-delete1($argv[1], array_slice($argv, 2));
+// Call the delete_docs function.
+delete_docs($argv[1], array_slice($argv, 2));
 ?>
