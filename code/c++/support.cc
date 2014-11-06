@@ -3,7 +3,6 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include <cstring>
 
 using namespace std;
 
@@ -17,8 +16,9 @@ csv_parse_line(ifstream & csv, vector<string> & fields)
 	return false;
 
     // If the input has \r\n line endings, drop the \r.
-    size_t len = strlen(line);
-    if (len && line[len - 1] == '\r') line[len - 1] = '\0';
+    size_t gcount = csv.gcount();
+    if (gcount > 1 && line[gcount - 1] == '\0' && line[gcount - 2] == '\r')
+	line[gcount - 2] = '\0';
 
     bool in_quotes = false;
     string field;
