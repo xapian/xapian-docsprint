@@ -30,7 +30,7 @@ function open_file ($file)
 }
 
 /**
- * Reads a row of data from a CSV file and parses into UTF-8
+ * Reads a row of data from a CSV file
  *
  * @param resource $fH Open file handle
  * @param array $headers Indexed array of column names
@@ -48,7 +48,7 @@ function parse_csv_row ($fH, $headers)
     }
 
     foreach ($row as $key => $value) {
-        $data[$headers[$key]] = iconv('ISO-8859-1', 'UTF-8', $value);
+        $data[$headers[$key]] = $value;
     }
 
     return $data;
