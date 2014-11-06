@@ -8,7 +8,7 @@ using namespace std;
 static void delete_docs(const string &dbpath, char ** identifiers)
 {
     // Open the database we're going to be deleting from.
-    Xapian::WritableDatabase db(dbpath, Xapian::DB_CREATE_OR_OPEN);
+    Xapian::WritableDatabase db(dbpath, Xapian::DB_OPEN);
 
     while (*identifiers) {
 	string idterm = "Q";

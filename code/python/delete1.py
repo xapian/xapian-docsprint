@@ -6,7 +6,7 @@ import xapian
 ### Start of example code.
 def delete(dbpath, identifiers):
     # Open the database we're going to be deleting from.
-    db = xapian.WritableDatabase(dbpath, xapian.DB_CREATE_OR_OPEN)
+    db = xapian.WritableDatabase(dbpath, xapian.DB_OPEN)
 
     for identifier in identifiers:
         idterm = u'Q' + identifier
