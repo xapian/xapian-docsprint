@@ -100,7 +100,7 @@ There are two broad approaches to do this:
 References
 ----------
 
-* "Information Retrieval" by C. J. van Rijsbergen is well worth reading. It's out of print, but is available for free from the author's website (in HTML or PDF).
+* "Information Retrieval" by C. J. van Rijsbergen is well worth reading. It's out of print, but is available for free from the `author's website <http://www.dcs.gla.ac.uk/Keith/Preface.html>`_ (in HTML or PDF).
 * "Readings in Information Retrieval" (published by Morgan Kaufmann, edited by Karen Sparck Jones and Peter Willett) is a collection of published papers covering many aspects of the subject.
 * "Managing Gigabytes" (also published by Morgan Kaufmann, written by Ian H. Witten, Alistair Moffat and Timothy C. Bell) describes information retrieval and compression techniques.
 * "Modern Information Retrieval" (published by Addison Wesley, written by Ricardo Baeza-Yates and Berthier Ribeiro-Neto) gives a good overview of the field. It was published more recently than the books above, and so covers some more recent developments.
