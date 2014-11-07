@@ -50,5 +50,9 @@ def search(dbpath, querystring, offset=0, pagesize=10):
     # Finally, make sure we log the query and displayed results
     support.log_matches(querystring, offset, pagesize, matches)
 
+if len(sys.argv) < 3:
+    print "Usage: %s DBPATH QUERYTERM..." % sys.argv[0]
+    sys.exit(1)
+
 logging.basicConfig(level=logging.INFO)
 search(dbpath = sys.argv[1], querystring = " ".join(sys.argv[2:]))

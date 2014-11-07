@@ -57,4 +57,8 @@ def index(datapath, dbpath):
         doc.add_boolean_term(idterm)
         db.replace_document(idterm, doc)
 
+if len(sys.argv) != 3:
+    print "Usage: %s DATAPATH DBPATH" % sys.argv[0]
+    sys.exit(1)
+
 index(datapath = sys.argv[1], dbpath = sys.argv[2])
