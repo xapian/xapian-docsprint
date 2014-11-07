@@ -79,7 +79,7 @@ search(const string & dbpath, const string & querystring,
 
 int main(int argc, char** argv) {
     if (argc < 3) {
-	cerr << "Syntax: " << argv[0] << " DBPATH QUERY [MATERIALS...]" << endl;
+	cerr << "Usage: " << argv[0] << " DBPATH QUERY [MATERIALS...]" << endl;
 	return 1;
     }
     const char * dbpath = argv[1];

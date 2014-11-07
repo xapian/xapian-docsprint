@@ -76,7 +76,7 @@ void index(const string & datapath, const string & dbpath)
 
 int main(int argc, char** argv) {
     if (argc != 3) {
-	cerr << "Syntax: " << argv[0] << " DATAPATH DBPATH" << endl;
+	cerr << "Usage: " << argv[0] << " DATAPATH DBPATH" << endl;
 	return 1;
     }
     index(argv[1], argv[2]);

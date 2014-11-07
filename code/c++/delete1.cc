@@ -20,7 +20,7 @@ static void delete_docs(const string &dbpath, char ** identifiers)
 
 int main(int argc, char** argv) {
     if (argc < 3) {
-	cerr << "Syntax: " << argv[0] << " DATAPATH ID..." << endl;
+	cerr << "Usage: " << argv[0] << " DBPATH ID..." << endl;
 	return 1;
     }
     delete_docs(argv[1], argv + 2);
