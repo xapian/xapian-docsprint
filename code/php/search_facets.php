@@ -83,7 +83,7 @@ function search($dbpath, $querystring, $offset = 0, $pagesize = 10)
 ## End of example code.
 
 if ($argc < 3) {
-    print "Usage: php search_facets.php <db_path> <query_string>\n";
+    print "Usage: php $argv[0] DBPATH QUERYTERM...\n";
     die();
 }
 

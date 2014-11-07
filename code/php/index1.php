@@ -53,8 +53,8 @@ function index ($datapath, $dbpath)
 }
 // End of example code.
 
-if ($argc < 2) {
-    print "Usage: php index1.php <source.csv> <target_db_path>\n";
+if ($argc != 3) {
+    print "Usage: php $argv[0] DATAPATH DBPATH\n";
     die();
 }
 

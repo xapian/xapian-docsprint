@@ -16,7 +16,7 @@ function delete_docs ($dbpath, $identifiers)
 // End of example code.
 
 if ($argc < 3) {
-    print "Usage: php delete1.php <db_path> <identifier>...\n";
+    print "Usage: php $argv[0] DBPATH ID...\n";
     die();
 }
 

@@ -101,7 +101,7 @@ function search($dbpath, $querystring, $materials, $offset = 0, $pagesize = 10)
 }
 
 if ($argc < 2) {
-    print "Usage: php search_filters.php <db_path> <query_string> [<material>...]\n";
+    print "Usage: php $argv[0] DBPATH QUERY [MATERIALS...]\n";
     die();
 }
 
