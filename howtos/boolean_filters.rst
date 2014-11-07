@@ -49,6 +49,7 @@ A full copy of the indexer with this updated code is available in
 We run this like so:
 
 .. xapianrunexample:: index_filters
+    :cleanfirst: db
     :args: data/100-objects-v1.csv db
 
 If we check the resulting index with delve, we will see that documents for

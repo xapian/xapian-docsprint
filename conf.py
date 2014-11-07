@@ -344,6 +344,7 @@ def xapian_escape_args(args):
 class XapianRunExample(LiteralInclude):
     option_spec = {
         'args': directives.unchanged_required,
+        'cleanfirst': directives.unchanged,
     }
 
     def run(self):
@@ -353,6 +354,9 @@ class XapianRunExample(LiteralInclude):
                 % (last_example, highlight_language))]
         command = xapian_code_example_command(self.arguments[0])
 
+	cleanfirst = ''
+        if 'cleanfirst' in self.options:
+	    cleanfirst = self.options['cleanfirst']
         if 'args' in self.options:
             args = self.options['args']
             command = "%s %s" % (command, args)
@@ -370,7 +374,7 @@ class XapianRunExample(LiteralInclude):
                 % (filename, highlight_language)
 
         global examples_used, examples_in_order
-        examples_in_order.append((self.arguments[0], args))
+        examples_in_order.append((self.arguments[0], args, cleanfirst))
         if self.arguments[0] in examples_used:
             examples_used[self.arguments[0]].append(args)
         else:
@@ -584,11 +588,15 @@ def xapian_check_examples():
     # Process the commands in order so that the correct databases have been
     # created when they are used.
     os.system("rm -rf db filtersdb statesdb")
-    for (ex, args) in examples_in_order:
+    for (ex, args, cleanfirst) in examples_in_order:
         command = xapian_code_example_command(ex)
         filename = xapian_code_example_filename(ex)
-        if ex.startswith("index"):
-            os.system("rm -rf db filtersdb statesdb")
+	if len(cleanfirst):
+	    if re.search(r'[^-A-Za-z0-9_ ]', cleanfirst):
+		# Or we could actually escape it...
+		print("Bad characters in cleanfirst: ''" % cleanfirst)
+		sys.exit(1)
+            os.system("rm -rf %s" % cleanfirst)
         run_command = xapian_run_example_command(ex)
         os.system("%s %s > tmp.out 2> tmp2.out || echo '%s failed';cat tmp2.out >> tmp.out" \
 		  % (run_command, args, ex))

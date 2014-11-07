@@ -72,6 +72,7 @@ contain such a variety of date formats).
 We run this like so:
 
 .. xapianrunexample:: index_ranges
+    :cleanfirst: db
     :args: data/100-objects-v1.csv db
 
 We can check this has created document values using `delve`::
@@ -179,6 +180,7 @@ others in a minute.
 We use the indexer in the same way as previous ones:
 
 .. xapianrunexample:: index_ranges2
+    :cleanfirst: statesdb
     :args: data/states.csv statesdb
 
 With this done, we can change the set of value range processors we

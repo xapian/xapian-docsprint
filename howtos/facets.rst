@@ -47,6 +47,7 @@ them as facets. Let's run that to build a dataset with document values
 suitable for faceting:
 
 .. xapianrunexample:: index_facets
+    :cleanfirst: db
     :args: data/100-objects-v1.csv db
 
 Querying

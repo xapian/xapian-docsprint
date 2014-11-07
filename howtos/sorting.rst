@@ -62,6 +62,7 @@ We'll use the states dataset to demonstrate this, and the code from
 dealing with dates in the :doc:`range queries <range_queries>` HOWTO:
 
 .. xapianrunexample:: index_ranges2
+    :cleanfirst: statesdb
     :args: data/states.csv statesdb
 
 This has three document values: slot 1 has the year of admission to
@@ -129,7 +130,8 @@ We don't have to sort on these, so we've just put them both into one
 slot that we can easily read them out from again:
 
 .. xapianrunexample:: index_values_with_geo
-   :args: data/states.csv statesdb
+    :cleanfirst: statesdb
+    :args: data/states.csv statesdb
 
 Now we need a KeyMaker; let's have it return a key that sorts by distance from
 Washington, DC.

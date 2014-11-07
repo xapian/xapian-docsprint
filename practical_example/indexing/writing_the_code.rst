@@ -11,4 +11,5 @@ You can run this code to index a sample data file (held in
 :xapian-example:`data/100-objects-v1.csv`) to a database at path ``db`` as follows:
 
 .. xapianrunexample:: index1
+    :cleanfirst: db
     :args: data/100-objects-v1.csv db
