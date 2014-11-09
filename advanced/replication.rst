@@ -151,8 +151,8 @@ switched atomically after a database copy has occurred.  The
 this situation, so ends up attempting to read the old database which has been
 deleted.
 
-We intend to fix this issue in the Brass backend (currently under development
-by eliminating this hidden use of a stub database file).
+We intend to fix this issue in the Brass backend (currently under development)
+by eliminating this hidden use of a stub database file.
 
 Alternative approaches
 ======================
