@@ -76,7 +76,7 @@ Secondly, also on the master machine, run the `xapian-replicate-server` server
 to serve the databases which are to be replicated.  This takes various
 parameters to control the directory that databases are found in, and the
 network interface to serve on.  The `--help` option will cause usage
-information to be displayed.  For example, if `/var/search/dbs`` contains a
+information to be displayed.  For example, if `/var/search/dbs` contains a
 set of Xapian databases to be replicated::
 
   xapian-replicate-server /var/search/dbs -p 7010
