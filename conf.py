@@ -267,7 +267,7 @@ def xapian_code_example_filename(ex):
 # Return the command to show in the generated docs.
 def xapian_code_example_command(ex):
     if highlight_language == 'python':
-        return "python %s" % xapian_code_example_filename(ex)
+        return "python2 %s" % xapian_code_example_filename(ex)
     elif highlight_language == 'php':
         return "php %s" % xapian_code_example_filename(ex)
     elif highlight_language == 'c++':
@@ -289,7 +289,7 @@ def get_tool_name(envvar, default):
 # Return the command to actually test run examples using.
 def xapian_run_example_command(ex):
     if highlight_language == 'python':
-        python = get_tool_name('PYTHON', 'python')
+        python = get_tool_name('PYTHON', 'python2')
         return "%s %s" % (python, xapian_code_example_filename(ex))
     elif highlight_language == 'php':
         php = get_tool_name('PHP', 'php')
