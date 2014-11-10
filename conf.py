@@ -235,6 +235,13 @@ else:
     # php:
     ext = '.' + highlight_language
 
+if highlight_language == 'php':
+    # By default, pygments expects '<?php' and '?>' around PHP code, so we
+    # need to set the 'startinline' option.
+    from sphinx.highlighting import lexers
+    from pygments.lexers.web import PhpLexer
+    lexers['php'] = PhpLexer(startinline=True)
+
 def github_link_node(name, rawtext, options=()):
     try:
         base = github_project_url
