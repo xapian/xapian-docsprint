@@ -216,7 +216,7 @@ examples_used = {}
 examples_in_order = []
 
 highlight_language = None
-for t in ['php', 'c++', 'python']:
+for t in ['php', 'c++', 'python', 'python3', 'csharp', 'java', 'lua', 'perl', 'ruby', 'tcl']:
     if tags.has(t):
         if not highlight_language is None:
             print "Multiple language tags set (at least %s and %s)" % (highlight_language, t)
@@ -227,12 +227,18 @@ if highlight_language is None:
     tags.add('python')
     highlight_language = 'python'
 
-if highlight_language == 'python':
+if highlight_language.startswith('python'):
     ext = '.py'
 elif highlight_language == 'c++':
     ext = '.cc'
+elif highlight_language == 'csharp':
+    ext = '.cs'
+elif highlight_language == 'perl':
+    ext = '.pl'
+elif highlight_language == 'ruby':
+    ext = '.rb'
 else:
-    # php:
+    # java lua php tcl:
     ext = '.' + highlight_language
 
 if highlight_language == 'php':
@@ -266,13 +272,29 @@ def xapian_code_example_filename(ex):
 
 # Return the command to show in the generated docs.
 def xapian_code_example_command(ex):
-    if highlight_language == 'python':
-        return "python2 %s" % xapian_code_example_filename(ex)
+    if highlight_language == 'lua':
+        return "lua %s" % xapian_code_example_filename(ex)
+    elif highlight_language == 'perl':
+        return "perl %s" % xapian_code_example_filename(ex)
     elif highlight_language == 'php':
         return "php %s" % xapian_code_example_filename(ex)
+    elif highlight_language == 'python':
+        return "python2 %s" % xapian_code_example_filename(ex)
+    elif highlight_language == 'python3':
+        return "python3 %s" % xapian_code_example_filename(ex)
+    elif highlight_language == 'ruby':
+        return "ruby %s" % xapian_code_example_filename(ex)
+    elif highlight_language == 'tcl':
+        return "tclsh %s" % xapian_code_example_filename(ex)
     elif highlight_language == 'c++':
         return "g++ `xapian-config --cxxflags` %s support.cc -o %s `xapian-config --libs`\n./%s" \
             % (xapian_code_example_filename(ex), ex, ex)
+    elif highlight_language == 'csharp':
+        return "cli-csc -unsafe -target:exe -out:%s.exe %s -r:XapianSharp.dll\n./%s.exe" \
+            % (ex, xapian_code_example_filename(ex), ex)
+    elif highlight_language == 'java':
+        return "javac %s\njava %s" \
+            % (xapian_code_example_filename(ex), ex)
     else:
         print "Unhandled highlight_language '%s'" % highlight_language
         sys.exit(1)
@@ -288,16 +310,40 @@ def get_tool_name(envvar, default):
 
 # Return the command to actually test run examples using.
 def xapian_run_example_command(ex):
-    if highlight_language == 'python':
-        python = get_tool_name('PYTHON', 'python2')
-        return "%s %s" % (python, xapian_code_example_filename(ex))
+    if highlight_language == 'lua':
+        lua = get_tool_name('LUA', 'lua')
+        return "%s %s" % (lua, xapian_code_example_filename(ex))
+    elif highlight_language == 'perl':
+        perl = get_tool_name('PERL', 'perl')
+        return "%s %s" % (perl, xapian_code_example_filename(ex))
     elif highlight_language == 'php':
         php = get_tool_name('PHP', 'php')
         return "%s %s" % (php, xapian_code_example_filename(ex))
+    elif highlight_language == 'python':
+        python = get_tool_name('PYTHON', 'python2')
+        return "%s %s" % (python, xapian_code_example_filename(ex))
+    elif highlight_language == 'python3':
+        python3 = get_tool_name('PYTHON3', 'python3')
+        return "%s %s" % (python3, xapian_code_example_filename(ex))
+    elif highlight_language == 'ruby':
+        ruby = get_tool_name('RUBY', 'ruby')
+        return "%s %s" % (ruby, xapian_code_example_filename(ex))
+    elif highlight_language == 'tcl':
+        tclsh = get_tool_name('TCLSH', 'tclsh')
+        return "%s %s" % (tclsh, xapian_code_example_filename(ex))
     elif highlight_language == 'c++':
         cxx = get_tool_name('CXX', 'g++')
         return "%s `xapian-config --cxxflags` %s code/c++/support.cc -o code/c++/%s `xapian-config --libs`\ncode/c++/%s" \
             % (cxx, xapian_code_example_filename(ex), ex, ex)
+    elif highlight_language == 'csharp':
+	csc = get_tool_name('CSC', 'cli-csc')
+        return "%s -unsafe -target:exe -out:%s.exe %s -r:XapianSharp.dll\n./%s.exe" \
+            % (csc, ex, xapian_code_example_filename(ex), ex)
+    elif highlight_language == 'java':
+	javac = get_tool_name('JAVAC', 'javac')
+	java = get_tool_name('JAVA', 'java')
+        return "%s %s\n%s %s" \
+            % (javac, xapian_code_example_filename(ex), java, ex)
     else:
         print "Unhandled highlight_language '%s'" % highlight_language
         sys.exit(1)
@@ -458,12 +504,26 @@ def xapian_example_short_role(typ, rawtext, etext, lineno, inliner,
 def xapian_class_role(typ, rawtext, etext, lineno, inliner,
                                  options=(), content=[]):
     c = utils.unescape(etext)
-    if highlight_language == 'python':
+    if highlight_language == 'c++':
+        return [nodes.literal(text = 'Xapian::' + c)], []
+    elif highlight_language == 'csharp':
+        return [nodes.literal(text = 'Xapian.' + c)], []
+    elif highlight_language == 'java':
+        return [nodes.literal(text = 'org.xapian.' + c)], []
+    elif highlight_language == 'lua':
         return [nodes.literal(text = 'xapian.' + c)], []
+    elif highlight_language == 'perl':
+        return [nodes.literal(text = 'Search::Xapian::' + c)], []
     elif highlight_language == 'php':
         return [nodes.literal(text = 'Xapian' + c)], []
-    elif highlight_language == 'c++':
+    elif highlight_language == 'python':
+        return [nodes.literal(text = 'xapian.' + c)], []
+    elif highlight_language == 'python3':
+        return [nodes.literal(text = 'xapian.' + c)], []
+    elif highlight_language == 'ruby':
         return [nodes.literal(text = 'Xapian::' + c)], []
+    elif highlight_language == 'tcl':
+        return [nodes.literal(text = 'xapian::' + c)], []
     else:
         print "Unhandled highlight_language '%s'" % highlight_language
         sys.exit(1)
@@ -476,30 +536,50 @@ def decorate_param(m):
     return m.group(1) + '$' + m.group(2)
 
 def decorate_variables(t):
-    if highlight_language == 'php' or highlight_language == 'perl':
+    if highlight_language in ('perl', 'php', 'ruby'):
         # Add a $ in front of each parameter which is a variable
         return re.sub(r'([(,]\s*)([^),]+)', decorate_param, t)
-    # Correct for Python and C++:
+    # Correct for: c++ csharp java lua python python3
+    # FIXME: I think tcl is going to need cleverer handling
     return t
 
 def xapian_just_method_role(typ, rawtext, etext, lineno, inliner,
                                  options=(), content=[]):
+    # FIXME: Need to adjust method names for csharp, java and ruby
     m = decorate_variables(utils.unescape(etext))
     return [nodes.literal(text = m)], []
 
 def xapian_method_role(typ, rawtext, etext, lineno, inliner,
                                  options=(), content=[]):
     cm = utils.unescape(etext)
-    # Correct for Python, PHP and C++:
-    if highlight_language == 'python':
+    if highlight_language == 'c++':
+        return [nodes.literal(text = 'Xapian::' + cm)], []
+    elif highlight_language == 'csharp':
+	# FIXME: Need to adjust method names for csharp
         cm = re.sub(r'::', r'.', cm)
+        return [nodes.literal(text = 'Xapian.' + cm)], []
+    elif highlight_language == 'java':
+	# FIXME: Need to adjust method names for java
+        cm = re.sub(r'::', r'.', cm)
+        return [nodes.literal(text = 'org.xapian.' + cm)], []
+    elif highlight_language == 'lua':
         return [nodes.literal(text = 'xapian.' + cm)], []
+    elif highlight_language == 'perl':
+        # Add a $ in front of each parameter.
+        cm = decorate_variables(cm)
+        return [nodes.literal(text = 'Search::Xapian::' + cm)], []
     elif highlight_language == 'php':
         # Add a $ in front of each parameter.
         cm = decorate_variables(cm)
         return [nodes.literal(text = 'Xapian' + cm)], []
-    elif highlight_language == 'c++':
+    elif highlight_language.startswith('python'):
+        cm = re.sub(r'::', r'.', cm)
+        return [nodes.literal(text = 'xapian.' + cm)], []
+    elif highlight_language == 'ruby':
+	# FIXME: Need to adjust method names for ruby
         return [nodes.literal(text = 'Xapian::' + cm)], []
+    elif highlight_language == 'tcl':
+        return [nodes.literal(text = 'xapian::' + cm)], []
     else:
         print "Unhandled highlight_language '%s'" % highlight_language
         sys.exit(1)
@@ -507,23 +587,66 @@ def xapian_method_role(typ, rawtext, etext, lineno, inliner,
 def xapian_variable_role(typ, rawtext, etext, lineno, inliner,
                                  options=(), content=[]):
     m = utils.unescape(etext)
-    if highlight_language == 'php' or highlight_language == 'perl':
+    if highlight_language in ('perl', 'php', 'ruby'):
         return [nodes.literal(text = '$' + m)], []
-    # Correct for Python and C++:
+    # Correct for: c++ csharp java lua python python3
+    # FIXME: I think tcl is going to need cleverer handling
     return [nodes.literal(text = m)], []
 
 def xapian_literal_role(typ, rawtext, etext, lineno, inliner,
                                  options=(), content=[]):
     t = utils.unescape(etext)
-    if highlight_language == 'python':
+    if highlight_language == 'c++':
+        return [nodes.literal(text = t)], []
+    elif highlight_language == 'csharp':
         if t == 'DBL_MAX':
-            t = 'sys.float_info.max'
+            t = 'double.MaxValue'
         elif t == 'false':
-            t = 'False'
+            t = 'false'
         elif t == 'true':
-            t = 'True'
+            t = 'true'
         elif t == 'NULL':
-            t = 'None'
+            t = 'null'
+        else:
+            print "Unhandled literal '%s' for %s" % (t, highlight_language)
+            sys.exit(1)
+        return [nodes.literal(text = t)], []
+    elif highlight_language == 'java':
+        if t == 'DBL_MAX':
+            t = 'java.lang.Double.MAX_VALUE'
+        elif t == 'false':
+            t = 'false'
+        elif t == 'true':
+            t = 'true'
+        elif t == 'NULL':
+            t = 'null'
+        else:
+            print "Unhandled literal '%s' for %s" % (t, highlight_language)
+            sys.exit(1)
+        return [nodes.literal(text = t)], []
+    elif highlight_language == 'lua':
+        if t == 'DBL_MAX':
+	    # FIXME: is this available in lua?
+            t = 'DBL_MAX'
+        elif t == 'false':
+            t = 'false'
+        elif t == 'true':
+            t = 'true'
+        elif t == 'NULL':
+            t = 'nil'
+        else:
+            print "Unhandled literal '%s' for %s" % (t, highlight_language)
+            sys.exit(1)
+        return [nodes.literal(text = t)], []
+    elif highlight_language == 'perl':
+        if t == 'DBL_MAX':
+            t = 'POSIX::DBL_MAX'
+        elif t == 'false':
+            t = '0'
+        elif t == 'true':
+            t = '1'
+        elif t == 'NULL':
+            t = 'undef'
         else:
             print "Unhandled literal '%s' for %s" % (t, highlight_language)
             sys.exit(1)
@@ -543,8 +666,49 @@ def xapian_literal_role(typ, rawtext, etext, lineno, inliner,
             print "Unhandled literal '%s' for %s" % (t, highlight_language)
             sys.exit(1)
         return [nodes.literal(text = t)], []
-    elif highlight_language == 'c++':
+    elif highlight_language.startswith('python'):
+        if t == 'DBL_MAX':
+            t = 'sys.float_info.max'
+        elif t == 'false':
+            t = 'False'
+        elif t == 'true':
+            t = 'True'
+        elif t == 'NULL':
+            t = 'None'
+        else:
+            print "Unhandled literal '%s' for %s" % (t, highlight_language)
+            sys.exit(1)
         return [nodes.literal(text = t)], []
+    elif highlight_language == 'ruby':
+        if t == 'DBL_MAX':
+            t = 'Float::MAX'
+        elif t == 'false':
+            t = 'false'
+        elif t == 'true':
+            t = 'true'
+        elif t == 'NULL':
+            t = 'nil'
+        else:
+            print "Unhandled literal '%s' for %s" % (t, highlight_language)
+            sys.exit(1)
+        return [nodes.literal(text = t)], []
+    elif highlight_language == 'tcl':
+        if t == 'DBL_MAX':
+	    # FIXME: is this available in tcl?
+            t = 'DBL_MAX'
+        elif t == 'false':
+            t = 'false'
+        elif t == 'true':
+            t = 'true'
+        elif t == 'NULL':
+	    # FIXME: Tcl doesn't have 'null' http://wiki.tcl.tk/17441 but what is
+	    # equivalent for passing a NULL pointer via SWIG-generated wrappers?
+            t = '0'
+        else:
+            print "Unhandled literal '%s' for %s" % (t, highlight_language)
+            sys.exit(1)
+        return [nodes.literal(text = t)], []
+
     else:
         print "Unhandled highlight_language '%s'" % highlight_language
         sys.exit(1)
