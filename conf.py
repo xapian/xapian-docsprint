@@ -214,6 +214,7 @@ last_example = None
 examples = set()
 examples_used = {}
 examples_in_order = []
+examples_missing = []
 
 highlight_language = None
 for t in ['php', 'c++', 'python', 'python3', 'csharp', 'java', 'lua', 'perl', 'ruby', 'tcl']:
@@ -370,8 +371,8 @@ class XapianCodeExample(LiteralInclude):
         examples.add(last_example)
         filename = xapian_code_example_filename(last_example)
         if not os.path.exists(filename):
-            print '*** No version of example %s in language %s - patches welcome!' \
-                % (last_example, highlight_language)
+            global examples_missing
+            examples_missing.append(last_example)
             return [nodes.literal(text = 'No version of example %s in language %s - patches welcome!'
                 % (last_example, highlight_language))]
         self.arguments[0] = "/" + filename
@@ -403,6 +404,8 @@ class XapianRunExample(LiteralInclude):
     def run(self):
         filename = xapian_code_example_filename(self.arguments[0])
         if not os.path.exists(filename):
+            global examples_missing
+            examples_missing.append(last_example)
             return [nodes.literal(text = 'No version of example %s in language %s - patches welcome!'
                 % (last_example, highlight_language))]
         command = xapian_code_example_command(self.arguments[0])
@@ -743,7 +746,7 @@ roles.register_local_role('xapian-constant', xapian_method_role)
 roles.register_local_role('xapian-literal', xapian_literal_role)
 
 def xapian_check_examples():
-    global examples, examples_used, examples_in_order
+    global examples, examples_used, examples_in_order, examples_missing
     bad = False
     for ex in examples:
         if ex in examples_used:
@@ -791,6 +794,15 @@ def xapian_check_examples():
             else:
                 os.unlink(tmp_out)
                 os.unlink("tmp2.out")
+
+    m_done = set()
+    for ex in examples_missing:
+        # Remove duplicate entries
+        if ex in m_done:
+            continue
+        m_done.add(ex)
+        print '*** No version of example %s in language %s - patches welcome!' \
+            % (ex, highlight_language)
 
     if bad:
         raise SystemExit()
