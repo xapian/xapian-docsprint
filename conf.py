@@ -337,12 +337,12 @@ def xapian_run_example_command(ex):
         return "%s `xapian-config --cxxflags` %s code/c++/support.cc -o code/c++/%s `xapian-config --libs`\ncode/c++/%s" \
             % (cxx, xapian_code_example_filename(ex), ex, ex)
     elif highlight_language == 'csharp':
-	csc = get_tool_name('CSC', 'cli-csc')
+        csc = get_tool_name('CSC', 'cli-csc')
         return "%s -unsafe -target:exe -out:%s.exe %s -r:XapianSharp.dll\n./%s.exe" \
             % (csc, ex, xapian_code_example_filename(ex), ex)
     elif highlight_language == 'java':
-	javac = get_tool_name('JAVAC', 'javac')
-	java = get_tool_name('JAVA', 'java')
+        javac = get_tool_name('JAVAC', 'javac')
+        java = get_tool_name('JAVA', 'java')
         return "%s %s\n%s %s" \
             % (javac, xapian_code_example_filename(ex), java, ex)
     else:
@@ -410,9 +410,9 @@ class XapianRunExample(LiteralInclude):
                 % (last_example, highlight_language))]
         command = xapian_code_example_command(self.arguments[0])
 
-	cleanfirst = ''
+        cleanfirst = ''
         if 'cleanfirst' in self.options:
-	    cleanfirst = self.options['cleanfirst']
+            cleanfirst = self.options['cleanfirst']
         if 'args' in self.options:
             args = self.options['args']
             command = "%s %s" % (command, args)
@@ -558,11 +558,11 @@ def xapian_method_role(typ, rawtext, etext, lineno, inliner,
     if highlight_language == 'c++':
         return [nodes.literal(text = 'Xapian::' + cm)], []
     elif highlight_language == 'csharp':
-	# FIXME: Need to adjust method names for csharp
+        # FIXME: Need to adjust method names for csharp
         cm = re.sub(r'::', r'.', cm)
         return [nodes.literal(text = 'Xapian.' + cm)], []
     elif highlight_language == 'java':
-	# FIXME: Need to adjust method names for java
+        # FIXME: Need to adjust method names for java
         cm = re.sub(r'::', r'.', cm)
         return [nodes.literal(text = 'org.xapian.' + cm)], []
     elif highlight_language == 'lua':
@@ -579,7 +579,7 @@ def xapian_method_role(typ, rawtext, etext, lineno, inliner,
         cm = re.sub(r'::', r'.', cm)
         return [nodes.literal(text = 'xapian.' + cm)], []
     elif highlight_language == 'ruby':
-	# FIXME: Need to adjust method names for ruby
+        # FIXME: Need to adjust method names for ruby
         return [nodes.literal(text = 'Xapian::' + cm)], []
     elif highlight_language == 'tcl':
         return [nodes.literal(text = 'xapian::' + cm)], []
@@ -629,7 +629,7 @@ def xapian_literal_role(typ, rawtext, etext, lineno, inliner,
         return [nodes.literal(text = t)], []
     elif highlight_language == 'lua':
         if t == 'DBL_MAX':
-	    # FIXME: is this available in lua?
+            # FIXME: is this available in lua?
             t = 'DBL_MAX'
         elif t == 'false':
             t = 'false'
@@ -697,15 +697,15 @@ def xapian_literal_role(typ, rawtext, etext, lineno, inliner,
         return [nodes.literal(text = t)], []
     elif highlight_language == 'tcl':
         if t == 'DBL_MAX':
-	    # FIXME: is this available in tcl?
+            # FIXME: is this available in tcl?
             t = 'DBL_MAX'
         elif t == 'false':
             t = 'false'
         elif t == 'true':
             t = 'true'
         elif t == 'NULL':
-	    # FIXME: Tcl doesn't have 'null' http://wiki.tcl.tk/17441 but what is
-	    # equivalent for passing a NULL pointer via SWIG-generated wrappers?
+            # FIXME: Tcl doesn't have 'null' http://wiki.tcl.tk/17441 but what is
+            # equivalent for passing a NULL pointer via SWIG-generated wrappers?
             t = '0'
         else:
             print "Unhandled literal '%s' for %s" % (t, highlight_language)
@@ -765,15 +765,15 @@ def xapian_check_examples():
     for (ex, args, cleanfirst) in examples_in_order:
         command = xapian_code_example_command(ex)
         filename = xapian_code_example_filename(ex)
-	if len(cleanfirst):
-	    if re.search(r'[^-A-Za-z0-9_ ]', cleanfirst):
-		# Or we could actually escape it...
-		print("Bad characters in cleanfirst: ''" % cleanfirst)
-		sys.exit(1)
+        if len(cleanfirst):
+            if re.search(r'[^-A-Za-z0-9_ ]', cleanfirst):
+                # Or we could actually escape it...
+                print("Bad characters in cleanfirst: ''" % cleanfirst)
+                sys.exit(1)
             os.system("rm -rf %s" % cleanfirst)
         run_command = xapian_run_example_command(ex)
         os.system("%s %s > tmp.out 2> tmp2.out || echo '%s failed';cat tmp2.out >> tmp.out" \
-		  % (run_command, args, ex))
+                  % (run_command, args, ex))
         esc_args = xapian_escape_args(args)
         fullout = "%s.%s.out" % (filename, esc_args)
         tmp_out = "%s.%s.tmp" % (filename, esc_args)
