@@ -34,24 +34,24 @@ def pull(title):
 
     def grab(info, name=None):
         if name is None:
-            name = info
+            name = info.lower()
         text = infobox.find("text", text=info)
         if text:
             information[name] = extract_text(text.parent.findNext("td"))
 
     grab("Capital")
-    grab("Admission to Union", "Admitted")
+    grab("Admission to Union", "admitted")
     pop = infobox.find("text", text="Population")
     if pop:
         text = pop.findNext("text", text=re.compile("Total$"))
         if text:
-            information['Population'] = extract_text(text.parent.findNext("td"))
-    grab(re.compile("Latitude$"), "Latitude")
-    grab(re.compile("Longitude$"), "Longitude")
+            information['population'] = extract_text(text.parent.findNext("td"))
+    grab(re.compile("Latitude$"), "latitude")
+    grab(re.compile("Longitude$"), "longitude")
     text = infobox.find("text", text=re.compile("Motto"))
     if text:
-        information["Motto"] = extract_text(text.findNext("i"))
-    information["Description"] = extract_text(infobox.findNext("p"))
+        information["motto"] = extract_text(text.findNext("i"))
+    information["description"] = extract_text(infobox.findNext("p"))
 
     return information
 
@@ -64,6 +64,16 @@ def extract_text(tag):
         return " ".join(" ".join([extract_text(item) for item in tag.contents]).split()).replace("( ", "(").replace(" )", ")").replace(" :", ":")
 
 
+columns = [
+    'name',
+    'capital',
+    'admitted',
+    'population',
+    'latitude',
+    'longitude',
+    'motto',
+    'description',
+    ]
 pool = eventlet.GreenPool(size=10)
 results = pool.imap(
     pull,
@@ -71,33 +81,8 @@ results = pool.imap(
     )
 with open("data/states.csv", "w") as fh:
     w = csv.writer(fh, dialect='excel')
-    w.writerow(
-        [
-            'name',
-            'capital',
-            'admitted',
-            'population',
-            'latitude',
-            'longitude',
-            'motto',
-            'description',
-            ]
-        )
+    w.writerow(columns)
     for result in results:
         if result is None:
             continue
-        w.writerow(
-            map(
-                lambda x: x.encode('utf-8'),
-                [
-                    result.get("Name", u""),
-                    result.get("Capital", u""),
-                    result.get("Admitted", u""),
-                    result.get("Population", u""),
-                    result.get("Latitude", u""),
-                    result.get("Longitude", u""),
-                    result.get("Motto", u""),
-                    result.get("Description", u""),
-                    ]
-                )
-            )
+        w.writerow([ result.get(col, u"").encode('utf-8') for col in columns ])
