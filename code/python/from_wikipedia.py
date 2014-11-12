@@ -28,9 +28,9 @@ def pull(title):
         return None
 
     information = {}
-    name = infobox.find("td", { 'class': 'fn org' })
+    name = infobox.find("th", { 'class': 'fn org' })
     if name:
-        information['Name'] = extract_text(name.find("b"))
+        information['name'] = extract_text(name)
 
     def grab(info, name=None):
         if name is None:
