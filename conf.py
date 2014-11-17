@@ -334,8 +334,18 @@ def xapian_run_example_command(ex):
         return "%s %s" % (tclsh, xapian_code_example_filename(ex))
     elif highlight_language == 'c++':
         cxx = get_tool_name('CXX', 'g++')
-        return "%s `xapian-config --cxxflags` %s code/c++/support.cc -o code/c++/%s `xapian-config --libs`\ncode/c++/%s" \
-            % (cxx, xapian_code_example_filename(ex), ex, ex)
+        xapian_config = get_tool_name('XAPIAN_CONFIG', 'xapian-config')
+        pfx = ''
+        xcopt = '--libs'
+        if xapian_config != 'xapian-config' and not xapian_config.startswith('/usr/'):
+            if os.system('%s --ltlibs > /dev/null 2>&1' % xapian_config) != 0:
+                print "'%s --ltlibs' doesn't work" % xapian_config
+                sys.exit(1)
+            if os.system('%s --libs > /dev/null 2>&1' % xapian_config) != 0:
+                pfx = 'libtool --quiet --mode=link '
+                xcopt = '--ltlibs'
+        return "%s%s `%s --cxxflags` %s code/c++/support.cc -o code/c++/%s `%s %s`\ncode/c++/%s" \
+            % (pfx, cxx, xapian_config, xapian_code_example_filename(ex), ex, xapian_config, xcopt, ex)
     elif highlight_language == 'csharp':
         csc = get_tool_name('CSC', 'cli-csc')
         return "%s -unsafe -target:exe -out:%s.exe %s -r:XapianSharp.dll\n./%s.exe" \
