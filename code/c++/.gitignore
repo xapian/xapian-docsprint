@@ -1,3 +1,4 @@
+.libs
 delete1
 index1
 index_facets
@@ -6,3 +7,5 @@ index_ranges
 search1
 search_facets
 search_filters
+search_filters2
+search_ranges
