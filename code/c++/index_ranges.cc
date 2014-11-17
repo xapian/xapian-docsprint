@@ -65,7 +65,8 @@ void index(const string & datapath, const string & dbpath)
 	termgenerator.index_text(description);
 
 	// Store all the fields for display purposes.
-	doc.set_data(identifier + "\n" + title + "\n" + description);
+	doc.set_data(identifier + "\n" + title + "\n" + description + "\n" +
+		     date_made + "\n" + measurements);
 
 // Start of example code.
         // parse the two values we need
