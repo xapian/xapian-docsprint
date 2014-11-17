@@ -144,6 +144,7 @@ either signal to the user or perhaps try the query again without the
 
 .. xapianrunexample:: search_ranges
     :args: db 1000mm..
+    :shouldfail: 1
 
 
 Handling dates

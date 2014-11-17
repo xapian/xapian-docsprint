@@ -409,6 +409,7 @@ class XapianRunExample(LiteralInclude):
     option_spec = {
         'args': directives.unchanged_required,
         'cleanfirst': directives.unchanged,
+        'shouldfail': directives.unchanged,
     }
 
     def run(self):
@@ -423,6 +424,9 @@ class XapianRunExample(LiteralInclude):
         cleanfirst = ''
         if 'cleanfirst' in self.options:
             cleanfirst = self.options['cleanfirst']
+        shouldfail = 0
+        if 'shouldfail' in self.options:
+            shouldfail = self.options['shouldfail']
         if 'args' in self.options:
             args = self.options['args']
             command = "%s %s" % (command, args)
@@ -440,7 +444,7 @@ class XapianRunExample(LiteralInclude):
                 % (filename, highlight_language)
 
         global examples_used, examples_in_order
-        examples_in_order.append((self.arguments[0], args, cleanfirst))
+        examples_in_order.append((self.arguments[0], args, cleanfirst, shouldfail))
         if self.arguments[0] in examples_used:
             examples_used[self.arguments[0]].append(args)
         else:
@@ -774,7 +778,7 @@ def xapian_check_examples():
     # Process the commands in order so that the correct databases have been
     # created when they are used.
     os.system("rm -rf db filtersdb statesdb")
-    for (ex, args, cleanfirst) in examples_in_order:
+    for (ex, args, cleanfirst, shouldfail) in examples_in_order:
         command = xapian_code_example_command(ex)
         filename = xapian_code_example_filename(ex)
         if len(cleanfirst):
@@ -784,8 +788,14 @@ def xapian_check_examples():
                 sys.exit(1)
             os.system("rm -rf %s" % cleanfirst)
         run_command = xapian_run_example_command(ex)
-        os.system("%s %s > tmp.out 2> tmp2.out || echo '%s failed';cat tmp2.out >> tmp.out" \
-                  % (run_command, args, ex))
+        status = os.system("%s %s > tmp.out 2> tmp2.out" % (run_command, args))
+        os.system("cat tmp2.out >> tmp.out")
+        if shouldfail:
+            if status == 0:
+                print '%s: Exit status 0, expected failure' % filename
+        else:
+            if status != 0:
+                print '%s: Exit status %d, expected 0' % (filename, status)
         esc_args = xapian_escape_args(args)
         fullout = "%s.%s.out" % (filename, esc_args)
         tmp_out = "%s.%s.tmp" % (filename, esc_args)
