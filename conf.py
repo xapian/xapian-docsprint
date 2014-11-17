@@ -752,6 +752,8 @@ def xapian_check_examples():
         if ex in examples_used:
             del examples_used[ex]
             continue
+        if ex in examples_missing:
+            continue
         print "Example %s isn't shown to be run anywhere" % ex
         bad = True
 
