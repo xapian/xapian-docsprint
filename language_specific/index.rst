@@ -1,1 +1,0 @@
-.. xapianinclude:: LANGUAGE/index.rst

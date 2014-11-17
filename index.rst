@@ -7,7 +7,7 @@ Contents:
    :maxdepth: 2
 
    overview
-   language_specific/index
+   language_specific
    concepts/index
    practical_example/index
    howtos/index
