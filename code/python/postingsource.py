@@ -42,17 +42,17 @@ class ExternalWeightPostingSource(xapian.PostingSource):
 ### End of at_end.
 
 ### Start of next.
-        def next(self, minweight):
-            try:
-                self.current = self.alldocs.next()
-            except StopIteration:
-                self.current = None
+    def next(self, minweight):
+        try:
+            self.current = self.alldocs.next()
+        except StopIteration:
+            self.current = None
 ### End of next.
 
 ### Start of skip_to.
-        def skip_to(self, docid, minweight):
-            try:
-                self.current = self.alldocs.skip_to(docid)
-            except StopIteration:
-                self.current = None
+    def skip_to(self, docid, minweight):
+        try:
+            self.current = self.alldocs.skip_to(docid)
+        except StopIteration:
+            self.current = None
 ### End of skip_to.
