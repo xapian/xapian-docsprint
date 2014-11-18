@@ -9,7 +9,6 @@ class ExternalWeightPostingSource(xapian.PostingSource):
     """
     def __init__(self, wtsource):
         xapian.PostingSource.__init__(self)
-        self.term = term
         self.wtsource = wtsource
 ### End of class header and constructor.
 
