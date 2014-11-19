@@ -28,7 +28,7 @@ probably make sure you have Xapian installed first!
 Installation
 ------------
 
-There are two pieces of Xapian you need to following this guide: the
+There are two pieces of Xapian you need to follow this guide: the
 library itself, and support for the language you're going to be
 using.  This guide was originally written with examples in Python_,
 and we're also working on full translations into PHP_ and C++.  Help with
