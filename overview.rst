@@ -45,16 +45,16 @@ release series.  So let's get that onto your system.
 Installation on Debian or Ubuntu
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Recent versions of both Debian and Ubuntu have Xapian 1.2 packaged: if
-you're using Debian 6.0 (squeeze) or later, or Ubuntu 11.10 (Oneiric
-Ocelot) or later you can just do one of the following depending on whether you
-want to work through the examples in Python or C++::
+Debian and Ubuntu have Xapian 1.2 packaged: if you're using a release which
+is still in support, except Ubuntu 10.04 LTS (Lucid Lynx), then you can just do
+one of the following depending on whether you want to work through the examples
+in Python or C++::
 
     $ sudo apt-get install python-xapian
     $ sudo apt-get install libxapian-dev
 
-If you're using Ubuntu 11.04 (Natty Narwhal) or earlier, you'll need to
-install from our PPA_.
+If you're using Ubuntu 10.04 LTS (Lucid Lynx), you'll need to install from our
+PPA_.
 
 .. _PPA: https://launchpad.net/~xapian-backports/+archive/xapian-1.2
 
