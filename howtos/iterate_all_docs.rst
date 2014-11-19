@@ -36,6 +36,6 @@ In Xapian, a postlist is a list of the documents in which a term exists.  Here, 
 "empty" term, which implicitly matches all documents, to get an iterator over all documents.
 
 The iterator can be dereferenced to get the document IDs; to get the actual documents, the
-xapian-method:`Database::get_document()` method should be used.
+:xapian-method:`Database::get_document()` method should be used.
 
 .. todo: Need an example here, and probably some rewording.
