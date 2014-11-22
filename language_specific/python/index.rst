@@ -7,26 +7,6 @@ and largely follow the C++ API, with the following differences and
 additions. Python strings and lists, etc., are converted automatically
 in the bindings, so generally it should just work as expected.
 
-The ``examples`` subdirectory contains examples showing how to use the
-Python bindings based on the simple examples from ``xapian-examples``:
-:ref:`simpleindex`,
-:ref:`simplesearch`,
-:ref:`simpleexpand`,
-There's also
-:ref:`simplematchdecider`,
-which shows how to define a MatchDecider in Python.
-
-
-The Python bindings come with a test suite, consisting of two test files:
-``smoketest.py`` and ``pythontest.py``. These are run by the
-"``make check``" command, or may be run manually.  By default, they
-will display the names of any tests which failed, and then display a count of
-tests which run and which failed.  The verbosity may be increased by setting
-the "``VERBOSE``" environment variable: a value of 1 will display
-detailed information about failures, and a value of 2 will display further
-information about the progress of tests.
-
-
 Exceptions
 ##########
 
