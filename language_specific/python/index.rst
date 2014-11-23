@@ -120,11 +120,6 @@ The lazy evaluation is mainly transparent, but does become visible in one situat
 - Document.termlist (also accessible as Document.__iter__): **termfreq** and **positer**
 - Database.postlist: **positer**
 
-In older releases, the pythonic iterators returned lists representing the
-appropriate item when their ``next()`` method was called.  These were
-removed in Xapian 1.1.0.
-
-
 Non-Pythonic Iterators
 ######################
 
@@ -191,7 +186,7 @@ work using the C++ array dereferencing):
 
 Additionally, the MSet has a property, ``mset.items``, which returns a
 list of tuples representing the MSet.  This is now deprecated - please use the
-property API instead (it works in Xapian 1.0.x too).  The tuple members and the
+property API instead.  The tuple members and the
 equivalent property names are as follows:
 
 
@@ -220,7 +215,7 @@ ESet
 
 The ESet has a property, ``eset.items``, which returns a list of
 tuples representing the ESet.  This is now deprecated - please use the
-property API instead (it works in Xapian 1.0.x too).  The tuple members and the
+property API instead.  The tuple members and the
 equivalent property names are as follows:
 
 
@@ -271,7 +266,7 @@ a mixture of terms and queries if you wish.  For example:
 MatchAll and MatchNothing
 -------------------------
 
-As of 1.1.1, these are wrapped as ``xapian.Query.MatchAll`` and
+These are wrapped as ``xapian.Query.MatchAll`` and
 ``xapian.Query.MatchNothing``.
 
 
