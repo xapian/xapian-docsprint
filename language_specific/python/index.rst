@@ -10,16 +10,16 @@ in the bindings, so generally it should just work as expected.
 Exceptions
 ##########
 
-Xapian exceptions are translated into Python exceptions with the same names
-and inheritance hierarchy as the C++ exception classes.  The base class of
-all Xapian exceptions is the ``xapian.Error`` class, and this in
-turn is a child of the standard python ``exceptions.Exception``
-class.
+Xapian-specific exceptions are subclasses of the :xapian-class:`Error`
+class, so you can trap all Xapian-specific exceptions like so::
 
-This means that programs can trap all xapian exceptions using "``except
-xapian.Error``", and can trap all exceptions which don't indicate that
-the program should terminate using "``except Exception``".
+    try:
+        do_something_with_xapian()
+    except xapian.Error as e:
+        print str(e)
 
+:xapian-class:`Error` is itself a subclass of the standard Python
+`exceptions.Exception` class.
 
 Unicode
 #######
