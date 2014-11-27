@@ -146,7 +146,7 @@ operations required to turn one word into another.  The allowed operations
 are: insert a character; delete a character; change a character to another;
 transpose two adjacent characters.  The candidate with the smallest edit
 distance is found, and if more than one word has the smallest edit distance,
-that which occurs the most times is chosen.  If there's a tie of this too,
+that which occurs the most times is chosen.  If there's a tie on this too,
 it's essentially arbitrary which is chosen.
 
 If the word passed in is in the spelling dictionary, then a candidate will
