@@ -32,11 +32,12 @@ Xapian databases hold all the information needed to perform searches in a set
 of tables.  The following tables always exist:
 
  - A posting list table, which holds a list of all the documents indexed by
-   each term in the database.
+   each term in the database, and for chert also chunked streams of the values
+   in each value slot.
  - A record table, which holds the document data associated with each document
    in the database.
  - A termlist table, which holds a list of all the terms which index each
-   document.
+   document, and for chert also the value slots used in each document.
 
 And the following optional tables exist only when there is data to store in
 them (in 1.0.1 and earlier, the position and value tables were always created
@@ -170,7 +171,7 @@ Be warned that Xapian is heavily I/O dependent, and therefore performance over
 a network file system is likely to be slow unless you've got a very well tuned
 setup.
 
-Xapian needs to be able to create a lock file in a database directory when
+Xapian needs to be able to lock a file in a database directory when
 modifications are being performed.  On some network files systems (e.g., NFS)
 this requires a lock daemon to be running.
 
@@ -369,7 +370,7 @@ of database "foo"::
 .. _upgrading-databases:
 
 Converting a flint database to a chert database
-------------------------------------------------
+-----------------------------------------------
 
 It is possible to convert a flint database to a chert database by
 using the "copydatabase" example program included with Xapian.  This is a
