@@ -95,7 +95,7 @@ Retrieval, while others have a specific meaning in the context of Xapian.
  Glass is the current "under development" database format as of Xapian 1.3.2.
  We try to keep it as stable as chert - the main difference is that
  incompatible changes may be made which will require you to reindex, even
- between stable point release.  In release 1.4.0, glass will be declared stable
+ between stable point releases.  In release 1.4.0, glass will be declared stable
  and made the default backend, and chert will then be deprecated.
 
 **Index**
