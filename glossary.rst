@@ -34,9 +34,9 @@ Retrieval, while others have a specific meaning in the context of Xapian.
 **Brass**
  Brass was the current "under development" database format in Xapian 1.2.x,
  1.3.0 and 1.3.1.  It was renamed to 'glass' in Xapian 1.3.2 because we decided
- to use backend names in ascending alphabetical order to make it easier to
- understand which backend is newest, and since 'flint' was used recently, we
- skipped over 'd', 'e' and 'f'.
+ name backends ascending alphabetical order to make it easier to understand
+ which backend is newest, and since 'flint' was used recently, we skipped over
+ 'd', 'e' and 'f'.
 
 **Chert**
  Chert is the stable database format used in Xapian 1.2.x.  It is similar
