@@ -41,7 +41,7 @@ Chapter 2: Databases
            database at the specified path if it already exists.
 
         -  DB_CREATE_OR_OVERWRITE: like DB_CREATE, but will overwrite the
-           database at the specfied path if it already exists.
+           database at the specified path if it already exists.
 
         -  DB_OPEN: the database will be opened if it already exists, but
            if it doesn't exist an exception will be raised.
