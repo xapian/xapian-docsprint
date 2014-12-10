@@ -279,7 +279,9 @@ Inspecting a database
 
 When designing an indexing strategy, it is often useful to be able to check
 the contents of the database.  Xapian includes a simple command-line program,
-"delve", to allow this.
+``delve``, to allow this.  Some packaged versions of Xapian install this as
+``xapian-delve``, and it's been renamed to that in the 1.3.x development
+series.
 
 For example, to display the list of terms in document "1" of the database
 "foo", use::
