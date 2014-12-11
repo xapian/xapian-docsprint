@@ -60,19 +60,19 @@ to store any positionlist information.
 
 If you look at a Xapian database, you will see that each of these tables
 actually uses 2 or 3 files.  For example, for a "chert" format database the
-termlist table is stored in the files "termlist.baseA", "termlist.baseB"
-and "termlist.DB".
+termlist table is stored in the files ``termlist.baseA``, ``termlist.baseB``
+and ``termlist.DB``.
 
-The ".DB" file actually stores the data, and is structured as a tree of
+The ``.DB`` file actually stores the data, and is structured as a tree of
 blocks, which have a default size of 8KB (though this can be set, either
 through the Xapian API, or with some of the tools detailed later in this
 document).
 
-The ".baseA" and ".baseB" files are used to keep track of where to start
-looking for data in the ".DB" file (the root of the tree), and which blocks are
-in use.  Often only one of the ".baseA" and ".baseB" files will be present;
+The ``.baseA`` and ``.baseB`` files are used to keep track of where to start
+looking for data in the ``.DB`` file (the root of the tree), and which blocks are
+in use.  Often only one of the ``.baseA`` and ``.baseB`` files will be present;
 each of these files refers to a revision of the database, and there may be more
-than one valid revision of the database stored in the ".DB" file at once.
+than one valid revision of the database stored in the ``.DB`` file at once.
 
 Changing the blocksize may have performance implications, but it is hard to
 tell whether these will be positive or negative for a particular combination
@@ -289,7 +289,7 @@ For example, to display the list of terms in document "1" of the database
   delve foo -r 1
 
 It is also possible to perform simple searches of a database.  Xapian includes
-another simple command-line program, "quest", to support this.  "quest" is
+another simple command-line program, ``quest``, to support this.  ``quest`` is
 only able to search for un-prefixed terms, the query string must be quoted to
 protect it from the shell.  To search the database "foo" for the phrase "hello
 world", use::
@@ -313,7 +313,7 @@ smaller a database is, the faster it can be searched, so if there aren't
 expected to be many further modifications, it can be desirable to compact the
 database.
 
-Xapian includes a tool called "xapian-compact" for compacting databases.
+Xapian includes a tool called ``xapian-compact`` for compacting databases.
 This tool makes a copy of a database, and takes advantage of
 the sorted nature of the source Xapian database to write the database out
 without leaving spare space for future modifications.  This can result in a
@@ -324,11 +324,11 @@ longer, due to needing to reorganise the database to make space for them.
 However, modifications are still possible, and if many modifications are made,
 the database will gradually develop spare space.
 
-There's an option ("-F") to perform a "fuller" compaction.  This option
+There's an option (``-F``) to perform a "fuller" compaction.  This option
 compacts the database as much as possible, but it violates the design of the
 Btree format slightly to achieve this, so it is not recommended if further
 modifications are at all likely in future.  If you do need to modify a "fuller"
-compacted database, we recommend you run xapian-compact on it without "-F"
+compacted database, we recommend you run ``xapian-compact`` on it without ``-F``
 first.
 
 While taking a copy of the database, it is also possible to change the
@@ -343,7 +343,7 @@ Merging databases
 When building an index for a very large amount of data, it can be desirable to
 index the data in smaller chunks (perhaps on separate machines), and then
 merge the chunks together into a single database.  This can be performed using
-the "xapian-compact" tool, simply by supplying several source database paths.
+the ``xapian-compact`` tool, simply by supplying several source database paths.
 
 Normally, merging works by reading the source databases in parallel, and
 writing the contents in sorted order to the destination database.  This will
@@ -362,7 +362,7 @@ Checking database integrity
 ---------------------------
 
 Xapian includes a command-line tool to check that a database is
-self-consistent.  This tool, "xapian-check", runs through the entire database,
+self-consistent.  This tool, ``xapian-check``, runs through the entire database,
 checking that all the internal nodes are correctly connected.  It can also be
 used on a single table, for example, this command will check the termlist table
 of database "foo"::
@@ -375,8 +375,8 @@ Converting a flint database to a chert database
 -----------------------------------------------
 
 It is possible to convert a flint database to a chert database by
-using the "copydatabase" example program included with Xapian.  This is a
-lot slower to run than "xapian-compact", since it has to perform the
+using the ``copydatabase`` example program included with Xapian.  This is a
+lot slower to run than ``xapian-compact``, since it has to perform the
 sorting of the term occurrence data from scratch, but should be faster than a
 re-index from source data since it doesn't need to perform the tokenisation
 step.  It is also useful if you no longer have the source data available.
@@ -386,9 +386,9 @@ creating the new database at "DESTINATION" as a chert database::
 
   copydatabase SOURCE DESTINATION
 
-By default copydatabase will renumber your documents starting with docid 1.
+By default ``copydatabase`` will renumber your documents starting with docid 1.
 If the docids are stored in or come from some external system, you should
-preserve them by using the --no-renumber option (new in Xapian 1.2.5)::
+preserve them by using the ``--no-renumber`` option (new in Xapian 1.2.5)::
 
   copydatabase --no-renumber SOURCE DESTINATION
 
@@ -397,8 +397,8 @@ Converting a quartz database to a flint database
 
 It is possible to convert a quartz database to a flint database by installing
 Xapian 1.0.x (since this has support for both quartz and flint)
-and using the "copydatabase" example program included with Xapian.  This is a
-lot slower to run than "xapian-compact", since it has to perform the
+and using the ``copydatabase`` example program included with Xapian.  This is a
+lot slower to run than ``xapian-compact``, since it has to perform the
 sorting of the term occurrence data from scratch, but should be faster than a
 re-index from source data since it doesn't need to perform the tokenisation
 step.  It is also useful if you no longer have the source data available.
@@ -419,7 +419,8 @@ databases non-portable between platforms, we had to make an incompatible
 change in the flint format.  It's not easy to write an upgrader, but you
 can convert a database using the following procedure (although it might
 be better to rebuild from scratch if you want to use the new UTF-8 support
-in Xapian::QueryParser, Xapian::Stem, and Xapian::TermGenerator).
+in :xapian-class:`QueryParser`, :xapian-class:`Stem`, and
+:xapian-class:`TermGenerator`).
 
 Run the following command in your Xapian 0.9.x installation to copy your
 0.9.x flint database "SOURCE" to a new quartz database "INTERMEDIATE"::
