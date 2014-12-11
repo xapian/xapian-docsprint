@@ -27,7 +27,7 @@ Sorting by Value
 You can order documents by comparing a specified document value.  Note that the
 comparison used compares the byte values in the value (i.e. it's a string sort
 ignoring locale), so ``1`` < ``10`` < ``2``.  If you want to encode the value
-such that it sorts numerically, use ``Xapian::sortable_serialise()`` to encode
+such that it sorts numerically, use :xapian-just-method:`sortable_serialise()` to encode
 values at index time - this works equally well on integers and floating point
 values:
 
@@ -47,11 +47,11 @@ values:
 There are three methods which are used to specify how the value is used to
 sort, depending if/how you want relevance used in the ordering:
 
-* ``Enquire::set_sort_by_value()`` specifies the relevance doesn't affect the
+* :xapian-method:`Enquire::set_sort_by_value()` specifies the relevance doesn't affect the
   ordering at all.
-* ``Enquire::set_sort_by_value_then_relevance()`` specifies that relevance is
+* :xapian-method:`Enquire::set_sort_by_value_then_relevance()` specifies that relevance is
   used for ordering any groups of documents for which the value is the same.
-* ``Enquire::set_sort_by_relevance_then_value()`` specifies that documents are
+* :xapian-method:`Enquire::set_sort_by_relevance_then_value()` specifies that documents are
   ordered by relevance, and the value is only used to order groups of documents
   with identical relevance values (note: the weight has to be exactly the same
   for values to determine the order, so this method isn't very useful when
