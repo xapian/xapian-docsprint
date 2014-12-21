@@ -7,7 +7,13 @@ Custom Weighting Schemes
 You can also implement your own weighting scheme, provided it can be expressed
 in the form of a sum over the matching terms, plus an extra term which depends
 on term-independent statistics (such as the normalised document length).
+
 Currently it is only possible to implement custom weighting schemes in C++.
+The API could probably be wrapped with a bit of effort, but performance is
+likely to be disappointing as the :xapian-just-method:`get_sumpart()` method
+gets called a lot (approximately once per matching term in each considered
+document), so the overhead of routing a method call from C++ to the wrapped
+language will matter.
 
 For example, here's an implementation of "coordinate matching" - each matching
 term scores one point:
