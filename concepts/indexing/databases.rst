@@ -103,7 +103,12 @@ lock.  Multiple concurrent readers are supported (in addition to the writer).
 When a database is opened for reading, a fixed snapshot of the database is
 referenced by the reader, (essentially `Multi-Version Concurrency Control`_).
 Updates which are made to the database will not be visible to the reader unless
-it calls :xapian-method:`Database::reopen()`.
+it calls :xapian-method:`Database::reopen()`.  If the reader is already reading
+the latest committed version of the database then
+:xapian-just-method:`reopen()` has no effect and is a cheap operation, so if
+you are reusing the same :xapian-class:`Database` object for multiple searches
+then it is a reasonable strategy to call :xapian-just-method:`reopen()` prior
+to each search.
 
 .. _Multi-Version Concurrency Control: http://en.wikipedia.org/wiki/Multiversion_concurrency_control
 
