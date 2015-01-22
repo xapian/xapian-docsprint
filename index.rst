@@ -20,7 +20,7 @@ Contributing
 ------------
 
 The `source for this documentation
-<http://github.com/jaylett/xapian-docsprint>`_ is being kept on github; the
+<http://github.com/xapian/xapian-docsprint>`_ is being kept on github; the
 best way to contribute is to add issues, comments and pull requests there.
 We're monitoring IRC during the sprint sessions (and in general) so you can
 also contact us on channel #xapian on irc.freenode.net [`webchat link
