@@ -97,6 +97,7 @@ There are two broad approaches to do this:
 * Pseudo Relevance feedback - top ranking document of the search are considered to be relevant and used to reweight the terms or add new term.
 
 
+----------
 References
 ----------
 
