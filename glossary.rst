@@ -58,6 +58,10 @@ Retrieval, while others have a specific meaning in the context of Xapian.
  from Xapian 1.2 onwards; Flint was used from Xapian 1.0 onwards; Quartz was
  used in older versions.
 
+**Divergence from Randomness**
+ A family of probabilistic weighting schemes developed more recently than
+ BM25.  Xapian 1.3 adds supports for a number of such schemes.
+
 **Document ID**
  A unique positive integer identifying a document in a Xapian database.
 
@@ -114,6 +118,10 @@ Retrieval, while others have a specific meaning in the context of Xapian.
 **Information Retrieval (IR)**
  Information Retrieval is the "science of search".  It's the name used to
  refer to the study of search and related topics in academia.
+
+**Language Modelling**
+ A family of weighting schemes based on modelling the frequency at which
+ words occur.  Xapian 1.3 adds supports for the Unigram Language Model.
 
 **MSet (Match Set)**
  The Match Set (MSet) is a ranked list of documents resulting from a query.
