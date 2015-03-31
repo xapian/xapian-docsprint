@@ -119,5 +119,9 @@ facets. These are:
   also allow you to create a facet by colour which is aware of these
   multiple values, giving counts for both red and blue.
 
+.. TODO:: This is misleading - it's already possibly to dead with a facet
+  with multiple values like this.  We should document how rather than
+  seeming to imply you can't currently.
+
 * Bucketing: this provides a means to group together numeric facets, so that
   a single facet can contain a range of values (e.g. price ranges).
