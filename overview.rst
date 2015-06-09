@@ -107,8 +107,9 @@ in the next paragraph (both are in the "code" subdirectory).
 .. _documentation source from github: https://github.com/xapian/xapian-docsprint
 
 The first dataset is the first 100 objects taken from `museum
-catalogue data released by the Science Museum
-<http://api.sciencemuseum.org.uk/documentation/collections/>`_, and
+catalogue data released by the Science Museum (which was available from
+<http://api.sciencemuseum.org.uk/documentation/collections/>`_, but that
+site seems to no longer exist as of June 2015) and
 the second we have curated ourselves from information on Wikipedia
 about the 50 `US States
 <http://en.wikipedia.org/wiki/U.S._state>`_. Both are provided as
@@ -118,8 +119,13 @@ Commons license Attribution-NonCommercial-ShareAlike
 second under `Creative Commons Attribution-Share Alike 3.0
 <http://creativecommons.org/licenses/by-sa/3.0/>`_.
 
-.. * `museum catalogue dataset <http://xapian.org/data/muscat-data.csv.gz>`_
-.. * `US states dataset <http://xapian.org/data/states-data.csv.gz>`_
+These datasets are in the git repo which holds the source for this
+documentation - you can also view them online on `github
+<https://github.com/xapian/xapian-docsprint/tree/master/data>`_:
+
+ * `100-objects-v1.csv <https://raw.githubusercontent.com/xapian/xapian-docsprint/master/data/100-objects-v1.csv>`_
+ * `100-objects-v2.csv <https://raw.githubusercontent.com/xapian/xapian-docsprint/master/data/100-objects-v2.csv>`_
+ * `states.csv <https://raw.githubusercontent.com/xapian/xapian-docsprint/master/data/states.csv>`_
 
 .. todo:: link to here from every howto and everything that needs the data files and example code
 

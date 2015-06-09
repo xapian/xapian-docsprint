@@ -1,12 +1,15 @@
 Building a museum catalogue
 ===========================
 
-We're going to build a simple search system based on `museum catalogue
-data <http://api.sciencemuseum.org.uk/documentation/collections/>`_
-released under the `Creative Commons
+.. This link to the API seems to be dead (June 2015) - reinstate it if that
+.. turns out to be temporary:
+.. http://api.sciencemuseum.org.uk/documentation/collections/
+
+We're going to build a simple search system based on museum catalogue
+data released under the `Creative Commons
 Attribution-NonCommercial-ShareAlike
 <http://creativecommons.org/licenses/by-nc-sa/3.0/>`_ license by the
-Science Museum in London, UK.
+`Science Museum in London, UK <http://www.sciencemuseum.org.uk/>`_.
 
 Preparing to run the examples
 -----------------------------
