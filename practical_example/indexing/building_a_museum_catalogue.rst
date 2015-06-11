@@ -1,10 +1,6 @@
 Building a museum catalogue
 ===========================
 
-.. This link to the API seems to be dead (June 2015) - reinstate it if that
-.. turns out to be temporary:
-.. http://api.sciencemuseum.org.uk/documentation/collections/
-
 We're going to build a simple search system based on museum catalogue
 data released under the `Creative Commons
 Attribution-NonCommercial-ShareAlike

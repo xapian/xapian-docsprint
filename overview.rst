@@ -106,12 +106,11 @@ in the next paragraph (both are in the "code" subdirectory).
 
 .. _documentation source from github: https://github.com/xapian/xapian-docsprint
 
-The first dataset is the first 100 objects taken from `museum
-catalogue data released by the Science Museum (which was available from
-<http://api.sciencemuseum.org.uk/documentation/collections/>`_, but that
-site seems to no longer exist as of June 2015) and
-the second we have curated ourselves from information on Wikipedia
-about the 50 `US States
+The first dataset is the first 100 objects taken from museum
+catalogue data released by the `Science Museum
+<http://www.sciencemuseum.org.uk>`_.  We downloaded this data from their API
+site, but this has since shut down.  The second dataset we have curated
+ourselves from information on Wikipedia about the 50 `US States
 <http://en.wikipedia.org/wiki/U.S._state>`_. Both are provided as
 gzipped CSV files. The first dataset is released under the `Creative
 Commons license Attribution-NonCommercial-ShareAlike
