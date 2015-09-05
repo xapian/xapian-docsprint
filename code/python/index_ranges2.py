@@ -28,7 +28,7 @@ def index(datapath, dbpath):
         termgenerator.set_document(doc)
 
 ### Start of example code.
-        # index each field with a suitable prefix
+        # Index each field with a suitable prefix.
         termgenerator.index_text(name, 1, 'S')
         termgenerator.index_text(description, 1, 'XD')
         termgenerator.index_text(motto, 1, 'XM')
