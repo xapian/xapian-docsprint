@@ -213,7 +213,7 @@ Removed Feature name                        Upgrade suggestion and comments
                                             level too) and we can't find any evidence that people are actually using it.
                                             So we are deprecating it and will replace it with something better thought out,
                                             probably during the 1.3.x development series.  There's so further thoughts at
-                                            http://trac.xapian.org/ticket/3#comment:8
+                                            https://trac.xapian.org/ticket/3#comment:8
 ------- ----------------------------------- ----------------------------------------------------------------------------------
 1.3.2   ``Xapian::Auto::open_stub()``       Use the constructor with ``Xapian::DB_BACKEND_STUB`` flag (new in 1.3.2) instead.
 ------- ----------------------------------- ----------------------------------------------------------------------------------

@@ -23,9 +23,9 @@ and also check that you've installed Xapian as detailed there.
 .. 
 ..     $ mkdir xapian-guide
 ..     $ cd xapian-guide
-..     $ wget http://xapian.org/docs/examples/python.tgz
-..     $ wget http://xapian.org/data/muscat-data.csv.gz
-..     $ wget http://xapian.org/data/states-data.csv.gz
+..     $ wget https://xapian.org/docs/examples/python.tgz
+..     $ wget https://xapian.org/data/muscat-data.csv.gz
+..     $ wget https://xapian.org/data/states-data.csv.gz
 ..     $ gzip -dc python.tgz | tar xvf - && rm python.tgz
 ..     $ gzip -d muscat-data.csv.gz
 ..     $ gzip -d states-data.csv.gz

@@ -43,7 +43,7 @@ document contained "happiness", a search for "happy" would find that
 document.
 
 The rules applied by a stemmer are dependent on the language of the text;
-Xapian includes `stemmers for more than a dozen languages <http://xapian.org/docs/apidoc/html/classXapian_1_1Stem.html>`_
+Xapian includes `stemmers for more than a dozen languages <https://xapian.org/docs/apidoc/html/classXapian_1_1Stem.html>`_
 (and for some languages there is a choice of stemmers), built using the
 `Snowball language <http://snowball.tartarus.org/>`_. We'd like to add
 stemmers for more languages - see the Snowball site for information on how
@@ -82,6 +82,6 @@ across multiple fields by default, instead of setting a default prefix you can
 map an empty field name to several term prefixes.
 
 Xapian has `conventions for term prefixes
-<http://xapian.org/docs/omega/termprefixes.html>`_ used for common fields,
+<https://xapian.org/docs/omega/termprefixes.html>`_ used for common fields,
 which originally came from Omega. For instance, 'A' is used for author, 'S'
 for subject/title, and so forth.

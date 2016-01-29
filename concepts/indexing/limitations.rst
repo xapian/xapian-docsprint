@@ -17,7 +17,7 @@ two bytes, so the limit is less for a term which contains zero bytes.
 It's rarely useful to have longer terms, but one situation where it can be
 is if you're using something like a URL as an ID term; `there is some
 discussion of this as one of our FAQs
-<http://trac.xapian.org/wiki/FAQ/UniqueIds>`_.
+<https://trac.xapian.org/wiki/FAQ/UniqueIds>`_.
 
 Document data length
 --------------------

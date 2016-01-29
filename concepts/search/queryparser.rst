@@ -127,10 +127,10 @@ configure which format dates are to be interpreted as (i.e. month-day-year)
 or otherwise.
 
 .. _Date:
-.. _DateValueRangeProcessor: http://xapian.org/docs/apidoc/html/classXapian_1_1DateValueRangeProcessor.html
+.. _DateValueRangeProcessor: https://xapian.org/docs/apidoc/html/classXapian_1_1DateValueRangeProcessor.html
 
 .. _Number:
-.. _NumericValueRangeProcessor: http://xapian.org/docs/apidoc/html/classXapian_1_1NumberValueRangeProcessor.html
+.. _NumericValueRangeProcessor: https://xapian.org/docs/apidoc/html/classXapian_1_1NumberValueRangeProcessor.html
 
 Wildcards
 ~~~~~~~~~
@@ -191,7 +191,7 @@ When the QueryParser receives a query, it joins together its component
 queries using a `default operator`_ which defaults to
 :xapian-just-constant:`OP_OR` but can be modified at run time.
 
-.. _default operator: http://xapian.org/docs/apidoc/html/classXapian_1_1QueryParser.html#2efe48be88c4872afec4bc963f417ea5
+.. _default operator: https://xapian.org/docs/apidoc/html/classXapian_1_1QueryParser.html#2efe48be88c4872afec4bc963f417ea5
 
 Parser Flags
 ~~~~~~~~~~~~
@@ -208,7 +208,7 @@ combined with the bitwise OR operator; these flags include:
 
 You can find more information about the available flags in the
 `API documentation
-<http://xapian.org/docs/apidoc/html/classXapian_1_1QueryParser.html#ae96a58a8de9d219ca3214a5a66e0407e>`_.
+<https://xapian.org/docs/apidoc/html/classXapian_1_1QueryParser.html#ae96a58a8de9d219ca3214a5a66e0407e>`_.
 
 By default, the QueryParser enables :xapian-just-constant:`FLAG_BOOLEAN`,
 :xapian-just-constant:`FLAG_PHRASE` and :xapian-just-constant:`FLAG_LOVEHATE`.

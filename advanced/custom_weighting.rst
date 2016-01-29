@@ -60,7 +60,7 @@ statistics which are absolutely required must be asked for as collecting
 statistics is expensive.  For a full list of statistics currently available
 from :xapian-class:`Weight` and the enumerators required to access them, please
 refer to the `API documentation
-<http://xapian.org/docs/sourcedoc/html/classXapian_1_1Weight.html#e3c11f1d2d96a18e0eb9b9b31c5c5479>`_.
+<https://xapian.org/docs/sourcedoc/html/classXapian_1_1Weight.html#e3c11f1d2d96a18e0eb9b9b31c5c5479>`_.
 
 .. todo:: Sort out doxygen visibility of protected stat_flags so the link above can be to the apidocs
 
@@ -70,7 +70,7 @@ frequency (Term frequency) of the term can be obtained by calling
 :xapian-just-method:`get_termfreq()`. For a full list of functions required to
 obtain various statistics, refer to
 `the xapian/weight.h header file
-<http://xapian.org/docs/sourcedoc/html/weight_8h_source.html#l00277>`_.
+<https://xapian.org/docs/sourcedoc/html/weight_8h_source.html#l00277>`_.
 
 Example:- Consider a simple weighting scheme such as a pseudo Tf-Idf weighting
 scheme which returns the document weight as the product of the within document

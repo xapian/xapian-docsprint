@@ -21,4 +21,4 @@ really long you'll need to do something more complicated.
 
 For more information on both techniques, `see our FAQ on this`_.
 
-.. _see our FAQ on this: http://trac.xapian.org/wiki/FAQ/UniqueIds
+.. _see our FAQ on this: https://trac.xapian.org/wiki/FAQ/UniqueIds

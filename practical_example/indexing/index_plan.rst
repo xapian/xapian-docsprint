@@ -22,7 +22,7 @@ systems. From this, we'll use 'S' to prefix title (it stands for 'subject'), and
 for description we'll use 'XD'. A full list of conventional prefixes is given at
 the top of the `omega documentation on termprefixes`_.
 
-.. _omega documentation on termprefixes: http://xapian.org/docs/omega/termprefixes
+.. _omega documentation on termprefixes: https://xapian.org/docs/omega/termprefixes
 
 When you're indexing multiple fields like this, the term positions used for
 each field when indexed unprefixed need to be kept apart. Say you have a

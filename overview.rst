@@ -19,7 +19,7 @@ probably make sure you have Xapian installed first!
 
    If you're looking for a way of getting a search system running without
    having to write any code, you may want to look at `Omega
-   <http://xapian.org/docs/omega/>`_, Xapian's pre-packaged web search
+   <https://xapian.org/docs/omega/>`_, Xapian's pre-packaged web search
    application. It's designed so that as your needs grow, you can extend or
    even replace it without having to change your database; the structure
    that Omega sets up will work when you start writing code directly
@@ -60,7 +60,7 @@ PPA_.
 
 Packages of the PHP bindings aren't available due to a licence
 compatibility issue, but you can `build your own packages
-<http://trac.xapian.org/wiki/FAQ/PHP%20Bindings%20Package>`_.
+<https://trac.xapian.org/wiki/FAQ/PHP%20Bindings%20Package>`_.
 
 Installation on other systems
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -70,7 +70,7 @@ install; information is available on `our download page`_. This covers
 most popular Linux distributions, FreeBSD, Mac OS (Python and C++
 only) and Windows using Microsoft Visual Studio.
 
-.. _our download page: http://xapian.org/download
+.. _our download page: https://xapian.org/download
 
 .. _compile from source:
 
@@ -94,9 +94,9 @@ there's only a complete set of examples for Python at present.
 .. Python`_, `in PHP`_ and `in C++`_, although only the Python versions
 .. are complete for now.
 
-.. .. _examples in Python: http://xapian.org/docs/examples/python.tgz
-.. .. _in PHP: http://xapian.org/docs/examples/php.tgz
-.. .. _in C++: http://xapian.org/docs/examples/c++.tgz
+.. .. _examples in Python: https://xapian.org/docs/examples/python.tgz
+.. .. _in PHP: https://xapian.org/docs/examples/php.tgz
+.. .. _in C++: https://xapian.org/docs/examples/c++.tgz
 
 .. todo:: finalise datasets and code and link to them from here
 
