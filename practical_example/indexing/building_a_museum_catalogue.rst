@@ -4,7 +4,7 @@ Building a museum catalogue
 We're going to build a simple search system based on museum catalogue
 data released under the `Creative Commons
 Attribution-NonCommercial-ShareAlike
-<http://creativecommons.org/licenses/by-nc-sa/3.0/>`_ license by the
+<https://creativecommons.org/licenses/by-nc-sa/3.0/>`_ license by the
 `Science Museum in London, UK <http://www.sciencemuseum.org.uk/>`_.
 
 Preparing to run the examples

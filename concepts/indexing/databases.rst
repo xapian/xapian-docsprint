@@ -110,7 +110,7 @@ you are reusing the same :xapian-class:`Database` object for multiple searches
 then it is a reasonable strategy to call :xapian-just-method:`reopen()` prior
 to each search.
 
-.. _Multi-Version Concurrency Control: http://en.wikipedia.org/wiki/Multiversion_concurrency_control
+.. _Multi-Version Concurrency Control: https://en.wikipedia.org/wiki/Multiversion_concurrency_control
 
 Currently Xapian's disk based backends have a limitation to their *multi-version
 concurrency* implementation - specifically, at most two versions can exist

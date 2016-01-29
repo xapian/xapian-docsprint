@@ -35,7 +35,7 @@ and we've made a start on full translations into PHP_ and C++.  Help with
 completing these translations and with translating the examples into other
 languages would be most welcome.
 
-.. _Python: http://www.python.org/
+.. _Python: https://www.python.org/
 .. _PHP: http://www.php.net/
 
 This guide documents Xapian 1.2 (except where a different version is explicitly
@@ -111,12 +111,12 @@ catalogue data released by the `Science Museum
 <http://www.sciencemuseum.org.uk>`_.  We downloaded this data from their API
 site, but this has since shut down.  The second dataset we have curated
 ourselves from information on Wikipedia about the 50 `US States
-<http://en.wikipedia.org/wiki/U.S._state>`_. Both are provided as
+<https://en.wikipedia.org/wiki/U.S._state>`_. Both are provided as
 gzipped CSV files. The first dataset is released under the `Creative
 Commons license Attribution-NonCommercial-ShareAlike
-<http://creativecommons.org/licenses/by-nc-sa/3.0/>`_ license, and the
+<https://creativecommons.org/licenses/by-nc-sa/3.0/>`_ license, and the
 second under `Creative Commons Attribution-Share Alike 3.0
-<http://creativecommons.org/licenses/by-sa/3.0/>`_.
+<https://creativecommons.org/licenses/by-sa/3.0/>`_.
 
 These datasets are in the git repo which holds the source for this
 documentation - you can also view them online on `github
@@ -132,11 +132,11 @@ Contributing
 ------------
 
 The `source for this documentation
-<http://github.com/xapian/xapian-docsprint>`_ is being kept on github; the
+<https://github.com/xapian/xapian-docsprint>`_ is being kept on github; the
 best way to contribute is to add issues, comments and pull requests there.
 We're monitoring IRC during the sprint sessions (and in general) so you can
 also contact us on channel #xapian on irc.freenode.net [`webchat link
-<http://webchat.freenode.net/?channels=%23xapian>`_].
+<https://webchat.freenode.net/?channels=%23xapian>`_].
 
 To be able to generate this documentation from a git checkout, you'll need
 the `Sphinx documentation tool <http://sphinx-doc.org/>`_.  If you're using
