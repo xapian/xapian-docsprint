@@ -718,9 +718,11 @@ def xapian_literal_role(typ, rawtext, etext, lineno, inliner,
         elif t == 'true':
             t = 'true'
         elif t == 'NULL':
-            # FIXME: Tcl doesn't have 'null' http://wiki.tcl.tk/17441 but what is
-            # equivalent for passing a NULL pointer via SWIG-generated wrappers?
-            t = '0'
+            # FIXME: Tcl doesn't have natively have a 'null'
+            # https://wiki.tcl.tk/17441 but SWIG-generated wrappers use the
+            # string NULL to represent a NULL pointer:
+            # http://www.swig.org/Doc3.0/Tcl.html#Tcl_nn19
+            t = 'NULL'
         else:
             print "Unhandled literal '%s' for %s" % (t, highlight_language)
             sys.exit(1)
