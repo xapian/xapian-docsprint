@@ -195,7 +195,7 @@ The :xapian-class:`DateValueRangeProcessor` is working on value slot 2, with an
 1860 and going forward as far 1959). The second parameter is whether
 it should prefer US style dates or not; since we're looking at US
 states, we've gone for US dates. The :xapian-class:`NumberValueRangeProcessor`
-is as we saw before.
+is as we saw before, which means that it can't cope with two digit years.
 
 This enables us to search for any state that talks about the Spanish
 in its description:
@@ -275,6 +275,11 @@ Or all that joined the union in the 1780s and have a population now over 10 mill
 
 With a little more work, we could support ranges such as '..5m' to
 mean up to 5 million, or '..750k' for up to 750 thousand.
+
+Similarly, it would be possible to use the same approach to create a custom
+:xapian-class:`ValueRangeProcessor` that could restrict to a range of years, and
+cope with two digit years, as our :xapian-class:`DateValueRangeProcessor` did for
+full dates.
 
 Performance limitations
 -----------------------
