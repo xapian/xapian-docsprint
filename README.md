@@ -15,6 +15,14 @@ documentation.  Confusingly there are several open source projects called
 the one you want.  We aren't certain exactly what version is needed - it
 seems Sphinx 0.6.4 is too old but 1.1.3 is new enough.
 
+For building a pdf version of documentation,you will need to install rst2pdf
+
+https://github.com/rst2pdf/rst2pdf
+
+to generate a pdf version for C++ use:
+```
+make pdf SPHINXOPTS=-tc++
+```
 You can generate versions for different programming languages (with translated
 examples and adjustments to the text).  For full details see `make help`
 but for example to generate an HTML version for C++ use:
