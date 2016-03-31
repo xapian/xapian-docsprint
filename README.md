@@ -17,12 +17,13 @@ seems Sphinx 0.6.4 is too old but 1.1.3 is new enough.
 
 For building a pdf version of documentation,you will need to install rst2pdf
 
-Recommended method:
+**Recommended method:**
 
 You can install rst2pdf from Python Package Index(PyPI) using pip
+
 ```sudo pip install rst2pdf```
 
-Other Method:
+**Other Method:**
 If you want to build install rst2pdf from source
 
 https://github.com/rst2pdf/rst2pdf#install-from-github
