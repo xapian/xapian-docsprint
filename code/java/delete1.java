@@ -7,8 +7,7 @@ public class delete1 {
 
     // Command line args - dbpath identifiers...
     public static void main(String[] args) {
-        if(args.length < 2)
-        {
+        if (args.length < 2) {
             System.out.println("Insufficient number of arguments (should be dbpath identifiers...)");
             return;
         }
@@ -21,8 +20,7 @@ public class delete1 {
         WritableDatabase db = new WritableDatabase(dbpath, XapianConstants.DB_OPEN);
 
         // Identifiers start from index 1
-        for(int i = 1; i < identifierArgs.length; i++)
-        {
+        for (int i = 1; i < identifierArgs.length; i++) {
             String idterm = "Q" + identifierArgs[i];
             db.deleteDocument(idterm);
         }

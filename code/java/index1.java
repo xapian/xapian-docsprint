@@ -33,8 +33,7 @@ public class index1 {
         termGenerator.setStemmer(new Stem("en"));
 
         //Parsing the CSV input file
-        Scanner csvScanner, lineScanner;
-        csvScanner = null;
+        Scanner csvScanner = null;
 
         try {
             File csv = new File(datapath);
