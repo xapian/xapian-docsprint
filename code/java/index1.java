@@ -26,13 +26,13 @@ public class index1 {
 
     // Start of example code.
     public static void index(String datapath, String dbpath) {
-        // Create or open the database we're goign to be writing to.
+        // Create or open the database we're going to be writing to.
         WritableDatabase db = new WritableDatabase(dbpath, XapianConstants.DB_CREATE_OR_OPEN);
         // Set up a TermGenerator that we'll use in indexing.
         TermGenerator termGenerator = new TermGenerator();
         termGenerator.setStemmer(new Stem("en"));
 
-        //Parsing the CSV input file
+        // Parsing the CSV input file
         Scanner csvScanner = null;
 
         try {
