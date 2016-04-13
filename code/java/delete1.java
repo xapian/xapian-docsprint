@@ -11,7 +11,10 @@ public class delete1 {
             System.out.println("Insufficient number of arguments (should be dbpath identifiers...)");
             return;
         }
-        deleteDocs(args[0], args);
+        // Splitting the array to obtain an array of identifiers
+        String[] identifierArgs = new String[args.length - 1];
+        System.arraycopy(args, 1, identifierArgs, 0, identifierArgs.length);
+        deleteDocs(args[0], identifierArgs);
     }
 
     // Start of example code.
@@ -19,9 +22,8 @@ public class delete1 {
         // Open the database we're going to be deleting from.
         WritableDatabase db = new WritableDatabase(dbpath, XapianConstants.DB_OPEN);
 
-        // Identifiers start from index 1
-        for (int i = 1; i < identifierArgs.length; i++) {
-            String idterm = "Q" + identifierArgs[i];
+        for (String identifierArg : identifierArgs) {
+            String idterm = "Q" + identifierArg;
             db.deleteDocument(idterm);
         }
 
