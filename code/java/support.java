@@ -1,6 +1,4 @@
 /* Support code for Java examples */
-
-package code.java;
 import java.util.ArrayList;
 
 public class support {

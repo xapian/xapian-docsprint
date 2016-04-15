@@ -1,5 +1,3 @@
-package code.java;
-
 import org.xapian.Database;
 import org.xapian.Document;
 import org.xapian.Enquire;
