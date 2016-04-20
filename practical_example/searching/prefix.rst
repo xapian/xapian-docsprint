@@ -16,7 +16,7 @@ in the search query relate to those in the index. We did that in the previous
 search code:
 
 .. xapianexample:: search1
-   :marker: prefix configuration.
+    :marker: prefix configuration.
 
 This allows us to perform a search based on either field, for example:
 
