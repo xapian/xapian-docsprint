@@ -1,4 +1,6 @@
 .libs
+*.lo
+*.o
 delete1
 index1
 index_facets
