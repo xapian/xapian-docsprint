@@ -15,6 +15,14 @@ To set up a search prefix, the QueryParser needs to be told which prefixes
 in the search query relate to those in the index. We did that in the previous
 search code:
 
+.. xapianrunexample:: index1
+    :silent:
+    :args: data/100-objects-v1.csv db
+
+.. xapianrunexample:: delete1
+    :silent:
+    :args: db 1953-448 1985-438
+
 .. xapianexample:: search1
     :marker: prefix configuration.
 

@@ -210,11 +210,12 @@ todo_include_todos = True
 # Default to setting 'python' tag if none are set, and set highlight language
 # appropriately.
 
+current_source = None
 last_example = None
 examples = set()
 examples_used = {}
-examples_in_order = []
 examples_missing = []
+errors = 0
 
 highlight_language = None
 for t in ['php', 'c++', 'python', 'python3', 'csharp', 'java', 'lua', 'perl', 'ruby', 'tcl']:
@@ -410,16 +411,26 @@ class XapianRunExample(LiteralInclude):
         'args': directives.unchanged_required,
         'cleanfirst': directives.unchanged,
         'shouldfail': directives.unchanged,
+        'silent': directives.flag,
     }
 
     def run(self):
-        filename = xapian_code_example_filename(self.arguments[0])
+        global current_source, errors
+        source = self.state_machine.get_source_and_line()[0]
+        if current_source != source:
+            # New file, so clean up databases.
+            os.system("rm -rf db filtersdb statesdb")
+            current_source = source
+
+        ex = self.arguments[0]
+
+        filename = xapian_code_example_filename(ex)
         if not os.path.exists(filename):
             global examples_missing
             examples_missing.append(last_example)
             return [nodes.literal(text = 'No version of example %s in language %s - patches welcome!'
                 % (last_example, highlight_language))]
-        command = xapian_code_example_command(self.arguments[0])
+        command = xapian_code_example_command(ex)
 
         cleanfirst = ''
         if 'cleanfirst' in self.options:
@@ -443,12 +454,55 @@ class XapianRunExample(LiteralInclude):
             print '*** No output file %s in language %s - patches welcome!' \
                 % (filename, highlight_language)
 
-        global examples_used, examples_in_order
-        examples_in_order.append((self.arguments[0], args, cleanfirst, shouldfail))
-        if self.arguments[0] in examples_used:
-            examples_used[self.arguments[0]].append(args)
+        global examples_used
+        if ex in examples_used:
+            examples_used[ex].append(args)
         else:
-            examples_used[self.arguments[0]] = [args]
+            examples_used[ex] = [args]
+
+        command = xapian_code_example_command(ex)
+        filename = xapian_code_example_filename(ex)
+        if len(cleanfirst):
+            if re.search(r'[^-A-Za-z0-9_ ]', cleanfirst):
+                # Or we could actually escape it...
+                print("Bad characters in cleanfirst: ''" % cleanfirst)
+                sys.exit(1)
+            os.system("rm -rf %s" % cleanfirst)
+        run_command = xapian_run_example_command(ex)
+        status = os.system("%s %s > tmp.out 2> tmp2.out" % (run_command, args))
+        os.system("cat tmp2.out >> tmp.out")
+        if shouldfail:
+            if status == 0:
+                print '%s: (%s): Exit status 0, expected failure' % (filename, source)
+                errors += 1
+        else:
+            if status != 0:
+                print '%s: (%s): Exit status %d, expected 0' % (filename, source, status)
+                errors += 1
+        esc_args = xapian_escape_args(args)
+        fullout = "%s.%s.out" % (filename, esc_args)
+        tmp_out = "%s.%s.tmp" % (filename, esc_args)
+        os.rename("tmp.out", tmp_out)
+        if os.path.exists(fullout):
+            filename = fullout
+        else:
+            filename = filename + ".out"
+        if not os.path.exists(filename):
+            print '*** No output file %s in language %s - patches welcome!' \
+                % (filename, highlight_language)
+            os.unlink("tmp2.out")
+        else:
+            sys.stdout.flush()
+            if os.system("diff -u %s %s 2>&1" % (tmp_out, filename)):
+                print "$ %s %s" % (command, args)
+                print "vimdiff %s %s" % (tmp_out, filename)
+                errors += 1
+            else:
+                os.unlink(tmp_out)
+                os.unlink("tmp2.out")
+
+        if 'silent' in self.options:
+            return []
 
         self.options['prepend'] = re.sub(r'(?m)^', r'$ ', command)
         # FIXME: Only want this syntax highlighting for lines starting '$'.
@@ -762,8 +816,7 @@ roles.register_local_role('xapian-constant', xapian_method_role)
 roles.register_local_role('xapian-literal', xapian_literal_role)
 
 def xapian_check_examples():
-    global examples, examples_used, examples_in_order, examples_missing
-    bad = False
+    global errors, examples, examples_used, examples_missing
     for ex in examples:
         if ex in examples_used:
             del examples_used[ex]
@@ -771,53 +824,11 @@ def xapian_check_examples():
         if ex in examples_missing:
             continue
         print "Example %s isn't shown to be run anywhere" % ex
-        bad = True
+        errors += 1
 
     for ex in examples_used:
         print "Example %s is used but never shown anywhere" % ex
-        bad = True
-
-    # Process the commands in order so that the correct databases have been
-    # created when they are used.
-    os.system("rm -rf db filtersdb statesdb")
-    for (ex, args, cleanfirst, shouldfail) in examples_in_order:
-        command = xapian_code_example_command(ex)
-        filename = xapian_code_example_filename(ex)
-        if len(cleanfirst):
-            if re.search(r'[^-A-Za-z0-9_ ]', cleanfirst):
-                # Or we could actually escape it...
-                print("Bad characters in cleanfirst: ''" % cleanfirst)
-                sys.exit(1)
-            os.system("rm -rf %s" % cleanfirst)
-        run_command = xapian_run_example_command(ex)
-        status = os.system("%s %s > tmp.out 2> tmp2.out" % (run_command, args))
-        os.system("cat tmp2.out >> tmp.out")
-        if shouldfail:
-            if status == 0:
-                print '%s: Exit status 0, expected failure' % filename
-        else:
-            if status != 0:
-                print '%s: Exit status %d, expected 0' % (filename, status)
-        esc_args = xapian_escape_args(args)
-        fullout = "%s.%s.out" % (filename, esc_args)
-        tmp_out = "%s.%s.tmp" % (filename, esc_args)
-        os.rename("tmp.out", tmp_out)
-        if os.path.exists(fullout):
-            filename = fullout
-        else:
-            filename = filename + ".out"
-        if not os.path.exists(filename):
-            print '*** No output file %s in language %s - patches welcome!' \
-                % (filename, highlight_language)
-            os.unlink("tmp2.out")
-        else:
-            sys.stdout.flush()
-            if os.system("diff -u %s %s 2>&1" % (tmp_out, filename)):
-                print "$ %s %s" % (command, args)
-                print "vimdiff %s %s" % (tmp_out, filename)
-            else:
-                os.unlink(tmp_out)
-                os.unlink("tmp2.out")
+        errors += 1
 
     m_done = set()
     for ex in examples_missing:
@@ -828,7 +839,7 @@ def xapian_check_examples():
         print '*** No version of example %s in language %s - patches welcome!' \
             % (ex, highlight_language)
 
-    if bad:
+    if errors > 0:
         raise SystemExit()
 
 atexit.register(xapian_check_examples)

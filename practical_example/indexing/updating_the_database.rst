@@ -33,6 +33,10 @@ A copy of this code is available in :xapian-code-example:`^`.
 Then we just run our deletion tool, giving it identifiers taken from
 the `id_NUMBER` field in the data set:
 
+.. xapianrunexample:: index1
+    :silent:
+    :args: data/100-objects-v1.csv db
+
 .. xapianrunexample:: delete1
     :args: db 1953-448 1985-438
 

@@ -2,6 +2,14 @@ Running a Search
 ----------------
 To search the database we've built, you just run our simple search engine:
 
+.. xapianrunexample:: index1
+    :silent:
+    :args: data/100-objects-v1.csv db
+
+.. xapianrunexample:: delete1
+    :silent:
+    :args: db 1953-448 1985-438
+
 .. xapianrunexample:: search1
     :args: db watch
 
