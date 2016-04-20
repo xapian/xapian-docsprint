@@ -1,6 +1,6 @@
 Running a Search
 ----------------
-To search the database we're built, you just run our simple search engine:
+To search the database we've built, you just run our simple search engine:
 
 .. xapianrunexample:: search1
     :args: db watch
