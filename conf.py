@@ -247,7 +247,7 @@ errors = 0
 highlight_language = None
 for t in languages:
     if tags.has(t):
-        if not highlight_language is None:
+        if highlight_language is not None:
             print "Multiple language tags set (at least %s and %s)" % (highlight_language, t)
             sys.exit(1)
         highlight_language = t
@@ -414,7 +414,7 @@ class XapianCodeExample(LiteralInclude):
             return [nodes.literal(text = 'No version of example %s in language %s - patches welcome!'
                 % (last_example, highlight_language))]
         self.arguments[0] = "/" + filename
-        if not 'start-after' in self.options and not 'end-before' in self.options:
+        if 'start-after' not in self.options and 'end-before' not in self.options:
             if 'marker' in self.options:
                 marker = self.options['marker']
                 del self.options['marker']
