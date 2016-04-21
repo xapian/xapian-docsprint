@@ -30,6 +30,7 @@ help:
 	@echo
 	@echo "By default, the 'python' version is built.  To specify a language, use e.g.:"
 	@echo "  make <target> LANGUAGE=c++"
+	@echo "Known languages: `python conf.py --list-languages`"
 
 clean:
 	-rm -rf $(BUILDDIR)/*

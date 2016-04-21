@@ -20,6 +20,25 @@ from docutils.parsers.rst.roles import set_classes
 from sphinx.directives.code import CodeBlock, LiteralInclude, directives
 from sphinx.directives.other import Include
 
+languages = [
+        'c++',
+        'csharp',
+        'java',
+        'lua',
+        'perl',
+        'php',
+        'python',
+        'python3',
+        'ruby',
+        'tcl'
+        ]
+
+if __name__ == "__main__":
+    if len(sys.argv) == 2 and sys.argv[1] == '--list-languages':
+        print(str.join(' ', languages))
+        sys.exit(0)
+    sys.exit(1)
+
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
@@ -226,7 +245,7 @@ total_errors = 0
 errors = 0
 
 highlight_language = None
-for t in ['php', 'c++', 'python', 'python3', 'csharp', 'java', 'lua', 'perl', 'ruby', 'tcl']:
+for t in languages:
     if tags.has(t):
         if not highlight_language is None:
             print "Multiple language tags set (at least %s and %s)" % (highlight_language, t)
