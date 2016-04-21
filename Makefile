@@ -6,11 +6,12 @@ SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 PAPER         =
 BUILDDIR      = _build
+LANGUAGE      = python
 
 # Internal variables.
 PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
-ALLSPHINXOPTS   = -q -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
+ALLSPHINXOPTS   = -q -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) -t$(LANGUAGE) .
 
 .PHONY: help clean html dirhtml pickle json htmlhelp qthelp latex changes linkcheck doctest
 
@@ -27,8 +28,8 @@ help:
 	@echo "  linkcheck to check all external links for integrity"
 	@echo "  doctest   to run all doctests embedded in the documentation (if enabled)"
 	@echo
-	@echo "To build documentation for a particular language, use e.g.:"
-	@echo "  make <target> SPHINXOPTS=-tc++"
+	@echo "By default, the 'python' version is built.  To specify a language, use e.g.:"
+	@echo "  make <target> LANGUAGE=c++"
 
 clean:
 	-rm -rf $(BUILDDIR)/*
