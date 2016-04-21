@@ -56,7 +56,7 @@ in Python or C++::
 If you're using Ubuntu 10.04 LTS (Lucid Lynx), you'll need to install from our
 PPA_.
 
-.. _PPA: https://launchpad.net/~xapian-backports/+archive/xapian-1.2
+.. _PPA: https://launchpad.net/~xapian-backports/+archive/ubuntu/xapian-1.2
 
 Packages of the PHP bindings aren't available due to a licence
 compatibility issue, but you can `build your own packages

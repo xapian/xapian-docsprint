@@ -191,7 +191,7 @@ When the QueryParser receives a query, it joins together its component
 queries using a `default operator`_ which defaults to
 :xapian-just-constant:`OP_OR` but can be modified at run time.
 
-.. _default operator: https://xapian.org/docs/apidoc/html/classXapian_1_1QueryParser.html#2efe48be88c4872afec4bc963f417ea5
+.. _default operator: https://xapian.org/docs/apidoc/html/classXapian_1_1QueryParser.html#a2efe48be88c4872afec4bc963f417ea5
 
 Parser Flags
 ~~~~~~~~~~~~

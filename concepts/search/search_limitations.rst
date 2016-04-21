@@ -54,7 +54,7 @@ from a service (for instance if you're using a :doc:`remote backend
 </advanced/remote>`) then you may need to do this `via a limit stanza
 for upstart <http://upstart.ubuntu.com/wiki/Stanzas#limit>`_, or `the
 LimitNOFILE= option for systemd
-<http://www.freedesktop.org/software/systemd/man/systemd.exec.html#LimitCPU=>`_.
+<https://www.freedesktop.org/software/systemd/man/systemd.exec.html#LimitCPU=>`_.
 
 You can also address this issue (and spread the search load) by using the
 remote backend to search databases on a cluster of machines - the remote
