@@ -207,6 +207,13 @@ latex_documents = [
 # Cause todos to be displayed.
 todo_include_todos = True
 
+# We want to check for errors at the end of each .rst file - the simplest way
+# to achieve this seems to be to add an epilog which calls a custom hook
+# macro.
+rst_epilog = """
+.. xapianendoffile:: dummy
+"""
+
 # Default to setting 'python' tag if none are set, and set highlight language
 # appropriately.
 
@@ -215,6 +222,7 @@ last_example = None
 examples = set()
 examples_used = {}
 examples_missing = []
+total_errors = 0
 errors = 0
 
 highlight_language = None
@@ -815,8 +823,22 @@ roles.register_local_role('xapian-constant', xapian_method_role)
 # Currently handles true, false, NULL, DBL_MAX.
 roles.register_local_role('xapian-literal', xapian_literal_role)
 
+class XapianEndOfFile(LiteralInclude):
+    option_spec = { }
+
+    def run(self):
+        global errors
+        if errors > 0:
+            total_errors += errors
+            errors = 0
+            raise self.error("%d error(s) with example code" % errors)
+        return []
+
+# "..xapianendoffile:" is used from the rst_epilog - it's not for manual use.
+directives.register_directive('xapianendoffile', XapianEndOfFile)
+
 def xapian_check_examples():
-    global errors, examples, examples_used, examples_missing
+    global examples, examples_used, examples_missing, total_errors
     for ex in examples:
         if ex in examples_used:
             del examples_used[ex]
@@ -824,11 +846,11 @@ def xapian_check_examples():
         if ex in examples_missing:
             continue
         print "Example %s isn't shown to be run anywhere" % ex
-        errors += 1
+        total_errors += 1
 
     for ex in examples_used:
         print "Example %s is used but never shown anywhere" % ex
-        errors += 1
+        total_errors += 1
 
     m_done = set()
     for ex in examples_missing:
@@ -839,7 +861,8 @@ def xapian_check_examples():
         print '*** No version of example %s in language %s - patches welcome!' \
             % (ex, highlight_language)
 
-    if errors > 0:
+    if total_errors > 0:
+        print "*** %d total error(s) with example code" % total_errors
         raise SystemExit()
 
 atexit.register(xapian_check_examples)
