@@ -827,7 +827,7 @@ class XapianEndOfFile(LiteralInclude):
     option_spec = { }
 
     def run(self):
-        global errors
+        global errors, total_errors
         if errors > 0:
             total_errors += errors
             errors = 0
