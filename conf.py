@@ -89,12 +89,9 @@ github_project_url = 'https://github.com/xapian/xapian-docsprint/blob/master'
 # Else, today_fmt is used as the format for a strftime call.
 #today_fmt = '%B %d, %Y'
 
-# List of documents that shouldn't be included in the build.
-#unused_docs = []
-
-# List of directories, relative to source directory, that shouldn't be searched
-# for source files.
-exclude_trees = ['_build', 'attic', 'language_specific']
+# List of patterns, relative to source directory, that match files and
+# directories to ignore when looking for source files.
+exclude_patterns = ['_build', 'attic', 'language_specific']
 
 # The reST default role (used for this markup: `text`) to use for all documents.
 #default_role = None
