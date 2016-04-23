@@ -20,5 +20,5 @@ examples and adjustments to the text).  For full details see `make help`
 but for example to generate an HTML version for C++ use:
 
 ```
-make html SPHINXOPTS=-tc++
+make html LANGUAGE=c++
 ```
