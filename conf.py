@@ -846,8 +846,9 @@ class XapianEndOfFile(LiteralInclude):
         global errors, total_errors
         if errors > 0:
             total_errors += errors
+            msg = "%d error(s) with example code" % errors
             errors = 0
-            raise self.error("%d error(s) with example code" % errors)
+            raise self.error(msg)
         return []
 
 # "..xapianendoffile:" is used from the rst_epilog - it's not for manual use.
