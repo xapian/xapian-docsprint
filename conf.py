@@ -474,9 +474,6 @@ class XapianRunExample(LiteralInclude):
         else:
             args = ''
             filename = filename + ".out"
-        if not os.path.exists(filename):
-            print '*** No output file %s in language %s - patches welcome!' \
-                % (filename, highlight_language)
 
         global examples_used
         if ex in examples_used:
@@ -484,8 +481,6 @@ class XapianRunExample(LiteralInclude):
         else:
             examples_used[ex] = [args]
 
-        command = xapian_code_example_command(ex)
-        filename = xapian_code_example_filename(ex)
         if len(cleanfirst):
             if re.search(r'[^-A-Za-z0-9_ ]', cleanfirst):
                 # Or we could actually escape it...
@@ -495,6 +490,7 @@ class XapianRunExample(LiteralInclude):
         run_command = xapian_run_example_command(ex)
         status = os.system("%s %s > tmp.out 2> tmp2.out" % (run_command, args))
         os.system("cat tmp2.out >> tmp.out")
+        os.unlink("tmp2.out")
         if shouldfail:
             if status == 0:
                 print '%s: (%s): Exit status 0, expected failure' % (filename, source)
@@ -503,27 +499,18 @@ class XapianRunExample(LiteralInclude):
             if status != 0:
                 print '%s: (%s): Exit status %d, expected 0' % (filename, source, status)
                 errors += 1
-        esc_args = xapian_escape_args(args)
-        fullout = "%s.%s.out" % (filename, esc_args)
-        tmp_out = "%s.%s.tmp" % (filename, esc_args)
-        os.rename("tmp.out", tmp_out)
-        if os.path.exists(fullout):
-            filename = fullout
-        else:
-            filename = filename + ".out"
+        tmp_out = 'tmp.out'
         if not os.path.exists(filename):
             print '*** No output file %s in language %s - patches welcome!' \
                 % (filename, highlight_language)
-            os.unlink("tmp2.out")
         else:
             sys.stdout.flush()
-            if os.system("diff -u %s %s 2>&1" % (tmp_out, filename)):
-                print "$ %s %s" % (command, args)
-                print "vimdiff %s %s" % (tmp_out, filename)
+            if os.system("diff -u tmp.out %s 2>&1" % filename):
+                print "$ %s %s > tmp.out 2> tmp2.out" % (run_command, args)
+                print "$ cat tmp2.out >> tmp.out"
+                print "$ vimdiff tmp.out %s" % filename
                 errors += 1
-            else:
-                os.unlink(tmp_out)
-                os.unlink("tmp2.out")
+        os.unlink(tmp_out)
 
         if 'silent' in self.options:
             return []
