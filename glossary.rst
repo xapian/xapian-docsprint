@@ -23,6 +23,13 @@ Retrieval, while others have a specific meaning in the context of Xapian.
  sometimes known as "Okapi BM25" since it was first implemented in an
  academic IR system called Okapi.
 
+**BM25+**
+ The weighting derived from the BM25 weighting formula. BM25+ is an improvement
+ over BM25 weighting scheme. It adds a lower-bound to Term Frequency normalization.
+ Thus, it can be generally called as "Lower-bounded BM25". Originally proposed by
+ Lv-Zhai in CIKM11 paper, BM25+ has been proved to be more effective than BM25 in the
+ tests conducted by Lv-Zhai.
+
 **Boolean Retrieval**
  Retrieving the set of documents that match a boolean query (e.g. a
  list of terms joined with a combination of operators such as AND, OR,
