@@ -21,7 +21,11 @@ Retrieval, while others have a specific meaning in the context of Xapian.
  the original probabilistic weighting scheme, and recent TREC tests have shown
  BM25 to be the best of the known probabilistic weighting schemes.  It's
  sometimes known as "Okapi BM25" since it was first implemented in an
- academic IR system called Okapi.
+ academic IR system called Okapi. BM25+ is another weighting scheme derived from 
+ the BM25 weighting formula. It adds a lower-bound to Term Frequency normalization.
+ BM25+ is useful when there are very long documents in the collection as it gives proper 
+ weights to those documents when any query term occurs in them and thereby, minimizing
+ the chances of over-penalizing those very long documents.
 
 **Boolean Retrieval**
  Retrieving the set of documents that match a boolean query (e.g. a
