@@ -47,6 +47,29 @@ shown that BM25+ works very well with δ = 1.
 
 .. _Lower-Bounding Term Frequency Normalization: http://sifaka.cs.uiuc.edu/czhai/pub/cikm11-bm25.pdf
 
+PL2Weight
+---------
+
+PL2Weight implements the representative scheme of the Divergence from Randomness Framework
+This weighting scheme is useful for tasks that require early precision. It uses the
+Poisson approximation of the Binomial Probabilistic distribution (P),the Laplace method
+to find the after-effect of sampling (L) and the second wdf normalization to normalize the
+wdf in the document to the length of the document (H2).
+
+Document weight is controlled by parameter c. The default value of 1 for c is suitable
+for longer queries but it may need to be changed for shorter queries.
+
+PL2PLusWeight
+-------------
+
+Proposed by Lv-Zhai, PL2PlusWeight is the modified lower-bounded PL2 retrieval function of
+the Divergence from Randomness Framework with an additonal parameter delta in addition to the
+parameter c from the PL2 weighting function.
+
+Parmater delta is the pseudo tf value to control the scale of the tf lower bound.
+It can be tuned for e.g from 0.1 to 1.5 in increments of 0.1 or so. Although, PL2+ works effectively
+across collections with a fixed default value of 0.8.
+
 LMWeight (Unigram language modelling)
 -------------------------------------
 
