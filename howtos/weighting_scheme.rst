@@ -10,7 +10,7 @@ How to change how documents are scored
 
 The easiest way to change document scoring is to change, or tune,
 the weighting scheme in use; Xapian provides a number of weighting schemes,
-including ``BM25Weight``, ``LMWeight``, ``TradWeight`` and ``BoolWeight``
+including ``BM25Weight``, ``BM25PlusWeight``, ``LMWeight``, ``TradWeight`` and ``BoolWeight``
 (the default is BM25Weight).
 
 You can also :ref:`implement your own <custom-weighting>`.
