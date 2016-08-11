@@ -30,6 +30,23 @@ fiddly process to tune them so people tend not to bother.
 
 .. todo:: Say something more useful about tuning the parameters!
 
+BM25PlusWeight
+--------------
+
+The occurrences of a query term in very long documents may not be rewarded properly
+by BM25, and thus those very long documents could be overly penalized. In such cases, 
+the BM25+ weighting formula is a useful improvement over the existing BM25 weighting 
+formula. In BM25, it is easy to note that there is a strict upper bound (k1 + 1) for
+Term Frequency normalization. However, the other interesting direction, lower-bounding
+TF, has not been well addressed. 
+
+BM25+ was originally proposed by Lv-Zhai in CIKM11 paper: `Lower-Bounding Term Frequency
+Normalization`_. BM25+ was derived from BM25 by lower-bounding TF and using all of the
+parameters of BM25 with an additional parameter -- delta(δ). Experiments by Lv-Zhai have
+shown that BM25+ works very well with δ = 1.
+
+.. _Lower-Bounding Term Frequency Normalization: http://sifaka.cs.uiuc.edu/czhai/pub/cikm11-bm25.pdf
+
 LMWeight (Unigram language modelling)
 -------------------------------------
 
