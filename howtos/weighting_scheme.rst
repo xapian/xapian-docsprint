@@ -66,9 +66,9 @@ Proposed by Lv-Zhai, PL2PlusWeight is the modified lower-bounded PL2 retrieval f
 the Divergence from Randomness Framework with an additonal parameter delta in addition to the
 parameter c from the PL2 weighting function.
 
-Parmater delta is the pseudo tf value to control the scale of the tf lower bound.
-It can be tuned for e.g from 0.1 to 1.5 in increments of 0.1 or so. Although, PL2+ works effectively
-across collections with a fixed default value of 0.8.
+Parmater delta is the pseudo tf value to control the scale of the tf lower bound. It can be tuned
+for e.g from 0.1 to 1.5 in increments of 0.1 or so. Although, PL2+ works effectively across collections
+with a fixed default value of 0.8.
 
 LMWeight (Unigram language modelling)
 -------------------------------------
@@ -84,6 +84,29 @@ values which do a good job, using two stage smoothing.
 The UnigramLM weighting formula is based on an original approach by Bruce Croft.
 It uses statistical language modelling; 'unigram' in this case means that
 words are considered to occur independently.
+
+The Dirichlet prior method is one of the best performing language modeling approaches. Xapian
+now provides support for a modified Dirichlet prior method, namely Dir+ which is an improvement over
+the original Dirichlet prior method as it is particularly more effective across web collections
+with very long documents (where document length is much larger than average document length).
+
+TfIdfWeight
+-----------
+
+TfIdfWeight implements the support for a number of `SMART normalization variants`_ of the tf-idf
+weighting scheme. These normalizations are specified by a three character string. The first letter
+in each string specifies the normalization for the term frequency component (wdfn), the second the
+normalization for the inverse document frequency component (idfn), and the third the normalization
+used for the document weight (wtn).
+
+For more details on Xapian supported SMART tf-idf normalizations, please visit TfIdfWeight API documentation
+page `here`_. More recently supported normalization in TfIdfWeight is the pivoted (piv+) retrieval function
+which represents one of the best performing vector space models. Piv+ takes two parameters; slope and delta
+which are set to their default optimal values. You may want pass different candidate values ranging from 0.1
+to 1.5 and choose one which fits best to your system based upon corpus being used.
+
+.. _SMART normalization variants: http://nlp.stanford.edu/IR-book/html/htmledition/document-and-query-weighting-schemes-1.html
+.. _here: https://xapian.org/docs/apidoc/html/classXapian_1_1TfIdfWeight.html
 
 TradWeight
 ----------
