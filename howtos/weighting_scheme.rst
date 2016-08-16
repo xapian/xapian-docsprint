@@ -10,7 +10,8 @@ How to change how documents are scored
 
 The easiest way to change document scoring is to change, or tune,
 the weighting scheme in use; Xapian provides a number of weighting schemes,
-including ``BM25Weight``, ``BM25PlusWeight``, ``LMWeight``, ``TradWeight`` and ``BoolWeight``
+including ``BM25Weight``, ``BM25PlusWeight``, ``PL2Weight``, ``PL2PlusWeight``,
+``LMWeight``, ``TfIdfWeight``, ``TradWeight`` and ``BoolWeight``
 (the default is BM25Weight).
 
 You can also :ref:`implement your own <custom-weighting>`.
@@ -87,26 +88,44 @@ words are considered to occur independently.
 
 The Dirichlet prior method is one of the best performing language modeling approaches. Xapian
 now provides support for a modified Dirichlet prior method, namely Dir+ which is an improvement over
-the original Dirichlet prior method as it is particularly more effective across web collections
-with very long documents (where document length is much larger than average document length).
+the original as it is particularly more effective across web collections with very long documents
+(where document length is much larger than average document length).
 
 TfIdfWeight
 -----------
 
 TfIdfWeight implements the support for a number of `SMART normalization variants`_ of the tf-idf
-weighting scheme. These normalizations are specified by a three character string. The first letter
-in each string specifies the normalization for the term frequency component (wdfn), the second the
-normalization for the inverse document frequency component (idfn), and the third the normalization
-used for the document weight (wtn).
+weighting scheme. These normalizations are specified by a three character string:
 
-For more details on Xapian supported SMART tf-idf normalizations, please visit TfIdfWeight API documentation
-page `here`_. More recently supported normalization in TfIdfWeight is the pivoted (piv+) retrieval function
+| 1. The first letter in each string specifies the normalization for the term frequency component (wdfn),
+| 2. the second the normalization for the inverse document frequency component (idfn), and
+| 3. the third the normalization used for the document weight (wtn).
+
+Normalizations are specified by the first character of their name string:
+
+1. | "**n** one" : wdfn = wdf
+   | "**b** oolean" (or sometimes binary) : wdfn = 1 if term is present in document else 0.
+   | "**s** quare" : wdfn = wdf * wdf
+   | "**l** og" : wdfn = 1 + ln (wdf)
+   | "**P** ivoted" : wdfn = 1 + log (1 + log (wdf))
+
+2. | "**n** one" : idfn = 1
+   | "**t** fidf" : idfn = log (N / Termfreq) where N is the number of
+                    documents in collection and Termfreq is the number of documents
+   | "**p** rob" : idfn = log ((N - Termfreq) / Termfreq)
+   | "**f** req" : idfn = 1 / Termfreq
+   | "**s** quared" : idfn = log (N / Termfreq) ^ 2
+   | "**P** ivoted" : idfn = log ((N + 1) / Termfreq)
+
+3. | "**n** one" : wtn = wdfn * idfn
+   | "**P** ivoted" : wtn = wqf (wdfn * idfn* (1 - slope + (slope * normlen)) + delta * idfn)
+
+More recently supported normalization in TfIdfWeight is the pivoted (piv+) retrieval function
 which represents one of the best performing vector space models. Piv+ takes two parameters; slope and delta
 which are set to their default optimal values. You may want pass different candidate values ranging from 0.1
 to 1.5 and choose one which fits best to your system based upon corpus being used.
 
 .. _SMART normalization variants: http://nlp.stanford.edu/IR-book/html/htmledition/document-and-query-weighting-schemes-1.html
-.. _here: https://xapian.org/docs/apidoc/html/classXapian_1_1TfIdfWeight.html
 
 TradWeight
 ----------
