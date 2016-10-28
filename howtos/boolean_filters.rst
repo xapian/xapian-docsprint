@@ -52,13 +52,13 @@ We run this like so:
     :cleanfirst: db
     :args: data/100-objects-v1.csv db
 
-If we check the resulting index with delve, we will see that documents for
+If we check the resulting index with xapian-delve, we will see that documents for
 which there was a value in the ``MATERIALS`` field now contain terms with the
 ``XM`` prefix (output snipped to show the relevant lines):
 
 .. code-block:: sh
 
-    $ delve -r 3 -1 db
+    $ xapian-delve -r 3 -1 db
     Term List for record #3:
     ...
     XDwooden

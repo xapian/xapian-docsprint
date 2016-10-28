@@ -1,12 +1,12 @@
-Verifying the index using delve
--------------------------------
+Verifying the index using xapian-delve
+--------------------------------------
 
-Xapian comes with a handy utility called `delve` which can be used to
+Xapian comes with a handy utility called `xapian-delve` which can be used to
 inspect a database, so let's look at the one you just built. If you just
-run ``delve db``, you'll get an overview: how many documents, average term
-length, and some other statistics::
+pass a database path as a parameter you'll get an overview: how many documents,
+average term length, and some other statistics::
 
-    $ delve db
+    $ xapian-delve db
     UUID = 1820ef0a-055b-4946-ae73-67aa4ef5c226
     number of documents = 100
     average document length = 100.58
@@ -18,7 +18,7 @@ length, and some other statistics::
 You can also look at an individual document, using Xapian's docid (``-d``
 means output document data as well)::
 
-    $ delve -r 1 -d db       # output has been reformatted
+    $ xapian-delve -r 1 -d db       # output has been reformatted
     Data for record #1:
     {
      "MEASUREMENTS": "",
@@ -42,16 +42,16 @@ means output document data as well)::
 You can also go the other way, starting with a term and finding both
 statistics and which documents it indexes::
 
-    $ delve -t Stime db
+    $ xapian-delve -t Stime db
     Posting List for term `Stime' (termfreq 4, collfreq 4, wdf_max 4):
     41 56 58 65
 
 This means you can look documents up by identifier::
 
-    $ delve -t Q1974-100 db
+    $ xapian-delve -t Q1974-100 db
     Posting List for term `Q1974-100' (termfreq 1, collfreq 1, wdf_max 1):
     1
 
-``delve`` is frequently useful if you aren't getting the behaviour you
+``xapian-delve`` is frequently useful if you aren't getting the behaviour you
 expect from a search system, to check that the database contains the
 documents and terms you expect.
