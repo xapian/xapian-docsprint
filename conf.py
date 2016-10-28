@@ -12,14 +12,10 @@
 # serve to show the default.
 
 import sys, os
-import re
-import atexit
-from docutils import nodes, utils
-from docutils.parsers.rst import roles
-from docutils.parsers.rst.roles import set_classes
-from sphinx.directives.code import CodeBlock, LiteralInclude, directives
-from sphinx.directives.other import Include
 
+# Handle this before we try to import sphinx-specific modules, so that this
+# can be used via Python 2 or 3, even if sphinx is only installed for one of
+# them.
 languages = [
         'c++',
         'csharp',
@@ -38,6 +34,14 @@ if __name__ == "__main__":
         print(str.join(' ', languages))
         sys.exit(0)
     sys.exit(1)
+
+import re
+import atexit
+from docutils import nodes, utils
+from docutils.parsers.rst import roles
+from docutils.parsers.rst.roles import set_classes
+from sphinx.directives.code import CodeBlock, LiteralInclude, directives
+from sphinx.directives.other import Include
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
