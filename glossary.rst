@@ -54,9 +54,10 @@ Retrieval, while others have a specific meaning in the context of Xapian.
  In Xapian (as opposed to a relational database system) a database consists of
  little more than indexed documents: this reflects the purpose of Xapian as an
  information retrieval system, rather than an information storage system.
- These may also occasionally be called Indexes.  Chert is the backend used
- from Xapian 1.2 onwards; Flint was used from Xapian 1.0 onwards; Quartz was
- used in older versions.
+ These may also occasionally be called Indexes.  Glass is the default backend
+ in the 1.4 release series; Chert was the default in Xapian 1.2 and is still
+ supported in 1.4; Flint was the default for Xapian 1.0 and supported by 1.2.
+ Quartz was used in still older versions.
 
 **Divergence from Randomness (DfR)**
  A family of probabilistic weighting schemes developed more recently than
@@ -96,11 +97,9 @@ Retrieval, while others have a specific meaning in the context of Xapian.
  deprecated in 1.2.x and removed in 1.3.0.
 
 **Glass**
- Glass is the current "under development" database format as of Xapian 1.3.2.
- We try to keep it as stable as chert - the main difference is that
- incompatible changes may be made which will require you to reindex, even
- between stable point releases.  In release 1.4.0, glass will be declared stable
- and made the default backend, and chert will then be deprecated.
+ Glass is the current default backend in Xapian 1.4.x.  Improvements over chert
+ are that slow cases of phrase searches are generally much faster, databases
+ are smaller on disk, and free blocks are tracked in lists rather than bitmaps.
 
 **Index**
  If a document is described by a term, this term is said to index the document.

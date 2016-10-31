@@ -2,7 +2,7 @@
 .. a copyright statement of:
 
 .. Copyright (C) 2006 Lemur Consulting Ltd
-.. Copyright (C) 2007,2008,2009,2010,2011 Olly Betts
+.. Copyright (C) 2007,2008,2009,2010,2011,2012,2016 Olly Betts
 
 ============================
 Xapian Administrator's Guide
@@ -23,34 +23,86 @@ general management of a Xapian database, including tasks such as taking
 backups and optimising performance.  It may also be useful introductory
 reading for Xapian application developers.
 
-The document is up-to-date for Xapian version 1.2.19.
+The document is up-to-date for Xapian version 1.4.1.
 
 Databases
 =========
 
 Xapian databases hold all the information needed to perform searches in a set
-of tables.  The following tables always exist:
+of tables.  The default database backend for the 1.4 release series is called
+`glass`.  The default backend for the 1.2 release series was called `chert`,
+and this is also supported by 1.4.
 
- - A posting list table, which holds a list of all the documents indexed by
-   each term in the database, and for chert also chunked streams of the values
-   in each value slot.
- - A record table, which holds the document data associated with each document
-   in the database.
- - A termlist table, which holds a list of all the terms which index each
-   document, and for chert also the value slots used in each document.
+Glass Backend
+-------------
+
+The following table always exists:
+
+ - The `postlist` table holds a list of all the documents indexed by each term
+   in the database (`postings`), and also chunked streams of the values in each
+   value slot.
+
+The following table exists by default, but you can choose not to have it:
+
+ - The `termlist` table holds a list of all the terms which index each
+   document, and also the value slots used in each document.  Without this,
+   some features aren't supported - see `Xapian::DB_NO_TERMLIST` for details.
 
 And the following optional tables exist only when there is data to store in
-them (in 1.0.1 and earlier, the position and value tables were always created
-even if empty; spelling and synonym tables were new in 1.0.2):
+them:
 
- - A position list table, which holds a list of all the word positions in each
+ - The `docdata` table holds the document data associated with each document
+   in the database.  If you never set any term positions, this table won't
+   exist.
+ - The `position` table holds a list of all the word positions in each document
+   which each term occurs at.  If you never set positional data, this table
+   won't exist.
+ - The `spelling` table holds data for suggesting spelling corrections.
+ - The `synonym` table holds a synonym dictionary.
+
+Each of the tables is held in a separate file with extension `.glass` (e.g.
+`postlist.glass`), allowing an administrator to see how much data is being used
+for each of the above purposes.
+
+The `.glass` file actually stores the data, and is structured as a tree of
+blocks, which have a default size of 8KB (though this can be set, either
+through the Xapian API, or with some of the tools detailed later in this
+document).
+
+Changing the blocksize may have performance implications, but it is hard to
+know whether these will be positive or negative for a particular combination
+of hardware and software without doing some profiling.
+
+The `.baseA` and `.baseB` files you may remember if you've worked Xapian
+database backends no longer exist in glass databases - the information about
+unused blocks is stored in a freelist (itself stored in unused blocks in
+the `.glass` file, and the other information is stored in the `iamglass`
+file.
+
+Glass also supports databases stored in a single file - currently these only
+support read operations, and have to be created by compacting an existing
+glass database.
+
+Chert Backend
+-------------
+
+The following tables always exist:
+
+ - The `postlist` holds a list of all the documents indexed by
+   each term in the database, and also chunked streams of the values in each
+   value slot.
+ - The `record` holds the document data associated with each document
+   in the database.
+ - The `termlist` holds a list of all the terms which index each
+   document, and also the value slots used in each document.
+
+And the following optional tables exist only when there is data to store in
+them:
+
+ - The `position` holds a list of all the word positions in each
    document which each term occurs at.
- - A value table, which holds the "values" (used for sorting, collapsing, and
-   other match-time calculations) associated with each document in the
-   database (only for flint - newer backends store values in the postlist and
-   termlist tables).
- - A spelling table, which holds data for suggesting spelling corrections.
- - A synonym table, which holds a synonym dictionary.
+ - The `spelling` holds data for suggesting spelling corrections.
+ - The `synonym` holds a synonym dictionary.
 
 Each of the tables is held in a separate file, allowing an administrator to
 see how much data is being used for each of the above purposes.  It is not
@@ -68,11 +120,11 @@ blocks, which have a default size of 8KB (though this can be set, either
 through the Xapian API, or with some of the tools detailed later in this
 document).
 
-The ``.baseA`` and ``.baseB`` files are used to keep track of where to start
-looking for data in the ``.DB`` file (the root of the tree), and which blocks are
-in use.  Often only one of the ``.baseA`` and ``.baseB`` files will be present;
+The ".baseA" and ".baseB" files are used to keep track of where to start
+looking for data in the ".DB" file (the root of the tree), and which blocks are
+in use.  Often only one of the ".baseA" and ".baseB" files will be present;
 each of these files refers to a revision of the database, and there may be more
-than one valid revision of the database stored in the ``.DB`` file at once.
+than one valid revision of the database stored in the ".DB" file at once.
 
 Changing the blocksize may have performance implications, but it is hard to
 tell whether these will be positive or negative for a particular combination
@@ -178,20 +230,23 @@ this requires a lock daemon to be running.
 Which database format to use?
 -----------------------------
 
-As of release 1.2.0, you should generally use the chert format (which is now
+As of release 1.4.0, you should generally use the glass format (which is now
 the default).
 
 Support for the pre-1.0 quartz format (deprecated in 1.0) was removed in 1.1.0.
 See below for how to convert a quartz database to a flint one.
 
-The flint backend (the default for 1.0) is still supported by 1.2.x, but
-deprecated - only use it if you already have flint databases; and plan to
-migrate away.
+The flint backend (the default for 1.0, and still supported by 1.2.x) was
+removed in 1.3.0.  See below for how to convert a flint database to a chert one.
 
-There's also a development backend called brass.  The main distinguishing
-feature of this is that the format may change incompatibly from time to time.
-It passes Xapian's extensive testsuite, but has seen less real world use
-than chert.
+The chert backend (the default for 1.2) is still supported by 1.4.x, but
+deprecated - only use it if you already have databases in this format; and plan
+to migrate away.
+
+.. There's also a development backend called XXXXX.  The main distinguishing
+.. feature of this is that the format may change incompatibly from time to time.
+.. It passes Xapian's extensive testsuite, but has seen less real world use
+.. than glass.
 
 Can I put other files in the database directory?
 ------------------------------------------------
@@ -206,8 +261,7 @@ which will break this technique, so as long as you don't choose a filename
 that Xapian uses itself, there should be no problems.  However, be aware that
 new versions of Xapian may use new files in the database directory, and it is
 also possible that new backend formats may not be compatible with the
-technique (e.g., it is possible that a future backend could store its entire
-database in a single file, not in a directory).
+technique.  And of course you can't do this with a single-file glass database.
 
 
 Backup Strategies
@@ -279,9 +333,8 @@ Inspecting a database
 
 When designing an indexing strategy, it is often useful to be able to check
 the contents of the database.  Xapian includes a simple command-line program,
-``xapian-delve``, to allow this (in Xapian 1.2.x and earlier, this tool was
-installed as just ``delve`` by default, though some packaged versions of Xapian
-were already renaming it to ``xapian-delve``).
+`xapian-delve`, to allow this (prior to 1.3.0, `xapian-delve` was usually
+called `delve`, though some packages were already renaming it).
 
 For example, to display the list of terms in document "1" of the database
 "foo", use:
@@ -373,12 +426,84 @@ of database "foo"::
 
   xapian-check foo/termlist.DB
 
+
+Fixing corrupted databases
+--------------------------
+
+The "xapian-check" tool is capable of fixing corrupted databases in certain
+limited situations.  Currently it only supports this for chert, where it is
+capable of:
+
+ * Regenerating a damaged ``iamchert`` file (if you've lost yours completely
+   just create an invalid one, e.g. with ``touch iamchert``).
+
+ * Regenerating damaged or lost base files from the corresponding DB files.
+   This was developed for the scenario where the database is freshly compacted
+   but should work provided the last update was cleanly applied.  If the last
+   update wasn't actually committed, then it is possible that it will try to
+   pick the root block for the partial update, which isn't what you want.
+   If you are in this situation, come and talk to us - with a testcase we
+   should be able to make it handle this better.
+
+To fix such issues, run xapian-check like so:
+
+.. code-block:: sh
+
+  xapian-check /path/to/database F
+
+
 .. _upgrading-databases:
+
+Converting a chert database to a glass database
+-----------------------------------------------
+
+This can be done using the ``copydatabase`` example program included with Xapian.
+This is a lot slower to run than ``xapian-compact``, since it has to perform the
+sorting of the term occurrence data from scratch, but should be faster than a
+re-index from source data since it doesn't need to perform the tokenisation
+step.  It is also useful if you no longer have the source data available.
+
+The following command will copy a database from "SOURCE" to "DESTINATION",
+creating the new database at "DESTINATION" as a chert database:
+
+.. code-block:: sh
+
+  copydatabase SOURCE DESTINATION
+
+By default copydatabase will renumber your documents starting with docid 1.
+If the docids are stored in or come from some external system, you should
+preserve them by using the ``--no-renumber`` option:
+
+.. code-block:: sh
+
+  copydatabase --no-renumber SOURCE DESTINATION
+
+
+Converting a pre-1.1.4 chert database to a chert database
+---------------------------------------------------------
+
+The chert format changed in 1.1.4 - at that point the format hadn't been
+finalised, but a number of users had already deployed it, and it wasn't hard
+to write an updater, so we provided one called `xapian-chert-update` which
+makes a copy with the updated format:
+
+.. code-block:: sh
+
+  xapian-chert-update SOURCE DESTINATION
+
+It works much like ``xapian-compact`` so should take a similar amount of time
+(and results in a compact database).  The initial version had a few bugs, so
+use xapian-chert-update from Xapian 1.2.5 or later.
+
+The ``xapian-chert-update`` utility was removed in Xapian 1.3.0, so you'll need
+to install Xapian 1.2.x to use it.
+
 
 Converting a flint database to a chert database
 -----------------------------------------------
 
-It is possible to convert a flint database to a chert database by
+It is possible to convert a flint database to a chert database by installing
+Xapian 1.2.x (since this has support for both flint and chert)
 using the ``copydatabase`` example program included with Xapian.  This is a
 lot slower to run than ``xapian-compact``, since it has to perform the
 sorting of the term occurrence data from scratch, but should be faster than a
