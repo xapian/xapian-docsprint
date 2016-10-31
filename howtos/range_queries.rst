@@ -245,17 +245,23 @@ populations. If either number is outside that range, we will return
 :xapian-constant:`BAD_VALUENO` and the QueryParser will move on.
 
 .. xapianexample:: search_ranges2
-    :marker: custom VRP code
+    :marker: custom RP code
 
 Most of the work is in `__call__` (python's equivalent of `operator()`
 in C++), which gets called with the two strings at either end of the
 range in the query string; either but not both can be the empty
-string, which indicates an open-ended range. In python this method
-should return a tuple of the value slot and the two strings modified
-so they can be used for :xapian-just-constant:`OP_VALUE_RANGE`. Rather than
-re-implement :xapian-class:`NumberRangeProcessor`, we wrap it to do the
-serialisation (due to the way python interacts with the API it's currently not
-possible to subclass it successfully here).
+string, which indicates an open-ended range.  This method returns a
+:xapian-class:`Query` object - if the object doesn't want to handle
+the range, then this should use operator :xapian-just-constant:`OP_INVALID`.
+it doesn't want to handle it; otherwise this query is the range that
+is matched - typically using :xapian-just-constant:`OP_VALUE_RANGE`, but
+arbitrary :xapian-class:`Query` objects are supported.
+
+Rather than re-implement :xapian-class:`NumberRangeProcessor`, we wrap it to do
+the serialisation (due to the way python interacts with the API it's currently
+not possible to subclass it successfully here).
+
+.. todo: Is the above paragraph still correct?
 
 Range processors are called in the order they're added, so our
 custom one gets a chance to look at all ranges, but will only 'claim'

@@ -19,12 +19,12 @@ def search(dbpath, querystring, offset=0, pagesize=10):
     queryparser.set_stemming_strategy(queryparser.STEM_SOME)
     queryparser.add_prefix("title", "S")
     queryparser.add_prefix("description", "XD")
-    # and add in value range processors
-    # Start of custom VRP code
-    class PopulationValueRangeProcessor(xapian.ValueRangeProcessor):
+    # and add in range processors
+    # Start of custom RP code
+    class PopulationRangeProcessor(xapian.RangeProcessor):
         def __init__(self, value, low, high):
-            super(PopulationValueRangeProcessor, self).__init__()
-            self.nvrp = xapian.NumberValueRangeProcessor(value)
+            super(PopulationRangeProcessor, self).__init__()
+            self.nvrp = xapian.NumberRangeProcessor(value)
             self.low = low
             self.high = high
 
@@ -35,25 +35,25 @@ def search(dbpath, querystring, offset=0, pagesize=10):
                     if _begin < self.low or _begin > self.high:
                         raise ValueError()
                 except:
-                    return (xapian.BAD_VALUENO, begin, end)
+                    return xapian.Query(xapian.Query.OP_INVALID)
             if end != u"":
                 try:
                     _end = int(end)
                     if _end < self.low or _end > self.high:
                         raise ValueError()
                 except:
-                    return (xapian.BAD_VALUENO, begin, end)
-            return self.nvrp(begin, end)
-    queryparser.add_valuerangeprocessor(
-        PopulationValueRangeProcessor(3, 500000, 50000000)
+                    return xapian.Query(xapian.Query.OP_INVALID)
+            return xapian.Query(xapian.Query.OP_VALUE_RANGE, begin, end)
+    queryparser.add_rangeprocessor(
+        PopulationRangeProcessor(3, 500000, 50000000)
         )
-    # End of custom VRP code
+    # End of custom RP code
     # Start of date example code
-    queryparser.add_valuerangeprocessor(
-        xapian.DateValueRangeProcessor(2, True, 1860)
+    queryparser.add_rangeprocessor(
+        xapian.DateRangeProcessor(2, xapian.RP_DATE_PREFER_MDY, 1860)
     )
-    queryparser.add_valuerangeprocessor(
-        xapian.NumberValueRangeProcessor(1, '')
+    queryparser.add_rangeprocessor(
+        xapian.NumberRangeProcessor(1)
     )
     # End of date example code
     # And parse the query

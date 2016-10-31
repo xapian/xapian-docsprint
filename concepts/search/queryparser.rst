@@ -122,15 +122,15 @@ ranges as::
     01/01/1970..01/03/1970
     size:3..7
 
-When date ranges are configured (as a `DateValueRangeProcessor`_), you can
+When date ranges are configured (as a `DateRangeProcessor`_), you can
 configure which format dates are to be interpreted as (i.e. month-day-year)
 or otherwise.
 
 .. _Date:
-.. _DateValueRangeProcessor: https://xapian.org/docs/apidoc/html/classXapian_1_1DateValueRangeProcessor.html
+.. _DateRangeProcessor: https://xapian.org/docs/apidoc/html/classXapian_1_1DateRangeProcessor.html
 
 .. _Number:
-.. _NumericValueRangeProcessor: https://xapian.org/docs/apidoc/html/classXapian_1_1NumberValueRangeProcessor.html
+.. _NumericRangeProcessor: https://xapian.org/docs/apidoc/html/classXapian_1_1NumberRangeProcessor.html
 
 Wildcards
 ~~~~~~~~~

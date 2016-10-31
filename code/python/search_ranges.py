@@ -19,12 +19,12 @@ def search(dbpath, querystring, offset=0, pagesize=10):
     queryparser.set_stemming_strategy(queryparser.STEM_SOME)
     queryparser.add_prefix("title", "S")
     queryparser.add_prefix("description", "XD")
-    # and add in value range processors
-    queryparser.add_valuerangeprocessor(
-        xapian.NumberValueRangeProcessor(0, 'mm', False)
+    # and add in range processors
+    queryparser.add_rangeprocessor(
+        xapian.NumberRangeProcessor(0, 'mm', xapian.RP_SUFFIX)
     )
-    queryparser.add_valuerangeprocessor(
-        xapian.NumberValueRangeProcessor(1, '')
+    queryparser.add_rangeprocessor(
+        xapian.NumberRangeProcessor(1)
     )
 
     # And parse the query

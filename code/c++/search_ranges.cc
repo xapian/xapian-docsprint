@@ -25,11 +25,11 @@ search(const string & dbpath, const string & querystring,
     queryparser.set_stemming_strategy(queryparser.STEM_SOME);
     queryparser.add_prefix("title", "S");
     queryparser.add_prefix("description", "XD");
-    // and add in value range processors
-    Xapian::NumberValueRangeProcessor size_vrp(0, "mm", false);
-    queryparser.add_valuerangeprocessor(&size_vrp);
-    Xapian::NumberValueRangeProcessor date_vrp(1, "");
-    queryparser.add_valuerangeprocessor(&date_vrp);
+    // and add in range processors
+    Xapian::NumberRangeProcessor size_vrp(0, "mm", Xapian::RP_SUFFIX);
+    queryparser.add_rangeprocessor(&size_vrp);
+    Xapian::NumberRangeProcessor date_vrp(1);
+    queryparser.add_rangeprocessor(&date_vrp);
 
     // And parse the query.
     Xapian::Query query = queryparser.parse_query(querystring);
