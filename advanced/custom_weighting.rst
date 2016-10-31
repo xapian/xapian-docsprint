@@ -32,13 +32,13 @@ term scores one point:
             return new CoordinateWeight;
         }
 
-        Xapian::weight get_sumpart(Xapian::termcount, Xapian::doclength) const {
+        double get_sumpart(Xapian::termcount, Xapian::doclength) const {
             return 1;
         }
-        Xapian::weight get_maxpart() const { return 1; }
+        double get_maxpart() const { return 1; }
 
-        Xapian::weight get_sumextra(Xapian::doclength) const { return 0; }
-        Xapian::weight get_maxextra() const { return 0; }
+        double get_sumextra(Xapian::doclength) const { return 0; }
+        double get_maxextra() const { return 0; }
 
         bool get_sumpart_needs_doclength() const { return false; }
     };
@@ -97,21 +97,21 @@ The implementation will be as follows:
             return new TfIdfWeight;
         }
 
-        Xapian::weight get_sumpart(Xapian::termcount wdf, Xapian::doclength) const {
+        double get_sumpart(Xapian::termcount wdf, Xapian::doclength) const {
             Xapian::doccount df = get_termfreq();
             double wdf_double(wdf);
-            Xapian::weight wt = wdf_double / df;
+            double wt = wdf_double / df;
             return wt;
         }
 
-        Xapian::weight get_maxpart() const {
+        double get_maxpart() const {
             Xapian::doccount df = get_termfreq();
             double max_wdf(get_wdf_upper_bound());
-            Xapian::weight max_weight = max_wdf / df;
+            double max_weight = max_wdf / df;
             return max_weight;
         }
-        Xapian::weight get_sumextra(Xapian::doclength) const { return 0; }
-        Xapian::weight get_maxextra() const { return 0; }
+        double get_sumextra(Xapian::doclength) const { return 0; }
+        double get_maxextra() const { return 0; }
     };
 
 
