@@ -284,7 +284,9 @@ installed as just ``delve`` by default, though some packaged versions of Xapian
 were already renaming it to ``xapian-delve``).
 
 For example, to display the list of terms in document "1" of the database
-"foo", use::
+"foo", use:
+
+.. code-block:: sh
 
   xapian-delve foo -r 1
 
@@ -292,7 +294,9 @@ It is also possible to perform simple searches of a database.  Xapian includes
 another simple command-line program, ``quest``, to support this.  ``quest`` is
 only able to search for un-prefixed terms, the query string must be quoted to
 protect it from the shell.  To search the database "foo" for the phrase "hello
-world", use::
+world", use:
+
+.. code-block:: sh
 
   quest -d foo '"hello world"'
 

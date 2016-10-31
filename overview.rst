@@ -48,7 +48,9 @@ Installation on Debian or Ubuntu
 Debian and Ubuntu have Xapian 1.2 packaged: if you're using a release which
 is still in support, except Ubuntu 10.04 LTS (Lucid Lynx), then you can just do
 one of the following depending on whether you want to work through the examples
-in Python or C++::
+in Python or C++:
+
+.. code-block:: none
 
     $ sudo apt-get install python-xapian
     $ sudo apt-get install libxapian-dev

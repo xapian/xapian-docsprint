@@ -75,7 +75,9 @@ We run this like so:
     :cleanfirst: db
     :args: data/100-objects-v1.csv db
 
-We can check this has created document values using `xapian-delve`::
+We can check this has created document values using `xapian-delve`:
+
+.. code-block:: none
 
     $ xapian-delve -V0 db | cat -v
     Value 0 for each document: 5:M-@M-@ 8:M-HV 9:M-EM-p 10:M-MF 11:M-AM-0 12:M-AP 15:M-8^P 19:M-Dt 20:M-GM-P 21:M-E 24:M-O: 25:M-BM-@ 26:M-AM-  27:M-BX 29:M-DD 30:M-BM-^P 31:M-6@ 33:M-;` 34:M-A0 35:M-LM-l 36:M-C^P 37:M-9M-p 38:M-A( 39:M-FT 42:M-H2 45:M-N@ 46:M-AP 50:M-:M-^P 51:M-9P 52:M-LM-! 54:M-CM-( 55:M-9M-P 56:M-@P 59:M-D` 61:M-A( 62:M-;@ 64:M-:M-^P 66:M-AM-H 67:M-8` 68:M-@D33333@ 69:M-D^P 70:M-@M-H 71:M-KM-( 72:M-8^P 73:M-5M-^NfffffM-^@ 74:M-5M-^NfffffM-^@ 75:M-C$M-LM-LM-LM-LM-LM-@ 76:M-BM-?33333@ 77:M-C>33333@ 78:M-;M-^@ 79:M-E^T 80:M-9P 81:M-A@ 84:M-9M-t 86:M-L~ 87:M-BM-@ 88:M-9(M-LM-LM-LM-LM-LM-@ 89:M-:M-?33333@ 90:M-8M-C33333@ 91:M-E| 93:M-A( 94:M-@` 97:M-EM-\ 98:M-Bh 100:M-9^P
