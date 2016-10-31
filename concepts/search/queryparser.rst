@@ -115,7 +115,9 @@ of range processors available, but the two discussed here are `Date`_ and
 To use a range, additional programming is required to tell the QueryParser
 what format a range is specified in and which value is to be searched for
 matches within that range. This then gives rise to the ability to specify
-ranges as::
+ranges as:
+
+.. code-block:: none
 
     $10..50
     5..10kg
