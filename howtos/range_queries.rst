@@ -97,8 +97,8 @@ numbers. For this to work, we have to tell QueryParser about the value
 range with a suffix first:
 
 .. xapianexample:: search_ranges
-    :start-after: and add in value range processors
-    :end-before: And parse the query
+    :start-after: and add in range processors
+    :end-before: and parse the query
 
 The first call has a final parameter of `False` to say that 'mm' is a
 suffix (the default is for it to be a prefix). When using the empty
