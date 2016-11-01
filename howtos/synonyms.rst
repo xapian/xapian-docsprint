@@ -17,7 +17,35 @@ synonym operator (``~``).
 .. note::
    Xapian doesn't offer automated generation of the synonym dictionary.
 
-.. todo:: write an example using one of our data sets.
+Here is an example of search program with synonym functionality.
+
+.. xapianexample:: search_synonyms
+
+You can see the search results without `~` operator.
+
+.. xapianrunexample:: index1
+    :silent:
+    :args: data/100-objects-v1.csv db
+
+.. xapianrunexample:: delete1
+    :silent:
+    :args: db 1953-448 1985-438
+
+.. xapianrunexample:: search_synonyms
+    :args: db time
+
+Notice the difference with the `~` operator with `time` were `calendar` is specified as its synonym.
+
+.. xapianrunexample:: index1
+    :silent:
+    :args: data/100-objects-v1.csv db
+
+.. xapianrunexample:: delete1
+    :silent:
+    :args: db 1953-448 1985-438
+
+.. xapianrunexample:: search_synonyms
+    :args: db ~time
 
 Model
 =====
@@ -27,13 +55,23 @@ terms can have one or more synonym terms.  A group of consecutive terms is
 specified in the dictionary by simply joining them with a single space between
 each one.
 
-.. todo:: Discuss interactions with stemming (ie, should the input and/or
-          output values in the synonym table be stemmed).
+If a term to be synonym expanded will be stemmed by the QueryParser, then
+synonyms will be checked for the unstemmed form first, and then for the stemmed
+form, so you can provide different synonyms for particular unstemmed forms
+if you want to.
+
+.. todo:: Discuss interactions with stemming (ie, should the input and/or output values in the synonym table be stemmed).
 
 Adding Synonyms
 ===============
 
-.. todo:: Document this!
+The synonyms can be added by the :xapian-method:`WritableDatabase::add_synonym()`. In the following 
+example ``calender`` is specified as a synonym for ``time``. Users may similarly write a loop to load all
+the synonyms from a dictionary file.
+
+.. xapianexample:: search_synonyms
+    :start-after: Start of adding synonyms
+    :end-before: End of adding synonyms
 
 QueryParser Integration
 =======================
@@ -42,20 +80,23 @@ In order for any of the synonym features of the QueryParser to work, you must
 call :xapian-method:`QueryParser::set_database()` to specify the database to
 use.
 
+.. xapianexample:: search_synonyms
+    :start-after: Start of set database
+    :end-before: End of set database
+
 If ``FLAG_SYNONYM`` is passed to :xapian-method:`QueryParser::parse_query()`
 then the QueryParser will recognise ``~`` in front of a term as indicating a
-request for synonym expansion.  If ``FLAG_LOVEHATE`` is also specified, you can
+request for synonym expansion.  
+
+If ``FLAG_LOVEHATE`` is also specified, you can
 use ``+`` and ``-`` before the ``~`` to indicate that you love or hate the
 synonym expanded expression.
+
+.. todo:: Just check if following statement is correct!
 
 A synonym-expanded term becomes the term itself OR-ed with any listed synonyms,
 so ``~truck`` might expand to ``truck OR lorry OR van``.  A group of terms is
 handled in much the same way.
-
-If a term to be synonym expanded will be stemmed by the QueryParser, then
-synonyms will be checked for the unstemmed form first, and then for the stemmed
-form, so you can provide different synonyms for particular unstemmed forms
-if you want to.
 
 If ``FLAG_AUTO_SYNONYMS`` is passed to
 :xapian-method:`QueryParser::parse_query()` then the QueryParser will
