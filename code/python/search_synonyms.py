@@ -13,13 +13,13 @@ def search(dbpath, querystring, offset=0, pagesize=10):
 
     # Open the database we're going to search.
     db = xapian.WritableDatabase(dbpath)
- 
-    # Start of adding synonyms   
+
+    # Start of adding synonyms
     db.add_synonym("time", "calendar")
     # End of adding synonyms
 
     # Set up a QueryParser with a stemmer and suitable prefixes
-    queryparser = xapian.QueryParser()        
+    queryparser = xapian.QueryParser()
     queryparser.set_stemmer(xapian.Stem("en"))
     queryparser.set_stemming_strategy(queryparser.STEM_SOME)
     # Start of prefix configuration.
