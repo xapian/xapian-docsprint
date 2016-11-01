@@ -37,26 +37,26 @@ def search(dbpath, querystring, offset=0, pagesize=10):
 
     for match in enquire.get_mset(offset, pagesize, 100):
         fields = json.loads(match.document.get_data())
-        print u"%(rank)i: #%(docid)3.3i %(title)s" % {
+        print(u"%(rank)i: #%(docid)3.3i %(title)s" % {
             'rank': match.rank + 1,
             'docid': match.docid,
             'title': fields.get('TITLE', u''),
-            }
+            })
         matches.append(match.docid)
 
     # Fetch and display the spy values
     for facet in spy.values():
-        print "Facet: %(term)s; count: %(count)i" % {
+        print("Facet: %(term)s; count: %(count)i" % {
             'term' : facet.term,
             'count' : facet.termfreq
-        }
+        })
 
     # Finally, make sure we log the query and displayed results
     support.log_matches(querystring, offset, pagesize, matches)
 ### End of example code.
 
 if len(sys.argv) < 3:
-    print "Usage: %s DBPATH QUERYTERM..." % sys.argv[0]
+    print("Usage: %s DBPATH QUERYTERM..." % sys.argv[0])
     sys.exit(1)
 
 logging.basicConfig(level=logging.INFO)

@@ -34,7 +34,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
     matches = []
     for index, match in enumerate(enquire.get_mset(offset, pagesize)):
         fields = json.loads(match.document.get_data())
-        print u"%(rank)i: #%(docid)3.3i %(name)s %(date)s\n        Population %(pop)s" % {
+        print(u"%(rank)i: #%(docid)3.3i %(name)s %(date)s\n        Population %(pop)s" % {
             'rank': offset + index + 1,
             'docid': match.docid,
             'name': fields.get('name', u''),
@@ -42,7 +42,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
             'pop': support.format_numeral(fields.get('population', 0)),
             'lat': fields.get('latitude', u''),
             'lon': fields.get('longitude', u''),
-            }
+            })
         matches.append(match.docid)
 
     # Finally, make sure we log the query and displayed results
@@ -50,7 +50,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
 ### End of example code.
 
 if len(sys.argv) < 3:
-    print "Usage: %s DBPATH QUERYTERM..." % sys.argv[0]
+    print("Usage: %s DBPATH QUERYTERM..." % sys.argv[0])
     sys.exit(1)
 
 logging.basicConfig(level=logging.INFO)

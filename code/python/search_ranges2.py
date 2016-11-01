@@ -70,7 +70,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
         population = support.format_numeral(fields.get('population', 0))
         date = support.format_date(fields.get('admitted'))
 
-        print u"""\
+        print(u"""\
 %(rank)i: #%(docid)3.3i %(name)s %(date)s
         Population %(pop)s""" % {
             'rank': match.rank + 1,
@@ -80,7 +80,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
             'pop': population,
             'lat': fields.get('latitude', u''),
             'lon': fields.get('longitude', u''),
-            }
+            })
         matches.append(match.docid)
 
     # Finally, make sure we log the query and displayed results
@@ -88,7 +88,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
 ### End of example code.
 
 if len(sys.argv) < 3:
-    print "Usage: %s DBPATH QUERYTERM..." % sys.argv[0]
+    print("Usage: %s DBPATH QUERYTERM..." % sys.argv[0])
     sys.exit(1)
 
 logging.basicConfig(level=logging.INFO)

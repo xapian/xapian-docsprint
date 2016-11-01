@@ -88,7 +88,7 @@ def parse_states(datapath):
         # 'fields' is a dictionary mapping from field name to value.
         admitted = fields.get('admitted', None)
         if admitted is None:
-            print "Couldn't process", fields
+            print("Couldn't process", fields)
             continue
 
         # Date (order) -- we use the order as our identifier
@@ -100,7 +100,7 @@ def parse_states(datapath):
                 admitted.year, str(admitted.month).zfill(2),
                 str(admitted.day).zfill(2))
         except ValueError:
-            print "couldn't parse admitted '%s'" % admitted
+            print("couldn't parse admitted '%s'" % admitted)
             fields['admitted'] = None
 
         order = pieces[1][:-1]

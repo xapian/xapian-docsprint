@@ -14,17 +14,17 @@ def pull(title):
     try:
         html = opener.open(url.encode("utf-8")).read()
     except:
-        print (u"  Could not fetch %s" % url).encode('utf-8')
+        print((u"  Could not fetch %s" % url).encode('utf-8'))
         return None
     try:
         soup = BeautifulSoup.BeautifulSoup(html)
     except:
-        print (u"  Could not parse %s" % url).encode('utf-8')
+        print((u"  Could not parse %s" % url).encode('utf-8'))
         return None
     # Extract information
     infobox = soup.find("table", { 'class': re.compile(r'\binfobox\b') })
     if not infobox:
-        print (u"  No infobox found in %s" % url).encode('utf-8')
+        print((u"  No infobox found in %s" % url).encode('utf-8'))
         return None
 
     information = {}

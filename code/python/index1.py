@@ -46,7 +46,7 @@ def index(datapath, dbpath):
 ### End of example code.
 
 if len(sys.argv) != 3:
-    print "Usage: %s DATAPATH DBPATH" % sys.argv[0]
+    print("Usage: %s DATAPATH DBPATH" % sys.argv[0])
     sys.exit(1)
 
 index(datapath = sys.argv[1], dbpath = sys.argv[2])
