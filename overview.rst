@@ -36,7 +36,7 @@ completing these translations and with translating the examples into other
 languages would be most welcome.
 
 .. _Python: https://www.python.org/
-.. _PHP: http://www.php.net/
+.. _PHP: https://php.net/
 
 This guide documents Xapian 1.4 (except where a different version is explicitly
 mentioned) so you'll find it easier to follow if you use a version from the 1.4
