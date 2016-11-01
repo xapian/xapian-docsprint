@@ -1,0 +1,21 @@
+1: #050 State of Maryland 17880428
+        Population 5773552
+2: #049 State of Delaware 17871207
+        Population 897934
+3: #040 Commonwealth of Pennsylvania 17871212
+        Population 12702379
+4: #043 State of New Jersey 17871218
+        Population 8791894
+5: #039 State of West Virginia 18630620
+        Population 1859815
+6: #037 State of North Carolina 17891121
+        Population 9535483
+7: #041 State of New York 17880726
+        Population 19378102
+8: #038 Commonwealth of Virginia 17880625
+        Population 8001024
+9: #048 State of Connecticut 17880109
+        Population 3574097
+10: #036 State of South Carolina 17880523
+        Population 4625384
+INFO:xapian.search:'State'[0:10] = 50 49 40 43 39 37 41 38 48 36

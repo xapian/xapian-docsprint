@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "code/python3/search_ranges.py", line 58, in <module>
+    search(dbpath = sys.argv[1], querystring = " ".join(sys.argv[2:]))
+  File "code/python3/search_ranges.py", line 31, in search
+    query = queryparser.parse_query(querystring)
+xapian.QueryParserError: Unknown range operation
