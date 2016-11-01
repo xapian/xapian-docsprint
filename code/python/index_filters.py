@@ -37,7 +37,7 @@ def index(datapath, dbpath):
         # Index the MATERIALS field, splitting on semicolons.
         for material in fields.get('MATERIALS', u'').split(';'):
             material = material.strip().lower()
-            if material != '':
+            if len(material) > 0:
                 doc.add_boolean_term('XM' + material)
         ### End of new indexing code.
 

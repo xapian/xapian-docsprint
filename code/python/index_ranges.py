@@ -39,7 +39,7 @@ def index(datapath, dbpath):
 ### Start of example code.
         # parse the two values we need
         measurements = fields.get('MEASUREMENTS', u'')
-        if measurements != u'':
+        if len(measurements) > 0:
             numbers = numbers_from_string(measurements)
             if len(numbers) > 0:
                 doc.add_value(0, xapian.sortable_serialise(max(numbers)))

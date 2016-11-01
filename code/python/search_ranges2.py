@@ -29,14 +29,14 @@ def search(dbpath, querystring, offset=0, pagesize=10):
             self.high = high
 
         def __call__(self, begin, end):
-            if begin != u"":
+            if len(begin) > 0:
                 try:
                     _begin = int(begin)
                     if _begin < self.low or _begin > self.high:
                         raise ValueError()
                 except:
                     return xapian.Query(xapian.Query.OP_INVALID)
-            if end != u"":
+            if len(end) > 0:
                 try:
                     _end = int(end)
                     if _end < self.low or _end > self.high:
