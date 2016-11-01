@@ -11,13 +11,14 @@ Xapian index. There are two ways of approaching this.
 
 One is to use a one-to-one mapping between your identifiers and Xapian
 docids. This will work if your identifiers are positive integers and they
-all fit within 32 bits (under about 4 billion).
+all fit within 32 bits (under about 4 billion), or if they are 64-bit
+and you configure xapian-core with `--enable-64bit-docid`.
 
 The other is to use a special term containing your identifier, which will
 work for any type of identifier.  Typically you will prefix this (by
 convention with 'Q') to avoid collisions with other terms.  Terms have a
-limited length (245 bytes in chert), so if your unique identifiers are
-really long you'll need to do something more complicated.
+limited length (245 bytes in glass and chert), so if your unique identifiers
+are really long you'll need to do something more complicated.
 
 For more information on both techniques, `see our FAQ on this`_.
 

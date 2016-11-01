@@ -11,9 +11,9 @@ do, but it's worth knowing about them.
 Term length
 -----------
 
-Terms are limited to 245 bytes in length (at least with the "chert"
-backend), but each zero byte in a term is currently internally encoded as
-two bytes, so the limit is less for a term which contains zero bytes.
+Terms are limited to 245 bytes in length (at least with the "glass" and
+"chert" backends), but each zero byte in a term is currently internally encoded
+as two bytes, so the limit is less for a term which contains zero bytes.
 It's rarely useful to have longer terms, but one situation where it can be
 is if you're using something like a URL as an ID term; `there is some
 discussion of this as one of our FAQs
@@ -37,11 +37,16 @@ document values longer than a few tens of bytes, as reading multiple
 Document ID
 -----------
 
-Document IDs are (currently) 32-bit which limits you to 2\ :sup:`32`-1
-(nearly 4.3 billion) documents in a database.  Document IDs for deleted
-documents aren't reused for when automatically assigning a new document ID,
-so this limit also includes documents you've deleted.  You can effectively
+Document IDs are (currently) 32-bit by default which limits you to
+2\ :sup:`32`-1 (nearly 4.3 billion) documents in a database.  Document IDs for
+deleted documents aren't reused for when automatically assigning a new document
+ID, so this limit also includes documents you've deleted.  You can effectively
 reclaim such no-longer-used document IDs by compacting the database.
+
+If you configure xapian-core with `--enable-64bit-docid` then 64-bit docids
+will be used instead.  You may well also want to make termcounts 64-bit
+with `--enabl-64bit-termcount`.  Note that these options change type sizes and
+hence the ABI of the library.
 
 B-tree block number
 -------------------
@@ -68,7 +73,7 @@ allows files and filesystems up to 16EB (figures from Wikipedia).
 
 Total document length limit
 ---------------------------
-Chert stores the total length (i.e. number of terms) of all the documents
+Glass stores the total length (i.e. number of terms) of all the documents
 in a database so it can calculate the average document length.  This is
 currently stored as an unsigned 64-bit quantity so you're almost certain
 to hit another limit first.

@@ -48,7 +48,7 @@ typically mean that you only need to cache a few percent of the database
 to eliminate most disk cache misses).
 
 It also means that reducing the database size is usually a win. The
-Chert backend compresses the information in the tables in ways which
+backend compresses the information in the tables in ways which
 work well given the nature of the data but aren't too expensive to
 unpack (e.g. lists of sorted docids are stored as differences with
 smaller values encoded in fewer bytes). There is further potential for
@@ -79,7 +79,7 @@ documents should expire from the index.
 Size Limits in Xapian
 =====================
 
-The chert backend (which is currently the default and recommended
+The glass backend (which is currently the default and recommended
 backend) stores the indexes in several files containing Btree tables. If
 you're indexing with positional information (for phrase searching) the
 term positions table is usually the largest.

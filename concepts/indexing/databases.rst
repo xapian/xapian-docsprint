@@ -24,7 +24,7 @@ Backends
 Xapian databases store data in custom formats which allow searches to be
 performed extremely quickly; Xapian does not use a relational database as
 its datastore.  There are several database backends; the main backend in
-the 1.2 release series of Xapian is called the *Chert* backend.  This
+the 1.4 release series of Xapian is called the *Glass* backend.  This
 stores information in the filesystem (under a given path).
 
 It is possible to perform searches across multiple databases at once, and
@@ -42,14 +42,14 @@ remote databases.
 On-disk databases
 -----------------
 
-As mentioned, Xapian 1.2 has a default database type called *Chert*;
+As mentioned, Xapian 1.4 has a default database type called *Glass*;
 :ref:`earlier formats can be upgraded using Xapian's copydatabase utility
 <upgrading-databases>`. When opening an existing database, Xapian will
 automatically figure out the backend to use.
 
 If you're
 familiar with data storage structures, you might be interested to know that
-Chert and Brass both use a copy-on-write B+-tree structure - but don't worry
+both Chert and Glass use a copy-on-write B+-tree structure - but don't worry
 if that doesn't mean anything to you!
 
 Stub database files
@@ -77,7 +77,7 @@ Xapian has an *inmemory* database type, which may be useful for testing and
 perhaps some short-term usage. However it is inefficient, and does not support
 all of Xapian's features (such as spelling correction, synonyms or replication),
 so for production systems it is often better to use an on-disk database such
-as *Chert*, with the files stored in a RAM disk.
+as *Glass*, with the files stored in a RAM disk.
 
 Remote databases and replication
 --------------------------------

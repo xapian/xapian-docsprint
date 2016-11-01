@@ -120,6 +120,57 @@ The lazy evaluation is mainly transparent, but does become visible in one situat
 - Document.termlist (also accessible as Document.__iter__): **termfreq** and **positer**
 - Database.postlist: **positer**
 
+In older releases, the pythonic iterators returned lists representing the
+appropriate item when their ``next()`` method was called.  These were
+removed in Xapian 1.1.0.
+
+
+Non-Pythonic Iterators
+######################
+
+Before the pythonic iterator wrappers were added, the python bindings provided
+thin wrappers around the C++ iterators.  However, these iterators don't behave
+like most iterators do in Python, so the pythonic iterators were implemented to
+replace them.  The non-pythonic iterators were removed in Xapian 1.3.0 -
+the documentation below is provided to aid migration away from them.
+
+All non-pythonic iterators support ``next()`` and
+``equals()`` methods
+to move through and test iterators (as for all language bindings).
+MSetIterator and ESetIterator also support ``prev()``.
+Python-wrapped iterators also support direct comparison, so something like:
+
+::
+
+  m=mset.begin()
+  while m!=mset.end():
+    # do something
+    m.next()
+
+C++ iterators are often dereferenced to get information, eg
+``(*it)``. With Python these are all mapped to named methods, as
+follows:
+
++------------------+----------------------+
+| Iterator         | Dereferencing method |
++==================+======================+
+| PositionIterator |    ``get_termpos()`` |
++------------------+----------------------+
+| PostingIterator  |  ``get_docid()``     |
++------------------+----------------------+
+| TermIterator     |     ``get_term()``   |
++------------------+----------------------+
+| ValueIterator    |     ``get_value()``  |
++------------------+----------------------+
+| MSetIterator     |     ``get_docid()``  |
++------------------+----------------------+
+| ESetIterator     |     ``get_term()``   |
++------------------+----------------------+
+
+
+Other methods, such as ``MSetIterator.get_document()``, are
+available unchanged.
+
 MSet
 ####
 
@@ -138,9 +189,48 @@ work using the C++ array dereferencing):
 | ``get_docid(index)``               | ``get_hit(index).get_docid()``         |
 +------------------------------------+----------------------------------------+
 
+Additionally, the MSet has a property, ``mset.items``, which returns a
+list of tuples representing the MSet.  This is now deprecated - please use the
+property API instead (it works in Xapian 1.0.x too).  The tuple members and the
+equivalent property names are as follows:
+
+
++-------------------------+---------------+---------------------------------------------------------------------------+
+|   Index                 | Property name | Contents                                                                  |
++=========================+===============+===========================================================================+
+| ``xapian.MSET_DID``     | docid         | Document id                                                               |
++-------------------------+---------------+---------------------------------------------------------------------------+
+| ``xapian.MSET_WT``      | weight        |  Weight                                                                   |
++-------------------------+---------------+---------------------------------------------------------------------------+
+| ``xapian.MSET_RANK``    | rank          | Rank                                                                      |
++-------------------------+---------------+---------------------------------------------------------------------------+
+| ``xapian.MSET_PERCENT`` |  percent      | Percentage weight                                                         |
++-------------------------+---------------+---------------------------------------------------------------------------+
+| ``xapian.MSET_DOCUMENT``| document      | Document object (Note: this member of the tuple was never actually set!)  |
++-------------------------+---------------+---------------------------------------------------------------------------+
+
+
 Two MSet objects are equal if they have the same number and maximum possible
 number of members, and if every document member of the first MSet exists at the
 same index in the second MSet, with the same weight.
+
+
+ESet
+####
+
+The ESet has a property, ``eset.items``, which returns a list of
+tuples representing the ESet.  This is now deprecated - please use the
+property API instead (it works in Xapian 1.0.x too).  The tuple members and the
+equivalent property names are as follows:
+
+
++------------------------+---------------+-----------+
+|   Index                | Property name | Contents  |
++========================+===============+===========+
+| ``xapian.ESET_TNAME``  | term          | Term name |
++------------------------+---------------+-----------+
+| ``xapian.ESET_WT``     | weight        |  Weight   |
++------------------------+---------------+-----------+
 
 
 Non-Class Functions
@@ -155,9 +245,8 @@ wrapped like so for Python:
 - ``Xapian::minor_version()`` is wrapped as ``xapian.minor_version()``
 - ``Xapian::revision()`` is wrapped as ``xapian.revision()``
 - ``Xapian::Auto::open_stub()`` is wrapped as ``xapian.open_stub()`` (now deprecated)
-- ``Xapian::Brass::open()`` is wrapped as ``xapian.brass_open()`` (now deprecated)
 - ``Xapian::Chert::open()`` is wrapped as ``xapian.chert_open()`` (now deprecated)
-- ``Xapian::InMemory::open()`` is wrapped as ``xapian.inmemory_open()``
+- ``Xapian::InMemory::open()`` is wrapped as ``xapian.inmemory_open()`` (now deprecated)
 - ``Xapian::Remote::open()`` is wrapped as ``xapian.remote_open()`` (both the TCP and "program" versions are wrapped - the SWIG wrapper checks the parameter list to decide which to call).
 - ``Xapian::Remote::open_writable()`` is wrapped as ``xapian.remote_open_writable()`` (both the TCP and "program" versions are wrapped - the SWIG wrapper checks the parameter list to decide which to call).
 
@@ -181,7 +270,7 @@ a mixture of terms and queries if you wish.  For example:
 MatchAll and MatchNothing
 -------------------------
 
-These are wrapped as ``xapian.Query.MatchAll`` and
+As of 1.1.1, these are wrapped as ``xapian.Query.MatchAll`` and
 ``xapian.Query.MatchNothing``.
 
 
