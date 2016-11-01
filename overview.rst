@@ -38,15 +38,20 @@ languages would be most welcome.
 .. _Python: https://www.python.org/
 .. _PHP: http://www.php.net/
 
-This guide documents Xapian 1.2 (except where a different version is explicitly
-mentioned) so you'll find it easier to follow if you use a version from the 1.2
+This guide documents Xapian 1.4 (except where a different version is explicitly
+mentioned) so you'll find it easier to follow if you use a version from the 1.4
 release series.  So let's get that onto your system.
 
 Installation on Debian or Ubuntu
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Debian and Ubuntu have Xapian 1.2 packaged: if you're using a release which
-is still in support, except Ubuntu 10.04 LTS (Lucid Lynx), then you can just do
+Neither Debian nor Ubuntu yet have a stable release with Xapian 1.4 packages.
+If you're using Debian unstable or testing, there are 1.4 packages there.
+For Ubuntu you can install packages from our PPA_.
+
+.. _PPA: https://launchpad.net/~xapian-backports/+archive/ubuntu/ppa
+
+Once you have a suitable repo configured, then you can do
 one of the following depending on whether you want to work through the examples
 in Python or C++:
 
@@ -54,11 +59,6 @@ in Python or C++:
 
     $ sudo apt-get install python-xapian
     $ sudo apt-get install libxapian-dev
-
-If you're using Ubuntu 10.04 LTS (Lucid Lynx), you'll need to install from our
-PPA_.
-
-.. _PPA: https://launchpad.net/~xapian-backports/+archive/ubuntu/xapian-1.2
 
 Packages of the PHP bindings aren't available due to a licence
 compatibility issue, but you can `build your own packages
