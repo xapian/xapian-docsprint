@@ -92,10 +92,8 @@ If ``FLAG_LOVEHATE`` is also specified, you can
 use ``+`` and ``-`` before the ``~`` to indicate that you love or hate the
 synonym expanded expression.
 
-.. todo:: Just check if following statement is correct!
-
-A synonym-expanded term becomes the term itself OR-ed with any listed synonyms,
-so ``~truck`` might expand to ``truck OR lorry OR van``.  A group of terms is
+A synonym-expanded term becomes the term itself `OP_SYNONYM`-ed with any listed synonyms,
+so ``~truck`` might expand to ``truck SYNONYM lorry SYNONYM van``.  A group of terms is
 handled in much the same way.
 
 If ``FLAG_AUTO_SYNONYMS`` is passed to
