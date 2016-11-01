@@ -43,7 +43,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
                         raise ValueError()
                 except:
                     return xapian.Query(xapian.Query.OP_INVALID)
-            return xapian.Query(xapian.Query.OP_VALUE_RANGE, begin, end)
+            return self.nvrp(begin, end)
     queryparser.add_rangeprocessor(
         PopulationRangeProcessor(3, 500000, 50000000)
         )
