@@ -22,9 +22,9 @@ def search(dbpath, querystring, offset=0, pagesize=10):
     # and add in range processors
     # Start of custom RP code
     class PopulationRangeProcessor(xapian.RangeProcessor):
-        def __init__(self, value, low, high):
+        def __init__(self, slot, low, high):
             super(PopulationRangeProcessor, self).__init__()
-            self.nvrp = xapian.NumberRangeProcessor(value)
+            self.nrp = xapian.NumberRangeProcessor(slot)
             self.low = low
             self.high = high
 
@@ -43,7 +43,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
                         raise ValueError()
                 except:
                     return xapian.Query(xapian.Query.OP_INVALID)
-            return self.nvrp(begin, end)
+            return self.nrp(begin, end)
     queryparser.add_rangeprocessor(
         PopulationRangeProcessor(3, 500000, 50000000)
         )
