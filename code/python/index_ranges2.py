@@ -49,7 +49,7 @@ def index(datapath, dbpath):
 ### End of example code.
 
         # Store all the fields for display purposes.
-        doc.set_data(json.dumps(fields, encoding='utf8'))
+        doc.set_data(json.dumps(fields))
 
         # We use the identifier to ensure each object ends up in the
         # database only once no matter how many times we run the

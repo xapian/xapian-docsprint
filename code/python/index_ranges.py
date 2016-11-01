@@ -34,7 +34,7 @@ def index(datapath, dbpath):
         termgenerator.index_text(description)
 
         # Store all the fields for display purposes.
-        doc.set_data(json.dumps(fields, encoding='utf8'))
+        doc.set_data(json.dumps(fields))
 
 ### Start of example code.
         # parse the two values we need
