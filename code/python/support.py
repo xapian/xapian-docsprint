@@ -143,6 +143,9 @@ def format_numeral(numeral, sep=','):
 def format_date(datestr):
     if datestr:
         _date = datetime.strptime(datestr, '%Y%m%d')
+        # Python 2 date objects don't allow years before 1900, so we have to
+        # build an object for a support year and the correct month to get the
+        # month name.
         wtf_date = date(2000, _date.month, 01)
         return '%s %s, %s' % (wtf_date.strftime('%B'), _date.day, _date.year)
 
