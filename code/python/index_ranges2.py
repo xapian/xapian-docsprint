@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 import json
+from support import parse_states
 import sys
 import xapian
-from support import parse_states
 
 def index(datapath, dbpath):
     # Create or open the database we're going to be writing to.
