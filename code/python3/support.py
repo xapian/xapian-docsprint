@@ -70,8 +70,7 @@ def middle_coord(text):
 def distance_between_coords(latlon1, latlon2):
     # For simplicity we treat these as planar coordinates and use
     # Pythagoras. Note that you should really use something like
-    # Haversine; there's an implementation in Xapian's geo support,
-    # although this is still on a branch.
+    # Haversine; there's an implementation in Xapian's geo support.
     return math.sqrt(
         math.pow(latlon2[0] - latlon1[0], 2) +
         math.pow(latlon2[1] - latlon1[1], 2)

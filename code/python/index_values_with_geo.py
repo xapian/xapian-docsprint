@@ -27,7 +27,7 @@ def index(datapath, dbpath):
         doc = xapian.Document()
         termgenerator.set_document(doc)
 
-        # index each field with a suitable prefix
+        # Index each field with a suitable prefix.
         termgenerator.index_text(name, 1, 'S')
         termgenerator.index_text(description, 1, 'XD')
         termgenerator.index_text(motto, 1, 'XM')
@@ -55,7 +55,7 @@ def index(datapath, dbpath):
         # Store all the fields for display purposes.
         doc.set_data(json.dumps(fields))
 
-        # We use the identifier to ensure each object ends up in the
+        # We use the order to ensure each object ends up in the
         # database only once no matter how many times we run the
         # indexer.
         idterm = u"Q" + str(order)
