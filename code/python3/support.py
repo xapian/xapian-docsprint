@@ -38,35 +38,6 @@ def numbers_from_string(s):
     return [float(n) for n in re.findall(r'[\d.]*\d[\d.]*', s)]
 
 
-def middle_coord(text):
-    """Get the middle coordinate from a coordinate range.
-
-    The input is in the form <start> to <end> with both extents being in
-    degrees and minutes as N/S/W/E. S and W thus need to be negated as we only
-    care about N/E.
-
-    """
-    def tuple_to_float(numbers):
-        divisor = 1
-        result = 0
-        for num in numbers:
-            result += float(num) / divisor
-            divisor = divisor * 60
-        return result
-
-    if text is None:
-        return None
-    pieces = text.split(' to ', 1)
-    start, end = map(numbers_from_string, pieces)
-    start = tuple_to_float(start)
-    end = tuple_to_float(end)
-    if pieces[0][-1] in ('S', 'W'):
-        start = -start
-    if pieces[1][-1] in ('S', 'W'):
-        end = -end
-    return (start + end) / 2
-
-
 def distance_between_coords(latlon1, latlon2):
     # For simplicity we treat these as planar coordinates and use
     # Pythagoras. Note that you should really use something like
@@ -85,41 +56,12 @@ def parse_states(datapath):
     """
     for fields in parse_csv_file(datapath, 'utf-8'):
         # 'fields' is a dictionary mapping from field name to value.
-        admitted = fields.get('admitted', None)
-        if admitted is None:
+
+        # We use 'order' as our unique identifier so check it's there.
+        order = fields.get('order', None)
+        if order is None:
             print("Couldn't process", fields)
             continue
-
-        # Date (order) -- we use the order as our identifier
-        pieces = admitted.split(' (', 1)
-        admitted = pieces[0]
-        try:
-            admitted = datetime.strptime(admitted, "%B %d, %Y")
-            fields['admitted'] = "%s%s%s" % (
-                admitted.year, str(admitted.month).zfill(2),
-                str(admitted.day).zfill(2))
-        except ValueError:
-            print("couldn't parse admitted '%s'" % admitted)
-            fields['admitted'] = None
-
-        order = pieces[1][:-1]
-        if any(x in order for x in ('st', 'nd', 'rd', 'th')):
-            order = order[:-2]
-        fields['order'] = int(order)
-
-        population = fields.get('population', None)
-        if population is not None:
-            # Population-comma-formatted (comment) extra
-            pieces = population.split('(', 1)
-            population = pieces[0].replace(',', '').strip()
-            try:
-                population = int(population)
-            except ValueError:
-                population = None
-        fields['population'] = population
-
-        fields['midlat'] = middle_coord(fields.get('latitude', None))
-        fields['midlon'] = middle_coord(fields.get('longitude', None))
 
         yield fields
 

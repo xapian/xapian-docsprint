@@ -44,12 +44,12 @@ def index(datapath, dbpath):
             doc.add_value(1, xapian.sortable_serialise(int(admitted[:4])))
             doc.add_value(2, admitted) # YYYYMMDD
         if population is not None:
-            doc.add_value(3, xapian.sortable_serialise(population))
+            doc.add_value(3, xapian.sortable_serialise(int(population)))
 ### Start of example code.
         midlat = fields['midlat']
         midlon = fields['midlon']
         if midlat and midlon:
-            doc.add_value(4, "%f,%f" % (midlat, midlon))
+            doc.add_value(4, "%f,%f" % (float(midlat), float(midlon)))
 ### End of example code.
 
         # Store all the fields for display purposes.
@@ -58,7 +58,7 @@ def index(datapath, dbpath):
         # We use the order to ensure each object ends up in the
         # database only once no matter how many times we run the
         # indexer.
-        idterm = u"Q" + str(order)
+        idterm = u"Q" + order
         doc.add_boolean_term(idterm)
         db.replace_document(idterm, doc)
 

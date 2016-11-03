@@ -42,7 +42,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
             'docid': match.docid,
             'name': fields.get('name', u''),
             'date': support.format_date(fields.get('admitted', u'')),
-            'pop': support.format_numeral(fields.get('population', 0)),
+            'pop': support.format_numeral(int(fields.get('population', 0))),
             'lat': fields.get('latitude', u''),
             'lon': fields.get('longitude', u''),
             })

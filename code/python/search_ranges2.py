@@ -67,7 +67,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
     matches = []
     for match in enquire.get_mset(offset, pagesize):
         fields = json.loads(match.document.get_data())
-        population = support.format_numeral(fields.get('population', 0))
+        population = support.format_numeral(int(fields.get('population', 0)))
         date = support.format_date(fields.get('admitted'))
 
         print(u"""\
