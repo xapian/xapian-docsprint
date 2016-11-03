@@ -77,7 +77,7 @@ columns = [
 pool = eventlet.GreenPool(size=10)
 results = pool.imap(
     pull,
-    sys.stdin.readlines(),
+    [line.rstrip() for line in sys.stdin.readlines()],
     )
 with open("data/states.csv", "w") as fh:
     w = csv.writer(fh, dialect='excel')
