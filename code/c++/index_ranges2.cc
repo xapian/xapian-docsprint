@@ -73,11 +73,11 @@ void index(const string & datapath, const string & dbpath)
 
 	// Add document values.
 	if (!admitted.empty()) {
-	    doc.add_value(1, xapian.sortable_serialise(atoi(admitted.substr(0, 4).c_str())));
+	    doc.add_value(1, Xapian::sortable_serialise(atoi(admitted.substr(0, 4).c_str())));
 	    doc.add_value(2, admitted); // YYYYMMDD
 	}
 	if (!population.empty()) {
-	    doc.add_value(3, xapian.sortable_serialise(atoi(population.c_str())));
+	    doc.add_value(3, Xapian::sortable_serialise(atoi(population.c_str())));
 	}
 // End of example code.
 
