@@ -1,0 +1,21 @@
+1: #050 State of Maryland April 28, 1788
+        Population 5,773,552
+2: #049 State of Delaware December 7, 1787
+        Population 897,934
+3: #040 Commonwealth of Pennsylvania December 12, 1787
+        Population 12,702,379
+4: #043 State of New Jersey December 18, 1787
+        Population 8,791,894
+5: #039 State of West Virginia June 20, 1863
+        Population 1,859,815
+6: #037 State of North Carolina November 21, 1789
+        Population 9,535,483
+7: #041 State of New York July 26, 1788
+        Population 19,378,102
+8: #038 Commonwealth of Virginia June 25, 1788
+        Population 8,001,024
+9: #048 State of Connecticut January 9, 1788
+        Population 3,574,097
+10: #036 State of South Carolina May 23, 1788
+        Population 4,625,384
+'State'[0:10] = 50 49 40 43 39 37 41 38 48 36

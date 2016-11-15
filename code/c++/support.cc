@@ -1,5 +1,6 @@
 #include <xapian.h>
 
+#include <cmath>
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
@@ -135,4 +136,14 @@ format_numeral(string n)
     for (int pos = n.size() - 3; pos > 0; pos -= 3)
 	n.insert(size_t(pos), ",");
     return n;
+}
+
+double
+distance_between_coords(const pair<double, double>& a,
+			const pair<double, double>& b)
+{
+    // For simplicity we treat these as planar coordinates and use
+    // Pythagoras. Note that you should really use something like
+    // Haversine; there's an implementation in Xapian's geo support.
+    return sqrt(pow(a.first - b.first, 2) + pow(a.second - b.second, 2));
 }
