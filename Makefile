@@ -35,7 +35,7 @@ help:
 clean:
 	-rm -rf $(BUILDDIR)/*
 	-rm -rf db statesdb
-	-rm -f code/python/*.pyc
+	-rm -f code/python/*.pyc code/python3/*.pyc
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
