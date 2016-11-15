@@ -88,20 +88,10 @@ search(const string & dbpath, const string & querystring,
 	Xapian::docid did = *m;
 
 	const string & data = m.get_document().get_data();
-	const string & admitted = get_field(data, DOC_FIELD_ADMITTED);
-	struct tm tm;
-	tm.tm_year = 100;
-	tm.tm_mon = atoi(admitted.substr(4, 2).c_str()) - 1;
-	tm.tm_mday = 1;
-	char month[20];
-        strftime(month, sizeof(month), "%B", &tm);
-	char date[40];
-	sprintf(date, "%s %d, %d", month,
-		atoi(admitted.substr(6, 2).c_str()),
-		atoi(admitted.substr(0, 4).c_str()));
-	string population = get_field(data, DOC_FIELD_POPULATION);
-	for (int pos = population.size() - 3; pos > 0; pos -= 3)
-	    population.insert(size_t(pos), ",");
+	const string& date = format_date(get_field(data, DOC_FIELD_ADMITTED));
+	const string& population =
+	    format_numeral(get_field(data, DOC_FIELD_POPULATION));
+
 	cout << m.get_rank() + 1 << ": #" << setfill('0') << setw(3) << did
 	     << " " << get_field(data, DOC_FIELD_NAME) << " "
 	     << date << "\n        Population "

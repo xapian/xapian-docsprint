@@ -1,5 +1,8 @@
 #include <xapian.h>
 
+#include <cstdio>
+#include <cstdlib>
+#include <ctime>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -108,4 +111,28 @@ bool first_number_in_string(const string & s, double *n_ptr)
 	if (is.eof()) return false;
     }
     return true;
+}
+
+string
+format_date(const string& yyyymmdd)
+{
+    struct tm tm;
+    tm.tm_year = 100;
+    tm.tm_mon = atoi(yyyymmdd.substr(4, 2).c_str()) - 1;
+    tm.tm_mday = 1;
+    char month[20];
+    strftime(month, sizeof(month), "%B", &tm);
+    char date[40];
+    sprintf(date, "%s %d, %d", month,
+	    atoi(yyyymmdd.substr(6, 2).c_str()),
+	    atoi(yyyymmdd.substr(0, 4).c_str()));
+    return date;
+}
+
+string
+format_numeral(string n)
+{
+    for (int pos = n.size() - 3; pos > 0; pos -= 3)
+	n.insert(size_t(pos), ",");
+    return n;
 }
