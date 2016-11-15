@@ -58,7 +58,6 @@ def search(dbpath, querystring, materials, offset=0, pagesize=10):
 
     # Finally, make sure we log the query and displayed results
     support.log_matches(querystring, offset, pagesize, matches)
-### End of example code.
 
 if len(sys.argv) < 3:
     print("Usage: %s DBPATH QUERY [MATERIALS...]" % sys.argv[0])

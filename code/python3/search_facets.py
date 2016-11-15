@@ -30,7 +30,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
     # And print out something about each match
     matches = []
 
-    # Start of example code.
+### Start of example code.
     # Set up a spy to inspect the MAKER value at slot 1
     spy = xapian.ValueCountMatchSpy(1)
     enquire.add_matchspy(spy)
