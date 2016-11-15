@@ -1,0 +1,15 @@
+1: #007 State of California September 9, 1850
+        Population 37,253,956
+2: #019 State of Texas December 29, 1845
+        Population 25,145,561
+3: #027 State of Illinois December 3, 1818
+        Population 12,830,632
+4: #030 State of Ohio March 1, 1803
+        Population 11,536,504
+5: #035 State of Florida March 3, 1845
+        Population 18,801,310
+6: #040 Commonwealth of Pennsylvania December 12, 1787
+        Population 12,702,379
+7: #041 State of New York July 26, 1788
+        Population 19,378,102
+'10000000..'[0:10] = 7 19 27 30 35 40 41

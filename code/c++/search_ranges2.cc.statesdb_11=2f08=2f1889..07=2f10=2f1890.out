@@ -1,0 +1,9 @@
+1: #001 State of Washington November 11, 1889
+        Population 6,744,496
+2: #004 State of Montana November 8, 1889
+        Population 989,415
+3: #005 Idaho July 3, 1890
+        Population 1,567,582
+4: #010 State of Wyoming July 10, 1890
+        Population 563,626
+'11/08/1889..07/10/1890'[0:10] = 1 4 5 10
