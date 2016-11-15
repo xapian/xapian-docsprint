@@ -33,6 +33,11 @@ def parse_csv_file(datapath, charset='utf8'):
             yield row
 
 
+def numbers_from_string(s):
+    """Find all numbers in a string."""
+    return [float(n) for n in re.findall(r'[\d.]*\d[\d.]*', s)]
+
+
 def distance_between_coords(latlon1, latlon2):
     # For simplicity we treat these as planar coordinates and use
     # Pythagoras. Note that you should really use something like
