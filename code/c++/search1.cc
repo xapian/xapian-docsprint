@@ -46,8 +46,9 @@ search(const string & dbpath, const string & querystring,
 	cout << m.get_rank() + 1 << ": #" << setfill('0') << setw(3) << did
 	     << ' ';
 
+	const size_t DOC_FIELD_TITLE = 1;
 	const string & data = m.get_document().get_data();
-	cout << get_field(data, 1) << endl;
+	cout << get_field(data, DOC_FIELD_TITLE) << endl;
 	// Log the document id.
 	clog << ' ' << did;
     }

@@ -47,10 +47,13 @@ search(const string & dbpath, const string & querystring,
 	Xapian::docid did = *m;
 	cout << m.get_rank() + 1 << ": #" << setfill('0') << setw(3) << did;
 
+	const size_t DOC_FIELD_TITLE = 1;
+	const size_t DOC_FIELD_DATE_MADE = 3;
+	const size_t DOC_FIELD_MEASUREMENTS = 4;
 	const string & data = m.get_document().get_data();
-	cout << " (" << get_field(data, 3) << ") "
-	     << get_field(data, 4) << "\n        "
-	     << get_field(data, 1) << endl;
+	cout << " (" << get_field(data, DOC_FIELD_DATE_MADE) << ") "
+	     << get_field(data, DOC_FIELD_MEASUREMENTS) << "\n        "
+	     << get_field(data, DOC_FIELD_TITLE) << endl;
 	// Log the document id.
 	clog << ' ' << did;
     }
