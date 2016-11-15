@@ -4,7 +4,7 @@ import json
 import logging
 import sys
 import xapian
-from support import distance_between_coords, log_matches
+import support
 
 def search(dbpath, querystring, offset=0, pagesize=10):
     # offset - defines starting point within result set
@@ -35,7 +35,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
             coords = map(float, doc.get_value(4).split(','))
             washington = (38.012, -77.037)
             return xapian.sortable_serialise(
-                distance_between_coords(coords, washington)
+                support.distance_between_coords(coords, washington)
                 )
     enquire.set_sort_by_key_then_relevance(DistanceKeyMaker(), False)
     # End of example code.
@@ -48,14 +48,15 @@ def search(dbpath, querystring, offset=0, pagesize=10):
             'rank': match.rank + 1,
             'docid': match.docid,
             'name': fields.get('name', u''),
-            'date': fields.get('admitted', u''),
-            'pop': fields.get('population', u''),
+            'date': support.format_date(fields.get('admitted', u'')),
+            'pop': support.format_numeral(int(fields.get('population', 0))),
             'lat': fields.get('latitude', u''),
             'lon': fields.get('longitude', u''),
             })
         matches.append(match.docid)
+
     # Finally, make sure we log the query and displayed results
-    log_matches(querystring, offset, pagesize, matches)
+    support.log_matches(querystring, offset, pagesize, matches)
 
 if len(sys.argv) < 3:
     print("Usage: %s DBPATH QUERYTERM..." % sys.argv[0])
