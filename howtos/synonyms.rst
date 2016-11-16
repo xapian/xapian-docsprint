@@ -55,7 +55,7 @@ terms can have one or more synonym terms.  A group of consecutive terms is
 specified in the dictionary by simply joining them with a single space between
 each one.
 
-If a term to be synonym expanded will be stemmed by the QueryParser, then
+If a term to be synonym expanded will be stemmed by the :xapian-class:`QueryParser`, then
 synonyms will be checked for the unstemmed form first, and then for the stemmed
 form, so you can provide different synonyms for particular unstemmed forms
 if you want to.
@@ -85,7 +85,7 @@ use.
     :end-before: End of set database
 
 If ``FLAG_SYNONYM`` is passed to :xapian-method:`QueryParser::parse_query()`
-then the QueryParser will recognise ``~`` in front of a term as indicating a
+then the :xapian-class:`QueryParser` will recognise ``~`` in front of a term as indicating a
 request for synonym expansion.  
 
 If ``FLAG_LOVEHATE`` is also specified, you can
@@ -97,16 +97,16 @@ so ``~truck`` might expand to ``truck SYNONYM lorry SYNONYM van``.  A group of t
 handled in much the same way.
 
 If ``FLAG_AUTO_SYNONYMS`` is passed to
-:xapian-method:`QueryParser::parse_query()` then the QueryParser will
+:xapian-method:`QueryParser::parse_query()` then the :xapian-class:` QueryParser` will
 automatically expand any term which has synonyms, unless the term is in a phrase
 or similar.
 
 If ``FLAG_AUTO_MULTIWORD_SYNONYMS`` is passed to
-:xapian-method:`QueryParser::parse_query()` then the QueryParser will look at
+:xapian-method:`QueryParser::parse_query()` then the :xapian-class:` QueryParser` will look at
 groups of terms separated only by whitespace and try to expand them as term
 groups.  This is done in a "greedy" fashion, so the first term which can start a
 group is expanded first, and the longest group starting with that term is
-expanded.  After expansion, the QueryParser will look for further possible
+expanded.  After expansion, the :xapian-class:` QueryParser` will look for further possible
 expansions starting with the term after the last term in the expanded group.
 
 OP_SYNONYM
