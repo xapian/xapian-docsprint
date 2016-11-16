@@ -10,7 +10,7 @@ Introduction
 ============
 
 Xapian provides support for storing a synonym dictionary, or thesaurus.  This
-can be used by the xapian-class:`QueryParser` class to expand terms in user query
+can be used by the :xapian-class:`QueryParser` class to expand terms in user query
 strings, either automatically, or when requested by the user with an explicit
 synonym operator (``~``).
 
@@ -34,7 +34,7 @@ You can see the search results without `~` operator.
 .. xapianrunexample:: search_synonyms
     :args: db time
 
-Notice the difference with the `~` operator with `time` were `calendar` is specified as its synonym.
+Notice the difference with the `~` operator with `time` where `calendar` is specified as its synonym.
 
 .. xapianrunexample:: index1
     :silent:
