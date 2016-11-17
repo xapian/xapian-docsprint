@@ -260,6 +260,8 @@ if highlight_language is None:
 if highlight_language.startswith('python'):
     ext = '.py'
 elif highlight_language == 'c++':
+    if not os.path.exists('code/c++/built'):
+        os.mkdir('code/c++/built')
     ext = '.cc'
 elif highlight_language == 'csharp':
     ext = '.cs'
@@ -317,7 +319,7 @@ def xapian_code_example_command(ex):
     elif highlight_language == 'tcl':
         return "tclsh %s" % xapian_code_example_filename(ex)
     elif highlight_language == 'c++':
-        return "g++ `xapian-config --cxxflags` %s support.cc -o %s `xapian-config --libs`\n./%s" \
+        return "g++ `xapian-config --cxxflags` %s support.cc -o built/%s `xapian-config --libs`\n./%s" \
             % (xapian_code_example_filename(ex), ex, ex)
     elif highlight_language == 'csharp':
         return "cli-csc -unsafe -target:exe -out:%s.exe %s -r:XapianSharp.dll\n./%s.exe" \
@@ -373,7 +375,7 @@ def xapian_run_example_command(ex):
             if os.system('%s --libs > /dev/null 2>&1' % xapian_config) != 0:
                 pfx = 'libtool --quiet --mode=link '
                 xcopt = '--ltlibs'
-        return "%s%s `%s --cxxflags` %s code/c++/support.cc -o code/c++/%s `%s %s`\ncode/c++/%s" \
+        return "%s%s `%s --cxxflags` %s code/c++/support.cc -o code/c++/built/%s `%s %s`\ncode/c++/built/%s" \
             % (pfx, cxx, xapian_config, xapian_code_example_filename(ex), ex, xapian_config, xcopt, ex)
     elif highlight_language == 'csharp':
         csc = get_tool_name('CSC', 'cli-csc')

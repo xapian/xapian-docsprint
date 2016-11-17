@@ -35,6 +35,7 @@ help:
 clean:
 	-rm -rf $(BUILDDIR)/*
 	-rm -rf db statesdb
+	-rm -rf code/c++/built
 	-rm -f code/python/*.pyc code/python3/*.pyc
 
 html:
