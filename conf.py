@@ -337,7 +337,7 @@ def get_tool_name(envvar, default):
     if re.search(r'[^-/_+.A-Za-z0-9]', tool):
         # Or we could actually escape it...
         print("Bad characters in $%s" % envvar)
-        sys.exit(1)
+#        sys.exit(1)
     return tool
 
 # Return the command to actually test run examples using.
@@ -382,8 +382,14 @@ def xapian_run_example_command(ex):
         return "%s -unsafe -target:exe -out:%s.exe %s -r:XapianSharp.dll\n./%s.exe" \
             % (csc, ex, xapian_code_example_filename(ex), ex)
     elif highlight_language == 'java':
-        javac = get_tool_name('JAVAC', 'javac')
-        java = get_tool_name('JAVA', 'java')
+        java_bindings_dir = os.environ.get("JAVA_BINDINGS_DIR")
+        classpath = ''
+        java_library_path = ''
+        if java_bindings_dir is not None:
+            classpath = ' -classpath ' + java_bindings_dir + 'xapian_jni.jar:./code/java/'
+            java_library_path = ' -Djava.library.path=' + java_bindings_dir + '../.libs'
+        javac = get_tool_name('JAVAC', 'javac') + classpath
+        java = get_tool_name('JAVA', 'java') + java_library_path + classpath
         return "%s %s\n%s %s" \
             % (javac, xapian_code_example_filename(ex), java, ex)
     else:
