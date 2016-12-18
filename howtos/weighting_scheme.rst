@@ -107,7 +107,7 @@ Normalizations are specified by the first character of their name string:
    | "**b** oolean" (or sometimes binary) : wdfn = 1 if term is present in document else 0.
    | "**s** quare" : wdfn = wdf * wdf
    | "**l** og" : wdfn = 1 + ln (wdf)
-   | "**P** ivoted" : wdfn = 1 + log (1 + log (wdf))
+   | "**P** ivoted" : wdfn = (1+log(1+log(wdf)))*(1/(1-slope+(slope*doclen/avg_len)))+delta [not in 1.4.x]
 
 2. | "**n** one" : idfn = 1
    | "**t** fidf" : idfn = log (N / Termfreq) where N is the number of
@@ -115,10 +115,9 @@ Normalizations are specified by the first character of their name string:
    | "**p** rob" : idfn = log ((N - Termfreq) / Termfreq)
    | "**f** req" : idfn = 1 / Termfreq
    | "**s** quared" : idfn = log (N / Termfreq) ^ 2
-   | "**P** ivoted" : idfn = log ((N + 1) / Termfreq)
+   | "**P** ivoted" : idfn = log ((N + 1) / Termfreq) [not in 1.4.x]
 
 3. | "**n** one" : wtn = wdfn * idfn
-   | "**P** ivoted" : wtn = wqf (wdfn * idfn* (1 - slope + (slope * normlen)) + delta * idfn)
 
 More recently supported normalization in TfIdfWeight is the pivoted (piv+) retrieval function
 which represents one of the best performing vector space models. Piv+ takes two parameters; slope and delta
