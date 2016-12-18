@@ -3,7 +3,7 @@ License
 
 This license applies to all documentation and example code in this book.
 
-| Copyright (c) 2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015 Olly Betts
+| Copyright (c) 2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016 Olly Betts
 | Copyright (c) 2006,2007,2008,2009 Lemur Consulting Ltd
 | Copyright (c) 2007 Deron Meranda
 | Copyright (c) 2007 Jenny Black
@@ -16,6 +16,8 @@ This license applies to all documentation and example code in this book.
 | Copyright (c) 2014 Guarav Arora
 | Copyright (c) 2014 Assem Chelli
 | Copyright (c) 2014 Mayank Chaudhary
+| Copyright (c) 2016 Aakash Muttineni
+| Copyright (c) 2016 Vivek Pal
 | Copyright (c) 2016 Parth Gupta
 
 
