@@ -337,7 +337,7 @@ def get_tool_name(envvar, default):
     if re.search(r'[^-/_+.A-Za-z0-9]', tool):
         # Or we could actually escape it...
         print("Bad characters in $%s" % envvar)
-#        sys.exit(1)
+        sys.exit(1)
     return tool
 
 # Return the command to actually test run examples using.
