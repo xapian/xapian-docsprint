@@ -31,9 +31,9 @@ Installation
 There are two pieces of Xapian you need to follow this guide: the
 library itself, and support for the language you're going to be
 using.  This guide was originally written with examples in Python_,
-and we've made a start on full translations into PHP_ and C++.  Help with
-completing these translations and with translating the examples into other
-languages would be most welcome.
+and we've made a start on full translations into Java, PHP_ and C++.
+Help with completing these translations and with translating the examples
+into other languages would be most welcome.
 
 .. _Python: https://www.python.org/
 .. _PHP: https://php.net/
@@ -89,16 +89,17 @@ If you want to run the code we use to demonstrate Xapian's features
 (and we recommend you do), you'll need both the code itself and the
 two datasets we use.
 
-The example code is available in Python, PHP, and C++ so far, although
+The example code is available in Python, PHP, C++ and Java so far, although
 there's only a complete set of examples for Python at present.
 
 .. As mentioned before, you can get the `examples in
-.. Python`_, `in PHP`_ and `in C++`_, although only the Python versions
+.. Python`_, `in PHP`_, `in C++`_ and `in Java`, although only the Python versions
 .. are complete for now.
 
 .. .. _examples in Python: https://xapian.org/docs/examples/python.tgz
 .. .. _in PHP: https://xapian.org/docs/examples/php.tgz
 .. .. _in C++: https://xapian.org/docs/examples/c++.tgz
+.. .. _in Java: https://xapian.org/docs/examples/java.tgz
 
 .. todo:: finalise datasets and code and link to them from here
 
