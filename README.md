@@ -18,6 +18,14 @@ requirement, but it's at least Sphinx 1.0.0 (the oldest we've tested with at
 all recently was Sphinx 1.1.3).  Either the Python 2 or Python 3 version should
 work.
 
+For building a pdf version of documentation,you will need to install rst2pdf
+
+https://github.com/rst2pdf/rst2pdf
+
+to generate a pdf version for C++ use:
+```
+make pdf SPHINXOPTS=-tc++
+```
 You can generate versions for different programming languages (with translated
 examples and adjustments to the text).  For full details see `make help`
 but for example to generate an HTML version for C++ use:
