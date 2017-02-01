@@ -16,7 +16,7 @@ exceptions and report what they were.  You can call the ``get_description()``
 method on a ``Xapian::Error`` object to get a human readable string including
 all the information the object contains.
 
-Because ``Xapian::Error`` is an abstract bass class you need to catch
+Because ``Xapian::Error`` is an abstract base class you need to catch
 it by reference::
 
     try {
