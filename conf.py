@@ -319,7 +319,7 @@ def xapian_code_example_command(ex):
     elif highlight_language == 'tcl':
         return "tclsh %s" % xapian_code_example_filename(ex)
     elif highlight_language == 'c++':
-        return "g++ `xapian-config --cxxflags` %s support.cc -o built/%s `xapian-config --libs`\n./%s" \
+        return "g++ `xapian-config --cxxflags` %s code/c++/support.cc -o code/c++/built/%s `xapian-config --libs`\n./code/c++/built/%s" \
             % (xapian_code_example_filename(ex), ex, ex)
     elif highlight_language == 'csharp':
         return "cli-csc -unsafe -target:exe -out:%s.exe %s -r:XapianSharp.dll\n./%s.exe" \
