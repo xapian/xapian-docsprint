@@ -87,27 +87,16 @@ Datasets and example code
 
 If you want to run the code we use to demonstrate Xapian's features
 (and we recommend you do), you'll need both the code itself and the
-two datasets we use.
+two datasets we use. You can grab the `source for this guide from github`_,
+which contains the example code in each language (in the ``code``
+subdirectory), and also the data files listed below (in the ``data``
+subdirectory).
 
-The example code is available in Python, PHP, C++ and Java so far, although
-there's only a complete set of examples for Python at present.
+.. _source for this guide from github: https://github.com/xapian/xapian-docsprint
 
-.. As mentioned before, you can get the `examples in
-.. Python`_, `in PHP`_, `in C++`_ and `in Java`, although only the Python versions
-.. are complete for now.
-
-.. .. _examples in Python: https://xapian.org/docs/examples/python.tgz
-.. .. _in PHP: https://xapian.org/docs/examples/php.tgz
-.. .. _in C++: https://xapian.org/docs/examples/c++.tgz
-.. .. _in Java: https://xapian.org/docs/examples/java.tgz
-
-.. todo:: finalise datasets and code and link to them from here
-
-For now, you'll want to grab the `documentation source from github`_ which
-contains the example code in each language, and also the data files listed
-in the next paragraph (both are in the "code" subdirectory).
-
-.. _documentation source from github: https://github.com/xapian/xapian-docsprint
+The example code is available in Python, PHP, C++ and Java so far,
+although there's only a complete set of examples for Python at
+present.
 
 The first dataset is the first 100 objects taken from museum
 catalogue data released by the `Science Museum
@@ -121,13 +110,18 @@ Commons license Attribution-NonCommercial-ShareAlike
 second under `Creative Commons Attribution-Share Alike 3.0
 <https://creativecommons.org/licenses/by-sa/3.0/>`_.
 
-These datasets are in the git repo which holds the source for this
-documentation - you can also view them online on `github
+If you haven't grabbed the git repository, you can also view these
+datasets oneline on `github
 <https://github.com/xapian/xapian-docsprint/tree/master/data>`_:
 
  * `100-objects-v1.csv <https://raw.githubusercontent.com/xapian/xapian-docsprint/master/data/100-objects-v1.csv>`_
  * `100-objects-v2.csv <https://raw.githubusercontent.com/xapian/xapian-docsprint/master/data/100-objects-v2.csv>`_
  * `states.csv <https://raw.githubusercontent.com/xapian/xapian-docsprint/master/data/states.csv>`_
+
+As we describe how to use Xapian, and show how to use it with practical code
+examples, we provide the commands needed to compile (if necessary) and run
+the code described. These commands are intended to be run from the top-level
+directory of the source for this guide.
 
 .. todo:: link to here from every howto and everything that needs the data files and example code
 
