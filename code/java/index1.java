@@ -1,3 +1,5 @@
+package code.java;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -10,6 +12,8 @@ import org.xapian.TermGenerator;
 import org.xapian.WritableDatabase;
 import org.xapian.XapianConstants;
 import org.xapian.XapianJNI;
+
+import code.java.support;
 
 public class index1 {
 

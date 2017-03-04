@@ -1,3 +1,5 @@
+package code.java;
+
 import org.xapian.WritableDatabase;
 import org.xapian.XapianConstants;
 

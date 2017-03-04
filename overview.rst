@@ -123,6 +123,9 @@ examples, we provide the commands needed to compile (if necessary) and run
 the code described. These commands are intended to be run from the top-level
 directory of the source for this guide.
 
+.. xapianinclude:: language_specific/LANGUAGE/running_examples.rst
+   :optional:
+
 .. todo:: link to here from every howto and everything that needs the data files and example code
 
 Contributing
