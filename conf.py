@@ -325,7 +325,7 @@ def xapian_code_example_command(ex):
         return "cli-csc -unsafe -target:exe -out:%s.exe %s -r:XapianSharp.dll\n./%s.exe" \
             % (ex, xapian_code_example_filename(ex), ex)
     elif highlight_language == 'java':
-        return "javac %s\njava %s" \
+        return "javac %s\njava code.java.%s" \
             % (xapian_code_example_filename(ex), ex)
     else:
         print "Unhandled highlight_language '%s'" % highlight_language
@@ -555,8 +555,20 @@ class XapianCodeSnippet(CodeBlock):
 directives.register_directive('xapiancodesnippet', XapianCodeSnippet)
 
 class XapianInclude(Include):
+
+    option_spec = {
+        'optional': directives.flag,
+    }
+    option_spec.update(Include.option_spec)
+
     def run(self):
         self.arguments[0] = re.sub(r'\bLANGUAGE\b', highlight_language, self.arguments[0])
+        if 'optional' in self.options:
+            # We want to silently fail if we can't find the file.
+            # Don't bother to process this 'properly', because we should
+            # only use it with straightforward paths.
+            if not os.path.exists(directives.path(self.arguments[0])):
+                return []
         return super(XapianInclude, self).run()
 
 # Usage:
