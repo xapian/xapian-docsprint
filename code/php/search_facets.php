@@ -32,30 +32,28 @@ function search($dbpath, $querystring, $offset = 0, $pagesize = 10)
 
     // Retrieve the matches and compute start and end points
     $matches = $enquire->get_mset($offset, $pagesize, 100);
-    $start = $matches->begin();
+    $match = $matches->begin();
     $end = $matches->end();
-    $index = 0;
 
     // Use an array to record the DocIds of each match
     $docids = array();
 
-    while (!($start->equals($end)))
+    while (!($match->equals($end)))
     {
         // retrieve the document and its data
-        $doc = $start->get_document();
+        $doc = $match->get_document();
         $fields = json_decode($doc->get_data());
-        $position = $offset + $index + 1;
+        $position = $match->get_rank() + 1;
 
         // record the docid
-        $docid = $start->get_docid();
+        $docid = $match->get_docid();
         $docids[] = $docid;
 
         // display the results
         printf("%d: #%3.3d %s\n", $position, $docid, $fields->TITLE);
 
         // increment MSet iterator and our counter
-        $start->next();
-        $index++;
+        $match->next();
     }
 
     // Fetch and display the spy values
