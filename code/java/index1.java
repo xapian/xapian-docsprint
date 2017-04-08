@@ -37,7 +37,7 @@ public class index1 {
             File csv = new File(datapath);
             csvScanner = new Scanner(csv);
         } catch (FileNotFoundException ex) {
-		Logger.getLogger(index1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(index1.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         // Ignoring first line (contains descriptors)
