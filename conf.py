@@ -478,14 +478,14 @@ class XapianRunExample(LiteralInclude):
             args = self.options['args']
             command = "%s %s" % (command, args)
             esc_args = xapian_escape_args(args)
-            fullout = "%s.%s.out" % (filename, esc_args)
+            fullout = "code/expected.out/%s.%s.out" % (ex, esc_args)
             if os.path.exists(fullout):
                 filename = fullout
             else:
-                filename = filename + ".out"
+                filename = "code/expected.out/%s.out" % ex
         else:
             args = ''
-            filename = filename + ".out"
+            filename = "code/expected.out/%s.out" % ex
 
         global examples_used
         if ex in examples_used:
@@ -513,8 +513,8 @@ class XapianRunExample(LiteralInclude):
                 errors += 1
         tmp_out = 'tmp.out'
         if not os.path.exists(filename):
-            print '*** No output file %s in language %s - patches welcome!' \
-                % (filename, highlight_language)
+            print '*** No output file %s - patches welcome!' \
+                % filename
         else:
             sys.stdout.flush()
             if os.system("diff -u tmp.out %s 2>&1" % filename):

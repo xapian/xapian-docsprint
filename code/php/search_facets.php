@@ -51,7 +51,7 @@ function search($dbpath, $querystring, $offset = 0, $pagesize = 10)
         $docids[] = $docid;
 
         // display the results
-        printf("%d: #%03d %s\n", $position, $docid, $fields->TITLE);
+        printf("%d: #%3.3d %s\n", $position, $docid, $fields->TITLE);
 
         // increment MSet iterator and our counter
         $start->next();
@@ -73,12 +73,12 @@ function search($dbpath, $querystring, $offset = 0, $pagesize = 10)
     }
 
     // Finally, make sure we log the query and displayed results
-    log_info(sprintf("xapian.search:'%s'[%d:%d] = %s",
-                $querystring,
-                $offset,
-                $offset+$pagesize,
-                implode(" ", $docids)
-            ));
+    printf("'%s'[%d:%d] = %s\n",
+           $querystring,
+           $offset,
+           $offset+$pagesize,
+           implode(" ", $docids)
+    );
 }
 ## End of example code.
 
