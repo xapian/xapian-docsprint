@@ -142,11 +142,7 @@ prefixes.
 If you get the rules wrong, the QueryParser will raise a
 `QueryParserError`, which in production code you could catch and
 either signal to the user or perhaps try the query again without the
-`RangeProcessor` that tripped up:
-
-.. xapianrunexample:: search_ranges
-    :args: db 1000mm..
-    :shouldfail: 1
+`RangeProcessor` that tripped up.
 
 
 Handling dates

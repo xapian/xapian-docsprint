@@ -55,12 +55,22 @@ public class search1 {
             long rank = msetIterator.getRank();
             long docID = msetIterator.getDocId();
             Document doc = db.getDocument(docID);
-            String title = doc.getValue(0);
-            String formattedRank = String.format("%03d",docID);
 
-            System.out.println((rank+1) + ": #" + formattedRank + " " + title);
+            System.out.printf("%i: #%3.3i %s%n", rank+1, docID, doc.getValue(0))
             msetIterator.next();
         }
+
+        System.out.printf("'%s'[%i:%i] = ", queryString, offset, offset+pagesize);
+        msetIterator = mset.begin();
+        while (msetIterator.hasNext())
+        {
+            System.out.printf("%i", msetIterator.getDocId());
+            msetIterator.next();
+            if (msetIterator.hasNext()) {
+                System.out.print(" ");
+            }
+        }
+        System.out.print("\n");
     }
     // End of example code.
 }

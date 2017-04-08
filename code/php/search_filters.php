@@ -47,10 +47,6 @@ function search($dbpath, $querystring, $materials, $offset = 0, $pagesize = 10)
     $enquire = new XapianEnquire($db);
     $enquire->set_query($query);
 
-    // Set up a spy to inspect the MAKER value at slot 1
-    $spy = new XapianValueCountMatchSpy(1);
-    $enquire->add_matchspy($spy);
-
     // Retrieve the matches and compute start and end points
     $matches = $enquire->get_mset($offset, $pagesize);
     $start = $matches->begin();
@@ -71,33 +67,19 @@ function search($dbpath, $querystring, $materials, $offset = 0, $pagesize = 10)
         $docids[] = $docid;
 
         // display the results
-        printf("%d: #%03d %s\n", $position, $docid, $fields->TITLE);
+        printf("%d: #%3.3d %s\n", $position, $docid, $fields->TITLE);
 
         // increment MSet iterator and our counter
         $start->next();
     }
 
-    // Parse and display the spy values
-    $spy_start = $spy->values_begin();
-    $spy_end = $spy->values_end();
-
-    while (!($spy_start->equals($spy_end)))
-    {
-        print sprintf("Facet: %s; count: %d\n",
-            $spy_start->get_term(),
-            $spy_start->get_termfreq()
-        );
-
-        $spy_start->next();
-    }
-
     // Finally, make sure we log the query and displayed results
-    log_info(sprintf("xapian.search:'%s'[%d:%d] = %s",
-                $querystring,
-                $offset,
-                $offset+$pagesize,
-                implode(" ", $docids)
-            ));
+    printf("'%s'[%d:%d] = %s\n",
+           $querystring,
+           $offset,
+           $offset+$pagesize,
+           implode(" ", $docids)
+    );
 }
 
 if ($argc < 2) {
