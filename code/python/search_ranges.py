@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import json
-import logging
 import sys
 import xapian
 import support
@@ -54,5 +53,4 @@ if len(sys.argv) < 3:
     print("Usage: %s DBPATH QUERYTERM..." % sys.argv[0])
     sys.exit(1)
 
-logging.basicConfig(level=logging.INFO)
 search(dbpath = sys.argv[1], querystring = " ".join(sys.argv[2:]))
