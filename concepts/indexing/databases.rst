@@ -130,7 +130,9 @@ opened concurrently.  This lock will be released when the database writer
 is closed (or automatically if the writer process dies).
 
 One unusual feature of Xapian's locking mechanism (at least on POSIX
-operating systems) is that Xapian forks a subprocess to hold the lock,
-rather than holding it in the main process.  This is to avoid the lock
-being accidentally released due to the slightly unhelpful semantics of
-fcntl locks.
+operating systems other than Linux) is that Xapian forks a subprocess to hold
+the lock, rather than holding it in the main process.  This is to avoid the
+lock being accidentally released due to the slightly unhelpful semantics of
+fcntl locks.  Linux kernel 3.15 added new OFD fcntl locks which have more
+helpful semantics which Xapian uses in preference, avoiding the need to fork
+a subprocess to hold the lock.
