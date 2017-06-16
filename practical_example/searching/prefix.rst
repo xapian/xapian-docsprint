@@ -17,11 +17,7 @@ search code:
 
 .. xapianrunexample:: index1
     :silent:
-    :args: data/100-objects-v1.csv db
-
-.. xapianrunexample:: delete1
-    :silent:
-    :args: db 1953-448 1985-438
+    :args: data/ch-objects.csv db
 
 .. xapianexample:: search1
     :marker: prefix configuration.
@@ -29,11 +25,11 @@ search code:
 This allows us to perform a search based on either field, for example:
 
 .. xapianrunexample:: search1
-    :args: db title:sunwatch
+    :args: db title:chair
 
 We can also combine prefixes with the logical operators to perform more
 complex queries (note that we need to escape quotes or else the shell
 will eat them):
 
 .. xapianrunexample:: search1
-    :args: db description:\"leather case\" AND title:sundial
+    :args: db description:\"swearing hands\" AND title:chair

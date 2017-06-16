@@ -35,7 +35,7 @@ the `id_NUMBER` field in the data set:
 
 .. xapianrunexample:: index1
     :silent:
-    :args: data/100-objects-v1.csv db
+    :args: data/ch-objects.csv db
 
 .. xapianrunexample:: delete1
     :args: db 1953-448 1985-438
