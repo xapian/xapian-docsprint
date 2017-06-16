@@ -98,25 +98,20 @@ The example code is available in Python, PHP, C++ and Java so far,
 although there's only a complete set of examples for Python at
 present.
 
-The first dataset is the first 100 objects taken from museum
-catalogue data released by the `Science Museum
-<http://www.sciencemuseum.org.uk>`_.  We downloaded this data from their API
-site, but this has since shut down.  The second dataset we have curated
-ourselves from information on Wikipedia about the 50 `US States
-<https://en.wikipedia.org/wiki/U.S._state>`_. Both are provided as
-gzipped CSV files. The first dataset is released under the `Creative
-Commons license Attribution-NonCommercial-ShareAlike
-<https://creativecommons.org/licenses/by-nc-sa/3.0/>`_ license, and the
-second under `Creative Commons Attribution-Share Alike 3.0
-<https://creativecommons.org/licenses/by-sa/3.0/>`_.
+The first dataset is the 100 objects taken from museum catalogue data
+released by the `Cooper Hewitt, Smithsonian Design Museum
+<https://www.cooperhewitt.org>`_, taken from their CC-0 github
+release.  The second dataset we have curated ourselves from
+information on Wikipedia about the 50 `US States
+<https://en.wikipedia.org/wiki/U.S._state>`_. Both are provided as CSV
+files. The first dataset is released using `Creative Commons CC-0
+<https://creativecommons.org/share-your-work/public-domain/cc0>`_, and
+the second under the `Creative Commons Attribution-Share Alike 3.0
+license <https://creativecommons.org/licenses/by-sa/3.0/>`_.
 
 If you haven't grabbed the git repository, you can also view these
 datasets oneline on `github
-<https://github.com/xapian/xapian-docsprint/tree/master/data>`_:
-
- * `100-objects-v1.csv <https://raw.githubusercontent.com/xapian/xapian-docsprint/master/data/100-objects-v1.csv>`_
- * `100-objects-v2.csv <https://raw.githubusercontent.com/xapian/xapian-docsprint/master/data/100-objects-v2.csv>`_
- * `states.csv <https://raw.githubusercontent.com/xapian/xapian-docsprint/master/data/states.csv>`_
+<https://github.com/xapian/xapian-docsprint/tree/master/data>`_.
 
 As we describe how to use Xapian, and show how to use it with practical code
 examples, we provide the commands needed to compile (if necessary) and run
