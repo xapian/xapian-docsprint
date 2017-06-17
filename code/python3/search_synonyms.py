@@ -12,6 +12,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
     # Open the database we're going to search.
     db = xapian.WritableDatabase(dbpath)
 
+### Start of example code.
     # Start of adding synonyms
     db.add_synonym("king", "royal")
     # End of adding synonyms
@@ -29,6 +30,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
 
     # And parse the query
     query = queryparser.parse_query(querystring, queryparser.FLAG_SYNONYM)
+### End of example code.
 
     # Use an Enquire object on the database to run the query
     enquire = xapian.Enquire(db)

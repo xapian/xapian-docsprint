@@ -19,6 +19,7 @@ search(const string & dbpath, const string & querystring,
     // Open the database we're going to search.
     Xapian::WritableDatabase db(dbpath);
 
+// Start of example code.
     // Start of adding synonyms
     db.add_synonym("king", "royal");
     // End of adding synonyms
@@ -45,6 +46,7 @@ search(const string & dbpath, const string & querystring,
 
     // And print out something about each match.
     Xapian::MSet mset = enquire.get_mset(offset, pagesize);
+// End of example code.
 
     clog << "'" << querystring << "'[" << offset << ":" << offset + pagesize
 	 << "] =";
