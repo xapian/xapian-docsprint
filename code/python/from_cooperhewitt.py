@@ -24,14 +24,17 @@ with open('data/ch-objects.csv', 'w') as fh:
     w = csv.writer(fh, dialect='excel')
     w.writerow(
         [
-            'id_NUMBER',
-            'TITLE',
-            'DATE_MADE',
-            'MATERIALS',
-            'DESCRIPTION',
-            'MAKER',
-            'MEASUREMENTS',
-            'COLLECTION',
+            'id_NUMBER', # 0
+            'NAME_unused',
+            'TITLE', # 2
+            'MAKER', # 3
+            'DATE_MADE', # 4
+            'PLACE_MADE_unused',
+            'MATERIALS', # 6
+            'MEASUREMENTS', # 7
+            'DESCRIPTION', # 8
+            'WHOLE_PART_unused',
+            'COLLECTION', # 10
         ]
     )
     count = 0
@@ -69,7 +72,7 @@ with open('data/ch-objects.csv', 'w') as fh:
             for arg in args:
                 arg = obj.get(arg)
                 if arg is not None and arg != '':
-                    return arg
+                    return arg.replace('\n', ' ')
             return ''
 
         # Too boring for us
@@ -86,10 +89,16 @@ with open('data/ch-objects.csv', 'w') as fh:
         
         row = [
             obj['accession_number'],
+            '', # backwards compatibility with previous dataset (internal name)
             _pick(obj, 'title_raw', 'title'),
+            '', # makers will go here (3)
             _pick(obj, 'date'),
+            '', # backwards compatibility with previous dataset (place made)
             medium(_pick(obj, 'medium')),
+            '', # measurements will go here (7)
             _pick(obj, 'label_text', 'description'),
+            '', # backwards compatibility with previous dataset (whole/part)
+            '', # collection will go here (10)
         ]
         makers = []
         collection = 'Cooper Hewitt, Smithsonian Design Museum'
@@ -118,7 +127,7 @@ with open('data/ch-objects.csv', 'w') as fh:
         if len(makers) != 1:
             #print("Wrong number of makers (%d)" % len(makers))
             continue
-        row.append(makers[0]['person_name'])
+        row[3] = makers[0]['person_name']
 
         def _convert(dim):
             if dim[1] == 'centimeters':
@@ -153,13 +162,11 @@ with open('data/ch-objects.csv', 'w') as fh:
                     ]
                 ]
 
-                row.append(
+                row[7] = (
                     ' x '.join([str(d) for d in dimensions]) + ' mm'
                 )
-            else:
-                row.append('')
 
-        row.append(collection)
+        row[10] = collection
         w.writerow([c.encode('utf-8') for c in row])
         
         count += 1
