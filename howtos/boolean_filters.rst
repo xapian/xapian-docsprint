@@ -10,11 +10,11 @@ may contain only a few specific values or identifiers.  We often wish to
 use such fields to restrict the results to only those matching a particular
 value, rather than treating them as unstructured "free text".
 
-In the museum catalog, the ``MATERIALS`` field is an example of a field
-which contains text from a restricted vocabulary.  This text can be thought
-of as an identifier, rather than text which needs to be parsed.  In fact,
-for many records this field contains several identifiers for materials in
-the object, separated by semicolons.
+In the museum catalog, the ``MATERIALS`` field is an example of a
+field which contains text from a restricted vocabulary.  This text can
+be thought of as an identifier, rather than text which needs to be
+parsed.  In fact, this field contains several identifiers for
+materials in the object, separated by semicolons.
 
 Indexing
 --------
@@ -50,7 +50,7 @@ We run this like so:
 
 .. xapianrunexample:: index_filters
     :cleanfirst: db
-    :args: data/100-objects-v1.csv db
+    :args: data/ch-objects.csv db
 
 If we check the resulting index with xapian-delve, we will see that documents for
 which there was a value in the ``MATERIALS`` field now contain terms with the
@@ -61,13 +61,11 @@ which there was a value in the ``MATERIALS`` field now contain terms with the
     $ xapian-delve -r 3 -1 db
     Term List for record #3:
     ...
-    XDwooden
-    XMglass
-    XMmounted
-    XMsand
-    XMtimer
-    XMwood
-    ZSabbot
+    XDwithout
+    XMblack
+    XMcrayon
+    XMpaper
+    ZSa
     ...
 
 Searching
@@ -94,12 +92,12 @@ filtering of the results from parsed queries.
 
 A full copy of the this updated search code is available in
 :xapian-basename-code-example:`^`.  With this, we could perform a search for
-documents matching "clock", and filter the results to return only those with a
-value of ``"steel (metal)"`` as one of the semicolon separated values in the
+documents matching "man", and filter the results to return only those with a
+value of ``crayon`` as one of the semicolon separated values in the
 materials field:
 
 .. xapianrunexample:: search_filters
-    :args: db clock 'steel (metal)'
+    :args: db man crayon
 
 Using the query parser
 ----------------------
@@ -121,7 +119,7 @@ Users can then perform a filtered search by preceding a word or phrase with
 search engines:
 
 .. xapianrunexample:: search_filters2
-    :args: db 'clock material:"steel (metal)"'
+    :args: db 'man material:crayon'
 
 What to supply to the query parser
 ----------------------------------

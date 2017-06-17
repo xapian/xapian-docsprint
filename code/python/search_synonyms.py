@@ -13,7 +13,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
     db = xapian.WritableDatabase(dbpath)
 
     # Start of adding synonyms
-    db.add_synonym("time", "calendar")
+    db.add_synonym("king", "royal")
     # End of adding synonyms
 
     # Set up a QueryParser with a stemmer and suitable prefixes

@@ -73,7 +73,7 @@ We run this like so:
 
 .. xapianrunexample:: index_ranges
     :cleanfirst: db
-    :args: data/100-objects-v1.csv db
+    :args: data/ch-objects.csv db
 
 We can check this has created document values using `xapian-delve`:
 
@@ -112,28 +112,28 @@ This is implemented in :xapian-basename-code-example:`^`, which also
 modifies the output to show the measurements and date made fields as
 well as the title.
 
-We can now restrict across dimensions using queries like '..50mm'
-(everything at most 50mm in its longest dimension), and across years
-using '1980..1989':
+We can now restrict across dimensions using queries like '..120mm'
+(everything at most 120mm in its longest dimension), and across years
+using '1400..1500':
 
 .. xapianrunexample:: search_ranges
-    :args: db ..50mm
+    :args: db ..120mm
 
 .. xapianrunexample:: search_ranges
-    :args: db 1980..1989
+    :args: db 1400..1500
 
 You can of course combine this with 'normal' search terms, such as all
-clocks made from 1960 onwards:
+cartoons before the 19th century:
 
 .. xapianrunexample:: search_ranges
-    :args: db clock 1960..
+    :args: db cartoon ..1799
 
 and even combining both ranges at once, such as all large objects from the 19th century:
 
 .. xapianrunexample:: search_ranges
-    :args: db 1000..mm 1800..1899
+    :args: db 500..mm 1800..1899
 
-Note the slightly awkward syntax *1000..mm*. The suffix must always go
+Note the slightly awkward syntax *500..mm*. The suffix must always go
 on the end of the entire range; it may also go on the beginning (so
 you can do *1000mm..mm*). Similarly, you can have *100mm..200mm* or
 *100..200mm* but not *100mm..200*. These rules are reversed for

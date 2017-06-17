@@ -1,9 +1,0 @@
-1: #012 Assembled and unassembled EXA electric clock kit
-2: #098 'Pond' electric clock movement (no dial)
-3: #052 Reconstruction of Dondi's Astronomical Clock, 1974
-4: #059 Electrically operated clock controller
-5: #024 Regulator Clock with Gravity Escapement
-6: #097 Bain's subsidiary electric clock
-7: #009 Copy  of a Dwerrihouse skeleton clock with coup-perdu escape
-8: #091 Pendulum clock designed by Galileo in 1642 and made by his son in 1649, model.
-'clock material:"steel (metal)"'[0:10] = 12 98 52 59 24 97 9 91

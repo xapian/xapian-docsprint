@@ -25,27 +25,15 @@ You can see the search results without `~` operator.
 
 .. xapianrunexample:: index1
     :silent:
-    :args: data/100-objects-v1.csv db
-
-.. xapianrunexample:: delete1
-    :silent:
-    :args: db 1953-448 1985-438
+    :args: data/ch-objects.csv db
 
 .. xapianrunexample:: search_synonyms
-    :args: db time
+    :args: db king
 
-Notice the difference with the `~` operator with `time` where `calendar` is specified as its synonym.
-
-.. xapianrunexample:: index1
-    :silent:
-    :args: data/100-objects-v1.csv db
-
-.. xapianrunexample:: delete1
-    :silent:
-    :args: db 1953-448 1985-438
+Notice the difference with the `~` operator with `king` where `royal` is specified as its synonym.
 
 .. xapianrunexample:: search_synonyms
-    :args: db ~time
+    :args: db ~king
 
 Model
 =====
@@ -66,7 +54,7 @@ Adding Synonyms
 ===============
 
 The synonyms can be added by the :xapian-method:`WritableDatabase::add_synonym()`. In the following 
-example ``calender`` is specified as a synonym for ``time``. Users may similarly write a loop to load all
+example ``royal`` is specified as a synonym for ``king``. Users may similarly write a loop to load all
 the synonyms from a dictionary file.
 
 .. xapianexample:: search_synonyms

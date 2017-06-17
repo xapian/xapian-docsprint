@@ -20,7 +20,7 @@ search(const string & dbpath, const string & querystring,
     Xapian::WritableDatabase db(dbpath);
 
     // Start of adding synonyms
-    db.add_synonym("time", "calendar");
+    db.add_synonym("king", "royal");
     // End of adding synonyms
 
     // Set up a QueryParser with a stemmer and suitable prefixes.
