@@ -38,7 +38,7 @@ the `id_NUMBER` field in the data set:
     :args: data/ch-objects.csv db
 
 .. xapianrunexample:: delete1
-    :args: db 1953-448 1985-438
+    :args: db 1898-21-7-b 1898-21-8
 
 After that, we expect to see two fewer documents in our database using xapian-delve:
 
@@ -47,8 +47,9 @@ After that, we expect to see two fewer documents in our database using xapian-de
     $ xapian-delve db
     UUID = 1820ef0a-055b-4946-ae73-67aa4ef5c226
     number of documents = 98
-    average document length = 100.041
-    document length lower bound = 33
-    document length upper bound = 251
+    average document length = 185.306
+    document length lower bound = 8
+    document length upper bound = 712
     highest document id ever used = 100
     has positional information = true
+    currently open for writing = false
