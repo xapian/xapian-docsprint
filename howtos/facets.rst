@@ -48,7 +48,7 @@ suitable for faceting:
 
 .. xapianrunexample:: index_facets
     :cleanfirst: db
-    :args: data/100-objects-v1.csv db
+    :args: data/ch-objects.csv db
 
 Querying
 --------
@@ -74,7 +74,7 @@ frequencies are correct. See `Limitations`_ for some discussion of the
 implications of this. Here's the output:
 
 .. xapianrunexample:: search_facets
-    :args: db clock
+    :args: db man
 
 Note that the spy will give you facets in alphabetical order, not in
 order of frequency; if you want to show the most frequent first you
