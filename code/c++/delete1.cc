@@ -5,6 +5,7 @@
 
 using namespace std;
 
+// Start of example code.
 static void delete_docs(const string &dbpath, char ** identifiers)
 {
     // Open the database we're going to be deleting from.
@@ -17,6 +18,7 @@ static void delete_docs(const string &dbpath, char ** identifiers)
 	++identifiers;
     }
 }
+// End of example code.
 
 int main(int argc, char** argv) {
     if (argc < 3) {
