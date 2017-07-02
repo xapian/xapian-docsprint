@@ -36,7 +36,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
     matches = []
     for match in enquire.get_mset(offset, pagesize):
         fields = json.loads(match.document.get_data())
-        print(u"%(rank)i: #%(docid)3.3i %(name)s %(date)s\n        Population %(pop)s" % {
+        print((u"%(rank)i: #%(docid)3.3i %(name)s %(date)s\n        Population %(pop)s" % {
             'rank': match.rank + 1,
             'docid': match.docid,
             'name': fields.get('name', u''),
@@ -44,7 +44,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
             'pop': support.format_numeral(int(fields.get('population', 0))),
             'lat': fields.get('latitude', u''),
             'lon': fields.get('longitude', u''),
-            })
+        }).encode('utf-8'))
         matches.append(match.docid)
 
     # Finally, make sure we log the query and displayed results

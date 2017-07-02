@@ -69,17 +69,18 @@ def search(dbpath, querystring, offset=0, pagesize=10):
         population = support.format_numeral(int(fields.get('population', 0)))
         date = support.format_date(fields.get('admitted'))
 
-        print(u"""\
-%(rank)i: #%(docid)3.3i %(name)s %(date)s
-        Population %(pop)s""" % {
-            'rank': match.rank + 1,
-            'docid': match.docid,
-            'name': fields.get('name', u''),
-            'date': date,
-            'pop': population,
-            'lat': fields.get('latitude', u''),
-            'lon': fields.get('longitude', u''),
-            })
+        print((
+            u"%(rank)i: #%(docid)3.3i %(name)s %(date)s\n"
+            u"        Population %(pop)s""" % {
+                'rank': match.rank + 1,
+                'docid': match.docid,
+                'name': fields.get('name', u''),
+                'date': date,
+                'pop': population,
+                'lat': fields.get('latitude', u''),
+                'lon': fields.get('longitude', u''),
+            }
+        ).encode('utf-8'))
         matches.append(match.docid)
 
     # Finally, make sure we log the query and displayed results
