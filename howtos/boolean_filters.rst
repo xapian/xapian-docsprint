@@ -112,7 +112,7 @@ prefix that terms have been stored in for that term.  For our materials search,
 we just need to a add a single line to the search code:
 
 .. xapianexample:: search_filters2
-    :emphasize-lines: 21-26
+    :marker: example code
 
 Users can then perform a filtered search by preceding a word or phrase with
 "material:", similar to the syntax supported for this sort of thing by many web
