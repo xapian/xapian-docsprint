@@ -111,7 +111,7 @@ second under `Creative Commons Attribution-Share Alike 3.0
 <https://creativecommons.org/licenses/by-sa/3.0/>`_.
 
 If you haven't grabbed the git repository, you can also view these
-datasets oneline on `github
+datasets online on `github
 <https://github.com/xapian/xapian-docsprint/tree/master/data>`_:
 
  * `100-objects-v1.csv <https://raw.githubusercontent.com/xapian/xapian-docsprint/master/data/100-objects-v1.csv>`_
