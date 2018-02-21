@@ -1,3 +1,24 @@
+/** @file search_letor.cc
+ */
+/* Copyright (C) 2004,2005,2006,2007,2008,2009,2010,2015 Olly Betts
+ * Copyright (C) 2011 Parth Gupta
+ * Copyright (C) 2016 Ayush Tomar
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301
+ * USA
+ */
 #include <xapian-letor.h>
 
 #include <iostream>
@@ -8,26 +29,12 @@ using namespace std;
 
 static void show_usage()
 {
-    cout << "Usage: rank_letor --db=DIRECTORY MODEL_METADATA_KEY QUERY\n";
+    cout << "Usage: search_letor --db=DBPATH MODEL_METADATA_KEY QUERY\n";
 }
 
-// Start of example code.
-// Stopwords:
-static const char * sw[] = {
-    "a", "about", "an", "and", "are", "as", "at",
-    "be", "by",
-    "en",
-    "for", "from",
-    "how",
-    "i", "in", "is", "it",
-    "of", "on", "or",
-    "that", "the", "this", "to",
-    "was", "what", "when", "where", "which", "who", "why", "will", "with"
-};
-
+// Start of example code
 void rank_letor(string db_path, string model_key, string query_)
 {
-    Xapian::SimpleStopper mystopper(sw, sw + sizeof(sw) / sizeof(sw[0]));
     Xapian::Stem stemmer("english");
     Xapian::doccount msize = 10;
     Xapian::QueryParser parser;
@@ -38,14 +45,11 @@ void rank_letor(string db_path, string model_key, string query_)
     parser.set_default_op(Xapian::Query::OP_OR);
     parser.set_stemmer(stemmer);
     parser.set_stemming_strategy(Xapian::QueryParser::STEM_SOME);
-    parser.set_stopper(&mystopper);
     Xapian::Query query_no_prefix = parser.parse_query(query_,
-						       parser.FLAG_DEFAULT|
-						       parser.FLAG_SPELLING_CORRECTION);
+						       parser.FLAG_DEFAULT);
     // query with title as default prefix
     Xapian::Query query_default_prefix = parser.parse_query(query_,
-							    parser.FLAG_DEFAULT|
-							    parser.FLAG_SPELLING_CORRECTION,
+							    parser.FLAG_DEFAULT,
 							    "S");
     // Combine queries
     Xapian::Query query = Xapian::Query(Xapian::Query::OP_OR, query_no_prefix,
@@ -67,7 +71,7 @@ void rank_letor(string db_path, string model_key, string query_)
     ranker.set_database_path(db_path);
     ranker.set_query(query);
 
-    // Get vector of re-ranked docids
+    // Re-rank the existing mset using the letor model.
     ranker.rank(mset, model_key);
 
     cout << "Docids after re-ranking by LTR model:\n" << endl;
@@ -84,7 +88,7 @@ int main(int argc, char** argv)
 {
     if (argc != 4) {
 	show_usage();
-	return 0;
+	return 1;
     }
     string db_path = argv[1];
     string model_key = argv[2];

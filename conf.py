@@ -303,7 +303,7 @@ def xapian_code_example_filename(ex):
     return "code/%s/%s%s" % (highlight_language, ex, ext)
 
 # Return the command to show in the generated docs.
-def xapian_code_example_command(ex, option):
+def xapian_code_example_command(ex, letor):
     if highlight_language == 'lua':
         return "lua %s" % xapian_code_example_filename(ex)
     elif highlight_language == 'perl':
@@ -319,11 +319,11 @@ def xapian_code_example_command(ex, option):
     elif highlight_language == 'tcl':
         return "tclsh %s" % xapian_code_example_filename(ex)
     elif highlight_language == 'c++':
-        if option == 0:
-            return "g++ `xapian-config --cxxflags` %s code/c++/support.cc  -o %s `xapian-config --libs`\n./%s" \
+        if letor == False:
+            return "g++ `xapian-config --cxxflags` %s code/c++/support.cc -o %s `xapian-config --libs`\n./%s" \
                 % (xapian_code_example_filename(ex), ex, ex)
         else:
-            return "g++ `xapian-config --cxxflags` %s -lxapianletor  -o %s `xapian-config --libs`\n./%s" \
+            return "g++ `xapian-config --cxxflags` %s -lxapianletor -o %s `xapian-config --libs`\n./%s" \
                 % (xapian_code_example_filename(ex), ex, ex)
     elif highlight_language == 'csharp':
         return "cli-csc -unsafe -target:exe -out:%s.exe %s -r:XapianSharp.dll\n./%s.exe" \
@@ -345,7 +345,7 @@ def get_tool_name(envvar, default):
     return tool
 
 # Return the command to actually test run examples using.
-def xapian_run_example_command(ex, option):
+def xapian_run_example_command(ex, letor):
     if highlight_language == 'lua':
         lua = get_tool_name('LUA', 'lua')
         return "%s %s" % (lua, xapian_code_example_filename(ex))
@@ -379,11 +379,11 @@ def xapian_run_example_command(ex, option):
             if os.system('%s --libs > /dev/null 2>&1' % xapian_config) != 0:
                 pfx = 'libtool --quiet --mode=link '
                 xcopt = '--ltlibs'
-        if option == 0:
-            return "%s%s `%s --cxxflags` %s code/c++/support.cc  -o code/c++/built/%s `%s %s`\ncode/c++/built/%s" \
+        if letor == False:
+            return "%s%s `%s --cxxflags` %s code/c++/support.cc -o code/c++/built/%s `%s %s`\ncode/c++/built/%s" \
                 % (pfx, cxx, xapian_config, xapian_code_example_filename(ex), ex, xapian_config, xcopt, ex)
         else:
-            return "%s%s `%s --cxxflags` %s -lxapianletor  -o code/c++/built/%s `%s %s`\ncode/c++/built/%s" \
+            return "%s%s `%s --cxxflags` %s -lxapianletor -o code/c++/built/%s `%s %s`\ncode/c++/built/%s" \
                 % (pfx, cxx, xapian_config, xapian_code_example_filename(ex), ex, xapian_config, xcopt, ex)
     elif highlight_language == 'csharp':
         csc = get_tool_name('CSC', 'cli-csc')
@@ -475,10 +475,10 @@ class XapianRunExample(LiteralInclude):
             examples_missing.append(last_example)
             return [nodes.literal(text = 'No version of example %s in language %s - patches welcome!'
                 % (last_example, highlight_language))]
-        option = 0
+        letor = False
         if 'letor' in self.options:
-            option = 1
-        command = xapian_code_example_command(ex, option)
+            letor = True
+        command = xapian_code_example_command(ex, letor)
 
         cleanfirst = ''
         if 'cleanfirst' in self.options:
@@ -511,7 +511,7 @@ class XapianRunExample(LiteralInclude):
                 print("Bad characters in cleanfirst: ''" % cleanfirst)
                 sys.exit(1)
             os.system("rm -rf %s" % cleanfirst)
-        run_command = xapian_run_example_command(ex, option)
+        run_command = xapian_run_example_command(ex, letor)
         status = os.system("%s %s > tmp.out 2> tmp2.out" % (run_command, args))
         os.system("cat tmp2.out >> tmp.out")
         os.unlink("tmp2.out")
@@ -557,7 +557,8 @@ class XapianTrain(LiteralInclude):
         os.system("xapian-train --db=db data/training_data.txt ListNET_Ranker")
         return super(XapianTrain, self).run()
 
-
+# Usage:
+# .. xapiantrain:: search_letor
 directives.register_directive('xapiantrain', XapianTrain)
 
 class XapianCodeSnippet(CodeBlock):

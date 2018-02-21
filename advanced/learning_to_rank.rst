@@ -13,9 +13,9 @@ Xapian Learning-to-Rank
 Introduction
 ============
 
-Learning-to-Rank(LTR) can be viewed as a weighting scheme which involves machine learning. The main idea behind LTR is to bring up relevant documents given a low ranking by probablistic techniques like BM25 by using machine learning models. A model is trained by learning from the relevance judgements provided by a user corresponding to a set of queries and a corpus of documents. This model is then used to re-rank the matchset to bring more relevant documents higher in the ranking. Learning-to-Rank has gained immense popularity and attention among researchers recently. Xapian is the first project with Learning-to-Rank functionality added to it.
+Learning-to-Rank(LTR) can be viewed as a weighting scheme which involves machine learning. The main idea behind LTR is to bring up relevant documents given a low ranking by probablistic techniques like BM25 by using machine learning models. A model is trained by learning from the relevance judgements provided by a user corresponding to a set of queries and a corpus of documents. This model is then used to re-rank the matchset to bring more relevant documents higher in the ranking. Learning-to-Rank has gained immense popularity and attention among researchers recently.
 
-LTR can be broadly seen in two stages: Learning the model & Ranking. Learning the model takes the training file as input and produces a model. After that given this learnt model, when a new query comes in, scores can be assigned to the documents associated to it.
+LTR can be broadly seen in two stages: Learning the model and Ranking. Learning the model takes the training file as input and produces a model. After that given this learnt model, when a new query comes in, scores can be assigned to the documents associated to it.
 
 Preparing the Training file
 ---------------------------
@@ -51,7 +51,7 @@ As mentioned before, this process requires a training file in the above format. 
     2010003 Q0 298021 0
     2010003 Q0 1456811 0
 
-   where first column is query-id, third column is Document-id and fourth column being relevance label which is 0 for irrelevance and 1 for relevance. Second column is many times referred as 'iter' but doesn't really important for us.  All the fields are whitespace delimited. This is the standard format of almost all the relevance judgement files. If you have little different relevance judgement file then you can easily convert it in such file using basic 'awk' command.
+   where first column is query-id, third column is Document-id and fourth column being relevance label which is 0 for irrelevance and 1 for relevance. Second column is many times referred as 'iter' but doesn't really important for us.  All the fields are whitespace delimited. This is the standard format of almost all the relevance judgement files. If you have relevance judgements in a different format then you can convert it to this format using a text processing tool such as 'awk'.
 
 3. Collection Index : Here you supply the path to the index of the corpus. If
    you have 'title' information in the collection with some xml/html tag or so
@@ -59,9 +59,9 @@ As mentioned before, this process requires a training file in the above format. 
 
     indexer.index(title,1,"S");
 
-You can refer to the "Indexing" section under "A practical example" heading for the Collection Index. The database created in the practical example will be used as the collection index for the examples. In particular we are going to be using all the documents from which contain the term "watch" which will be used as the query for the examples.
+You can refer to the "Indexing" section under "A practical example" heading for the Collection Index. The database created in the practical example will be used as the collection index for the examples. In particular we are going to be using all the documents which contain the term "watch", which will be used as the query for the examples.
 
-Provided such information, API is capable of creating the training file which is in the mentioned format and can be easily used for learning a model.
+Provided such information, API is capable of creating the training file which is in the mentioned format and can be used for learning a model.
 
 To prepare a training file run the following command from the top level directory. This example assumes that you have created the db from the first example in "Indexing" section under "A practical example" header and you have installed xapian-letor.
 
@@ -91,7 +91,7 @@ You can use any one of the rankers to Learn the model. The command line tool xap
 Ranking
 -------
 
-After we have built a model, its quite straightforward to get a real score for a particular document for the given query. Here we supply the first hand retrieved ranked-list to the Ranking function, which assigns a new score to each document after converting it to the same dimensioned feature vector. This list is re-ranked according to the new scores.
+After we have built a model, it's quite straightforward to get a real score for a particular document for the given query. Here we supply the first hand retrieved ranked-list to the Ranking function, which assigns a new score to each document after converting it to the same dimensioned feature vector. This list is re-ranked according to the new scores.
 
 Here’s the significant part of the example code to implement ranking.
 
