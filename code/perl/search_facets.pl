@@ -52,7 +52,7 @@ sub search {
     my $mset = $enquire->get_mset($offset, $pagesize, 100);
     foreach my $item ($mset->items) {
         my $fields = decode_json($item->get_document->get_data);
-        printf(q{%i: #%3.3i %s - %sq}, $item->get_rank + 1, $item->get_docid, $fields->{TITLE}, $fields->{MAKER});
+        printf(q{%i: #%3.3i %s - %s}, $item->get_rank + 1, $item->get_docid, $fields->{TITLE}, $fields->{MAKER});
         print "\n";
         push @matches, $item->get_docid;
     }
