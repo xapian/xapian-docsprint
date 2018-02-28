@@ -7,7 +7,7 @@ use JSON::MaybeXS;
 use Search::Xapian ':all';
 use FindBin qw($Bin);
 use lib $Bin;
-use CSVParser;
+use Support;
 use Data::Dumper;
 
 my ($data_path, $db_path) = @ARGV;
@@ -22,7 +22,7 @@ sub index_csv {
     # Set up a TermGenerator that we'll use in indexing.
     my $term_generator = Search::Xapian::TermGenerator->new;
     $term_generator->set_stemmer(Search::Xapian::Stem->new('en'));
-    foreach my $rec (CSVParser::parse_csv($data_path)) {
+    foreach my $rec (Support::parse_csv($data_path)) {
         # print Dumper($rec);
         my $doc = Search::Xapian::Document->new;
         $term_generator->set_document($doc);

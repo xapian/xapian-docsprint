@@ -1,4 +1,4 @@
-package CSVParser;
+package Support;
 use strict;
 use warnings;
 
@@ -24,6 +24,13 @@ sub parse_csv {
     $csv->eof or die $csv->error_diag();
     close $fh or die "$file: $!";
     return @out;
+}
+
+sub log_matches {
+    my ($query, $offset, $page_size, $matches) = @_;
+    printf(q{'%s'[%i:%i] = %s}, $query, $offset, $offset + $page_size,
+            join(' ', @$matches));
+    print "\n";
 }
 
 1;
