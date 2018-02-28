@@ -12,7 +12,7 @@ sub parse_csv {
                                binary => 1,
                               })
       or die "Cannot use CSV: ".Text::CSV->error_diag ();
-    open(my $fh, "<:encoding(utf8)", $file) or die "$file: $!";
+    open(my $fh, "<:encoding(UTF-8)", $file) or die "$file: $!";
 
     my $header = $csv->getline($fh);
 

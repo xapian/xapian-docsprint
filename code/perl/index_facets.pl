@@ -9,6 +9,7 @@ use FindBin qw($Bin);
 use lib $Bin;
 use Support;
 use Data::Dumper;
+use Encode qw/encode/;
 
 my ($data_path, $db_path) = @ARGV;
 die "Usage $0 DATAPATH DBPATH" unless $data_path && $db_path;
@@ -37,6 +38,15 @@ sub index_csv {
 
         # Store all the fields for display purposes.
         $doc->set_data(encode_json($rec));
+
+        # add the collection and the maker into value slots
+        if ($rec->{COLLECTION}) {
+            $doc->add_value(0, encode('UTF-8', $rec->{COLLECTION}));
+        }
+        if ($rec->{MAKER}) {
+            $doc->add_value(1, encode('UTF-8', $rec->{MAKER}));
+        }
+
 
         # We use the identifier to ensure each object ends up in the
         # database only once no matter how many times we run the

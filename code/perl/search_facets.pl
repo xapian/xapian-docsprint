@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 
+use utf8;
 use strict;
 use warnings;
 
@@ -7,8 +8,11 @@ use JSON::MaybeXS;
 use Search::Xapian ':all';
 use FindBin qw($Bin);
 use lib $Bin;
+use Encode qw/decode/;
 use Support;
-
+use Data::Dumper;
+binmode STDOUT, ":encoding(UTF-8)";
+binmode STDERR, ":encoding(UTF-8)";
 
 my ($db_path, @terms) = @ARGV;
 die "Usage: $0 DB_PATH QUERY..." unless $db_path && @terms;
@@ -39,12 +43,27 @@ sub search {
     # And print out something about each match
     my @matches;
     
-    my $mset = $enquire->get_mset($offset, $pagesize);
+### Start of example code.
+
+    # Set up a spy to inspect the MAKER value at slot 1
+    my $spy = Search::Xapian::ValueCountMatchSpy->new(1);
+    $enquire->add_matchspy($spy);
+
+    my $mset = $enquire->get_mset($offset, $pagesize, 100);
     foreach my $item ($mset->items) {
         my $fields = decode_json($item->get_document->get_data);
-        printf(q{%i: #%3.3i %s}, $item->get_rank + 1, $item->get_docid, $fields->{TITLE});
+        printf(q{%i: #%3.3i %s - %sq}, $item->get_rank + 1, $item->get_docid, $fields->{TITLE}, $fields->{MAKER});
         print "\n";
         push @matches, $item->get_docid;
     }
+    # Fetch and display the spy values
+    my $end = $spy->values_end;
+    # it looks like the values are not decoded coming out.
+    for (my $it = $spy->values_begin; $it != $end; $it++) {
+        print "Facet: " . decode('UTF-8', $it->get_termname) . "; count: " . $it->get_termfreq . "\n"
+    }
+
+
     Support::log_matches($query_string, $offset, $pagesize, \@matches);
+### End of example code.
 }
