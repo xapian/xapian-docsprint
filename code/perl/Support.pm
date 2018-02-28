@@ -33,4 +33,14 @@ sub log_matches {
     print "\n";
 }
 
+sub numbers_from_string {
+    my $string = shift;
+    return unless $string;
+    my @all;
+    while ($string =~ m/([\d\.]*\d[\d\.]*)/g) {
+        push @all, $1;
+    }
+    return @all;
+}
+
 1;
