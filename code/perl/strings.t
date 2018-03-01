@@ -28,8 +28,8 @@ foreach my $store_encoded (0..1) {
         $term_generator->index_text('try');
 
         # this is the gist of the demostration. It doesn't care if the
-        # encoding string is encoded or decoded. We always get back
-        # the encoded one.
+        # stored string is encoded or decoded. We always get back the
+        # encoded one.
         if ($store_encoded) {
             $doc->set_data($encoded_string);
             $doc->add_value(0, $encoded_string);
