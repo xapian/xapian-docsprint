@@ -40,6 +40,8 @@ sub index_csv {
                 $doc->add_boolean_term('XM' . $material);
             }
         }
+        ### End of new indexing code.
+
         # Index fields without prefixes for general search.
         $term_generator->index_text($rec->{TITLE});
         $term_generator->increase_termpos();

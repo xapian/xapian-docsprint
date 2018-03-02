@@ -15,6 +15,7 @@ die "Usage: $0 DB_PATH QUERY..." unless $db_path && @terms;
 
 search($db_path, join(' ', @terms));
 
+### Start of example code.
 sub search {
     my ($db_path, $query_string, $offset, $pagesize) = @_;
     $offset ||= 0;
@@ -48,3 +49,4 @@ sub search {
     }
     Support::log_matches($query_string, $offset, $pagesize, \@matches);
 }
+### End of example code.

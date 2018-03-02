@@ -23,6 +23,8 @@ sub search {
     $pagesize  ||= 10;
 
     my $db = Search::Xapian::Database->new($db_path);
+
+### Start of example code.
     # Set up a QueryParser with a stemmer and suitable prefixes
     my $queryparser = Search::Xapian::QueryParser->new;
     $queryparser->set_stemmer(Search::Xapian::Stem->new('en'));
@@ -47,6 +49,7 @@ sub search {
                                                         @$materials);
         $query = Search::Xapian::Query->new(+OP_FILTER, $query, $material_query);
     }
+### End of example code.
     
     # Use an Enquire object on the database to run the query
     my $enquire = $db->enquire($query);

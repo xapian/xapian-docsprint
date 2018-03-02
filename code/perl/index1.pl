@@ -15,6 +15,7 @@ die "Usage $0 DATAPATH DBPATH" unless $data_path && $db_path;
 
 index_csv($data_path, $db_path);
 
+### Start of example code.
 sub index_csv {
     my ($data_path, $db_path) = @_;
     # Create or open the database we're going to be writing to.
@@ -46,4 +47,4 @@ sub index_csv {
         $db->replace_document_by_term($idterm, $doc);
     }
 }
-
+### End of example code.
