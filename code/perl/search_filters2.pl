@@ -11,14 +11,13 @@ use Support;
 use Data::Dumper;
 
 
-my ($db_path, $query_string, @materials) = @ARGV;
-die "Usage: $0 DB_PATH QUERY MATERIALS..." unless $db_path && $query_string;
+my ($db_path, $query_string) = @ARGV;
+die "Usage: $0 DB_PATH QUERYTERM..." unless $db_path && $query_string;
 
-search($db_path, $query_string, \@materials);
+search($db_path, $query_string);
 
 sub search {
-    my ($db_path, $query_string, $materials, $offset, $pagesize) = @_;
-    $materials ||= [];
+    my ($db_path, $query_string, $offset, $pagesize) = @_;
     $offset    ||= 0;
     $pagesize  ||= 10;
 
@@ -34,19 +33,13 @@ sub search {
     $queryparser->add_prefix(title => "S");
     $queryparser->add_prefix(description => "XD");
 
+    # allow the user to specify material:.... in the query
+    $queryparser->add_boolean_prefix(material => "XM");    
     # End of prefix configuration.
 
     # And parse the query
     my $query = $queryparser->parse_query($query_string);
 
-    # there is no pod for Search::Xapian::Query, but works anyway. Operator + list.
-
-    if (@$materials) {
-        my $material_query = Search::Xapian::Query->new(+OP_OR,
-                                                        map { Search::Xapian::Query->new('XM' . lc($_)) }
-                                                        @$materials);
-        $query = Search::Xapian::Query->new(+OP_FILTER, $query, $material_query);
-    }
 ### End of example code.
     
     # Use an Enquire object on the database to run the query
