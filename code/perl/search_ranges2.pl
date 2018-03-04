@@ -35,10 +35,14 @@ sub search {
 
     # this works with Search::Xapian on debian stable (1.2.24) and cpan (1.2.25)
     # for version in git master, method, classes and constant changed:
-    # $queryparser->add_rangeprocessor(Xapian::NumberRangeProcessor->new(0, 'mm', RP_SUFFIX));
+
+    # Start of date example code
+    # git master version:
+    # $queryparser->add_rangeprocessor(Xapian::DateRangeProcessor->new(2, RP_DATE_PREFER_MDY, 1860);
     # $queryparser->add_rangeprocessor(Xapian::NumberRangeProcessor->new(1);
     $queryparser->add_valuerangeprocessor(Search::Xapian::DateValueRangeProcessor->new(2, 1, 1860));
     $queryparser->add_valuerangeprocessor(Search::Xapian::NumberValueRangeProcessor->new(1));
+    # End of date example code
 
     # And parse the query
     my $query = $queryparser->parse_query($query_string);
