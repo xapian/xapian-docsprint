@@ -1,7 +1,25 @@
 #!/usr/bin/env perl
 
+# Start of custom RP code
+package PopulationRangeProcessor;
 use strict;
 use warnings;
+use Search::Xapian ':all';
+
+sub new {
+    my ($class, $slot, $low, $high) = @_;
+    my $self = {
+                nrp => Search::Xapian::NumberValueRangeProcessor->new($slot),
+                low => $low,
+                high => $high,
+               };
+    bless $self, $class;
+}
+# End of custom RP code
+package main;
+use strict;
+use warnings;
+
 
 use JSON::MaybeXS;
 use Data::Dumper;
@@ -32,12 +50,11 @@ sub search {
     # End of prefix configuration.
 
     # and add in range processors
-
-    # this works with Search::Xapian on debian stable (1.2.24) and cpan (1.2.25)
-    # for version in git master, method, classes and constant changed:
+    $queryparser->add_valuerangeprocessor(PopulationRangeProcessor->new(3, 500000, 50000000));
 
     # Start of date example code
-    # git master version:
+    # this works with Search::Xapian on debian stable (1.2.24) and cpan (1.2.25)
+    # for version in git master, method, classes and constant changed:
     # $queryparser->add_rangeprocessor(Xapian::DateRangeProcessor->new(2, RP_DATE_PREFER_MDY, 1860);
     # $queryparser->add_rangeprocessor(Xapian::NumberRangeProcessor->new(1);
     $queryparser->add_valuerangeprocessor(Search::Xapian::DateValueRangeProcessor->new(2, 1, 1860));
