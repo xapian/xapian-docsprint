@@ -1,8 +1,10 @@
 package Support;
 use strict;
 use warnings;
-
 use Text::CSV;
+use Data::Dumper;
+use DateTime;
+use DateTime::Format::Strptime;;
 
 sub parse_csv {
     my $file = shift;
@@ -42,5 +44,40 @@ sub numbers_from_string {
     }
     return @all;
 }
+
+sub parse_states {
+    my @records = parse_csv(@_);
+    return grep { length($_->{order}) } @records;
+}
+
+sub format_numeral {
+    my $number = shift;
+    if ($number =~ m/\A[0-9]+\z/) {
+        if ($number eq '0') {
+            return $number;
+        }
+        else {
+            my @out;
+            my @all = reverse(split('', $number));
+            for (my $i = 0; $i < @all; $i++) {
+                if ($i and (($i % 3) == 0)) {
+                    push @out, ',';
+                }
+                push @out, $all[$i];
+            }
+            return join('', reverse @out);
+        }
+    }
+    else {
+        die "Numeral should be an integer";
+    }
+}
+
+sub format_date {
+    my $date = shift;
+    my $strp = DateTime::Format::Strptime->new(pattern => '%Y%m%d');
+    my $dt = $strp->parse_datetime($date);
+    return $dt->month_name . ' ' . $dt->day . ', ' . $dt->year;
+};
 
 1;
