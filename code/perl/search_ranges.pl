@@ -30,8 +30,14 @@ sub search {
     $queryparser->add_prefix(description => "XD");
     # End of prefix configuration.
 
-    die "Xapian::Search::NumberRangeProcessor is not bound in perl!";
-    # $queryparser->add_rangeprocessor(Xapian::Search::NumberRangeProcessor->new(1));
+    # and add in range processors
+
+    # this works with Search::Xapian on debian stable (1.2.24) and cpan (1.2.25)
+    # for version in git master, method, classes and constant changed:
+    # $queryparser->add_rangeprocessor(Xapian::NumberRangeProcessor->new(0, 'mm', RP_SUFFIX));
+    # $queryparser->add_rangeprocessor(Xapian::NumberRangeProcessor->new(1);
+    $queryparser->add_valuerangeprocessor(Search::Xapian::NumberValueRangeProcessor->new(0, 'mm', 0));
+    $queryparser->add_valuerangeprocessor(Search::Xapian::NumberValueRangeProcessor->new(1));
 
     # And parse the query
     my $query = $queryparser->parse_query($query_string);
@@ -41,12 +47,16 @@ sub search {
 
     # And print out something about each match
     my @matches;
-    
+
     my $mset = $enquire->get_mset($offset, $pagesize);
     foreach my $item ($mset->items) {
         my $fields = decode_json($item->get_document->get_data);
-        printf(q{%i: #%3.3i %s}, $item->get_rank + 1, $item->get_docid, $fields->{TITLE});
-        print "\n";
+        printf(qq{%i: #%3.3i (%s) %s\n        %s\n},
+               $item->get_rank + 1,
+               $item->get_docid,
+               $fields->{DATE_MADE},
+               $fields->{MEASUREMENTS},
+               $fields->{TITLE});
         push @matches, $item->get_docid;
     }
     Support::log_matches($query_string, $offset, $pagesize, \@matches);
