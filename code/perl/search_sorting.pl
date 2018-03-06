@@ -15,7 +15,6 @@ die "Usage: $0 DB_PATH QUERY..." unless $db_path && @terms;
 
 search($db_path, join(' ', @terms));
 
-### Start of example code.
 sub search {
     my ($db_path, $query_string, $offset, $pagesize) = @_;
     $offset ||= 0;
@@ -38,7 +37,7 @@ sub search {
     my $enquire = $db->enquire($query);
 
     # Start of example code.
-    $enquire->set_sort_by_value_then_relevance(1, undef);
+    $enquire->set_sort_by_value_then_relevance(1, 0);
     # End of example code.
 
 
