@@ -80,8 +80,7 @@ only) and Windows using Microsoft Visual Studio.
 If you're using a different operating system, you will need to compile
 from source, which should work on any Unix-like operating system,
 and Windows using any one of Cygwin, MSYS+mingw or MSVC. Source code
-is again available from our download page, as are additional Makefiles
-for building using MSVC on Windows.
+is again available from our download page.
 
 Datasets and example code
 -------------------------
