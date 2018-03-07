@@ -34,7 +34,7 @@ sub index_csv {
         # Index the MATERIALS field, splitting on semicolons.
         foreach my $material (split(/;/, $rec->{MATERIALS})) {
             $material =~ s/\A\s*//;
-            $material =~ s/\z\s*//;
+            $material =~ s/\s*\z//;
             $material = lc($material);
             if (length($material)) {
                 $doc->add_boolean_term('XM' . $material);

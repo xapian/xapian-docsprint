@@ -42,10 +42,10 @@ sub search {
     # there is no pod for Search::Xapian::Query, but works anyway. Operator + list.
 
     if (@$materials) {
-        my $material_query = Search::Xapian::Query->new(+OP_OR,
+        my $material_query = Search::Xapian::Query->new(OP_OR,
                                                         map { Search::Xapian::Query->new('XM' . lc($_)) }
                                                         @$materials);
-        $query = Search::Xapian::Query->new(+OP_FILTER, $query, $material_query);
+        $query = Search::Xapian::Query->new(OP_FILTER, $query, $material_query);
     }
 ### End of example code.
     

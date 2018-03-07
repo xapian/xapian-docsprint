@@ -11,10 +11,10 @@ use Support;
 use Data::Dumper;
 
 
-my ($db_path, $query_string) = @ARGV;
-die "Usage: $0 DB_PATH QUERYTERM..." unless $db_path && $query_string;
+my ($db_path, @terms) = @ARGV;
+die "Usage: $0 DB_PATH QUERY..." unless $db_path && @terms;
 
-search($db_path, $query_string);
+search($db_path, join(' ', @terms));
 
 sub search {
     my ($db_path, $query_string, $offset, $pagesize) = @_;
