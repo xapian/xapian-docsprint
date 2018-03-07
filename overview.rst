@@ -31,10 +31,11 @@ Installation
 There are two pieces of Xapian you need to follow this guide: the
 library itself, and support for the language you're going to be
 using.  This guide was originally written with examples in Python_,
-and we've made a start on full translations into Java, PHP_ and C++.
+and we've made a start on full translations into Java, Perl_, PHP_ and C++.
 Help with completing these translations and with translating the examples
 into other languages would be most welcome.
 
+.. _Perl: https://www.perl.org/
 .. _Python: https://www.python.org/
 .. _PHP: https://php.net/
 
@@ -94,7 +95,7 @@ subdirectory).
 
 .. _source for this guide from github: https://github.com/xapian/xapian-docsprint
 
-The example code is available in Python, PHP, C++ and Java so far,
+The example code is available in Python, Perl, PHP, C++ and Java so far,
 although there's only a complete set of examples for Python at
 present.
 
