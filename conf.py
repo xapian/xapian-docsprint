@@ -368,13 +368,15 @@ def xapian_run_example_command(ex):
         xapian_config = get_tool_name('XAPIAN_CONFIG', 'xapian-config')
         pfx = ''
         xcopt = '--libs'
-        if xapian_config != 'xapian-config' and not xapian_config.startswith('/usr/'):
+        # If XAPIAN_CONFIG is pointed at xapian-config from an uninstalled
+        # xapian-core tree then --libs gives an error and we have to use
+        # --ltlibs.
+        if os.system('%s --libs > /dev/null 2>&1' % xapian_config) != 0:
             if os.system('%s --ltlibs > /dev/null 2>&1' % xapian_config) != 0:
-                print "'%s --ltlibs' doesn't work" % xapian_config
+                print("'%s --ltlibs' doesn't work" % xapian_config)
                 sys.exit(1)
-            if os.system('%s --libs > /dev/null 2>&1' % xapian_config) != 0:
-                pfx = 'libtool --quiet --mode=link '
-                xcopt = '--ltlibs'
+            pfx = 'libtool --quiet --mode=link '
+            xcopt = '--ltlibs'
         return "%s%s `%s --cxxflags` %s code/c++/support.cc -o code/c++/built/%s `%s %s`\ncode/c++/built/%s" \
             % (pfx, cxx, xapian_config, xapian_code_example_filename(ex), ex, xapian_config, xcopt, ex)
     elif highlight_language == 'csharp':
