@@ -63,11 +63,15 @@ a new database is being built nightly, and is named according to the date
 on which it was built.
 
 These files are recognised by the autodetection in the Database
-constructor (if the pathname is file rather than a directory, it's
-treated as a stub database file, or if the pathname is a directory
-containing a file called ``XAPIANDB``) or you can open them explicitly
-using ``Xapian::DB_BACKEND_STUB``. The stub database format specifies
-one database per line. For example::
+constructor or you can open them explicitly using
+``Xapian::DB_BACKEND_STUB``.
+
+If the path provided to the Database constructor is a directory
+containing a file called ``XAPIANDB``, such ``XAPIANDB`` file is
+considered to be the stub database file.
+
+The stub database format specifies one database per line, prefixed by
+the type. For example::
 
   remote localhost:23876
   auto /var/spool/xapian/webindex
