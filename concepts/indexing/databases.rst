@@ -79,7 +79,7 @@ renaming) in a production environment without having to worry about
 race conditions. For example, if you want to rebuild the database from
 scratch and replace it, you can build the database using a new
 directory, prepare a stub file with the new path, and finally move the
-stub file into the one which the running code is using.
+stub file over the one which the running code is using.
 
 This technique is better than just replacing the database directory,
 which is affected by race conditions.
@@ -91,20 +91,23 @@ The current types understood by Xapian are:
 
 ``auto``
     This isn't an actual database format, but rather auto-detection of
-    one of the disk based backends (e.g. "chert" or "glass") from a
-    single specified path (which can be to a file or directory).
+    one of the disk based backends (e.g. "chert" or "glass"). It takes a
+    single specified path (which can be to a file or directory) as argument::
+
+      auto /var/spool/xapian/webindex
 
 ``glass``
     Glass is the default backend in Xapian 1.4.x. It supports
     incremental modifications, concurrent single-writer and
     multiple-reader access to a database. It's very efficient and
-    highly scalable, and more compact than chert.
+    highly scalable, and more compact than chert. It takes a path as
+    argument like ``auto``.
 
 ``chert``
     Chert was the default backend in Xapian 1.2.x. It supports
     incremental modifications, concurrent single-writer and
     multiple-reader access to a database. It's very efficient and
-    highly scalable.
+    highly scalable. It takes a path as argument like ``auto``.
 
 ``inmemory``
     This type is a database held entirely in memory. It was originally
@@ -126,12 +129,6 @@ The current types understood by Xapian are:
     remote backend is used. Otherwise the TCP variant of the remote
     backend is used, and the rest of the line specifies the host and
     port to connect to.
-
-
-
-
-
-.. todo:: allows atomic switching between databases
 
 .. todo:: uses e.g. keeping latest changes in a small DB you merge periodically
 
