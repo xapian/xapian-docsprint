@@ -62,11 +62,77 @@ database when the physical database location may vary; for example, because
 a new database is being built nightly, and is named according to the date
 on which it was built.
 
-.. todo:: document format, or link to documentation of it
+These files are recognised by the autodetection in the Database
+constructor or you can open them explicitly using
+``Xapian::DB_BACKEND_STUB``.
 
-.. todo:: allows atomic switching between databases
+If the path provided to the Database constructor is a directory
+containing a file called ``XAPIANDB``, such ``XAPIANDB`` file is
+considered to be the stub database file.
 
-.. todo:: provides a way to have pre-canned sets of databases to search
+The stub database format specifies one database per line, prefixed by
+the type. For example::
+
+  remote localhost:23876
+  auto /var/spool/xapian/webindex
+
+This way you can have a pre-canned sets of databases to search.
+
+Using such stub files you can swap databases atomically (with a file
+renaming) in a production environment without having to worry about
+race conditions. For example, if you want to rebuild the database from
+scratch and replace it, you can build the database using a new
+directory, prepare a stub file with the new path, and finally move the
+stub file over the one which the running code is using.
+
+This technique is better than just replacing the database directory,
+which is affected by race conditions.
+
+Database types
+^^^^^^^^^^^^^^
+
+The current types understood by Xapian are:
+
+``auto``
+    This isn't an actual database format, but rather auto-detection of
+    one of the disk based backends (e.g. "chert" or "glass"). It takes a
+    single specified path (which can be to a file or directory) as argument::
+
+      auto /var/spool/xapian/webindex
+
+``glass``
+    Glass is the default backend in Xapian 1.4.x. It supports
+    incremental modifications, concurrent single-writer and
+    multiple-reader access to a database. It's very efficient and
+    highly scalable, and more compact than chert. It takes a path as
+    argument like ``auto``.
+
+``chert``
+    Chert was the default backend in Xapian 1.2.x. It supports
+    incremental modifications, concurrent single-writer and
+    multiple-reader access to a database. It's very efficient and
+    highly scalable. It takes a path as argument like ``auto``.
+
+``inmemory``
+    This type is a database held entirely in memory. It was originally
+    written for testing purposes only, but may prove useful for
+    building up temporary small databases.
+
+``remote``
+    This can specify either a "program" or TCP remote backend, for example::
+
+      remote :ssh xapian-prog.example.com xapian-progsrv /srv/xapian/db1
+
+    or::
+
+      remote xapian-tcp.example.com:12345
+
+    If the first character of the second word is a colon (:), then
+    this is skipped and the remainder of the line is used as the
+    command to run xapian-progsrv and the "program" variant of the
+    remote backend is used. Otherwise the TCP variant of the remote
+    backend is used, and the rest of the line specifies the host and
+    port to connect to.
 
 .. todo:: uses e.g. keeping latest changes in a small DB you merge periodically
 
