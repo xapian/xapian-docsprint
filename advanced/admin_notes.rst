@@ -52,11 +52,9 @@ And the following optional tables exist only when there is data to store in
 them:
 
  - The `docdata` table holds the document data associated with each document
-   in the database.  If you never set any term positions, this table won't
-   exist.
- - The `position` table holds a list of all the word positions in each document
-   which each term occurs at.  If you never set positional data, this table
-   won't exist.
+   in the database.
+ - The `position` table stores all the word positions in each document
+   which each term occurs at.
  - The `spelling` table holds data for suggesting spelling corrections.
  - The `synonym` table holds a synonym dictionary.
 
