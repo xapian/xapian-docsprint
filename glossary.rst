@@ -67,6 +67,9 @@ Retrieval, while others have a specific meaning in the context of Xapian.
  A family of probabilistic weighting schemes developed more recently than
  BM25.  Xapian 1.3 adds supports for a number of such schemes.
 
+**Diversification**
+ In order to increase user’s satisfaction, the presented result set should not only be relevant to the search topic, but should also present a variety of perspectives, that is, the results should be different from one another, especially for ambiguous queries. The effectiveness of web search and the satisfaction of users can be enhanced by providing various results of a search query in a certain order of relevance and concern, known as diversification.
+
 **Document ID**
  A unique positive integer identifying a document in a Xapian database.
 
