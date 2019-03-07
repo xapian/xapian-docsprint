@@ -29,7 +29,7 @@ using namespace std;
 
 static void show_usage()
 {
-    cout << "Usage: search_letor --db=DBPATH MODEL_METADATA_KEY QUERY\n";
+    cout << "Usage: search_letor MODEL_METADATA_KEY QUERY\n";
 }
 
 // Start of example code

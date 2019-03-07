@@ -319,7 +319,7 @@ def xapian_code_example_command(ex, letor):
     elif highlight_language == 'tcl':
         return "tclsh %s" % xapian_code_example_filename(ex)
     elif highlight_language == 'c++':
-        if letor == False:
+        if not letor:
             return "g++ `xapian-config --cxxflags` %s code/c++/support.cc -o %s `xapian-config --libs`\n./%s" \
                 % (xapian_code_example_filename(ex), ex, ex)
         else:
@@ -379,7 +379,7 @@ def xapian_run_example_command(ex, letor):
             if os.system('%s --libs > /dev/null 2>&1' % xapian_config) != 0:
                 pfx = 'libtool --quiet --mode=link '
                 xcopt = '--ltlibs'
-        if letor == False:
+        if not letor:
             return "%s%s `%s --cxxflags` %s code/c++/support.cc -o code/c++/built/%s `%s %s`\ncode/c++/built/%s" \
                 % (pfx, cxx, xapian_config, xapian_code_example_filename(ex), ex, xapian_config, xcopt, ex)
         else:
