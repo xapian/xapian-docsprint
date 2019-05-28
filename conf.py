@@ -812,7 +812,7 @@ def xapian_literal_role(typ, rawtext, etext, lineno, inliner,
             # FIXME: Tcl doesn't have natively have a 'null'
             # https://wiki.tcl.tk/17441 but SWIG-generated wrappers use the
             # string NULL to represent a NULL pointer:
-            # http://www.swig.org/Doc3.0/Tcl.html#Tcl_nn19
+            # http://www.swig.org/Doc4.0/Tcl.html#Tcl_nn19
             t = 'NULL'
         else:
             print "Unhandled literal '%s' for %s" % (t, highlight_language)
