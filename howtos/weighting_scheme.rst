@@ -126,7 +126,7 @@ to 1.5 and choose one which fits best to your system based upon corpus being use
 by 1.4.x, it's only in git master (and will be in the next release series) - it's hard to backport because
 the two new parameters need to be stored by the TfIdfWeight class.
 
-.. _SMART normalization variants: http://nlp.stanford.edu/IR-book/html/htmledition/document-and-query-weighting-schemes-1.html
+.. _SMART normalization variants: https://nlp.stanford.edu/IR-book/html/htmledition/document-and-query-weighting-schemes-1.html
 
 TradWeight
 ----------

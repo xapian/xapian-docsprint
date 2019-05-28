@@ -100,7 +100,7 @@ present.
 
 The first dataset is the first 100 objects taken from museum
 catalogue data released by the `Science Museum
-<http://www.sciencemuseum.org.uk>`_.  We downloaded this data from their API
+<https://www.sciencemuseum.org.uk>`_.  We downloaded this data from their API
 site, but this has since shut down.  The second dataset we have curated
 ourselves from information on Wikipedia about the 50 `US States
 <https://en.wikipedia.org/wiki/U.S._state>`_. Both are provided as
@@ -139,7 +139,7 @@ also contact us on channel #xapian on irc.freenode.net [`webchat link
 <https://webchat.freenode.net/?channels=%23xapian>`_].
 
 To be able to generate this documentation from a git checkout, you'll need
-the `Sphinx documentation tool <http://sphinx-doc.org/>`_.  If you're using
+the `Sphinx documentation tool <https://sphinx-doc.org/>`_.  If you're using
 Debian or Ubuntu or another Debian-derived distro, you can get this by
 installing either the `python-sphinx` or `python3-sphinx` package.  Once
 you have Sphinx installed, you can generate HTML output with ``make html``

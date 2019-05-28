@@ -45,7 +45,7 @@ document.
 The rules applied by a stemmer are dependent on the language of the text;
 Xapian includes `stemmers for more than a dozen languages <https://xapian.org/docs/apidoc/html/classXapian_1_1Stem.html>`_
 (and for some languages there is a choice of stemmers), built using the
-`Snowball language <http://snowballstem.org/>`_. We'd like to add
+`Snowball language <https://snowballstem.org/>`_. We'd like to add
 stemmers for more languages - see the Snowball site for information on how
 to contribute.
 

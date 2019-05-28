@@ -8,7 +8,7 @@ Join in on channel #xapian on irc.freenode.net (webchat link:
 https://webchat.freenode.net/?channels=%23xapian) or via [our
 mailing lists](https://xapian.org/lists).
 
-You will need the [Sphinx documentation tool](http://sphinx-doc.org/)
+You will need the [Sphinx documentation tool](https://sphinx-doc.org/)
 installed to process the documentation. You can install the `python-sphinx`
 package on Debian, Fedora and Ubuntu, or `pip install -r requirements.txt`
 to install the python package directly. We currently support up to Sphinx
