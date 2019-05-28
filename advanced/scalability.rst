@@ -17,10 +17,9 @@ Webtop search engine, which offered a search over around 500 million web
 pages (around 1.5 terabytes of database files). Searches took less than
 a second.
 
-In terms of current deployments, `gmane <http://search.gmane.org/>`_
-indexes and searches nearly 100 million mail messages on a single server
-at the time of writing (2012), and we've had user reports of systems with
-more than 250 million documents.
+Before gmane stopped offering a web interface in mid 2016, the gmane search
+indexed and search more than 150 million mail messages on a single server.
+We've had user reports of systems with more than 250 million documents.
 
 If you've questions about scalability not covered in this document, ask
 on the mailing lists - people using Xapian to search large databases may
