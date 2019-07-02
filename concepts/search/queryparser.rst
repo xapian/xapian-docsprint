@@ -143,8 +143,10 @@ characters within a term; for example:
     ``wild*`` matches ``wild, wildcard, wildcat, wilderness``
 
 This feature is disabled by default; to enable it, see 'Parser Flags'
-below.  It also requires a database to be set on the QueryParser (so
-that it can find the list of terms to expand the wildcard to).
+below.  In Xapian 1.2.x and earlier it also required a database to be set on
+the QueryParser (so that it could find the list of terms to expand the wildcard
+to) - in Xapian 1.4.x and later the wildcard expansion doesn't happen until
+:xapian-method:`Enquire::get_mset()` is called.
 
 By default the wildcard will expand to as many terms as there are with
 the specified prefix.  This can cause performance problems, so you can limit
