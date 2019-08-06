@@ -2,6 +2,9 @@
 #
 # Simple example script demonstrating how to re-rank using the trained model.
 #
+# Copyright (C) 2004,2005,2006,2007,2008,2009,2010,2015 Olly Betts
+# Copyright (C) 2011 Parth Gupta
+# Copyright (C) 2016 Ayush Tomar
 # Copyright (C) 2019 Vaibhav Kansagara
 #
 # This program is free software; you can redistribute it and/or
@@ -46,12 +49,10 @@ try:
     parser.set_stemming_strategy(xapian.QueryParser.STEM_SOME)
 
     query_no_prefix = parser.parse_query(query_string,
-                                         parser.FLAG_DEFAULT|
-                                         parser.FLAG_SPELLING_CORRECTION)
+                                         parser.FLAG_DEFAULT)
     # query with title as default prefix
     query_default_prefix = parser.parse_query(query_string,
-                                              parser.FLAG_DEFAULT|
-                                              parser.FLAG_SPELLING_CORRECTION,
+                                              parser.FLAG_DEFAULT,
                                               "S")
     # Combine queries
     query = xapian.Query(xapian.Query.OP_OR, query_no_prefix, query_default_prefix)
@@ -63,7 +64,7 @@ try:
 
     if mset.empty():
         print("Empty MSet. No documents could be retrieved with the given Query.")
-        sys.exit(1)
+        sys.exit(0)
 
     print("Docids before re-ranking by LTR model:\n")
     for m in mset:
