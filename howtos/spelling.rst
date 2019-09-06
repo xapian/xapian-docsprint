@@ -27,29 +27,63 @@ Static spelling data
 --------------------
 
 If ``db`` is a :xapian-class:`WritableDatabase`, you can add to the spelling
-dictionary using::
+dictionary using:
+
+.. xapiancodesnippet:: c++
 
     db.add_spelling(word, frequency_inc);
 
-The ``frequency_inc`` parameter is optional, and defaults to 1.
+.. xapiancodesnippet:: php
 
-And the corresponding way to remove from the spelling dictionary is::
+    $db->add_spelling($word, $frequency_inc);
+
+.. xapiancodesnippet:: python python3
+
+    db.add_spelling(word, frequency_inc)
+
+The :xapian-variable:`frequency_inc` parameter is optional, and defaults to 1.
+
+And the corresponding way to remove from the spelling dictionary is:
+
+.. xapiancodesnippet:: c++
 
     db.remove_spelling(word, frequency_dec);
 
-The ``frequency_dec`` parameter is optional and defaults to 1.  If you try to
-decrement the frequency of a word by more than its current value, it's just
-removed.
+.. xapiancodesnippet:: php
+
+    $db->remove_spelling($word, $frequency_dec);
+
+.. xapiancodesnippet:: python python3
+
+    db.remove_spelling(word, frequency_dec)
+
+The :xapian-variable:`frequency_dec` parameter is optional, and defaults to 1.
+If you try to decrement the frequency of a word by more than its current value,
+it's just removed.
 
 Dynamic spelling data
 ---------------------
 
 :xapian-class:`TermGenerator` can be configured to automatically add
-words from indexed documents to the spelling dictionary::
+words from indexed documents to the spelling dictionary:
+
+.. xapiancodesnippet:: c++
 
     Xapian::TermGenerator indexer;
     indexer.set_database(db);
     indexer.set_flags(indexer.FLAG_SPELLING);
+
+.. xapiancodesnippet:: php
+
+    $indexer = new XapianTermGenerator();
+    $indexer->set_database(db);
+    $indexer->set_flags(XapianTermGenerator::FLAG_SPELLING);
+
+.. xapiancodesnippet:: python python3
+
+    indexer = xapian.TermGenerator()
+    indexer.set_database(db)
+    indexer.set_flags(indexer.FLAG_SPELLING)
 
 Note that you must call the :xapian-method:`TermGenerator::set_database()`
 method as well as setting :xapian-constant:`TermGenerator::FLAG_SPELLING` so
