@@ -546,7 +546,7 @@ class XapianCodeSnippet(CodeBlock):
     option_spec = { }
 
     def run(self):
-        if highlight_language in self.arguments:
+        if highlight_language not in self.arguments:
             return []
         return super(XapianCodeSnippet, self).run()
 
