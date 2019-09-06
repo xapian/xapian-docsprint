@@ -542,15 +542,17 @@ directives.register_directive('xapianrunexample', XapianRunExample)
 
 
 class XapianCodeSnippet(CodeBlock):
+    required_arguments = 1
+    optional_arguments = len(languages) - 1
     option_spec = { }
 
     def run(self):
-        if highlight_language != self.arguments[0]:
+        if highlight_language in self.arguments:
             return []
         return super(XapianCodeSnippet, self).run()
 
 # Usage:
-# .. xapiancodesnippet:: python
+# .. xapiancodesnippet:: python python3
 #
 #     def foo():
 #          return 42
