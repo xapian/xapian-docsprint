@@ -35,6 +35,22 @@ values:
 
     doc.add_value(0, Xapian::sortable_serialise(price));
 
+.. xapiancodesnippet:: csharp
+
+    doc.AddValue(0, Xapian.SortableSerialise(price));
+
+.. xapiancodesnippet:: java
+
+    doc.addValue(0, Xapian.sortableSerialise(price));
+
+.. xapiancodesnippet:: lua
+
+    doc:add_value(0, xapian.sortable_serialise(price))
+
+.. xapiancodesnippet:: perl
+
+    $doc->add_value(0, Xapian::sortable_serialise($price));
+
 .. xapiancodesnippet:: php
 
     $doc->add_value(0, Xapian::sortable_serialise($price));
@@ -42,6 +58,14 @@ values:
 .. xapiancodesnippet:: python python3
 
     doc.add_value(0, xapian.sortable_serialise(price))
+
+.. xapiancodesnippet:: ruby
+
+    doc.add_value(0, Xapian::sortable_serialise(price))
+
+.. xapiancodesnippet:: tcl
+
+    doc add_value [0 [xapian::sortable_serialise $price]]
 
 There are three methods which are used to specify how the value is used to
 sort, depending if/how you want relevance used in the ordering:

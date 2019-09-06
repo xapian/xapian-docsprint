@@ -33,6 +33,22 @@ dictionary using:
 
     db.add_spelling(word, frequency_inc);
 
+.. xapiancodesnippet:: csharp
+
+    db.AddSpelling(word, frequency_inc);
+
+.. xapiancodesnippet:: java
+
+    db.addSpelling(word, frequency_inc);
+
+.. xapiancodesnippet:: lua
+
+    db:add_spelling(word, frequency_inc)
+
+.. xapiancodesnippet:: perl
+
+    $db->add_spelling($word, $frequency_inc);
+
 .. xapiancodesnippet:: php
 
     $db->add_spelling($word, $frequency_inc);
@@ -40,6 +56,14 @@ dictionary using:
 .. xapiancodesnippet:: python python3
 
     db.add_spelling(word, frequency_inc)
+
+.. xapiancodesnippet:: ruby
+
+    db.add_spelling(word, frequency_inc)
+
+.. xapiancodesnippet:: tcl
+
+    db add_spelling [$word $frequency_inc]
 
 The :xapian-variable:`frequency_inc` parameter is optional, and defaults to 1.
 
@@ -49,6 +73,22 @@ And the corresponding way to remove from the spelling dictionary is:
 
     db.remove_spelling(word, frequency_dec);
 
+.. xapiancodesnippet:: csharp
+
+    db.RemoveSpelling(word, frequency_dec);
+
+.. xapiancodesnippet:: java
+
+    db.removeSpelling(word, frequency_dec);
+
+.. xapiancodesnippet:: lua
+
+    db:remove_spelling(word, frequency_dec)
+
+.. xapiancodesnippet:: perl
+
+    $db->remove_spelling($word, $frequency_dec);
+
 .. xapiancodesnippet:: php
 
     $db->remove_spelling($word, $frequency_dec);
@@ -56,6 +96,14 @@ And the corresponding way to remove from the spelling dictionary is:
 .. xapiancodesnippet:: python python3
 
     db.remove_spelling(word, frequency_dec)
+
+.. xapiancodesnippet:: ruby
+
+    db.remove_spelling(word, frequency_dec)
+
+.. xapiancodesnippet:: tcl
+
+    db remove_spelling [$word $frequency_dec]
 
 The :xapian-variable:`frequency_dec` parameter is optional, and defaults to 1.
 If you try to decrement the frequency of a word by more than its current value,
@@ -72,6 +120,12 @@ words from indexed documents to the spelling dictionary:
     Xapian::TermGenerator indexer;
     indexer.set_database(db);
     indexer.set_flags(indexer.FLAG_SPELLING);
+
+.. xapiancodesnippet:: perl
+
+    my $indexer = Xapian::TermGenerator->new();
+    $indexer->set_database($db);
+    $indexer->set_flags(Xapian::TermGenerator::FLAG_SPELLING);
 
 .. xapiancodesnippet:: php
 
