@@ -410,7 +410,6 @@ class XapianCodeExample(LiteralInclude):
         'end-before': directives.unchanged_required,
         'prepend': directives.unchanged_required,
         'append': directives.unchanged_required,
-        'emphasize-lines': directives.unchanged_required,
         'marker': directives.unchanged_required,
     }
 
