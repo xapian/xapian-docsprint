@@ -33,7 +33,6 @@ values:
 
 .. xapiancodesnippet:: c++
 
-    Xapian::Document doc;
     doc.add_value(0, Xapian::sortable_serialise(price));
 
 .. xapiancodesnippet:: php
