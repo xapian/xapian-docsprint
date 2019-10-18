@@ -5,6 +5,7 @@ import sys
 import xapian
 import support
 
+### Start of example code.
 def search(dbpath, querystring, offset=0, pagesize=10):
     # offset - defines starting point within result set
     # pagesize - defines number of records to retrieve
@@ -47,6 +48,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
 
     # Finally, make sure we log the query and displayed results
     support.log_matches(querystring, offset, pagesize, matches)
+### End of example code.
 
 if len(sys.argv) < 3:
     print("Usage: %s DBPATH QUERYTERM..." % sys.argv[0])
