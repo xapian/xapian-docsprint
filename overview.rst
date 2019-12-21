@@ -58,8 +58,7 @@ in Python or C++:
 
 .. code-block:: none
 
-    $ sudo apt-get install python-xapian
-    $ sudo apt-get install python3-xapian (For Python3)
+    $ sudo apt-get install python3-xapian
     $ sudo apt-get install libxapian-dev
 
 Packages of the PHP bindings aren't available due to a licence
