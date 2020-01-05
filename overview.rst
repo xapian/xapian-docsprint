@@ -46,9 +46,8 @@ release series.  So let's get that onto your system.
 Installation on Debian or Ubuntu
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Neither Debian nor Ubuntu yet have a stable release with Xapian 1.4 packages.
-If you're using Debian unstable or testing, there are 1.4 packages there.
-For Ubuntu you can install packages from our PPA_.
+Recent releases of Debian and Ubuntu both have Xapian 1.4 packages.  If
+you're still using Ubuntu xenial you can install packages from our PPA_.
 
 .. _PPA: https://launchpad.net/~xapian-backports/+archive/ubuntu/ppa
 
