@@ -254,8 +254,8 @@ for t in languages:
         highlight_language = t
 
 if highlight_language is None:
-    tags.add('python')
-    highlight_language = 'python'
+    print("No known language tag set")
+    sys.exit(1)
 
 if highlight_language.startswith('python'):
     ext = '.py'
