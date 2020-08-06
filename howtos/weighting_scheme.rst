@@ -146,7 +146,7 @@ Apart from the three character string, these normalizations can also be specifie
    | INCREMENTED_GLOBAL_FREQ
    | SQRT_GLOBAL_FREQ
 
-1. | NONE
+3. | NONE
 
 More recently supported normalization in TfIdfWeight is the pivoted (piv+) retrieval function
 which represents one of the best performing vector space models. Piv+ takes two parameters; slope and delta
