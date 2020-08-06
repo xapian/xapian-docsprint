@@ -19,7 +19,7 @@ API
 ---
  
 Diversification on an MSet of results can be achieved by using the
-:xapian-method:`Diversify` class, e.g.::
+:xapian-class:`Diversify` class, e.g.::
 
     // Query a database and get 10 results, where 'enq' is an instantiated
     // Enquire object over a database
