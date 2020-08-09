@@ -119,6 +119,35 @@ Normalizations are specified by the first character of their name string:
 
 3. | "**n** one" : wtn = wdfn * idfn
 
+Apart from the three character string, these normalizations can also be specified by using three separate normalization parameters.
+
+| 1. The first parameter specifies the normalization for the term frequency component (wdf_norm),
+| 2. the second the normalization for the inverse document frequency component (idf_norm), and
+| 3. the third the normalization used for the document weight (wt_norm).
+
+1. | NONE
+   | BOOLEAN
+   | SQUARE
+   | LOG
+   | PIVOTED
+   | LOG_AVERAGE
+   | AUG_LOG
+   | SQRT
+   | AUG_AVERAGE
+
+2. | TFIDF
+   | NONE
+   | PROB
+   | FREQ
+   | SQUARE
+   | PIVOTED
+   | GLOBAL_FREQ
+   | LOG_GLOBAL_FREQ
+   | INCREMENTED_GLOBAL_FREQ
+   | SQRT_GLOBAL_FREQ
+
+3. | NONE
+
 More recently supported normalization in TfIdfWeight is the pivoted (piv+) retrieval function
 which represents one of the best performing vector space models. Piv+ takes two parameters; slope and delta
 which are set to their default optimal values. You may want pass different candidate values ranging from 0.1
