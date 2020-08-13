@@ -12,8 +12,8 @@ user satisfaction, especially for ambiguous queries.
 
 Xapian currently has an implementation of an *implicit* method (using documents as features,
 as opposed to using query based features such as query logs) adapted from the C :sup:`2` - GLS method mentioned in Scalable and Efficient Web Search Results Diversification, Naini et al. 2016. This saves the cost of having to provide external features such as query
-logs, while still achieving the desired diversification effect, which according to
-the paper is reasonable enough for practical uses as tested on the public data set - ClueWeb09 with TREC Web 09/10 queries.
+logs, while still achieving the desired diversification effect. According to
+the paper the results are reasonable enough for practical uses as tested on the public data set - ClueWeb09 with TREC Web 09/10 queries.
 
 API
 ---
