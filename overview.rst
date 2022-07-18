@@ -133,9 +133,9 @@ Contributing
 The `source for this documentation
 <https://github.com/xapian/xapian-docsprint>`_ is being kept on github; the
 best way to contribute is to add issues, comments and pull requests there.
-We're monitoring IRC during the sprint sessions (and in general) so you can
-also contact us on channel #xapian on irc.freenode.net [`webchat link
-<https://webchat.freenode.net/?channels=%23xapian>`_].
+If you want to chat to us interactively during the sprint sessions (and in
+general) there are details of `how to connect to our chat channel
+<https://xapian.org/lists>`_ on our website.
 
 To be able to generate this documentation from a git checkout, you'll need
 the `Sphinx documentation tool <https://sphinx-doc.org/>`_.  If you're using
