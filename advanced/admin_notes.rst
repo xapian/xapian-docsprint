@@ -46,7 +46,8 @@ The following table exists by default, but you can choose not to have it:
 
  - The `termlist` table holds a list of all the terms which index each
    document, and also the value slots used in each document.  Without this,
-   some features aren't supported - see `Xapian::DB_NO_TERMLIST` for details.
+   some features aren't supported - see xapian-constant:`Xapian::DB_NO_TERMLIST`
+   for details.
 
 And the following optional tables exist only when there is data to store in
 them:
@@ -331,8 +332,8 @@ Inspecting a database
 
 When designing an indexing strategy, it is often useful to be able to check
 the contents of the database.  Xapian includes a simple command-line program,
-`xapian-delve`, to allow this (prior to 1.3.0, `xapian-delve` was usually
-called `delve`, though some packages were already renaming it).
+``xapian-delve``, to allow this (prior to 1.3.0, ``xapian-delve`` was usually
+called ``delve``, though some packages were already renaming it).
 
 For example, to display the list of terms in document "1" of the database
 "foo", use:
@@ -420,7 +421,9 @@ Xapian includes a command-line tool to check that a database is
 self-consistent.  This tool, ``xapian-check``, runs through the entire database,
 checking that all the internal nodes are correctly connected.  It can also be
 used on a single table, for example, this command will check the termlist table
-of database "foo"::
+of database "foo":
+
+.. code-block:: sh
 
   xapian-check foo/termlist.DB
 
@@ -482,7 +485,7 @@ Converting a pre-1.1.4 chert database to a chert database
 
 The chert format changed in 1.1.4 - at that point the format hadn't been
 finalised, but a number of users had already deployed it, and it wasn't hard
-to write an updater, so we provided one called `xapian-chert-update` which
+to write an updater, so we provided one called ``xapian-chert-update`` which
 makes a copy with the updated format:
 
 .. code-block:: sh
@@ -509,13 +512,17 @@ re-index from source data since it doesn't need to perform the tokenisation
 step.  It is also useful if you no longer have the source data available.
 
 The following command will copy a database from "SOURCE" to "DESTINATION",
-creating the new database at "DESTINATION" as a chert database::
+creating the new database at "DESTINATION" as a chert database:
+
+.. code-block:: sh
 
   copydatabase SOURCE DESTINATION
 
 By default ``copydatabase`` will renumber your documents starting with docid 1.
 If the docids are stored in or come from some external system, you should
-preserve them by using the ``--no-renumber`` option (new in Xapian 1.2.5)::
+preserve them by using the ``--no-renumber`` option (new in Xapian 1.2.5):
+
+.. code-block:: sh
 
   copydatabase --no-renumber SOURCE DESTINATION
 
@@ -531,7 +538,9 @@ re-index from source data since it doesn't need to perform the tokenisation
 step.  It is also useful if you no longer have the source data available.
 
 The following command will copy a database from "SOURCE" to "DESTINATION",
-creating the new database at "DESTINATION" as a flint database::
+creating the new database at "DESTINATION" as a flint database:
+
+.. code-block:: sh
 
   copydatabase SOURCE DESTINATION
 
@@ -550,11 +559,15 @@ in :xapian-class:`QueryParser`, :xapian-class:`Stem`, and
 :xapian-class:`TermGenerator`).
 
 Run the following command in your Xapian 0.9.x installation to copy your
-0.9.x flint database "SOURCE" to a new quartz database "INTERMEDIATE"::
+0.9.x flint database "SOURCE" to a new quartz database "INTERMEDIATE":
+
+.. code-block:: sh
 
   copydatabase SOURCE INTERMEDIATE
 
 Then run the following command in your Xapian 1.0.y installation to copy
-your quartz database to a 1.0.y flint database "DESTINATION"::
+your quartz database to a 1.0.y flint database "DESTINATION":
+
+.. code-block:: sh
 
   copydatabase INTERMEDIATE DESTINATION
