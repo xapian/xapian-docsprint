@@ -72,9 +72,9 @@ Changing the blocksize may have performance implications, but it is hard to
 know whether these will be positive or negative for a particular combination
 of hardware and software without doing some profiling.
 
-The `.baseA` and `.baseB` files you may remember if you've worked Xapian
-database backends no longer exist in glass databases - the information about
-unused blocks is stored in a freelist (itself stored in unused blocks in
+The `.baseA` and `.baseB` files you may remember if you've worked with older
+Xapian database backends no longer exist in glass databases - the information
+about unused blocks is stored in a freelist (itself stored in unused blocks in
 the `.glass` file, and the other information is stored in the `iamglass`
 file.
 
