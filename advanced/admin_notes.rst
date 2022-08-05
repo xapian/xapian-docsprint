@@ -181,16 +181,25 @@ Each Xapian database directory contains a lock file named
 technique is the same).
 
 This lock-file will always exist, but will be locked using ``fcntl()`` when the
-database is open for writing.  Because of the semantics of ``fcntl()`` locking,
-for each WritableDatabase opened we spawn a child process to hold the lock,
-which then exec-s ``cat``, so you will see a ``cat`` subprocess of any writer
-process in the output of ``ps``, ``top``, etc.
+database is open for writing.  A major advantage of ``fnctl()`` locks is that
+if a writer exits without being given a chance to clean up (for example, if the
+application holding the writer is killed), any ``fcntl()`` locks held will be
+automatically released by the operating system so stale locks can't happen.
 
-If a writer exits without being given a chance to clean up (for example, if the
-application holding the writer is killed), the ``fcntl()`` lock will be
-automatically released by the operating system.  Under Microsoft Windows, we
-use a different locking technique which doesn't require a child process, but
-also means the lock is released automatically when the writing process exits.
+Unfortunately, ``fcntl()`` locking has some unhelpful semantics (if a process
+closes *ANY* open file descriptor on the file that releases the lock) so on
+most POSIX platforms we spawn a child process to hold the lock for each
+database opened for writing, which then exec-s ``cat``, so you will see a
+``cat`` subprocess of any writer process in the output of ``ps``, ``top``, etc.
+
+"Open File Description" locks are like traditional ``fcntl()`` locks but with
+this problem addressed, and Xapian will use these if available and avoid these
+extra child processes.  At the time of writing it seems only Linux (since kernel
+3.15) supports these, but hopefully they'll get added to POSIX so in the future.
+
+Under Microsoft Windows, we use a different locking technique which doesn't
+require a child process, but still means the lock is released automatically
+when the writing process exits.
 
 Revision numbers
 ----------------
