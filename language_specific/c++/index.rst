@@ -22,9 +22,9 @@ it by reference::
     try {
         do_something_with_xapian();
     } catch (const Xapian::Error & e) {
-        cout << "Exception: " << e.get_description() << endl;
+        cout << "Exception: " << e.get_description() << '\n';
     } catch (const std::exception & e) {
-        cout << "Exception: " << e.what() << endl;
+        cout << "Exception: " << e.what() << '\n';
     }
 
 .. todo:: Xapian::Error hierarchy

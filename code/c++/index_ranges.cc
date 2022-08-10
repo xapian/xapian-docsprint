@@ -37,7 +37,7 @@ void index(const string & datapath, const string & dbpath)
 	fields.at(FIELD_MEASUREMENTS) != "MEASUREMENTS" ||
 	fields.at(FIELD_DESCRIPTION) != "DESCRIPTION") {
 	// The CSV format doesn't match what we expect.
-	cerr << "CSV format has changed!" << endl;
+	cerr << "CSV format has changed!\n";
 	exit(1);
     }
 
@@ -92,7 +92,7 @@ void index(const string & datapath, const string & dbpath)
 
 int main(int argc, char** argv) {
     if (argc != 3) {
-	cerr << "Usage: " << argv[0] << " DATAPATH DBPATH" << endl;
+	cerr << "Usage: " << argv[0] << " DATAPATH DBPATH\n";
 	return 1;
     }
     index(argv[1], argv[2]);

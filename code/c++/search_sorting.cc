@@ -57,16 +57,16 @@ search(const string & dbpath, const string & querystring,
 	cout << m.get_rank() + 1 << ": #" << setfill('0') << setw(3) << did
 	     << " " << get_field(data, DOC_FIELD_NAME) << " "
 	     << date << "\n        Population "
-	     << population << endl;
+	     << population << '\n';
 	// Log the document id.
 	clog << ' ' << did;
     }
-    clog << endl;
+    clog << '\n';
 }
 
 int main(int argc, char** argv) {
     if (argc < 3) {
-	cerr << "Usage: " << argv[0] << " DBPATH QUERYTERM..." << endl;
+	cerr << "Usage: " << argv[0] << " DBPATH QUERYTERM...\n";
 	return 1;
     }
     const char * dbpath = argv[1];

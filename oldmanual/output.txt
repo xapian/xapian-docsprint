@@ -285,7 +285,7 @@ Chapter 3: Documents
 
          Xapian::Database db("testdb");
          Xapian::Document doc = db.get_document(1);
-         std::cout << doc.get_data() <<std::endl;
+         std::cout << doc.get_data() << '\n';
 
        This is normally entirely transparent to the user, but can have a
        visible effect in some very specific circumstances. If the database
@@ -302,7 +302,7 @@ Chapter 3: Documents
          Xapian::Document doc2 = db.get_document(1);
          doc1.set_data("hello");
          db.replace_document(1, doc1);
-         std::cout << doc2.get_data() <<std::endl;
+         std::cout << doc2.get_data() << '\n';
          // Output is "hello"
 
        If you want to force all the contents of a document to be read

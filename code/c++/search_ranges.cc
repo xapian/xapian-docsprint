@@ -53,16 +53,16 @@ search(const string & dbpath, const string & querystring,
 	const string & data = m.get_document().get_data();
 	cout << " (" << get_field(data, DOC_FIELD_DATE_MADE) << ") "
 	     << get_field(data, DOC_FIELD_MEASUREMENTS) << "\n        "
-	     << get_field(data, DOC_FIELD_TITLE) << endl;
+	     << get_field(data, DOC_FIELD_TITLE) << '\n';
 	// Log the document id.
 	clog << ' ' << did;
     }
-    clog << endl;
+    clog << '\n';
 }
 
 int main(int argc, char** argv) {
     if (argc < 3) {
-	cerr << "Usage: " << argv[0] << " DBPATH QUERYTERM..." << endl;
+	cerr << "Usage: " << argv[0] << " DBPATH QUERYTERM...\n";
 	return 1;
     }
     const char * dbpath = argv[1];
