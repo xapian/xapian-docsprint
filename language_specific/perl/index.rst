@@ -40,7 +40,7 @@ How this applies to Xapian? You usually store strings with
 want bytes. If you pass a decoded string, it will be silently encoded.
 When you are going to retrieve them, the data will come out encoded,
 as a string of bytes, and you need to be prepared for it. You can do
-this using serialization. The example code stores the documents data
+this using serialization. The example code stores the document data
 using ``encode_json`` (which produces a byte string) and on retrieving
 it calls ``decode_json`` (which returns decoded values). When you
 store a value, you encode it with ``encode`` or with the
