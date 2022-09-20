@@ -122,11 +122,11 @@ blocks, which have a default size of 8KB (though this can be set, either
 through the Xapian API, or with some of the tools detailed later in this
 document).
 
-The ".baseA" and ".baseB" files are used to keep track of where to start
-looking for data in the ".DB" file (the root of the tree), and which blocks are
-in use.  Often only one of the ".baseA" and ".baseB" files will be present;
+The ``.baseA`` and ``.baseB`` files are used to keep track of where to start
+looking for data in the ``.DB`` file (the root of the tree), and which blocks are
+in use.  Often only one of the ``.baseA`` and ``.baseB`` files will be present;
 each of these files refers to a revision of the database, and there may be more
-than one valid revision of the database stored in the ".DB" file at once.
+than one valid revision of the database stored in the ``.DB`` file at once.
 
 Changing the blocksize may have performance implications, but it is hard to
 tell whether these will be positive or negative for a particular combination
