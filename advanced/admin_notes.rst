@@ -65,8 +65,7 @@ for each of the above purposes.
 
 The `.glass` file actually stores the data, and is structured as a tree of
 blocks, which have a default size of 8KB (though this can be set, either
-through the Xapian API, or with some of the tools detailed later in this
-document).
+through the Xapian API, or with the ``xapian-compact`` tool described below).
 
 Changing the blocksize may have performance implications, but it is hard to
 know whether these will be positive or negative for a particular combination
@@ -80,7 +79,11 @@ file.
 
 Glass also supports databases stored in a single file - currently these only
 support read operations, and have to be created by compacting an existing
-glass database.
+glass database.  It won't save you diskspace, but it means only one file needs
+to be opened to open the database so reduces initialisation overhead a little,
+and a single file is more convenient if you need to copy it around. You can
+even embed the database in another file so you can ship a single file
+containing content and a Xapian database which provides a search of it.
 
 Chert Backend
 -------------
@@ -396,10 +399,35 @@ modifications are at all likely in future.  If you do need to modify a "fuller"
 compacted database, we recommend you run ``xapian-compact`` on it without ``-F``
 first.
 
-While taking a copy of the database, it is also possible to change the
-blocksize.  If you wish to profile search speed with different blocksizes,
-this is the recommended way to generate the different databases (but remember
-to compact the original database as well, for a fair comparison).
+You can specify the blocksize to use for the compacted database (which should
+be a power of 2 between 2KB and 64KB, with the default being 8KB).
+
+Making the blocksize a multiple of (or the same as) both the sector size of the
+device and the blocksize of the filing system which the database is on is
+a good idea, but sector size seems to always be 4K or less
+(at least according to https://en.wikipedia.org/wiki/Disk_sector) and FS block
+size still seems to be 4K by default (the widely used Linux ext4 FS potentially
+supports up to 64K but only up to the system page size which is 4K on e.g. x86
+and x86-64).  So in practice a Xapian blocksize of 4KB or more will satisfy
+this.
+
+The main benefits a larger blocksize gives are slightly more efficient packing
+and reduced total per-block overheads (and the additional gains here are
+likely to be smaller for each extra block size doubling), while the downside is
+needing to read/write more data to read/write a single block. The extra data is
+at least contiguous (at least in file offset terms - maybe not always on disk
+if the file is fragmented) but there are potentially significant negative
+factors like added pressure on the drive cache and OS file cache. The
+additional losses are likely to grow for each extra block size doubling.
+
+In general for most people just using the default block size is sensible. It's
+something you might tune when you either care more about reducing size over
+anything else, or if you're prepared to profile your complete system with
+different block sizes to see what works best for your own situation.
+
+If profiling different blocksizes including the 8KB default, remember to use a
+compacted version for the 8KB block size database or else you won't get a fair
+comparison.
 
 
 Merging databases
