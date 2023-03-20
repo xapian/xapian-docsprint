@@ -11,7 +11,9 @@ each page, or to group pages together into subjects and have one document
 for each subject.
 
 Documents are identified in a database by a unique positive integer id,
-known as the `document ID`.  Currently this is a 32 bit quantity.
+known as the `document ID`.  Currently this is a 32-bit quantity by
+default (you can configure xapian-core with ``--enable-64bit-docid``
+to get 64-bit docids).
 
 Documents have three components: `data`, `terms` and `values`.  We'll
 discuss terms and data first - values are useful for some more advanced
