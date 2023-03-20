@@ -9,6 +9,7 @@
 
 using namespace std;
 
+// Start of example code.
 static void
 search(const string & dbpath, const string & querystring,
        Xapian::doccount offset = 0, Xapian::doccount pagesize = 10)
@@ -61,6 +62,7 @@ search(const string & dbpath, const string & querystring,
     }
     clog << '\n';
 }
+// End of example code.
 
 int main(int argc, char** argv) {
     if (argc < 3) {

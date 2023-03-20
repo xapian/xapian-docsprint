@@ -29,12 +29,19 @@ It can be used to hold a reference to the document elsewhere (such as the
 primary key in an external database table), or could be used to store the
 full text of the document.
 
-Generally, the best thing to do with the document data is to store any
-information you need in order to display the resulting document to the user
-(or to whatever process consumes the results of searches).  Xapian doesn't
-enforce a serialisation scheme for putting structured information into the
-document data: depending on your application, you might want to implement a
-simple scheme using newlines to separate values, use JSON or XML
-serialisation, or use some other method of pickling data.
+Generally you use the document data to store any information you need in order
+to display the resulting document to the user (or to whatever process consumes
+the results of searches).  Xapian doesn't enforce a serialisation scheme for
+putting structured information into the document data, so you can use whatever
+is most appropriate for your application.
+
+Protocol buffers are often a good choice - there's support for them for most
+programming languages, they use a compact representation which doesn't
+explicitly store the field names, and you can add new fields without
+invalidating existing encoded data.
+
+Some other possible options are a simple scheme using newlines to separate
+``name=value`` entries (like Omega uses), JSON, XML, or a language-specific
+serialisation such as ``pickle`` in Python.
 
 .. todo:: Talk about the importance of batching changes where feasible
