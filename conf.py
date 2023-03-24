@@ -453,7 +453,7 @@ class XapianRunExample(LiteralInclude):
 
     def run(self):
         global current_source, errors
-        source = self.state_machine.get_source_and_line()[0]
+        source = self.get_source_info()[0]
         if current_source != source:
             # New file, so clean up databases.
             os.system("rm -rf db filtersdb statesdb")
