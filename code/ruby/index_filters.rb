@@ -6,7 +6,8 @@ require_relative 'support'
 
 
 ### Start of example code.
-def index_csv(data_path, db_path)
+### Start of example code.
+def index(data_path, db_path)
   # puts "#{data_path} #{db_path}"
   db = Xapian::WritableDatabase.new(db_path, Xapian::DB_CREATE_OR_OPEN)
   term_generator = Xapian::TermGenerator.new
@@ -20,6 +21,18 @@ def index_csv(data_path, db_path)
     term_generator.index_text(row["TITLE"].to_s)
     term_generator.increase_termpos
     term_generator.index_text(row["DESCRIPTION"].to_s)
+
+    ### Start of new indexing code.
+    # Index the MATERIALS field, splitting on semicolons.
+    row["MATERIALS"].to_s.split(';').each do |material|
+      material.strip!
+      material.downcase!
+      if material.length > 0
+        doc.add_boolean_term('XM' + material)
+      end
+    end
+    ### End of new indexing code.
+
     doc.data = row.to_h.to_json
     idterm = "Q#{row["id_NUMBER"]}"
     doc.add_boolean_term(idterm)
@@ -32,5 +45,4 @@ if ARGV.length < 2
   abort "Usage #{__FILE__} DATAPATH DBPATH"
 end
 
-index_csv(ARGV[0], ARGV[1])
-
+index(ARGV[0], ARGV[1])
