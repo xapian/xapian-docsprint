@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 require 'xapian'
 require 'json'
@@ -14,21 +15,20 @@ def search(dbpath, querystring, materials, offset: 0, pagesize: 10)
 ### Start of example code.
   # Set up a QueryParser with a stemmer and suitable prefixes
   queryparser = Xapian::QueryParser.new
-  queryparser.stemmer = Xapian::Stem.new("en")
+  queryparser.stemmer = Xapian::Stem.new('en')
   queryparser.stemming_strategy = Xapian::QueryParser::STEM_SOME
-  queryparser.add_prefix("title", "S")
-  queryparser.add_prefix("description", "XD")
-
+  queryparser.add_prefix('title', 'S')
+  queryparser.add_prefix('description', 'XD')
 
   # And parse the query
   query = queryparser.parse_query(querystring)
 
-  if materials.length > 0
+  if materials.length.positive?
     # Filter the results to ones which contain at least one of the
     # materials.
 
     # Build a query for each material value
-    material_queries = materials.map { |material| 'XM' + material.downcase }
+    material_queries = materials.map { |material| "XM#{material.downcase}" }
 
     # Build a query for each material value
     material_query = Xapian::Query.new(Xapian::Query::OP_OR, material_queries)
@@ -46,15 +46,16 @@ def search(dbpath, querystring, materials, offset: 0, pagesize: 10)
   matches = []
   enquire.mset(offset, pagesize).matches.each do |match|
     fields = JSON.parse(match.document.data)
-    printf "%i: #%3.3i %s\n", match.rank + 1, match.docid, fields['TITLE']
+    printf "%<rank>i: #%<docid>3.3i %<title>s\n",
+           rank: match.rank + 1,
+           docid: match.docid,
+           title: fields['TITLE']
     matches << match.docid
   end
   log_matches(querystring, offset, pagesize, matches)
 end
 ### End of example code.
 
-if ARGV.length < 2
-  abort "Usage #{__FILE__} DBPATH QUERY..."
-end
+abort "Usage #{__FILE__} DBPATH QUERY..." if ARGV.length < 2
 
 search(ARGV[0], ARGV[1], ARGV[2..])

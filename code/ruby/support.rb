@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'csv'
 
 def parse_csv_file(datapath)
