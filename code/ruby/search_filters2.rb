@@ -45,4 +45,4 @@ end
 
 abort "Usage #{__FILE__} DBPATH QUERY..." if ARGV.length < 2
 
-search(ARGV[0], ARGV[1], ARGV[2..])
+search(ARGV[0], ARGV[1])
