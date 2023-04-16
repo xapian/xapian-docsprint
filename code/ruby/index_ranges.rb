@@ -6,7 +6,6 @@ require 'json'
 require_relative 'support'
 
 def index(data_path, db_path)
-  # puts "#{data_path} #{db_path}"
   db = Xapian::WritableDatabase.new(db_path, Xapian::DB_CREATE_OR_OPEN)
 
   # Set up a TermGenerator that we'll use in indexing.
