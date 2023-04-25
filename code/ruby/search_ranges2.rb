@@ -5,6 +5,45 @@ require 'xapian'
 require 'json'
 require_relative 'support'
 
+# Start of custom RP code
+class PopulationRangeProcessor < Xapian::NumberRangeProcessor
+  attr_reader :low, :high
+
+  class ValueError < RuntimeError
+  end
+
+  def initialize(slot, low, high)
+    @low = low
+    @high = high
+    # puts "Initializing"
+    super(slot)
+  end
+  def operator(lower, higher)
+    # puts "Processing"
+    begin
+      if lower && lower.length > 0
+        lower_i = lower.to_i
+        if lower_i < self.low || lower_i > self.high
+          raise ValueError
+        end
+      end
+      if higher && higher.length > 0
+        higher_i = higher.to_i
+        if higher_i < self.low || higher_i > self.high
+          raise ValueError
+        end
+      end
+    rescue ValueError
+      return Xapian::Query::OP_INVALID
+    end
+    return super(lower, higher)
+  end
+end
+# and later
+# queryparser.add_rangeprocessor(PopulationRangeProcessor.new(3, 500000, 50000000))
+# End of custom RP code
+
+
 def search(dbpath, querystring, offset: 0, pagesize: 10)
   # offset - defines starting point within result set
   # pagesize - defines number of records to retrieve
@@ -19,9 +58,7 @@ def search(dbpath, querystring, offset: 0, pagesize: 10)
   queryparser.add_prefix('title', 'S')
   queryparser.add_prefix('description', 'XD')
   # and add in range processors
-  # Start of custom RP code
-  # TODO
-  # End of custom RP code
+  queryparser.add_rangeprocessor(PopulationRangeProcessor.new(3, 500_000, 50_000_000))
   # Start of date example code
   queryparser.add_rangeprocessor(Xapian::DateRangeProcessor.new(2, Xapian::RP_DATE_PREFER_MDY, 1860))
   queryparser.add_rangeprocessor(Xapian::NumberRangeProcessor.new(1))

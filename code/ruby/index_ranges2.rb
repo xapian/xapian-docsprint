@@ -39,7 +39,6 @@ def index(data_path, db_path)
     end
 
     doc.add_value(3, Xapian.sortable_serialise(row['population'].to_i)) if row['population']
-
 ### End of example code.
 
     doc.data = row.to_h.to_json
