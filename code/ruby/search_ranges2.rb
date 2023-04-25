@@ -6,8 +6,8 @@ require 'json'
 require_relative 'support'
 
 # Start of custom RP code
-class PopulationRangeProcessor < Xapian::NumberRangeProcessor
-  attr_reader :low, :high
+class PopulationRangeProcessor < Xapian::RangeProcessor
+  attr_reader :low, :high, :npr
 
   class ValueError < RuntimeError
   end
@@ -15,11 +15,10 @@ class PopulationRangeProcessor < Xapian::NumberRangeProcessor
   def initialize(slot, low, high)
     @low = low
     @high = high
-    # puts "Initializing"
-    super(slot)
+    @npr = Xapian::NumberRangeProcessor.new(slot)
+    super()
   end
-  def operator(lower, higher)
-    # puts "Processing"
+  def __call__(lower, higher)
     begin
       if lower && lower.length > 0
         lower_i = lower.to_i
@@ -34,9 +33,9 @@ class PopulationRangeProcessor < Xapian::NumberRangeProcessor
         end
       end
     rescue ValueError
-      return Xapian::Query::OP_INVALID
+      return Xapian::Query.new(Xapian::Query::OP_INVALID)
     end
-    return super(lower, higher)
+    return self.npr.call(lower, higher)
   end
 end
 # and later
