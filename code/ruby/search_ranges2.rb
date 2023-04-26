@@ -18,30 +18,26 @@ class PopulationRangeProcessor < Xapian::RangeProcessor
     @npr = Xapian::NumberRangeProcessor.new(slot)
     super()
   end
+
   def __call__(lower, higher)
     begin
-      if lower && lower.length > 0
+      if lower && lower.length.positive?
         lower_i = lower.to_i
-        if lower_i < self.low || lower_i > self.high
-          raise ValueError
-        end
+        raise ValueError if lower_i < low || lower_i > high
       end
-      if higher && higher.length > 0
+      if higher && higher.length.positive?
         higher_i = higher.to_i
-        if higher_i < self.low || higher_i > self.high
-          raise ValueError
-        end
+        raise ValueError if higher_i < low || higher_i > high
       end
     rescue ValueError
       return Xapian::Query.new(Xapian::Query::OP_INVALID)
     end
-    return self.npr.call(lower, higher)
+    npr.call(lower, higher)
   end
 end
 # and later
 # queryparser.add_rangeprocessor(PopulationRangeProcessor.new(3, 500000, 50000000))
 # End of custom RP code
-
 
 def search(dbpath, querystring, offset: 0, pagesize: 10)
   # offset - defines starting point within result set
