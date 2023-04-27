@@ -46,7 +46,7 @@ def index(data_path, db_path)
     # We use the identifier to ensure each object ends up in the
     # database only once no matter how many times we run the indexer.
 
-    idterm = "Q#{row['order'].to_s}"
+    idterm = "Q#{row['order']}"
     doc.add_boolean_term(idterm)
     db.replace_document(idterm, doc)
   end
