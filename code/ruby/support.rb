@@ -23,6 +23,11 @@ def numbers_from_string(string)
   out
 end
 
+def distance_between_coords(latlon1, latlon2)
+  Math.sqrt(((latlon2[0] - latlon1[0])**2) +
+            ((latlon2[1] - latlon1[1])**2))
+end
+
 def format_numeral(numeral, sep: ',')
   raise 'Numeral must be an int type to format' unless numeral.is_a?(Integer)
 
