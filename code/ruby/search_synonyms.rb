@@ -11,11 +11,10 @@ def search(dbpath, querystring, offset: 0, pagesize: 10)
   # pagesize - defines number of records to retrieve
 
   # Open the database we're going to search.
-  db = Xapian::Database.new(dbpath)
+  db = Xapian::WritableDatabase.new(dbpath)
 
-  # puts db.methods
   # Start of adding synonyms
-  # db.add_synonym("time", "calendar")
+  db.add_synonym("time", "calendar")
   # End of adding synonyms
 
   # Set up a QueryParser with a stemmer and suitable prefixes
