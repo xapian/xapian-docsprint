@@ -29,7 +29,8 @@ def search(dbpath, querystring, offset: 0, pagesize: 10)
   # End of set database
 
   # And parse the query
-  query = queryparser.parse_query(querystring)
+  query = queryparser.parse_query(querystring,
+                                  Xapian::QueryParser::FLAG_SYNONYM)
 
   # Use an Enquire object on the database to run the query
   enquire = Xapian::Enquire.new(db)
