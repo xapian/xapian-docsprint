@@ -6,9 +6,9 @@ guide <https://getting-started-with-xapian.readthedocs.org/>`_.
 Eventually this repository will be merged into the main Xapian tree.
 
 You will need the `Sphinx documentation tool <https://sphinx-doc.org/>`_
-installed to process this documentation. You can install the `python-sphinx`
-package on Debian, Fedora and Ubuntu, or ``pip install -r requirements.txt``
-to install the python package directly.
+installed to process this documentation. You can install the `python3-sphinx`
+or `python-sphinx` package on Debian, Fedora and Ubuntu, or ``pip install -r
+requirements.txt`` to install the python package directly.
 
 You can generate versions for different programming languages (with translated
 examples and adjustments to the text).  For full details see ``make help``
