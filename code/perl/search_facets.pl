@@ -3,8 +3,19 @@
 use strict;
 use warnings;
 
+BEGIN {
+  eval {
+    require Xapian;
+    Xapian->import(':all');
+    Xapian::search_xapian_compat();
+  };
+  if ($@) {
+    require Search::Xapian;
+    Search::Xapian->import(':all');
+  }
+}
+
 use JSON::MaybeXS;
-use Search::Xapian ':all';
 use FindBin qw($Bin);
 use lib $Bin;
 use Encode qw/decode/;
@@ -12,6 +23,7 @@ use Support;
 use Data::Dumper;
 binmode STDOUT, ":encoding(UTF-8)";
 binmode STDERR, ":encoding(UTF-8)";
+
 
 my ($db_path, @terms) = @ARGV;
 die "Usage: $0 DB_PATH QUERY..." unless $db_path && @terms;

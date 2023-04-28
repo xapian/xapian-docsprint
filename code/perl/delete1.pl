@@ -2,7 +2,19 @@
 
 use strict;
 use warnings;
-use Search::Xapian ':all';
+
+BEGIN {
+  eval {
+    require Xapian;
+    Xapian->import(':all');
+    Xapian::search_xapian_compat();
+  };
+  if ($@) {
+    require Search::Xapian;
+    Search::Xapian->import(':all');
+  }
+}
+
 
 my ($db_path, @ids) = @ARGV;
 die "Usage $0 DBPATH ID..." unless $db_path && @ids;

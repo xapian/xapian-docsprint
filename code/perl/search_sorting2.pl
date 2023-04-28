@@ -3,8 +3,22 @@
 use strict;
 use warnings;
 
+my $using_search_xapian;
+BEGIN {
+  eval {
+    require Xapian;
+    Xapian->import(':all');
+    Xapian::search_xapian_compat();
+    $using_search_xapian = 0;
+  };
+  if ($@) {
+    require Search::Xapian;
+    Search::Xapian->import(':all');
+    $using_search_xapian = 1;
+  }
+}
+
 use JSON::MaybeXS;
-use Search::Xapian ':all';
 use FindBin qw($Bin);
 use lib $Bin;
 use Support;
@@ -37,17 +51,24 @@ sub search {
     my $enquire = $db->enquire($query);
 
     # Start of example code.
-    # perl uses MultiValueSorter, not the key maker
-    my $keymaker = Search::Xapian::MultiValueSorter->new;
-    $keymaker->add(1, 0);
-    $keymaker->add(3, 1);
-    $enquire->set_sort_by_key($keymaker);
+    if ($using_search_xapian) {
+        # Search::Xapian has MultiValueSorter, not MultiValueKeyMaker.
+        my $keymaker = Search::Xapian::MultiValueSorter->new;
+        $keymaker->add(1, 0);
+        $keymaker->add(3, 1);
+        $enquire->set_sort_by_key($keymaker);
+    } else {
+        my $keymaker = Search::Xapian::MultiValueKeyMaker->new;
+        $keymaker->add_value(1, 0);
+        $keymaker->add_value(3, 1);
+        $enquire->set_sort_by_key($keymaker, 0);
+    }
     # End of example code.
 
 
     # And print out something about each match
     my @matches;
-    
+
     my $mset = $enquire->get_mset($offset, $pagesize);
     foreach my $item ($mset->items) {
         my $fields = decode_json($item->get_document->get_data);

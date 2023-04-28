@@ -3,13 +3,25 @@
 use strict;
 use warnings;
 
+BEGIN {
+  eval {
+    require Xapian;
+    Xapian->import(':all');
+    Xapian::search_xapian_compat();
+  };
+  if ($@) {
+    require Search::Xapian;
+    Search::Xapian->import(':all');
+  }
+}
+
 use JSON::MaybeXS;
-use Search::Xapian ':all';
 use FindBin qw($Bin);
 use lib $Bin;
 use Support;
 use Data::Dumper;
 use Encode qw/encode/;
+
 
 my ($data_path, $db_path) = @ARGV;
 die "Usage $0 DATAPATH DBPATH" unless $data_path && $db_path;
