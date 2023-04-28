@@ -54,8 +54,8 @@ sub search {
     if ($using_search_xapian) {
         # Search::Xapian has MultiValueSorter, not MultiValueKeyMaker.
         my $keymaker = Search::Xapian::MultiValueSorter->new;
-        $keymaker->add(1, 0);
-        $keymaker->add(3, 1);
+        $keymaker->add(1, 1);
+        $keymaker->add(3, 0);
         $enquire->set_sort_by_key($keymaker);
     } else {
         my $keymaker = Search::Xapian::MultiValueKeyMaker->new;
