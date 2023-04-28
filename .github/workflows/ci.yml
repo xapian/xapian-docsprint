@@ -1,0 +1,142 @@
+name: CI
+
+on:
+  push:
+    paths-ignore:
+      - README.rst
+  pull_request:
+    branches: master
+    paths-ignore:
+      - README.rst
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  cplusplus:
+    runs-on: 'ubuntu-22.04'
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+    - name: Install CCache
+      uses: hendrikmuhs/ccache-action@v1
+      with:
+        key: cplusplus
+    - name: Install package dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install \
+            python3-sphinx \
+            libxapian-dev \
+            build-essential
+    - name: make html
+      run: make html LANGUAGE=c++
+
+  java:
+    runs-on: 'ubuntu-22.04'
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+    - name: Install CCache
+      uses: hendrikmuhs/ccache-action@v1
+      with:
+        key: java
+    - name: Install package dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install \
+            python3-sphinx \
+            libxapian-java \
+            openjdk-19-jdk-headless
+    - name: make html
+      run: make html LANGUAGE=java
+
+  perl:
+    runs-on: 'ubuntu-22.04'
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+    - name: Install CCache
+      uses: hendrikmuhs/ccache-action@v1
+      with:
+        key: perl
+    - name: Install package dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install \
+            python3-sphinx \
+            libsearch-xapian-perl
+    - name: make html
+      run: make html LANGUAGE=perl
+
+  python2:
+    runs-on: 'ubuntu-20.04'
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+    - name: Install CCache
+      uses: hendrikmuhs/ccache-action@v1
+      with:
+        key: python2
+    - name: Install package dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install \
+            python3-sphinx \
+            python-xapian
+    - name: make html
+      run: make html LANGUAGE=python
+
+  python3:
+    runs-on: 'ubuntu-22.04'
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+    - name: Install CCache
+      uses: hendrikmuhs/ccache-action@v1
+      with:
+        key: python3
+    - name: Install package dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install \
+            python3-sphinx \
+            python3-xapian
+    - name: make html
+      run: make html LANGUAGE=python3
+
+  ruby:
+    runs-on: 'ubuntu-22.04'
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+    - name: Install CCache
+      uses: hendrikmuhs/ccache-action@v1
+      with:
+        key: ruby
+    - name: Install package dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install \
+            python3-sphinx \
+            ruby-xapian
+    - name: make html
+      run: make html LANGUAGE=ruby
+
+  tcl:
+    runs-on: 'ubuntu-22.04'
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+    - name: Install CCache
+      uses: hendrikmuhs/ccache-action@v1
+      with:
+        key: tcl
+    - name: Install package dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install \
+            python3-sphinx \
+            tclxapian
+    - name: make html
+      run: make html LANGUAGE=tcl
