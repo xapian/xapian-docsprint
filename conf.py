@@ -453,7 +453,12 @@ class XapianRunExample(LiteralInclude):
 
     def run(self):
         global current_source, errors
-        source = self.get_source_info()[0]
+        try:
+            source = self.get_source_info()[0]
+        except AttributeError:
+            # Needed for older Sphinx (the version in Ubuntu 20.04 doesn't
+            # have get_source_info(); the one in 22.04 does).
+            source = self.state_machine.get_source_and_line(self.lineno)[0]
         if current_source != source:
             # New file, so clean up databases.
             os.system("rm -rf db filtersdb statesdb")
