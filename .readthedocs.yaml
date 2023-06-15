@@ -18,7 +18,7 @@ build:
     # `post_build`.
     pre_build:
       - mkdir dummy
-      - touch dummy/conf.py
+      - touch dummy/conf.py dummy/contents.rst
     post_build:
       - rm -rf dummy
       - make html LANGUAGE=python3 BUILDDIR=_readthedocs
