@@ -5,17 +5,27 @@
 # Required
 version: 2
 
+# We want to replace the build command itself but the "Override the build
+# process" feature means we have to reimplement everything, so instead we
+# "Extend the build process" and set up a dummy no-op conf.py in `pre_build`
+# so `build` doesn't do anything, then actually build in `post_build`.
+pre_build:
+  - mkdir dummy
+  - touch dummy/conf.py
+
 # Set the version of Python and other tools you might need
 build:
   os: ubuntu-22.04
   tools:
     python: "3.11"
-  commands:
-    - make html LANGUAGE=python3 BUILDDIR=_readthedocs
 
-# Build documentation with Sphinx
+post_build:
+  - mv conf.py.orig conf.py
+  - make html LANGUAGE=python3 BUILDDIR=_readthedocs
+
+# (Don't) build documentation with Sphinx
 sphinx:
-  configuration: conf.py
+  configuration: dummy/conf.py
 
 # We recommend specifying your dependencies to enable reproducible builds:
 # https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html
