@@ -234,9 +234,6 @@ rst_epilog = """
 .. xapianendoffile:: dummy
 """
 
-# Default to setting 'python' tag if none are set, and set highlight language
-# appropriately.
-
 current_source = None
 last_example = None
 examples = set()
@@ -244,6 +241,8 @@ examples_used = {}
 examples_missing = []
 total_errors = 0
 errors = 0
+
+# Set highlight language appropriately.
 
 highlight_language = None
 for t in languages:
