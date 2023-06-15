@@ -20,7 +20,7 @@ build:
       - mkdir dummy
       - touch dummy/conf.py dummy/contents.rst
     post_build:
-      - rm -rf dummy
+      - rm -rf dummy _readthedocs/html
       - make html LANGUAGE=python3 BUILDDIR=_readthedocs
 
 # (Don't) build documentation with Sphinx
