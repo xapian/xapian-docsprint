@@ -194,6 +194,10 @@ htmlhelp_basename = 'GettingStartedwithXapiandoc'
 
 # -- Options for LaTeX output --------------------------------------------------
 
+# Default is 'pdflatex' which doesn't have great Unicode support and
+# fails on a Greek letter in a formula.
+latex_engine = 'xelatex'
+
 # The paper size ('letter' or 'a4').
 #latex_paper_size = 'letter'
 
