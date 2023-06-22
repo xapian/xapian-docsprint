@@ -157,19 +157,12 @@ html_short_title = "%s v%s" % (_project, version)
 # using the given strftime format.
 #html_last_updated_fmt = '%b %d, %Y'
 
-# If true, SmartyPants will be used to convert quotes and dashes to
-# typographically correct entities.
-#html_use_smartypants = True
-
 # Custom sidebar templates, maps document names to template names.
 #html_sidebars = {}
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
 #html_additional_pages = {}
-
-# If false, no module index is generated.
-#html_use_modindex = True
 
 # If false, no index is generated.
 #html_use_index = True
@@ -198,12 +191,6 @@ htmlhelp_basename = 'GettingStartedwithXapiandoc'
 # fails on a Greek letter in a formula.
 latex_engine = 'xelatex'
 
-# The paper size ('letter' or 'a4').
-#latex_paper_size = 'letter'
-
-# The font size ('10pt', '11pt' or '12pt').
-#latex_font_size = '10pt'
-
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
@@ -215,18 +202,8 @@ latex_documents = [
 # the title page.
 #latex_logo = None
 
-# For "manual" documents, if this is true, then toplevel headings are parts,
-# not chapters.
-#latex_use_parts = False
-
-# Additional stuff for the LaTeX preamble.
-#latex_preamble = ''
-
 # Documents to append as an appendix to all manuals.
 #latex_appendices = []
-
-# If false, no module index is generated.
-#latex_use_modindex = True
 
 # Cause todos to be displayed.
 todo_include_todos = True
