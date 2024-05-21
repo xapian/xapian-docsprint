@@ -47,7 +47,8 @@ search(const string & dbpath, const string & querystring,
         PopulationRangeProcessor(Xapian::valueno slot, int low_, int high_)
 	    : Xapian::NumberRangeProcessor(slot), low(low_), high(high_) { }
 	
-	Xapian::Query operator()(const string& begin, const string& end) {
+	Xapian::Query operator()(const string& begin,
+                                 const string& end) override {
 	    if (!check_range_end(begin))
 		 return Xapian::Query(Xapian::Query::OP_INVALID);
 	    if (!check_range_end(end))

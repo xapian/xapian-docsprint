@@ -34,7 +34,7 @@ search(const string & dbpath, const string & querystring,
     enquire.set_query(query);
     // Start of example code.
     class DistanceKeyMaker : public Xapian::KeyMaker {
-	string operator()(const Xapian::Document& doc) const {
+	string operator()(const Xapian::Document& doc) const override {
             // we want to return a sortable string which represents
             // the distance from Washington, DC to the middle of this
             // state.
