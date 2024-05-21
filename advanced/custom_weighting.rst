@@ -12,35 +12,49 @@ Currently it is only possible to implement custom weighting schemes in C++.
 The API could probably be wrapped with a bit of effort, but performance is
 likely to be disappointing as the :xapian-just-method:`get_sumpart()` method
 gets called a lot (approximately once per matching term in each considered
-document), so the overhead of routing a method call from C++ to the wrapped
-language will matter.
+document), so the overhead of routing a virtual method call from C++ to the
+wrapped language will matter.
 
 For example, here's an implementation of "coordinate matching" - each matching
-term scores one point:
+term scores one point (this is provided in the API as
+:xapian-class:`Xapian::CoordWeight` but is an illustrative example of
+implementing a simple weighting scheme):
 
 .. code-block:: c++
 
-    class CoordinateWeight : public Xapian::Weight {
+    class CoordWeight : public Xapian::Weight {
+        double factor = 1.0;
+
       public:
-        CoordinateWeight * clone() const { return new CoordinateWeight; }
-        CoordinateWeight() { }
-        ~CoordinateWeight() { }
+        CoordWeight() { }
 
-        std::string name() const { return "Coord"; }
-        std::string serialise() const { return std::string(); }
-        CoordinateWeight * unserialise(const std::string &) const {
-            return new CoordinateWeight;
+        ~CoordWeight() { }
+
+        CoordWeight* clone() const override { return new CoordWeight; }
+
+        void init(double factor_) override { factor = factor_; }
+
+        std::string name() const override { return "Coord"; }
+
+        // No parameters to serialise.
+        std::string serialise() const override { return std::string(); }
+
+        CoordWeight* unserialise(const std::string&) const override {
+            return new CoordWeight;
         }
 
-        double get_sumpart(Xapian::termcount, Xapian::doclength) const {
-            return 1;
+        double get_sumpart(Xapian::termcount,
+                           Xapian::termcount,
+                           Xapian::termcount) const override {
+            return factor;
         }
-        double get_maxpart() const { return 1; }
+        double get_maxpart() const override { return factor; }
 
-        double get_sumextra(Xapian::doclength) const { return 0; }
-        double get_maxextra() const { return 0; }
-
-        bool get_sumpart_needs_doclength() const { return false; }
+        double get_sumextra(Xapian::termcount,
+                            Xapian::termcount) const override {
+            return 0;
+        }
+        double get_maxextra() const override { return 0; }
     };
 
 
@@ -80,36 +94,50 @@ The implementation will be as follows:
 .. code-block:: c++
 
     class TfIdfWeight : public Xapian::Weight {
+        double factor = 1.0;
+
       public:
-        TfIdfWeight * clone() const { return new TfIdfWeight; }
         TfIdfWeight() {
             need_stat(WDF);
             need_stat(TERMFREQ);
             need_stat(WDF_MAX);
         }
+
         ~TfIdfWeight() { }
 
-        std::string name() const { return "TfIdf"; }
-        std::string serialise() const { return std::string(); }
-        TfIdfWeight * unserialise(const std::string &) const {
+        TfIdfWeight* clone() const override { return new TfIdfWeight; }
+
+        void init(double factor_) override { factor = factor_; }
+
+        std::string name() const override { return "TfIdf"; }
+
+        // No parameters to serialise.
+        std::string serialise() const override { return std::string(); }
+
+        TfIdfWeight* unserialise(const std::string&) const override {
             return new TfIdfWeight;
         }
 
-        double get_sumpart(Xapian::termcount wdf, Xapian::doclength) const {
+        double get_sumpart(Xapian::termcount wdf,
+                           Xapian::termcount,
+                           Xapian::termcount) const override {
             Xapian::doccount df = get_termfreq();
             double wdf_double(wdf);
             double wt = wdf_double / df;
-            return wt;
+            return wt * factor;
         }
 
-        double get_maxpart() const {
+        double get_maxpart() const override {
             Xapian::doccount df = get_termfreq();
             double max_wdf(get_wdf_upper_bound());
             double max_weight = max_wdf / df;
-            return max_weight;
+            return max_weight * factor;
         }
-        double get_sumextra(Xapian::doclength) const { return 0; }
-        double get_maxextra() const { return 0; }
+
+        double get_sumextra(Xapian::termcount,
+                            Xapian::termcount) const override { return 0; }
+
+        double get_maxextra() const override { return 0; }
     };
 
 
