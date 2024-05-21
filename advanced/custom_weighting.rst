@@ -60,9 +60,7 @@ statistics which are absolutely required must be asked for as collecting
 statistics is expensive.  For a full list of statistics currently available
 from :xapian-class:`Weight` and the enumerators required to access them, please
 refer to the `API documentation
-<https://xapian.org/docs/sourcedoc/html/classXapian_1_1Weight.html#ae3c11f1d2d96a18e0eb9b9b31c5c5479>`_.
-
-.. todo:: Sort out doxygen visibility of protected stat_flags so the link above can be to the apidocs
+<https://xapian.org/docs/apidoc/html/classXapian_1_1Weight.html#ae3c11f1d2d96a18e0eb9b9b31c5c5479>`_.
 
 The statistics can then be obtained by the subclass by simply calling the
 corresponding function of the :xapian-class:`Weight` class. For eg:- The document
