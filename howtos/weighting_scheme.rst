@@ -64,10 +64,10 @@ PL2PLusWeight
 -------------
 
 Proposed by Lv-Zhai, PL2PlusWeight is the modified lower-bounded PL2 retrieval function of
-the Divergence from Randomness Framework with an additonal parameter delta in addition to the
+the Divergence from Randomness Framework with an additional parameter delta in addition to the
 parameter c from the PL2 weighting function.
 
-Parmater delta is the pseudo tf value to control the scale of the tf lower bound. It can be tuned
+Parameter delta is the pseudo tf value to control the scale of the tf lower bound. It can be tuned
 for e.g from 0.1 to 1.5 in increments of 0.1 or so. Although, PL2+ works effectively across collections
 with a fixed default value of 0.8.
 
