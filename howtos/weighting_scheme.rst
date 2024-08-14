@@ -160,10 +160,18 @@ the two new parameters need to be stored by the TfIdfWeight class.
 TradWeight
 ----------
 
-TradWeight implements the original probabilistic weighting formula, which
+``TradWeight`` implements the original probabilistic weighting formula, which
 is essentially a special case of BM25 (it's BM25 with k2 = 0, k3 = 0, b =
-1, and min_normlen = 0, except that all the weights are scaled by a
-constant factor).
+1, and min_normlen = 0, except that prior to Xapian 1.5.0 all the weights are
+scaled by a constant factor).
+
+Since Xapian 1.5.0, ``TradWeight`` is just a thin sub-class of ``BM25Weight``
+which sets these other parameter values (in older releases ``TradWeight`` is
+a separate subclass of ``Xapian::Weight`` - the only functional difference is
+the scaling of the returned weights by the constant factor mentioned above).
+``TradWeight`` is also deprecated as of Xapian 1.5.0 - just use ``BM25Weight``
+with the parameters shown above (which also works with all older Xapian
+releases too).
 
 BoolWeight
 ----------

@@ -34,7 +34,7 @@ implementing a simple weighting scheme):
 
         void init(double factor_) override { factor = factor_; }
 
-        std::string name() const override { return "Coord"; }
+        std::string name() const override { return "coord"; }
 
         // No parameters to serialise.
         std::string serialise() const override { return std::string(); }
@@ -86,36 +86,38 @@ obtain various statistics, refer to
 
 Example:- Consider a simple weighting scheme such as a pseudo Tf-Idf weighting
 scheme which returns the document weight as the product of the within document
-frequency of the term and the inverse of the document frequency
-of the term (Inverse of the number of documents the term appears in).
+frequency of the term and the inverse of the term frequency
+of the term (one divided by the number of documents the term appears in).
 
 The implementation will be as follows:
 
 .. code-block:: c++
 
-    class TfIdfWeight : public Xapian::Weight {
+    class PseudoTfIdfWeight : public Xapian::Weight {
         double factor = 1.0;
 
       public:
-        TfIdfWeight() {
+        PseudoTfIdfWeight() {
             need_stat(WDF);
             need_stat(TERMFREQ);
             need_stat(WDF_MAX);
         }
 
-        ~TfIdfWeight() { }
+        ~PseudoTfIdfWeight() { }
 
-        TfIdfWeight* clone() const override { return new TfIdfWeight; }
+        PseudoTfIdfWeight* clone() const override {
+            return new PseudoTfIdfWeight;
+        }
 
         void init(double factor_) override { factor = factor_; }
 
-        std::string name() const override { return "TfIdf"; }
+        std::string name() const override { return "pseudotfidf"; }
 
         // No parameters to serialise.
         std::string serialise() const override { return std::string(); }
 
-        TfIdfWeight* unserialise(const std::string&) const override {
-            return new TfIdfWeight;
+        PseudoTfIdfWeight* unserialise(const std::string&) const override {
+            return new PseudoTfIdfWeight;
         }
 
         double get_sumpart(Xapian::termcount wdf,
