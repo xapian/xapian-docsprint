@@ -224,6 +224,7 @@ implementation if you don't really care what
 
 .. todo:: Provide some more examples!
 .. todo:: "why you might want to do this" (e.g. scenario) too
+.. todo:: mention subclassing from ValuePostingSource
 
 Multiple databases, and remote databases
 ========================================
