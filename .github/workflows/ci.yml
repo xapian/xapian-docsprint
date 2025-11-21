@@ -70,6 +70,7 @@ jobs:
       run: make html LANGUAGE=perl
 
   python2:
+    if: false
     runs-on: 'ubuntu-20.04'
     steps:
     - name: Check out repository code
