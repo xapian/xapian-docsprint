@@ -22,8 +22,8 @@ Any unicode strings supplied will automatically be translated into UTF-8
 simple strings before being passed to the Xapian core.  The Xapian core is
 largely agnostic about character encoding, but in those places where it does
 process data in a character encoding dependent way it assumes that the data
-is in UTF-8.  The Xapian Python bindings always return string data as simple
-strings.
+is in UTF-8, and normalised to NFC or NFKC.  The Xapian Python bindings always
+return string data as simple strings.
 
 Therefore, in order to avoid issues with character encodings, you should
 always pass text data to Xapian as unicode strings, or UTF-8 encoded simple
@@ -34,12 +34,10 @@ algorithms).  For example, it is perfectly valid to pass arbitrary binary
 data in a simple string to the ``xapian.Document.set_data()``
 method.
 
-It is often useful to normalise unicode data before passing it to Xapian -
-Xapian currently has no built-in support for normalising unicode
-representations of data.  The standard python module
-"``unicodedata``" provides support for normalising unicode: you
-probably want the "``NFKC``" normalisation scheme: in other words,
-use something like
+Unicode text is most often in NFC already, but if you need to normalise text
+before passing it to Xapian, the standard python module "``unicodedata``"
+provides support for normalising unicode: you probably want the "``NFKC``"
+normalisation scheme: in other words, use something like
 
 ::
 
@@ -47,6 +45,8 @@ use something like
 
 to normalise the string "foo" before passing it to Xapian.
 
+See `the general section on Unicode </concepts/unicode>` for more information
+on Unicode normalisations.
 
 Exceptions
 ##########
