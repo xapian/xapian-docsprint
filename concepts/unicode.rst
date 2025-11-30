@@ -49,8 +49,8 @@ instead done via a font effect (e.g. `4<sup>2</sup>` in HTML) then this would
 likely also result in the term "42", and the normalisation of related cases
 such as "H₂SO₄" to "H2SO4" does seem useful.
 
-The `<https://www.macchiato.com/unicode-intl-sw/nfc-faq#h.h8uqckv6osay> NFC
-FAQ`_ says:
+The `NFC FAQ
+<https://www.macchiato.com/unicode-intl-sw/nfc-faq#h.h8uqckv6osay>`_ says:
 
     For example, according to data at Google: ~99.98% of web HTML page content
     characters are definitely NFC.
