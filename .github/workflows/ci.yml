@@ -47,7 +47,7 @@ jobs:
         sudo apt-get install \
             python3-sphinx \
             libxapian-java \
-            openjdk-19-jdk-headless
+            openjdk-25-jdk-headless
     - name: make html
       run: make html LANGUAGE=java
 
