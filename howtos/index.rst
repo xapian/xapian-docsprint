@@ -13,3 +13,4 @@ How To...
    synonyms
    weighting_scheme
    iterate_all_docs
+   diversification
