@@ -117,3 +117,6 @@ post-processing it.
 However, if the collapsing eliminates a lot of documents then the collapsed
 search will typically take rather longer than the uncollapsed search because
 the matcher has to consider many more potential matches.
+
+Xapian 2.0.0 has a new implementation of the matcher which handles collapsing
+more efficiently (very significantly so in some cases).
