@@ -1,7 +1,7 @@
 .. Original content was taken from xapian-core/docs/replication.rst with
 .. a copyright statement of:
 .. Copyright (C) 2008 Lemur Consulting Ltd
-.. Copyright (C) 2008,2010,2011 Olly Betts
+.. Copyright (C) 2008,2010,2011,2012 Olly Betts
 
 .. _replication:
 
@@ -42,6 +42,10 @@ of the above properties.  It is not intended to support replication of multiple
 writable databases - there must always be a single master database to which all
 modifications are made.
 
+This document gives an overview of how and why to use the replication protocol.
+If you are interested in technical details of the implementation of the
+replication protocol, see the separate document `net/replication_protocol.rst`
+in the xapian-core source tree.
 
 Backend Support
 ===============
@@ -50,7 +54,10 @@ Replication is supported by the chert and glass database backends,
 and can cleanly handle the
 master switching database type (a full copy is sent in this situation).  It
 doesn't make a lot of sense to support replication for the remote backend.
-Replication of inmemory databases isn't currently available.
+Replication of inmemory databases isn't currently available.  We have a longer
+term aim to replace the current inmemory backend with the current disk based
+backend (e.g. glass) but storing its data in memory.  Once this is done, it
+would probably be easy to support replication of inmemory databases.
 
 Setting up replicated databases
 ===============================
