@@ -23,15 +23,17 @@ general management of a Xapian database, including tasks such as taking
 backups and optimising performance.  It may also be useful introductory
 reading for Xapian application developers.
 
-The document is up-to-date for Xapian version 1.4.20.
+The document is up-to-date for Xapian version 2.0.0.
 
 Databases
 =========
 
 Xapian databases hold all the information needed to perform searches in a set
-of tables.  The default database backend for the 1.4 release series is called
-`glass`.  The default backend for the 1.2 release series was called `chert`,
-and this is also supported by 1.4.
+of tables.  The default database backend for the 1.4 and 2.0 release series is
+called `glass`.
+
+The default backend for the 1.2 release series was called `chert`, and this is
+also supported by 1.4 but not 2.0.
 
 Glass Backend
 -------------
@@ -164,11 +166,12 @@ Note that it is not currently possible to extend Xapian's transactions to
 cover multiple databases, or to link them with transactions in external
 systems, such as an RDBMS.
 
-Finally, note that it is possible to compile Xapian such that it doesn't make
-modifications in an atomic manner, in order to build very large databases more
-quickly (search the Xapian mailing list archives for "DANGEROUS" mode for more
-details).  This isn't yet integrated into standard builds of Xapian, but may
-be in future, if appropriate protections can be incorporated.
+Finally, the xapian-constant:`Xapian::DB_DANGEROUS` flag allows updating a
+Xapian database such that modifications are not applied in an atomic manner.
+This means if update is interrupted the database is likely to be corrupted,
+but the advantage is overhead of applying updates atomically is avoided so
+it can be useful for speeding up the initial indexing run for a very large
+dataset.
 
 Single writer, multiple reader
 ------------------------------
@@ -197,8 +200,8 @@ database opened for writing, which then exec-s ``cat``, so you will see a
 
 "Open File Description" locks are like traditional ``fcntl()`` locks but with
 this problem addressed, and Xapian will use these if available and avoid these
-extra child processes.  At the time of writing it seems only Linux (since kernel
-3.15) supports these, but hopefully they'll get added to POSIX so in the future.
+extra child processes.  OFD locks were initially implemented in Linux (kernel
+version 3.15), and then standardised in POSIX issue 8.
 
 Under Microsoft Windows, we use a different locking technique which doesn't
 require a child process, but still means the lock is released automatically
@@ -207,8 +210,8 @@ when the writing process exits.
 Revision numbers
 ----------------
 
-Xapian databases contain a revision number.  This is essentially a count of
-the number of modifications since the database was created, and is needed to
+Xapian databases have a revision number.  This is essentially a count of
+the number of commits made since the database was created, and is used to
 implement the atomic modification functionality.  It is stored as a 32 bit
 integer, so there is a chance that a very frequently updated database could
 cause this to overflow.  The consequence of such an overflow would be to throw
@@ -220,8 +223,20 @@ second, and no normal Xapian system will commit more than once every few
 seconds.  However, if you are concerned, you can use the ``xapian-compact``
 tool to make a fresh copy of the database with the revision number set to 1.
 
-The revision number of each table can be displayed by the ``xapian-check``
-tool.
+The revision number for a database can be seen using the ``xapian-delve``
+tool (since Xapian 1.4.6)::
+
+    $ xapian-delve gmane.db
+    UUID = 161a9117-b475-4d6c-ab62-c6de1c638028
+    number of documents = 119595678
+    average document length = 636.021
+    document length lower bound = 3
+    document length upper bound = 274597
+    highest document id ever used = 119595678
+    has positional information = false
+    revision = 11960
+    currently open for writing = false
+
 
 Network file systems
 --------------------
@@ -347,22 +362,24 @@ the contents of the database.  Xapian includes a simple command-line program,
 ``xapian-delve``, to allow this (prior to 1.3.0, ``xapian-delve`` was usually
 called ``delve``, though some packages were already renaming it).
 
-For example, to display the list of terms in document "1" of the database
-"foo", use:
+For example, to display the list of terms in document "1" of the Xapian
+database "foo", use:
 
 .. code-block:: sh
 
   xapian-delve foo -r 1
 
-It is also possible to perform simple searches of a database.  Xapian includes
-another simple command-line program, ``quest``, to support this.  ``quest`` is
-only able to search for un-prefixed terms, the query string must be quoted to
-protect it from the shell.  To search the database "foo" for the phrase "hello
-world", use:
+Xapian includes another simple command-line program to perform searches for
+testing and debugging purposes called ``xapian-quest`` (note: it was just
+called ``quest`` in Xapian < 2.0.0).
+
+The query string is specified as a single non-option command line argument,
+which generally needs to be quoted to protect it from the shell.  For example,
+to search the Xapian database "foo" for the phrase "hello world", use:
 
 .. code-block:: sh
 
-  quest -d foo '"hello world"'
+  xapian-quest -d foo '"hello world"'
 
 If you have installed the "Omega" CGI application built on Xapian, this can
 also be used with the built-in "godmode" template to provide a web-based
@@ -376,28 +393,42 @@ Compacting a database
 ---------------------
 
 Xapian databases normally have some spare space in each block to allow
-new information to be efficiently slotted into the database.  However, the
+new information to be efficiently inserted into the database.  However, the
 smaller a database is, the faster it can be searched, so if there aren't
-expected to be many further modifications, it can be desirable to compact the
-database.
+expected to be many further modifications then it can be desirable to
+eliminate this spare space, which can be done by compacting the database.
 
-Xapian includes a tool called ``xapian-compact`` for compacting databases.
-This tool makes a copy of a database, and takes advantage of
-the sorted nature of the source Xapian database to write the database out
-without leaving spare space for future modifications.  This can result in a
-large space saving.
+Xapian includes an API to allow compacting database, and a command-line tool
+called ``xapian-compact`` which is a thin wrapper around this API.  This
+feature makes a copy of a database, and takes advantage of the sorted nature of
+the source Xapian database to write the database out without leaving spare
+space for future modifications.  This can result in a large space saving.
 
 The downside of compaction is that future modifications may take a little
 longer, due to needing to reorganise the database to make space for them.
 However, modifications are still possible, and if many modifications are made,
 the database will gradually develop spare space.
 
-There's an option (``-F``) to perform a "fuller" compaction.  This option
-compacts the database as much as possible, but it violates the design of the
-Btree format slightly to achieve this, so it is not recommended if further
-modifications are at all likely in future.  If you do need to modify a "fuller"
-compacted database, we recommend you run ``xapian-compact`` on it without ``-F``
-first.
+There's an option (``xapian-compact -F``, or ``FULLER`` in the compaction API)
+to perform a "fuller" compaction.  Since Xapian 1.4.31, this option is the same
+as ``xapian-compact`` without ``-F``, or ``FULL`` in the compaction API.
+In older versions, it did the same as ``FULL`` but in addition it increased
+the maximum size of the low-level items in the database tables.  The idea was
+that this would reduce the overhead required because larger items would not
+need to be split into as many pieces (or even split at all in some cases).
+
+A downside of ``FULLER`` was it violated the design of the Btree format
+slightly and this resulted in corner-case bugs which are tricky to fix.  Also
+while ``FULLER`` did result in smaller compacted databases when it was added
+for the quartz backend in 2005, testing with the glass backend in 2026 showed
+it actually gave **larger** output than ``FULL`` for typical databases.  For
+these reasons, since Xapian 1.4.31 ``FULLER`` has exactly the same effect as
+``FULL``.
+
+If you have a ``FULLER`` compacted database from Xapian 1.4.30 or earlier, we do
+not recommended applying updates to it.  If you find you need to update such a
+database, we recommend you run ``xapian-compact`` (without ``-F``) to create a
+database that's safer to update.
 
 You can specify the blocksize to use for the compacted database (which should
 be a power of 2 between 2KB and 64KB, with the default being 8KB).
