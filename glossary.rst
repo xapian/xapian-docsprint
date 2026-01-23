@@ -59,13 +59,13 @@ Retrieval, while others have a specific meaning in the context of Xapian.
  little more than indexed documents: this reflects the purpose of Xapian as an
  information retrieval system, rather than an information storage system.
  These may also occasionally be called Indexes.  Glass is the default backend
- in the 1.4 release series; Chert was the default in Xapian 1.2 and is still
- supported in 1.4; Flint was the default for Xapian 1.0 and supported by 1.2.
- Quartz was used in still older versions.
+ in the 1.4 and 2.0 release series; Chert was the default in Xapian 1.2 and is
+ still supported in 1.4 but not 2.0; Flint was the default for Xapian 1.0 and
+ supported by 1.2.  Quartz was used prior to Xapian 1.0.
 
 **Divergence from Randomness (DfR)**
  A family of probabilistic weighting schemes developed more recently than
- BM25.  Xapian 1.3 adds supports for a number of such schemes.
+ BM25.  Xapian 1.3 added supports for a number of such schemes.
 
 **Diversification**
  In order to increase user’s satisfaction, the presented result set should not only be relevant to the search topic, but should also present a variety of perspectives, that is, the results should be different from one another, especially for ambiguous queries. The effectiveness of web search and the satisfaction of users can be enhanced by providing various results of a search query in a certain order of relevance and concern, known as diversification.
@@ -104,9 +104,10 @@ Retrieval, while others have a specific meaning in the context of Xapian.
  deprecated in 1.2.x and removed in 1.3.0.
 
 **Glass**
- Glass is the current default backend in Xapian 1.4.x.  Improvements over chert
- are that slow cases of phrase searches are generally much faster, databases
- are smaller on disk, and free blocks are tracked in lists rather than bitmaps.
+ Glass is the current default backend in Xapian 1.4.x and 2.0.x.
+ Improvements over chert are that slow cases of phrase searches are generally
+ much faster, databases are smaller on disk, and free blocks are tracked in
+ lists rather than bitmaps.
 
 **Index**
  If a document is described by a term, this term is said to index the document.
@@ -127,7 +128,9 @@ Retrieval, while others have a specific meaning in the context of Xapian.
 
 **Language Modelling (LM)**
  A family of weighting schemes based on modelling the frequency at which
- words occur.  Xapian 1.3 adds supports for the Unigram Language Model.
+ words occur.  Xapian support several weighting schemes based on the
+ Unigram Language Model (Xapian 1.3 added these but the original implementation
+ was flawed; Xapian 2.0.0 added a correct implementation.)
 
 **MSet (Match Set)**
  The Match Set (MSet) is a ranked list of documents resulting from a query.
