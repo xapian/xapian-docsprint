@@ -1,3 +1,8 @@
+# FIXME: This was originally written for Python2 and last updated in 2016.
+# I'm not sure if it's useful to be able to update the data to what
+# wikipedia now says, but if we do this will need updating for Python3
+# and for changes to the format of the wikipedia pages.
+
 import re
 import BeautifulSoup
 from datetime import date, datetime
