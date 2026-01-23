@@ -30,13 +30,13 @@ help:
 	@echo
 	@echo "By default, the '$(default_language)' version is built.  To specify a language, use e.g.:"
 	@echo "  make <target> LANGUAGE=c++"
-	@echo "Known languages: `python conf.py --list-languages`"
+	@echo "Known languages: `python3 conf.py --list-languages`"
 
 clean:
 	-rm -rf $(BUILDDIR)/*
 	-rm -rf db statesdb
 	-rm -rf code/c++/built
-	-rm -f code/python/*.pyc code/python3/*.pyc
+	-rm -f code/ython3/*.pyc
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html

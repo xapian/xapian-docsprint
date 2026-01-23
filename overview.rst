@@ -140,6 +140,6 @@ general) there are details of `how to connect to our chat channel
 To be able to generate this documentation from a git checkout, you'll need
 the `Sphinx documentation tool <https://sphinx-doc.org/>`_.  If you're using
 Debian or Ubuntu or another Debian-derived distro, you can get this by
-installing either the `python-sphinx` or `python3-sphinx` package.  Once
+installing the `python3-sphinx` package.  Once
 you have Sphinx installed, you can generate HTML output with ``make html``
 (for a full list of available formats, see ``make``).

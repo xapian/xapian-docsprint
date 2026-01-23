@@ -53,7 +53,7 @@ dictionary using:
 
     $db->add_spelling($word, $frequency_inc);
 
-.. xapiancodesnippet:: python python3
+.. xapiancodesnippet:: python3
 
     db.add_spelling(word, frequency_inc)
 
@@ -93,7 +93,7 @@ And the corresponding way to remove from the spelling dictionary is:
 
     $db->remove_spelling($word, $frequency_dec);
 
-.. xapiancodesnippet:: python python3
+.. xapiancodesnippet:: python3
 
     db.remove_spelling(word, frequency_dec)
 
@@ -133,7 +133,7 @@ words from indexed documents to the spelling dictionary:
     $indexer->set_database(db);
     $indexer->set_flags(XapianTermGenerator::FLAG_SPELLING);
 
-.. xapiancodesnippet:: python python3
+.. xapiancodesnippet:: python3
 
     indexer = xapian.TermGenerator()
     indexer.set_database(db)

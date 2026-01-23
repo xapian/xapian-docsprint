@@ -23,7 +23,6 @@ languages = [
         'lua',
         'perl',
         'php',
-        'python',
         'python3',
         'ruby',
         'tcl'
@@ -237,7 +236,7 @@ if highlight_language is None:
     print("No known language tag set")
     sys.exit(1)
 
-if highlight_language.startswith('python'):
+if highlight_language == 'python3':
     ext = '.py'
 elif highlight_language == 'c++':
     if not os.path.exists('code/c++/built'):
@@ -290,8 +289,6 @@ def xapian_code_example_command(ex):
         return "perl %s" % xapian_code_example_filename(ex)
     elif highlight_language == 'php':
         return "php %s" % xapian_code_example_filename(ex)
-    elif highlight_language == 'python':
-        return "python2 %s" % xapian_code_example_filename(ex)
     elif highlight_language == 'python3':
         return "python3 %s" % xapian_code_example_filename(ex)
     elif highlight_language == 'ruby':
@@ -331,9 +328,6 @@ def xapian_run_example_command(ex):
     elif highlight_language == 'php':
         php = get_tool_name('PHP', 'php')
         return "%s %s" % (php, xapian_code_example_filename(ex))
-    elif highlight_language == 'python':
-        python = get_tool_name('PYTHON', 'python2')
-        return "%s %s" % (python, xapian_code_example_filename(ex))
     elif highlight_language == 'python3':
         python3 = get_tool_name('PYTHON3', 'python3')
         return "%s %s" % (python3, xapian_code_example_filename(ex))
@@ -536,10 +530,13 @@ class XapianCodeSnippet(CodeBlock):
         return super(XapianCodeSnippet, self).run()
 
 # Usage:
-# .. xapiancodesnippet:: python python3
+# .. xapiancodesnippet:: python3
 #
 #     def foo():
 #          return 42
+#
+# Multiple space-separated language names can be listed if the same code
+# snippet happens to work for them.
 directives.register_directive('xapiancodesnippet', XapianCodeSnippet)
 
 class XapianInclude(Include):
@@ -610,8 +607,6 @@ def xapian_class_role(typ, rawtext, etext, lineno, inliner,
         return [nodes.literal(text = 'Search::Xapian::' + c)], []
     elif highlight_language == 'php':
         return [nodes.literal(text = 'Xapian' + c)], []
-    elif highlight_language == 'python':
-        return [nodes.literal(text = 'xapian.' + c)], []
     elif highlight_language == 'python3':
         return [nodes.literal(text = 'xapian.' + c)], []
     elif highlight_language == 'ruby':
@@ -633,7 +628,7 @@ def decorate_variables(t):
     if highlight_language in ('perl', 'php', 'ruby'):
         # Add a $ in front of each parameter which is a variable
         return re.sub(r'([(,]\s*)([^),]+)', decorate_param, t)
-    # Correct for: c++ csharp java lua python python3
+    # Correct for: c++ csharp java lua python3
     # FIXME: I think tcl is going to need cleverer handling
     return t
 
@@ -666,7 +661,7 @@ def xapian_method_role(typ, rawtext, etext, lineno, inliner,
         # Add a $ in front of each parameter.
         cm = decorate_variables(cm)
         return [nodes.literal(text = 'Xapian' + cm)], []
-    elif highlight_language.startswith('python'):
+    elif highlight_language == 'python3':
         cm = re.sub(r'::', r'.', cm)
         return [nodes.literal(text = 'xapian.' + cm)], []
     elif highlight_language == 'ruby':
@@ -683,7 +678,7 @@ def xapian_variable_role(typ, rawtext, etext, lineno, inliner,
     m = utils.unescape(etext)
     if highlight_language in ('perl', 'php', 'ruby'):
         return [nodes.literal(text = '$' + m)], []
-    # Correct for: c++ csharp java lua python python3
+    # Correct for: c++ csharp java lua python3
     # FIXME: I think tcl is going to need cleverer handling
     return [nodes.literal(text = m)], []
 
@@ -760,7 +755,7 @@ def xapian_literal_role(typ, rawtext, etext, lineno, inliner,
             print("Unhandled literal '%s' for %s" % (t, highlight_language))
             sys.exit(1)
         return [nodes.literal(text = t)], []
-    elif highlight_language.startswith('python'):
+    elif highlight_language == 'python3':
         if t == 'DBL_MAX':
             t = 'sys.float_info.max'
         elif t == 'false':

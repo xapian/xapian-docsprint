@@ -69,25 +69,6 @@ jobs:
     - name: make html
       run: make html LANGUAGE=perl
 
-  python2:
-    if: false
-    runs-on: 'ubuntu-20.04'
-    steps:
-    - name: Check out repository code
-      uses: actions/checkout@v3
-    - name: Install CCache
-      uses: hendrikmuhs/ccache-action@v1
-      with:
-        key: python2
-    - name: Install package dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install \
-            python3-sphinx \
-            python-xapian
-    - name: make html
-      run: make html LANGUAGE=python
-
   python3:
     runs-on: 'ubuntu-22.04'
     steps:
