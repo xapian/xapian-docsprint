@@ -97,6 +97,18 @@ the same start and end, or :xapian-class:`MatchDecider`, but it's probably most
 efficient to also index the categories as suitably prefixed boolean terms
 and use those for filtering.
 
+Handling Multi-valued Facets
+----------------------------
+
+Some facets are multi-valued - for example, an item might have "red and blue"
+for its "colour" facet.
+
+Xapian doesn't currently have built-in support for this situation, but you can
+write your own :xapian-class:`MatchSpy` subclass which unpacks the facet
+value to handle this case.
+
+.. FIXME: Provide example code.
+.. Tickets #199 and #198 are relevant to this.
 
 Limitations
 ===========
@@ -109,19 +121,7 @@ increasing this number may have an effect on overall query performance,
 although a typical sized database is unlikely to see adverse effects.
 
 
-In Development
-==============
-Some additional features currently in development may benefit users of
-facets. These are:
-
-* Multiple values in slots: this will allow you to have a single value slot
-  (e.g. colour) which contains multiple values (e.g. red, blue).  This will
-  also allow you to create a facet by colour which is aware of these
-  multiple values, giving counts for both red and blue.
-
-.. TODO:: This is misleading - it's already possibly to dead with a facet
-  with multiple values like this.  We should document how rather than
-  seeming to imply you can't currently.
-
-* Bucketing: this provides a means to group together numeric facets, so that
-  a single facet can contain a range of values (e.g. price ranges).
+.. FIXME: We did some development work on buckets but concluded what we had
+.. was not actually useful in practice so didn't merge.  See #439
+.. * Bucketing: this provides a means to group together numeric facets, so that
+..  a single facet can contain a range of values (e.g. price ranges).
