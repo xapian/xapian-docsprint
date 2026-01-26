@@ -37,16 +37,19 @@ document values longer than a few tens of bytes, as reading multiple
 Document ID
 -----------
 
-Document IDs are (currently) 32-bit by default which limits you to
-2\ :sup:`32`-1 (nearly 4.3 billion) documents in a database.  Document IDs for
-deleted documents aren't reused for when automatically assigning a new document
-ID, so this limit also includes documents you've deleted.  You can effectively
-reclaim such no-longer-used document IDs by compacting the database.
+Document IDs are unsigned integers and (currently) 32-bit by default which
+limits you to 2\ :sup:`32`-1 (nearly 4.3 billion) documents in a database.
+Document IDs for deleted documents aren't reused when automatically assigning a
+new document ID, so this limit also includes documents you've deleted.  You can
+effectively reclaim such no-longer-used document IDs by compacting the
+database.
 
 If you configure xapian-core with `--enable-64bit-docid` then 64-bit docids
 will be used instead.  You may well also want to make termcounts 64-bit
-with `--enabl-64bit-termcount`.  Note that these options change type sizes and
-hence the ABI of the library.
+with `--enable-64bit-termcount`.  Note that these options change type sizes and
+hence the ABI of the library.  These options don't affect the Database format,
+but Xapian will error if it sees a docid or termcount in the database which
+is too large for the type it is using.
 
 B-tree block number
 -------------------
@@ -73,6 +76,7 @@ allows files and filesystems up to 16EB (figures from Wikipedia).
 
 Total document length limit
 ---------------------------
+
 Glass stores the total length (i.e. number of terms) of all the documents
 in a database so it can calculate the average document length.  This is
 currently stored as an unsigned 64-bit quantity so you're almost certain

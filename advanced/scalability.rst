@@ -46,8 +46,8 @@ in the box so the OS can cache lots of disk blocks (the access patterns
 typically mean that you only need to cache a few percent of the database
 to eliminate most disk cache misses).
 
-It also means that reducing the database size is usually a win. The
-backend compresses the information in the tables in ways which
+It also means that reducing the database size is usually a win.  Xapian's
+disk-based databases compress the information in the tables in ways which
 work well given the nature of the data but aren't too expensive to
 unpack (e.g. lists of sorted docids are stored as differences with
 smaller values encoded in fewer bytes). There is further potential for
