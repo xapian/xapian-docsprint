@@ -55,13 +55,6 @@ terms can have one or more synonym terms.  A group of consecutive terms is
 specified in the dictionary by simply joining them with a single space between
 each one.
 
-If a term to be synonym expanded will be stemmed by the :xapian-class:`QueryParser`, then
-synonyms will be checked for the unstemmed form first, and then for the stemmed
-form, so you can provide different synonyms for particular unstemmed forms
-if you want to.
-
-.. todo:: Discuss interactions with stemming (ie, should the input and/or output values in the synonym table be stemmed).
-
 Adding Synonyms
 ===============
 
@@ -96,6 +89,13 @@ A synonym-expanded term becomes the term itself `OP_SYNONYM`-ed with any listed 
 so ``~truck`` might expand to ``truck SYNONYM lorry SYNONYM van``.  A group of terms is
 handled in much the same way.
 
+If a term to be synonym expanded will be stemmed by the :xapian-class:`QueryParser`, then
+synonyms will be checked for the unstemmed form first, and then for the stemmed
+form, so you can provide different synonyms for particular unstemmed forms
+if you want to.
+
+.. todo:: Discuss interactions with stemming (ie, should the input and/or output values in the synonym table be stemmed).
+
 If ``FLAG_AUTO_SYNONYMS`` is passed to
 :xapian-method:`QueryParser::parse_query()` then the :xapian-class:` QueryParser` will
 automatically expand any term which has synonyms, unless the term is in a phrase
@@ -127,8 +127,11 @@ yet though.
 Backend Support
 ---------------
 
-Currently synonyms are supported by the chert and glass databases.  They work
-with a single database or multiple databases (use
-:xapian-method:`Database::add_database()` as usual).  We've no plans to support
-them for the InMemory backend, but we do intend to support them for the remote
-backend in the future.
+Currently synonyms are supported by chert, glass and honey databases.  They work
+with a single database or multiple databases (use Database::add_database() as
+usual).  They are supported by remote databases since Xapian 2.0.0.
+
+We've no plans to add support for them to the current InMemory backend, but
+we do plan to replace this with a backend which will be the same as the
+current disk-based backend but using memory for storage, and this will
+support synonyms.
