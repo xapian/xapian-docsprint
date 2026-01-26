@@ -44,8 +44,8 @@ Concurrently Open Databases
 ---------------------------
 
 If you try to search many databases concurrently, you may hit the
-per-process file-descriptor limit - each chert database uses between 3 and
-7 fds depending which tables are present, and a process can only open a
+per-process file-descriptor limit - each glass database uses between 1 and
+6 fds depending which tables are present, and a process can only open a
 certain number (on Linux, the default is usually 1024, so that limits you
 to a few hundred concurrently open databases).  You can `raise the
 per-process limit <https://wiki.debian.org/Limits>`_ on some Unix-like
