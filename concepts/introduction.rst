@@ -26,20 +26,20 @@ Indexing
 
 | **Documents**
 
-| D[0] = {This is a book}
-| D[1] = {Books are worth reading}
-| D[2] = {This book is worth buying}
+| D[1] = {This is a book}
+| D[2] = {Books are worth reading}
+| D[3] = {This book is worth buying}
 
 | **Index**
 
-| This - {0,2}
-| book - {0,1,2}
-| is - {0,2}
-| a - {0}
-| are - {1}
-| worth - {1,2}
-| reading - {1}
-| buying - {2}
+| This - {1,3}
+| book - {1,2,3}
+| is - {1,3}
+| a - {1}
+| are - {2}
+| worth - {2,3}
+| reading - {2}
+| buying - {3}
 
 Stemming
 --------
