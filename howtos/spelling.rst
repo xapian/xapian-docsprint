@@ -26,8 +26,8 @@ words from a static word list, or a combination of the two.
 Static spelling data
 --------------------
 
-If ``db`` is a :xapian-class:`WritableDatabase`, you can add to the spelling
-dictionary using:
+If ``db`` is a :xapian-class:`WritableDatabase`, you can add an entry to the
+spelling dictionary using:
 
 .. xapiancodesnippet:: c++
 
@@ -67,7 +67,7 @@ dictionary using:
 
 The :xapian-variable:`frequency_inc` parameter is optional, and defaults to 1.
 
-And the corresponding way to remove from the spelling dictionary is:
+The corresponding way to remove an entry from the spelling dictionary is:
 
 .. xapiancodesnippet:: c++
 
@@ -270,11 +270,18 @@ search would be prohibitively expensive for many uses.
 Backend Support
 ---------------
 
-Currently spelling correction is supported for chert and glass databases.  It
-works with a single database or multiple databases (use
-:xapian-method:`Database::add_database()` as usual).  We've no plans to support
-it for the InMemory backend, but we do intend to support it for the remote
-backend in the future.
+Currently spelling correction is supported for chert, glass and honey
+databases.
+
+It works with a single database or multiple databases (use
+:xapian-method:`Database::add_database()` as usual).
+
+It's not supported by the remote backend but we intend to add support in
+the future.
+
+It's not supported by the current InMemory backend, but we intend to replace
+this with a backend based on the current disk backend but using memory for
+storage, which would then provide support.
 
 Prefixed Terms
 --------------
@@ -300,7 +307,7 @@ Spelling data from deleted documents
 If you're adding spelling data using :xapian-class:`TermGenerator`, then
 spelling data from deleted (or updated) documents doesn't automatically get
 removed from the spelling dictionary when documents are deleted.  This is
-usually not a problem, can be if the topic area covered by a database moves
+usually not a problem, can be if the topic area covered by a database evolves
 significantly with time.
 
 References
