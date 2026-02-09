@@ -30,14 +30,15 @@ Installation
 
 There are two pieces of Xapian you need to follow this guide: the
 library itself, and support for the language you're going to be
-using.  This guide was originally written with examples in Python_,
-and we've made a start on full translations into Java, Perl_, PHP_ and C++.
+using.  This guide was originally written with examples in Python_, and
+we've made a start on full translations into Java, Perl_, PHP_, Ruby_ and C++.
 Help with completing these translations and with translating the examples
 into other languages would be most welcome.
 
 .. _Perl: https://www.perl.org/
 .. _Python: https://www.python.org/
 .. _PHP: https://php.net/
+.. _Ruby: https://www.ruby-lang.org/
 
 This guide documents Xapian 1.4 (except where a different version is explicitly
 mentioned) so you'll find it easier to follow if you use a version from the 1.4
