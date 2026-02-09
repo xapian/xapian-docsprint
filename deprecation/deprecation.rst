@@ -4,7 +4,7 @@
 .. This document was originally written by Richard Boulton.
 
 .. Copyright (C) 2007 Lemur Consulting Ltd
-.. Copyright (C) 2007,2008,2009,2010,2011,2012,2013 Olly Betts
+.. Copyright (C) 2007-2026 Olly Betts
 
 ===========
 Deprecation
@@ -43,8 +43,8 @@ Deprecation markers
 At any particular point, some parts of the C++ API will be marked as
 "deprecated".  Deprecated features are annotated in the API headers with macros
 such as ``XAPIAN_DEPRECATED()``, which will cause compilers with appropriate
-support (such as GCC 3.1 or later, and MSVC 7.0 or later) to emit compile-time
-warnings if these features are used.
+support (such as GCC, clang and MSVC) to emit compile-time warnings if these
+features are used.
 
 If a feature is marked with one of these markers, you should avoid using it in
 new code, and should migrate your code to use a replacement when possible.  The
@@ -66,6 +66,8 @@ API and ABI compatibility
 Releases are given three-part version numbers (e.g. 1.2.9), the three parts
 being termed "major" (1), "minor" (2), and "revision" (9).  Releases with
 the same major and minor version are termed a "release series".
+
+.. FIXME Update this section to reflect post 2.0.0 system.
 
 For Xapian releases 1.0.0 and higher, an even minor version indicates a stable
 release series, while an odd minor version indicates a development release
@@ -151,8 +153,8 @@ versions.
 
 Sometimes we can support such versions without extra effort (e.g. Tcl's
 stubs mechanism means Tcl 8.1 probably still works, even though the last
-8.1.x release was over a decade ago), and in some cases Linux distros
-continue to support software after upstream stops.
+8.1.x release was in 2001), and in some cases Linux distros continue to
+support software after upstream stops.
 
 But in most cases keeping support around is a maintenance overhead and
 we'd rather spend our time on more useful things.
@@ -172,9 +174,9 @@ We recommend taking the following steps to avoid depending on deprecated
 features when writing your applications:
 
  - If at all possible, test compile your project using a compiler which
-   supports warnings about deprecated features (such as GCC 3.1 or later), and
-   check for such warnings.  Use the -Werror flag to GCC to ensure that you
-   don't miss any of them.
+   supports warnings about deprecated features (such as GCC), and check for
+   such warnings.  Pass the -Werror flag to GCC to ensure that you don't miss
+   any of them.
 
  - Check the NEWS file for each new release for details of any new features
    which are deprecated in the release.
