@@ -63,15 +63,15 @@ Boolean retrieval, retrieve the documents by doing union, intersection or differ
 
 **Posting list of query terms**
 
-| book -> {1,4,10}
+| home -> {1,4,10}
 | work -> {1,2,4,9}
 
 **Boolean Retrieval**
 
-| book AND work -> {1,4}
-| book OR work  -> {1,2,4,9,10}
-| book AND_NOT work -> {10}
-| work AND_NOT book -> {2,9}
+| home AND work -> {1,4}
+| home OR work  -> {1,2,4,9,10}
+| home AND_NOT work -> {10}
+| work AND_NOT home -> {2,9}
 
 Probabilistic Retrieval
 -----------------------
