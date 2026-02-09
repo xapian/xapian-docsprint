@@ -165,3 +165,25 @@ And running it is as simple as before:
 
 .. xapianrunexample:: search_sorting3
     :args: statesdb State
+
+Taking advantage of raw document order
+--------------------------------------
+
+Sorting by a value adds some overhead compared to ordering documents by
+relevance.
+
+There's a neat approach that can sometimes be used to give a sorted search
+which is even faster than sorting by relevance.  The key trick is
+to arrange that the numeric docid order matches the desired sort order.  Then
+returning results sorted in this order can be done by performing a boolean
+search (``enquire.set_weighting_scheme(Xapian::BoolWeight());``) with the
+direction of sort set by ``enquire.set_weighting_scheme(enquire.ASCENDING);``
+or ``enquire.set_weighting_scheme(enquire.DESCENDING);``.
+
+The ``ASCENDING`` docid order is particularly efficient because the match can
+stop when it has found the desired number of documents.
+
+The main limitation of this trick is that documents need to be indexed in the
+desired order.  This is often feasible for a "sort by date" feature as new
+documents will typically arrive in date order, but is probably going to be
+trickier to arrange for something like "sort by price".
