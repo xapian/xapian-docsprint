@@ -233,8 +233,11 @@ for t in languages:
         highlight_language = t
 
 if highlight_language is None:
-    print("No known language tag set")
-    sys.exit(1)
+    if 'READTHEDOCS' in os.environ:
+        highlight_language = 'python3'
+    else:
+        print("No known language tag set")
+        sys.exit(1)
 
 if highlight_language == 'python3':
     ext = '.py'
