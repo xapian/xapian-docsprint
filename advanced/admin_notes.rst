@@ -224,8 +224,9 @@ seconds.  However, if you are concerned, you can use the ``xapian-compact``
 tool to make a fresh copy of the database with the revision number set to 1.
 
 The revision number for a database can be seen using the ``xapian-delve``
-tool (since Xapian 1.4.6)::
+tool (since Xapian 1.4.6):
 
+::
     $ xapian-delve gmane.db
     UUID = 161a9117-b475-4d6c-ab62-c6de1c638028
     number of documents = 119595678
