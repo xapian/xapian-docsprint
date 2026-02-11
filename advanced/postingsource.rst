@@ -36,11 +36,11 @@ Example
 
 .. todo:: clean up the example to better show what we're trying to do
 
-:xapian-class:`ExternalWeightPostingSource` doesn't restrict which documents
+``ExternalWeightPostingSource`` doesn't restrict which documents
 match - it's intended to be combined with an existing query using
 :xapian-just-constant:`OP_AND_MAYBE` like so::
 
-    extwtps = xapian.ExternalWeightPostingSource(db, wtsource)
+    extwtps = ExternalWeightPostingSource(db, wtsource)
     query = xapian.Query(query.OP_AND_MAYBE, query, xapian.Query(extwtps))
 
 The wtsource would be a class like this one::
