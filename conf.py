@@ -851,7 +851,10 @@ class XapianEndOfFile(LiteralInclude):
 # "..xapianendoffile:" is used from the rst_epilog - it's not for manual use.
 directives.register_directive('xapianendoffile', XapianEndOfFile)
 
-def xapian_check_examples():
+def xapian_check_examples(app, exception):
+    if exception is not None:
+        return
+
     global examples, examples_used, examples_missing, total_errors
     for ex in examples:
         if ex in examples_used:
@@ -877,6 +880,7 @@ def xapian_check_examples():
 
     if total_errors > 0:
         print("*** %d total error(s) with example code" % total_errors)
-        raise SystemExit()
+        raise SystemExit(1)
 
-atexit.register(xapian_check_examples)
+def setup(app):
+    app.connect('build-finished', xapian_check_examples)
