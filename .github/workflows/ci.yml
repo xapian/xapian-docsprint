@@ -50,7 +50,7 @@ jobs:
             openjdk-25-jdk-headless \
             libandroid-json-org-java
     - name: make html
-      run: make html LANGUAGE=java JDK_JAVA_OPTIONS='-Djava.library.path=/usr/lib/x86_64-linux-gnu/jni'
+      run: make html LANGUAGE=java JAVA_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/jni
 
   perl:
     runs-on: 'ubuntu-22.04'

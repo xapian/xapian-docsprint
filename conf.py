@@ -370,6 +370,9 @@ def xapian_run_example_command(ex):
         classpath = ' -classpath ' + get_java_classpath(java_bindings_dir)
         javac = get_tool_name('JAVAC', 'javac') + classpath
         java = get_tool_name('JAVA', 'java') + classpath
+        java_library_path = os.environ.get("JAVA_LIBRARY_PATH")
+        if java_library_path is not None:
+            java = java + " -Djava.library.path=" + java_library_path
         return "%s %s\n%s code.java.%s" \
             % (javac, xapian_code_example_filename(ex), java, ex)
     else:
