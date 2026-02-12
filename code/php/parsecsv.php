@@ -8,7 +8,7 @@
  */
 function get_csv_headers ($fH)
 {
-    return fgetcsv($fH);
+    return fgetcsv($fH, escape: "");
 }
 
 /**
@@ -39,7 +39,7 @@ function open_file ($file)
  */
 function parse_csv_row ($fH, $headers)
 {
-    $row = fgetcsv($fH);
+    $row = fgetcsv($fH, escape: "");
     $data = array();
 
     if (is_array($row) === false)
