@@ -41,11 +41,8 @@ sub search {
     my $queryparser = Search::Xapian::QueryParser->new;
     $queryparser->set_stemmer(Search::Xapian::Stem->new('en'));
     $queryparser->set_stemming_strategy(STEM_SOME);
-
-    # Start of prefix configuration.
     $queryparser->add_prefix(title => "S");
     $queryparser->add_prefix(description => "XD");
-    # End of prefix configuration.
 
     # Start of set database
     $queryparser->set_database($db);
