@@ -5,7 +5,7 @@ Advanced features
    :maxdepth: 2
 
    postingsource
-   term-definition
+   term_definition
    unigramlm
    custom_weighting
    admin_notes
