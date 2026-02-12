@@ -31,7 +31,7 @@ def search(dbpath, querystring, offset: 0, pagesize: 10)
   matches = []
   enquire.mset(offset, pagesize).matches.each do |match|
     fields = JSON.parse(match.document.data)
-    printf "%<rank>i: #%<docid>3.3i %<title>s\n",
+    printf "%<rank>d: #%<docid>03d %<title>s\n",
            rank: match.rank + 1,
            docid: match.docid,
            title: fields['TITLE']

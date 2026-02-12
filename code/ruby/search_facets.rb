@@ -36,14 +36,14 @@ def search(dbpath, querystring, offset: 0, pagesize: 10)
 
   enquire.mset(offset, pagesize, 100).matches.each do |match|
     fields = JSON.parse(match.document.data)
-    printf "%<rank>i: #%<docid>3.3i %<title>s\n",
+    printf "%<rank>d: #%<docid>03d %<title>s\n",
            rank: match.rank + 1,
            docid: match.docid,
            title: fields['TITLE']
     matches << match.docid
   end
   spy.values.each do |facet|
-    printf "Facet: %<term>s; count: %<count>i\n",
+    printf "Facet: %<term>s; count: %<count>d\n",
            term: facet.term,
            count: facet.termfreq
   end
