@@ -70,7 +70,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
         date = support.format_date(fields.get('admitted'))
 
         print(u"""\
-%(rank)i: #%(docid)3.3i %(name)s %(date)s
+%(rank)d: #%(docid)03d %(name)s %(date)s
         Population %(pop)s""" % {
             'rank': match.rank + 1,
             'docid': match.docid,

@@ -9,7 +9,7 @@ import re
 
 def log_matches(querystring, offset, pagesize, matches):
     print(
-        "'%s'[%i:%i] = %s" % (
+        "'%s'[%d:%d] = %s" % (
             querystring,
             offset,
             offset + pagesize,

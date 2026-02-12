@@ -36,7 +36,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
     matches = []
     for match in enquire.get_mset(offset, pagesize):
         fields = json.loads(match.document.get_data().decode('utf8'))
-        print(u"%(rank)i: #%(docid)3.3i %(name)s %(date)s\n        Population %(pop)s" % {
+        print(u"%(rank)d: #%(docid)03d %(name)s %(date)s\n        Population %(pop)s" % {
             'rank': match.rank + 1,
             'docid': match.docid,
             'name': fields.get('name', u''),

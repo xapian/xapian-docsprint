@@ -36,7 +36,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
 
     for match in enquire.get_mset(offset, pagesize, 100):
         fields = json.loads(match.document.get_data().decode('utf8'))
-        print(u"%(rank)i: #%(docid)3.3i %(title)s" % {
+        print(u"%(rank)d: #%(docid)03d %(title)s" % {
             'rank': match.rank + 1,
             'docid': match.docid,
             'title': fields.get('TITLE', u''),
@@ -45,7 +45,7 @@ def search(dbpath, querystring, offset=0, pagesize=10):
 
     # Fetch and display the spy values
     for facet in spy.values():
-        print("Facet: %(term)s; count: %(count)i" % {
+        print("Facet: %(term)s; count: %(count)d" % {
             'term' : facet.term.decode('utf-8'),
             'count' : facet.termfreq
         })
