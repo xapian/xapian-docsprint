@@ -2,6 +2,7 @@
 
 use strict;
 use warnings;
+use feature 'unicode_strings';
 
 my $using_search_xapian;
 BEGIN {
