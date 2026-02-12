@@ -50,11 +50,16 @@ certain number (on Linux, the default is usually 1024, so that limits you
 to a few hundred concurrently open databases).  You can `raise the
 per-process limit <https://wiki.debian.org/Limits>`_ on some Unix-like
 platforms, though you may need to be root to do so; if you're doing this
-from a service (for instance if you're using a :doc:`remote backend
-</advanced/remote>`) then you may need to do this `via a limit stanza
+from a service (for instance if you're using a
+remote)
+then you may need to do this `via a limit stanza
 for upstart <http://upstart.ubuntu.com/wiki/Stanzas#limit>`_, or `the
 LimitNOFILE= option for systemd
 <https://www.freedesktop.org/software/systemd/man/systemd.exec.html#LimitCPU=>`_.
+
+.. FIXME: replace "remote)" line in paragraph above with this once the "remote"
+   doc is written:
+   :doc: `remote backend </advanced/remote>`)
 
 You can also address this issue (and spread the search load) by using the
 remote backend to search databases on a cluster of machines - the remote
