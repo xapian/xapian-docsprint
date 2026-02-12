@@ -1,5 +1,10 @@
 package code.java;
 
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xapian.Database;
 import org.xapian.Document;
 import org.xapian.Enquire;
@@ -17,7 +22,7 @@ public class search1 {
             System.out.println("Insufficient number of arguments (should be dbpath querystring)");
             return;
         }
-        search(args[0], args[1]);
+        search(args[0], String.join(" ", Arrays.copyOfRange(args, 1, args.length)));
     }
 
     public static void search(String dbpath, String queryString) {
@@ -58,15 +63,21 @@ public class search1 {
             long docID = msetIterator.getDocId();
             Document doc = db.getDocument(docID);
 
-            System.out.printf("%i: #%3.3i %s%n", rank+1, docID, doc.getValue(0));
+            try {
+                JSONObject fields = new JSONObject(doc.getData());
+                String title = fields.getString("TITLE");
+                System.out.printf("%d: #%03d %s%n", rank+1, docID, title);
+            } catch (JSONException ex) {
+                Logger.getLogger(index1.class.getName()).log(Level.SEVERE, null, ex);
+            }
             msetIterator.next();
         }
 
-        System.out.printf("'%s'[%i:%i] = ", queryString, offset, offset+pagesize);
+        System.out.printf("'%s'[%d:%d] = ", queryString, offset, offset+pagesize);
         msetIterator = mset.begin();
         while (msetIterator.hasNext())
         {
-            System.out.printf("%i", msetIterator.getDocId());
+            System.out.printf("%d", msetIterator.getDocId());
             msetIterator.next();
             if (msetIterator.hasNext()) {
                 System.out.print(" ");

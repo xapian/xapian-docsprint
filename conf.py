@@ -305,8 +305,9 @@ def xapian_code_example_command(ex):
         return "cli-csc -unsafe -target:exe -out:%s.exe %s -r:XapianSharp.dll\n./%s.exe" \
             % (ex, xapian_code_example_filename(ex), ex)
     elif highlight_language == 'java':
-        return "javac %s\njava code.java.%s" \
-            % (xapian_code_example_filename(ex), ex)
+        cp = '-classpath ' + get_java_classpath('/usr/share/java')
+        return "javac %s %s\njava %s code.java.%s" \
+            % (cp, xapian_code_example_filename(ex), cp, ex)
     else:
         print("Unhandled highlight_language '%s'" % highlight_language)
         sys.exit(1)
@@ -319,6 +320,10 @@ def get_tool_name(envvar, default):
         print("Bad characters in $%s" % envvar)
         sys.exit(1)
     return tool
+
+# Return classpath to use for java bindings directory d.
+def get_java_classpath(d):
+    return d + '/xapian.jar:' + d + '/json.jar:'
 
 # Return the command to actually test run examples using.
 def xapian_run_example_command(ex):
@@ -361,15 +366,11 @@ def xapian_run_example_command(ex):
         return "%s -unsafe -target:exe -out:%s.exe %s -r:XapianSharp.dll\n./%s.exe" \
             % (csc, ex, xapian_code_example_filename(ex), ex)
     elif highlight_language == 'java':
-        java_bindings_dir = os.environ.get("JAVA_BINDINGS_DIR")
-        classpath = ''
-        java_library_path = ''
-        if java_bindings_dir is not None:
-            classpath = ' -classpath ' + java_bindings_dir + 'xapian_jni.jar:./code/java/'
-            java_library_path = ' -Djava.library.path=' + java_bindings_dir + '../.libs'
+        java_bindings_dir = os.environ.get("JAVA_BINDINGS_DIR", "/usr/share/java")
+        classpath = ' -classpath ' + get_java_classpath(java_bindings_dir)
         javac = get_tool_name('JAVAC', 'javac') + classpath
-        java = get_tool_name('JAVA', 'java') + java_library_path + classpath
-        return "%s %s\n%s %s" \
+        java = get_tool_name('JAVA', 'java') + classpath
+        return "%s %s\n%s code.java.%s" \
             % (javac, xapian_code_example_filename(ex), java, ex)
     else:
         print("Unhandled highlight_language '%s'" % highlight_language)

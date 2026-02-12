@@ -6,6 +6,8 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xapian.Document;
 import org.xapian.Stem;
 import org.xapian.TermGenerator;
@@ -77,8 +79,15 @@ public class index1 {
             termGenerator.indexText(description);
 
             // Store all fields for display purposes
-            doc.setData(currentLine);
-            doc.addValue(0, title);
+            try {
+                JSONObject jsonData = new JSONObject();
+                jsonData.put("DESCRIPTION", description);
+                jsonData.put("id_NUMBER", identifier);
+                jsonData.put("TITLE", title);
+                doc.setData(jsonData.toString());
+            } catch (JSONException ex) {
+                Logger.getLogger(index1.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             // We use the identifier to ensure each object ends up in the
             // database only once no matter how many times we run the

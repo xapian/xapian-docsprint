@@ -47,7 +47,8 @@ jobs:
         sudo apt-get install \
             python3-sphinx \
             libxapian-java \
-            openjdk-25-jdk-headless
+            openjdk-25-jdk-headless \
+            libandroid-json-java
     - name: make html
       run: make html LANGUAGE=java
 
