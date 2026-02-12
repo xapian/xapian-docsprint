@@ -30,7 +30,7 @@ sub parse_csv {
 
 sub log_matches {
     my ($query, $offset, $page_size, $matches) = @_;
-    printf(q{'%s'[%i:%i] = %s}, $query, $offset, $offset + $page_size,
+    printf(q{'%s'[%d:%d] = %s}, $query, $offset, $offset + $page_size,
             join(' ', @$matches));
     print "\n";
 }

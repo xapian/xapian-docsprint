@@ -70,7 +70,7 @@ sub search {
     my $mset = $enquire->get_mset($offset, $pagesize);
     foreach my $item ($mset->items) {
         my $fields = decode_json($item->get_document->get_data);
-        printf(qq{%i: #%3.3i %s %s\n        Population %s\n},
+        printf(qq{%d: #%03d %s %s\n        Population %s\n},
                $item->get_rank + 1,
                $item->get_docid,
                $fields->{name},
