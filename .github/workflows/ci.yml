@@ -66,6 +66,7 @@ jobs:
         sudo apt-get install \
             python3-sphinx \
             libsearch-xapian-perl \
+            libdatetime-format-strptime-perl \
             libdatetime-perl \
             libjson-maybexs-perl \
             libtext-csv-perl
