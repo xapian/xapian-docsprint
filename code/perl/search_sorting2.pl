@@ -56,7 +56,7 @@ sub search {
         my $keymaker = Search::Xapian::MultiValueSorter->new;
         $keymaker->add(1, 1);
         $keymaker->add(3, 0);
-        $enquire->set_sort_by_key($keymaker);
+        $enquire->set_sort_by_key($keymaker, 0);
     } else {
         my $keymaker = Search::Xapian::MultiValueKeyMaker->new;
         $keymaker->add_value(1, 0);
