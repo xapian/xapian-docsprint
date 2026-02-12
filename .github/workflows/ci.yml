@@ -48,7 +48,7 @@ jobs:
             python3-sphinx \
             libxapian-java \
             openjdk-25-jdk-headless \
-            libandroid-json-java
+            libandroid-json-org-java
     - name: make html
       run: make html LANGUAGE=java
 
