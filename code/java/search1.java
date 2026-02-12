@@ -58,7 +58,7 @@ public class search1 {
             long docID = msetIterator.getDocId();
             Document doc = db.getDocument(docID);
 
-            System.out.printf("%i: #%3.3i %s%n", rank+1, docID, doc.getValue(0))
+            System.out.printf("%i: #%3.3i %s%n", rank+1, docID, doc.getValue(0));
             msetIterator.next();
         }
 
