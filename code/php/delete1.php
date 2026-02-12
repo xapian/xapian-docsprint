@@ -1,6 +1,4 @@
 <?php
-require_once("xapian.php");
-
 // Start of example code.
 function delete_docs ($dbpath, $identifiers)
 {

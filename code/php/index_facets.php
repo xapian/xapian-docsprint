@@ -1,5 +1,4 @@
 <?php
-require_once("xapian.php");
 require_once("parsecsv.php");
 
 // Start of example code
