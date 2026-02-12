@@ -66,7 +66,8 @@ jobs:
         sudo apt-get install \
             python3-sphinx \
             libsearch-xapian-perl \
-            libjson-maybexs-perl
+            libjson-maybexs-perl \
+            libtext-csv-perl
     - name: make html
       run: make html LANGUAGE=perl
 
