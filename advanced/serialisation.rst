@@ -55,7 +55,11 @@ However, there is a wrinkle.  A query can contain arbitrary user-defined
 unserialise such queries, all the :xapian-class:`PostingSource` subclasses used
 in the query must implement the :xapian-just-method:`name()`,
 :xapian-just-method:`serialise()` and :xapian-just-method:`unserialise()`
-methods (see :ref:`postingsource` for details).
+methods.
+
+.. FIXME: once the postingsource document is rewritten and restored append
+   this to the paragraph above:
+   (see :ref:`postingsource` for details).
 
 In addition, a special form of unserialise must be used which takes a
 :xapian-class:`Registry` object as an additional parameter, which must know
