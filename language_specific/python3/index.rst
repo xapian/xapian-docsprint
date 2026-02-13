@@ -2,12 +2,14 @@
 Python Specific Notes
 =====================
 
-The Python3 bindings for Xapian are packaged in the ``xapian`` module,
+The Python bindings for Xapian are packaged in the ``xapian`` module,
 so to use them you need to add this to your code::
 
   import xapian
 
-They require Python >= 3.2 in Xapian 1.4.x.
+Since Xapian 1.4.22 these bindings require Python >= 3.3.  If you still need
+support for older Python versions, Xapian 1.4.x supports Python 2.7; Xapian <=
+1.4.21 supports Python 2.6 and 3.2.
 
 The Python API largely follows the C++ API - the differences and
 additions are noted below.
@@ -32,43 +34,36 @@ on it like so::
   for i in doc.termlist():
     print(i.term.decode('utf-8'))
 
-Unicode
-#######
-
-The xapian Python bindings accept unicode strings as well as simple strings
-(ie, "str" type strings) at all places in the API which accept string data.
-Any unicode strings supplied will automatically be translated into UTF-8
-simple strings before being passed to the Xapian core.  The Xapian core is
-largely agnostic about character encoding, but in those places where it does
-process data in a character encoding dependent way it assumes that the data
-is in UTF-8.  The Xapian Python bindings always return string data as simple
+Therefore, in order to avoid issues with character encodings, you should
+always pass text data to Xapian as unicode strings, or UTF-8 encoded byte
 strings.
 
-Therefore, in order to avoid issues with character encodings, you should
-always pass text data to Xapian as unicode strings, or UTF-8 encoded simple
-strings.  There is, however, no requirement for simple strings passed into
+There is, however, no requirement for byte strings passed into
 Xapian to be valid UTF-8 encoded strings, unless they are being passed to a
 text processing routine (such as the query parser, or the stemming
 algorithms).  For example, it is perfectly valid to pass arbitrary binary
-data in a simple string to the ``xapian.Document.set_data()``
-method.
+data to the ``xapian.Document.set_data()`` method.
 
-It is often useful to normalise unicode data before passing it to Xapian -
-Xapian currently has no built-in support for normalising unicode
-representations of data.  The standard python module
-"``unicodedata``" provides support for normalising unicode: you
-probably want the "``NFKC``" normalisation scheme: in other words,
-use something like
+Unicode
+=======
+
+Unicode text is most often in NFC already, but if you need to normalise text
+before passing it to Xapian, the standard python module "``unicodedata``"
+provides support for normalising unicode: you probably want the "``NFKC``"
+normalisation scheme, so for example normalising a query string prior to
+parsing it would look something like this:
 
 ::
+    def parse_query(query_string):
+        query_string = unicodedata.normalize('NFKC', query_string)
+        qp = xapian.QueryParser()
+        query_obj = qp.parse_query(query_string)
 
-  unicodedata.normalize('NFKC', u'foo')
-
-to normalise the string "foo" before passing it to Xapian.
-
+See `the general section on Unicode </concepts/unicode>` for more information
+on Unicode normalisations.
 
 Exceptions
-##########
+==========
 
 Xapian-specific exceptions are subclasses of the :xapian-class:`Error`
 class, so you can trap all Xapian-specific exceptions like so::
@@ -78,17 +73,16 @@ class, so you can trap all Xapian-specific exceptions like so::
     except xapian.Error as e:
         print str(e)
 
-:xapian-class:`Error` is itself a subclass of the standard Python
-`exceptions.Exception` class.
+:xapian-class:`Error` is a subclass of the standard Python
+`exceptions.Exception` class so will also be caught by `except Exception`.
 
 Iterators
-#########
+=========
 
 The iterator classes in the Xapian C++ API are wrapped in a pythonic style.
 The following are supported (where marked as "default iterator", it means
-``__iter__()`` does the right
-thing so you can for instance use ``for term in document`` to
-iterate over terms in a Document object):
+``__iter__()`` does the right thing so you can for instance use
+``for term in document`` to iterate over terms in a Document object):
 
 
 +----------------------+------------------------------------------+---------------------------------------+----------------------+
@@ -104,11 +98,11 @@ iterate over terms in a Document object):
 +----------------------+------------------------------------------+---------------------------------------+----------------------+
 |``Database``          | ``allterms()`` (also as default iterator)| ``allterms_begin()``                  | ``TermIter``         |
 +----------------------+------------------------------------------+---------------------------------------+----------------------+
-|``Database``          | ``postlist(tname)``                      | ``postlist_begin(tname)``             | ``PostingIter``      |
+|``Database``          | ``postlist(term)``                       | ``postlist_begin(term)``              | ``PostingIter``      |
 +----------------------+------------------------------------------+---------------------------------------+----------------------+
 |``Database``          | ``termlist(docid)``                      | ``termlist_begin(docid)``             | ``TermIter``         |
 +----------------------+------------------------------------------+---------------------------------------+----------------------+
-|``Database``          | ``positionlist(docid, tname)``           | ``positionlist_begin(docid, tname)``  | ``PositionIter``     |
+|``Database``          | ``positionlist(docid, term)``            | ``positionlist_begin(docid, term)``   | ``PositionIter``     |
 +----------------------+------------------------------------------+---------------------------------------+----------------------+
 |``Database``          | ``metadata_keys(prefix)``                | ``metadata_keys(prefix)``             | ``TermIter``         |
 +----------------------+------------------------------------------+---------------------------------------+----------------------+
@@ -124,18 +118,18 @@ iterate over terms in a Document object):
 +----------------------+------------------------------------------+---------------------------------------+----------------------+
 |``QueryParser``       | ``stoplist()``                           | ``stoplist_begin()``                  | ``TermIter``         |
 +----------------------+------------------------------------------+---------------------------------------+----------------------+
-|``QueryParser``       | ``unstemlist(tname)``                    | ``unstem_begin(tname)``               | ``TermIter``         |
+|``QueryParser``       | ``unstemlist(term)``                     | ``unstem_begin(term)``                | ``TermIter``         |
 +----------------------+------------------------------------------+---------------------------------------+----------------------+
-|``ValueCountMatchSpy``|  ``values()``                            | ``values_begin()``                    | ``TermIter``         |
+|``ValueCountMatchSpy``| ``values()``                             | ``values_begin()``                    | ``TermIter``         |
 +----------------------+------------------------------------------+---------------------------------------+----------------------+
-|``ValueCountMatchSpy``|  ``top_values()``                        | ``top_values_begin()``                | ``TermIter``         |
+|``ValueCountMatchSpy``| ``top_values()``                         | ``top_values_begin()``                | ``TermIter``         |
 +----------------------+------------------------------------------+---------------------------------------+----------------------+
 
 
 The pythonic iterators generally return Python objects, with properties
 available as attribute values, with lazy evaluation where appropriate.  An
-exception is the ``PositionIter`` object returned by
-``Database.positionlist``, which returns an integer.
+exception is ``PositionIter`` (as returned by ``Database.positionlist`` for
+example), which returns an integer.
 
 The lazy evaluation is mainly transparent, but does become visible in one
 situation: if you keep an object returned by an iterator, without evaluating
@@ -146,52 +140,32 @@ that the information requested wasn't available.  This will only happen for a
 few of the properties - most are either not evaluated lazily (because the
 underlying Xapian implementation doesn't evaluate them lazily, so there's no
 advantage in lazy evaluation), or can be accessed even after the iterator has
-moved.  The simplest work around is simply to evaluate any properties you wish
-to use which are affected by this before moving the iterator.  The complete set
-of iterator properties affected by this is:
+moved.  The simplest work around is to evaluate any properties you wish to use
+which are affected by this before moving the iterator.  The complete set of
+iterator properties affected by this is:
 
-- Database.allterms (also accessible as Database.__iter__): **termfreq**
-- Database.termlist: **termfreq** and **positer**
-- Document.termlist (also accessible as Document.__iter__): **termfreq** and **positer**
-- Database.postlist: **positer**
+- ``Database.allterms`` (also accessible as ``Database.__iter__``): **termfreq**
+- ``Database.termlist``: **termfreq** and **positer**
+- ``Document.termlist`` (also accessible as ``Document.__iter__``): **termfreq** and **positer**
+- ``Database.postlist``: **positer**
 
 MSet
-####
+====
 
 MSet objects have some additional methods to simplify access (these
 work using the C++ array dereferencing):
 
-+------------------------------------+----------------------------------------+
-| Method name                        |            Explanation                 |
-+====================================+========================================+
-| ``get_hit(index)``                 |  returns MSetItem at index             |
-+------------------------------------+----------------------------------------+
-| ``get_document_percentage(index)`` | ``convert_to_percent(get_hit(index))`` |
-+------------------------------------+----------------------------------------+
-| ``get_document(index)``            | ``get_hit(index).get_document()``      |
-+------------------------------------+----------------------------------------+
-| ``get_docid(index)``               | ``get_hit(index).get_docid()``         |
-+------------------------------------+----------------------------------------+
-
-Additionally, the MSet has a property, ``mset.items``, which returns a
-list of tuples representing the MSet.  This is now deprecated - please use the
-property API instead (it works in Xapian 1.0.x too).  The tuple members and the
-equivalent property names are as follows:
-
-
-+-------------------------+---------------+---------------------------------------------------------------------------+
-|   Index                 | Property name | Contents                                                                  |
-+=========================+===============+===========================================================================+
-| ``xapian.MSET_DID``     | docid         | Document id                                                               |
-+-------------------------+---------------+---------------------------------------------------------------------------+
-| ``xapian.MSET_WT``      | weight        |  Weight                                                                   |
-+-------------------------+---------------+---------------------------------------------------------------------------+
-| ``xapian.MSET_RANK``    | rank          | Rank                                                                      |
-+-------------------------+---------------+---------------------------------------------------------------------------+
-| ``xapian.MSET_PERCENT`` |  percent      | Percentage weight                                                         |
-+-------------------------+---------------+---------------------------------------------------------------------------+
-| ``xapian.MSET_DOCUMENT``| document      | Document object (Note: this member of the tuple was never actually set!)  |
-+-------------------------+---------------+---------------------------------------------------------------------------+
++--------------------------------+--------------------------------------+
+| Method name                    |            Explanation               |
++================================+======================================+
+| ``get_hit(i)``                 |  returns ``MSetItem`` at index ``i`` |
++--------------------------------+--------------------------------------+
+| ``get_document_percentage(i)`` | ``convert_to_percent(get_hit(i))``   |
++--------------------------------+--------------------------------------+
+| ``get_document(i)``            | ``get_hit(i).get_document()``        |
++--------------------------------+--------------------------------------+
+| ``get_docid(i)``               | ``get_hit(i).get_docid()``           |
++--------------------------------+--------------------------------------+
 
 
 Two MSet objects are equal if they have the same number and maximum possible
@@ -199,11 +173,11 @@ number of members, and if every document member of the first MSet exists at the
 same index in the second MSet, with the same weight.
 
 Non-Class Functions
-###################
+===================
 
 The C++ API contains a few non-class functions (the Database factory
 functions, and some functions reporting version information), which are
-wrapped like so for Python 3:
+wrapped like so for Python:
 
 - ``Xapian::version_string()`` is wrapped as ``xapian.version_string()``
 - ``Xapian::major_version()`` is wrapped as ``xapian.major_version()``
@@ -217,13 +191,13 @@ recommended by PEP 396).  This may not be the same as `xapian.version_string()`
 as the latter is the version of xapian-core (the C++ library) in use.
 
 Query
-#####
+=====
 
 In C++ there's a Xapian::Query constructor which takes a query operator and
 start/end iterators specifying a number of terms or queries, plus an optional
 parameter.  In Python, this is wrapped to accept any Python sequence (for
-example a list or tuple) to give the terms/queries, and you can specify
-a mixture of terms and queries if you wish.  For example:
+example a list or tuple) of terms or queries (or even a mixture of terms
+and queries).  For example:
 
 
 ::
@@ -235,17 +209,17 @@ a mixture of terms and queries if you wish.  For example:
 MatchAll and MatchNothing
 -------------------------
 
-As of 1.1.1, these are wrapped as ``xapian.Query.MatchAll`` and
+These are wrapped as ``xapian.Query.MatchAll`` and
 ``xapian.Query.MatchNothing``.
 
 
 MatchDecider
-############
+============
 
 Custom MatchDeciders can be created in Python - subclass
-``xapian.MatchDecider``, ensure you call the super-constructor, and define a
-``__call__`` method that will do the work. The simplest example (which does nothing
-useful) would be as follows:
+``xapian.MatchDecider``, ensure you call the super-constructor from your
+constructor, and define a ``__call__`` method that will do the work. The
+simplest example (which does nothing useful) would be as follows:
 
 ::
 
@@ -259,13 +233,13 @@ useful) would be as follows:
 
 
 RangeProcessors
-###############
+===============
 
 The ``RangeProcessor`` class (and its subclasses) provide an ``operator()``
 method in C++ which is exposed in Python as a ``__call__()`` method, making the
 class instances into callables.
 
-This method checks whether a beginning and end of a range are in a format
+This method checks whether the beginning and end of a range are in a format
 understood by the ``RangeProcessor``, and if so returns a ``Query`` object
 which matches the range (typically it converts the beginning and end into
 strings which sort appropriately and returns an ``OP_VALUE_RANGE`` query).
@@ -281,7 +255,7 @@ define custom ones in python.
           return xapian.Query(xapian.Query.OP_VALUE_RANGE, "A"+begin, "B"+end)
 
 Apache and mod_python/mod_wsgi
-##############################
+==============================
 
 Prior to Xapian 1.3.0, you had to tell mod_python and mod_wsgi to run
 applications which use Xapian in the main interpreter.  Xapian 1.3.0 no
