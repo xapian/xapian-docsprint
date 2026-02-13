@@ -69,9 +69,7 @@ Installation on other systems
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Many operating systems have packages available to make Xapian easy to
-install; information is available on `our download page`_. This covers
-most popular Linux distributions, FreeBSD, Mac OS (Python and C++
-only) and Windows using Microsoft Visual Studio.
+install; information is available on `our download page`_.
 
 .. _our download page: https://xapian.org/download
 
