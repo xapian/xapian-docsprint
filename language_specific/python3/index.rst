@@ -243,6 +243,10 @@ This method checks whether the beginning and end of a range are in a format
 understood by the ``RangeProcessor``, and if so returns a ``Query`` object
 which matches the range (typically it converts the beginning and end into
 strings which sort appropriately and returns an ``OP_VALUE_RANGE`` query).
+
+Return `xapian.Query(xapian.Query.OP_INVALID)` to signal that you don't want to
+handle an offered range.
+
 There are several built-in ``RangeProcessor`` subclasses, but you can also
 define custom ones in python.
 
