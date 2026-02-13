@@ -14,8 +14,7 @@
 import sys, os
 
 # Handle this before we try to import sphinx-specific modules, so that this
-# can be used via Python 2 or 3, even if sphinx is only installed for one of
-# them.
+# works even if sphinx isn't installed.
 languages = [
         'c++',
         'csharp',
