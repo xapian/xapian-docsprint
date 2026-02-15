@@ -77,7 +77,7 @@ release = '1.4.1'
 _project = u'Getting Started with Xapian'
 _authors = u'Xapian Documentation Team & Contributors'
 project = u'%s %s' % ( _project, version)
-copyright = u'2003-2018 ' + _authors
+copyright = u'2003-2026 ' + _authors
 
 github_project_url = 'https://github.com/xapian/xapian-docsprint/blob/master'
 
