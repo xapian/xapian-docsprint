@@ -109,7 +109,7 @@ a suffix or prefix, so it's convenient to skip that parameter.
 
 
 This is implemented in :xapian-basename-code-example:`^`, which also
-modifies the output to show the measurements and date made fields as
+modifies the output to show the measurements and date-made fields as
 well as the title.
 
 We can now restrict across dimensions using queries like '..50mm'
@@ -150,10 +150,13 @@ Handling dates
 
 To restrict to a date range, we need to decide how to both store the
 date in a document value, and how we want users to input the date
-range in their query. :xapian-class:`DateRangeProcessor`, which is part of
-Xapian, works by storing the date as a string in the form 'YYYYMMDD',
-and can take dates in either US style (month/day/year) or European
-style (day/month/year).
+range in their query. Xapian comes with :xapian-class:`DateRangeProcessor`,
+which requires dates to be stored in a value slot as a string in the form
+'YYYYMMDD', and can take dates in most commonly used formats.  The
+month/day/year format commonly used in the US can be ambiguous with
+the day/month/year format commonly used in much of the rest of the world
+so :xapian-class:`DateRangeProcessor` provides a flag to control how to
+interpret ambiguous cases.
 
 To show how this works, we're going to need to use a different dataset, because
 the museums data only gives years the objects were made in; we've built one
@@ -190,10 +193,11 @@ give to the QueryParser.
 
 The :xapian-class:`DateRangeProcessor` is working on value slot 2, with an
 "epoch" of 1860 (so two digit years will be considered as starting at
-1860 and going forward as far 1959). The second parameter is whether
-it should prefer US style dates or not; since we're looking at US
-states, we've gone for US dates. The :xapian-class:`NumberRangeProcessor`
-is as we saw before, which means that it can't cope with two digit years.
+1860 and going forward as far 1959). The second parameter specifies flags;
+since we're looking at US states, we've gone for setting the flag which
+resolves ambiguous cases as US-format dates. The
+:xapian-class:`NumberRangeProcessor` is as we saw before, which means that it
+can't cope with two digit years.
 
 This enables us to search for any state that talks about the Spanish
 in its description:
@@ -222,7 +226,7 @@ Writing your own RangeProcessor
 
 We haven't yet done anything with population. What we want is
 something that behaves like :xapian-class:`NumberRangeProcessor`, but knows
-what reason possible values are. If we insert it *before* the
+what reasonable population values are. If we insert it *before* the
 :xapian-class:`NumberRangeProcessor` on slot 1 (year), it can pick up
 anything that should be treated as a population, and let everything else be
 treated as a year range.
@@ -247,7 +251,7 @@ populations. If either number is outside that range, we will return
 
 Most of the work is in `__call__` (python's equivalent of `operator()`
 in C++), which gets called with the two strings at either end of the
-range in the query string; either but not both can be the empty
+range in the query string; either (but not both) can be the empty
 string, which indicates an open-ended range.  This method returns a
 :xapian-class:`Query` object - if the object doesn't want to handle
 the range, then this should use operator :xapian-just-constant:`OP_INVALID`.
