@@ -133,11 +133,11 @@ and even combining both ranges at once, such as all large objects from the 19th 
 .. xapianrunexample:: search_ranges
     :args: db 1000..mm 1800..1899
 
-Note the slightly awkward syntax *1000..mm*. The suffix must always go
-on the end of the entire range; it may also go on the beginning (so
-you can do *1000mm..mm*). Similarly, you can have *100mm..200mm* or
-*100..200mm* but not *100mm..200*. These rules are reversed for
-prefixes.
+If you're using Xapian 1.4.31 or newer you can use the more natural syntax
+*1000mm..* instead of the slightly awkward *1000..mm*.
+
+The rule here is that when :xapian-constant:`RP_REPEATED` is used, an empty range
+bound doesn't need a prefix so long as it's specified on the other bound.
 
 If you get the rules wrong, the QueryParser will raise a
 `QueryParserError`, which in production code you could catch and
