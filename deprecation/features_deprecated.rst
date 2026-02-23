@@ -30,9 +30,10 @@ Deprecated Remove Feature name                        Upgrade suggestion and com
                                                       ``Xapian::TermGenerator::FLAG_CJK_NGRAM`` and
                                                       ``Xapian::MSet::SNIPPET_CJK_NGRAM``.
 ---------- ------ ----------------------------------- ------------------------------------------------------------------------
-2.0.0      3.0.0  ``TradWeight`` class                Instead of ``TradWeight(k)`` use ``Xapian::BM25Weight(k, 0, 0, 1, 0)``;
+2.0.0      3.0.0  ``TradWeight`` class                Since 2.0.0, ``TradWeight`` is just a thin subclass of ``BM25Weight``.
+                                                      Instead of ``TradWeight(k)`` use ``Xapian::BM25Weight(k, 0, 0, 1, 0)``;
                                                       instead of ``TradWeight()`` use ``Xapian::BM25Weight(1, 0, 0, 1, 0)``.
-                                                      (Since 2.0.0, ``TradWeight`` is just a thin subclass of ``BM25Weight``.)
+                                                      Both replacements work with all older Xapian versions too.
 ---------- ------ ----------------------------------- ------------------------------------------------------------------------
 2.0.0      3.0.0  ``Enquire::set_expansion_scheme()`` Use ``"prob"`` instead, supported by Xapian >= 1.4.26.
                   with ``"trad""`` for eweightname
