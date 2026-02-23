@@ -22,7 +22,7 @@ it may also be required in order to polish a rough edge which has been missed
 in earlier versions of Xapian, or simply to reflect an internal change which
 requires a modification to the external interface.
 
-We aim to make such changes in a way that allows developers to work against a
+We aim to make such changes in a way that allows developers to work with a
 stable API, while avoiding the need for the Xapian developers to maintain too
 many old historical interface artefacts.  This document describes the process
 we use to deprecate old pieces of the API, lists parts of the API which are
@@ -63,74 +63,69 @@ make, you might do this like so:
 API and ABI compatibility
 -------------------------
 
-Releases are given three-part version numbers (e.g. 1.2.9), the three parts
-being termed "major" (1), "minor" (2), and "revision" (9).  Releases with
-the same major and minor version are termed a "release series".
+Releases are given three-part version numbers (e.g. 1.4.29), the three parts
+being termed "major" (1), "minor" (4), and "revision" (29).
 
-.. FIXME Update this section to reflect post 2.0.0 system.
-
-For Xapian releases 1.0.0 and higher, an even minor version indicates a stable
-release series, while an odd minor version indicates a development release
-series.
+Starting with 2.0.0, releases with the same major version are termed a "stable
+release series".  (For releases with major version 1, those with the same major
+*and* minor formed a release series, with even minors being stable release series
+and odd minors being development release series; releases with major version
+0 were all essentially development releases.)
 
 Within a stable release series, we strive to maintain API and ABI forwards
 compatibility.  This means that an application written and compiled against
 version `X.Y.a` of Xapian should work, without any source changes or need to
-recompile, with a later version `X.Y.b`, for all `b` >= `a`.
-Stable releases which increase the minor or major version number will usually
-change the ABI incompatibly (so that code will need to be recompiled against
-the newer release series.  They may also make incompatible API changes,
-though we will attempt to do this in a way which makes it reasonably easy to
-migrate applications, and document how to do so in this document.
+recompile, with a later version `X.Z.b` (where either `Z == Y` and `b >= a`,
+or `Z > Y`).
 
-It is possible that a feature may be marked as deprecated within a minor
-release series - that is from version `X.Y.c`
-onwards, where `c` is not zero.  The API and ABI will not be changed by this
-deprecation, since the feature will still be available in the API (though the
-change may cause the compiler to emit new warnings when rebuilding code
-which uses the now-deprecated feature).
+A release which increases the major version number will usually change the ABI
+incompatibly (so that code will need to be recompiled against the newer release
+series).  A major version increase may also make incompatible API changes,
+though we will attempt to do this in a way which makes it reasonably easy to
+update applications such that they can work with two consecutive major
+versions (and to document how to do so).
 
 Users should generally be able to expect working code which uses Xapian not to
-stop working without reason.  We attempt to codify this in the following
-policy, but we reserve the right not to slavishly follow this.  The spirit of
-the rule should kept in mind - for example if we discovered a feature which
-didn't actually work, making an incompatible API change at the next ABI bump
-would be reasonable.
+stop working without warning, so we have the following deprecation policy:
 
 Normally a feature will be supported after being deprecated for an entire
-stable release series.  For example, if a feature is deprecated in release
-1.2.0, it will be supported for the entire 1.2.x release series, and removed in
-development release 1.3.0.  If a feature is deprecated in release 1.2.1, it
-will be supported for the 1.2.x *and* 1.4.x stable release series (and of
-course the 1.3.x release series in between), and won't be removed until
-1.5.0.
+stable release series.  Where technically feasible, we'll try to warn if a
+deprecated feature is used, starting from the first X.0.0 release after it
+is deprecated.
+
+For example, if a feature is deprecated in release 2.0.0, it will be supported
+for the entire 2.x.y release series but give a deprecation warning, and it will
+be removed in 3.0.0.
+
+Deprecation can happen mid-release series too.  If a feature is deprecated in
+release 2.0.1 or 2.1.0, it will be supported for the 2.x.y *and* 3.x.y stable
+release series, but will only give a deprecation warning starting with 3.0.0.
+It won't be removed until 4.0.0.
+
+This policy is an attempt to codify the stated aim, but the aim is more
+important than the policy itself.  For example if we discover a feature which
+doesn't actually work, it might be reasonable to start issuing a deprecation
+warning right away and make an incompatible API change at the next ABI bump.
 
 Experimental features
 ---------------------
 
-During a development release series (such as the 1.1.x series), some features
-may be marked as "experimental".  Such features are liable to change without
-going through the normal deprecation procedure.  This includes changing on-disk
-formats for data stored by the feature, and breaking API and ABI compatibility
-between releases for the feature.  Such features are included in releases to
-get wider use and corresponding feedback about them.
+Sometimes new features may be marked as "experimental".  Such features are
+liable to change without going through the normal deprecation procedure.  This
+includes changing on-disk formats for data stored by the feature, and breaking
+API compatibility within a release series for the feature (however we won't
+break ABI compatibility).  Such features are included in releases to get wider
+use and corresponding feedback about them.
 
 Deprecation in the bindings
 ---------------------------
 
-When the Xapian API changes, the interface provided by the Xapian bindings will
-usually change in step.  In addition, it is sometimes necessary to change the
+When the Xapian C++ API changes, the interface provided by the Xapian bindings
+will usually change in step.  In addition, it is sometimes necessary to change the
 way in which Xapian is wrapped by bindings - for example, to provide a better
-convenience wrapper for iterators in Python.  Again, we aim to ensure that an
-application written (and compiled, if the language being bound is a compiled
-language) for version `X.Y.a` of Xapian should work without any changes or need
-to recompile, with a later version `X.Y.b`, for all `a` <= `b`.
-
-However, the bindings are a little less mature than the core C++ API, so we
-don't intend to give the same guarantee that a feature present and not
-deprecated in version `X.Y.a` will work in all versions `X+1.Y.b`.  In other
-words, we may remove features which have been deprecated without waiting for
-an entire release series to pass.
+convenience wrapper for iterators in Python.  We aim to provide similar
+compatibility guarantees for the APIs provided by the bindings as we do for the
+C++ API.
 
 Any planned deprecations will be documented in the list of deprecations and
 removed features at the end of this file.
@@ -194,5 +189,3 @@ features when writing your applications:
    implemented, all application writers using the bindings can do is to check
    the list of deprecated features in each new release, or lookup the features
    they are using in the list at the end of this file.
-
-
