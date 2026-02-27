@@ -6,9 +6,9 @@
 .. Copyright (C) 2007 Lemur Consulting Ltd
 .. Copyright (C) 2007-2026 Olly Betts
 
-===========
-Deprecation
-===========
+=======================
+Deprecation of features
+=======================
 
 .. contents:: Table of contents
 
