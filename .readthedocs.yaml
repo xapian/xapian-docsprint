@@ -8,8 +8,9 @@ version: 2
 # Set the version of Python and other tools you might need
 build:
   os: ubuntu-24.04
-  apt_packages:
-    - python3-xapian
+  packages:
+    extra_requirements:
+      - xapian-bindings-binary
   tools:
     python: "3.12"
 
