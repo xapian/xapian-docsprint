@@ -20,7 +20,4 @@ sphinx:
 python:
   install:
   - requirements: requirements.txt
-  - method: pip
-    path: .
-    extra_requirements:
-      - xapian-bindings-binary
+  - requirements: .readthedocs.extra_requirements.txt
