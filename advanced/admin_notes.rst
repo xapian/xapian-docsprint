@@ -23,7 +23,8 @@ general management of a Xapian database, including tasks such as taking
 backups and optimising performance.  It may also be useful introductory
 reading for Xapian application developers.
 
-The document is up-to-date for Xapian version 2.0.0.
+The document is up-to-date for Xapian version 2.0.0,
+but also covers Xapian 1.4.x.
 
 Databases
 =========

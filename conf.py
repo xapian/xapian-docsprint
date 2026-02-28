@@ -69,9 +69,9 @@ master_doc = 'index'
 # built documents.
 #
 # The short X.Y version.
-version = '1.4'
+version = '2.0'
 # The full version, including alpha/beta/rc tags.
-release = '1.4.1'
+release = '2.0.0'
 
 # General information about the project.
 _project = u'Getting Started with Xapian'

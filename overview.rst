@@ -40,9 +40,9 @@ into other languages would be most welcome.
 .. _PHP: https://php.net/
 .. _Ruby: https://www.ruby-lang.org/
 
-This guide documents Xapian 1.4 (except where a different version is explicitly
-mentioned) so you'll find it easier to follow if you use a version from the 1.4
-release series.  So let's get that onto your system.
+This guide documents Xapian 1.4.x and 2.x (except where a different version is
+explicitly mentioned) so you'll find it easier to follow if you use a version
+from either the 1.4 or 2 release series.  So let's get that onto your system.
 
 Installation on Debian or Ubuntu
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
