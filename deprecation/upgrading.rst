@@ -130,7 +130,7 @@ Alternatively, you can make the conversion to ``std::string`` explicit:
     doc.add_term(std::string(ImplicitString()));
 
 Both approaches will still work with 1.4.x (though the first requires that the
-code is built at C++17 or newer).
+code is built as C++17 or newer).
 
 Passing NULL/nullptr
 ~~~~~~~~~~~~~~~~~~~~
