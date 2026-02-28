@@ -10,17 +10,44 @@ How to change how documents are scored
 
 The easiest way to change document scoring is to change, or tune,
 the weighting scheme in use; Xapian provides a number of weighting schemes,
-including ``BM25Weight``, ``BM25PlusWeight``, ``PL2Weight``, ``PL2PlusWeight``,
-``LMWeight``, ``TfIdfWeight``, ``TradWeight`` and ``BoolWeight``
-(the default is BM25Weight).
+including :xapian-class:`BM25Weight`, :xapian-class:`BM25PlusWeight`,
+:xapian-class:`PL2Weight`, :xapian-class:`PL2PlusWeight`,
+:xapian-class:`TfIdfWeight` and :xapian-class:`BoolWeight` (the default is
+:xapian-class:`BM25Weight`).
 
 You can also :ref:`implement your own <custom-weighting>`.
 
 Built-in weighting schemes
 ==========================
 
+The weighting schemes included with Xapian come from several families of
+weighting schemes.
+
+Probabilistic weighting schemes
+-------------------------------
+
+These weighting schemes are derived from Bayes' Theorem of conditional
+probability.
+
+TradWeight
+~~~~~~~~~~
+
+:xapian-class:`TradWeight` implemented the original probabilistic weighting
+formula, which is essentially a special case of BM25 (it's BM25 with
+:math:`k_2=0`, :math:`k_3=0`, :math:`b=1`, and :math:`minnormlen=0`, except
+that prior to Xapian 2.0.0 all the weights are scaled by a constant factor).
+
+Since Xapian 2.0.0, :xapian-class:`TradWeight` is just a thin sub-class of
+:xapian-class:`BM25Weight` which sets these other parameter values (in older
+releases :xapian-class:`TradWeight` was a separate subclass of
+:xapian-class:`Weight` - the only functional difference is the scaling of the
+returned weights by the constant factor mentioned above).
+:xapian-class:`TradWeight` is also deprecated as of Xapian 2.0.0 - just use
+:xapian-class:`BM25Weight` with the parameters shown above (which also works
+with all older Xapian releases too).
+
 BM25Weight
-----------
+~~~~~~~~~~
 
 The BM25 weighting formula which Xapian uses by default has a number of
 parameters.  We have picked some default parameter values which do a good job
@@ -32,67 +59,184 @@ fiddly process to tune them so people tend not to bother.
 .. todo:: Say something more useful about tuning the parameters!
 
 BM25PlusWeight
---------------
+~~~~~~~~~~~~~~
 
-The occurrences of a query term in very long documents may not be rewarded properly
-by BM25, and thus those very long documents could be overly penalized. In such cases, 
-the BM25+ weighting formula is a useful improvement over the existing BM25 weighting 
-formula. In BM25, it is easy to note that there is a strict upper bound (k1 + 1) for
-Term Frequency normalization. However, the other interesting direction, lower-bounding
-TF, has not been well addressed. 
+BM25 may not properly reward occurrences of a query term in very long documents
+so such documents may be overly penalised.  The BM25+ weighting formula aims
+to improve ranking in this situation.
 
-BM25+ was originally proposed by Lv-Zhai in CIKM11 paper: `Lower-Bounding Term Frequency
-Normalization`_. BM25+ was derived from BM25 by lower-bounding TF and using all of the
-parameters of BM25 with an additional parameter -- delta(δ). Experiments by Lv-Zhai have
-shown that BM25+ works very well with δ = 1.
+In BM25 there is a strict upper bound on the normalised Term Frequency
+(:math:`k_1+1`).  However, the lower bound has not been well addressed
+and the formula allows it to be negative (though most implementations,
+including Xapian's, adjusts the result to prevent it being negative).
+
+BM25+ was originally proposed by Lv-Zhai in CIKM11 paper: `Lower-Bounding Term
+Frequency Normalization`_. It was derived from BM25 by lower-bounding TF.
+It uses all of the parameters of BM25 with an additional parameter, delta
+(:math:`\delta`).  Experiments by Lv-Zhai have shown that BM25+ works very well
+with :math:`\delta=1`.
 
 .. _Lower-Bounding Term Frequency Normalization: http://sifaka.cs.uiuc.edu/czhai/pub/cikm11-bm25.pdf
 
+Divergence from Randomness
+--------------------------
+
+The idea behind Divergence from Randomness is to weight based on how much
+the observed term distribution diverges from that which a random process
+would produce.  Different models of that randomness can be used, as can
+different normalisations, leading to a family of different models.  Xapian
+implements several of these based on which have proved successful in
+evaluations.
+
 PL2Weight
----------
+~~~~~~~~~
 
-PL2Weight implements the representative scheme of the Divergence from Randomness Framework
-This weighting scheme is useful for tasks that require early precision. It uses the
-Poisson approximation of the Binomial Probabilistic distribution (P),the Laplace method
-to find the after-effect of sampling (L) and the second wdf normalization to normalize the
-wdf in the document to the length of the document (H2).
+The PL2 weighting scheme is useful for tasks that require early precision.
 
-Document weight is controlled by parameter c. The default value of 1 for c is suitable
-for longer queries but it may need to be changed for shorter queries.
+It uses thePoisson approximation of the Binomial Probabilistic distribution (P)
+along with Stirling's approximation for the factorial value, the Laplace method
+to find the after-effect of sampling (L) and the second wdf normalization
+proposed by Amati to normalize the wdf in the document to the length of the
+document (H2).
+
+Document weight is controlled by parameter c. The default value of 1 for c is
+suitable for longer queries but it may need to be changed for shorter queries.
 
 PL2PLusWeight
+~~~~~~~~~~~~~
+
+Proposed by Lv-Zhai, PL2+ is a modified lower-bounded version of PL2,
+with an additional parameter delta in addition to the parameter c from the PL2
+weighting function.
+
+Parameter delta is the pseudo tf value to control the scale of the tf lower
+bound. It can be tuned for e.g from 0.1 to 1.5 in increments of 0.1 or so.
+Although, PL2+ works effectively across collections with a fixed default value
+of 0.8.
+
+InL2Weight
+~~~~~~~~~~
+
+InL2 uses the Inverse document frequency model (In), the
+Laplace method to find the aftereffect of sampling (L) and the second wdf
+normalization proposed by Amati to normalize the wdf in the document to the
+length of the document (H2).
+
+This weighting scheme is useful for tasks that require early precision.
+
+IfB2Weight
+~~~~~~~~~~
+
+IfB2 uses the Inverse term frequency model (If), the Bernoulli method to find
+the aftereffect of sampling (B) and the second wdf normalization proposed
+by Amati to normalize the wdf in the document to the length of the document
+(H2).
+
+IneB2Weight
+~~~~~~~~~~~
+
+IneB2 uses the Inverse expected document frequency model (Ine), the Bernoulli
+method to find the aftereffect of sampling (B) and the second wdf
+normalization proposed by Amati to normalize the wdf in the document to the
+length of the document (H2).
+
+BB2Weight
+~~~~~~~~~
+
+BB2 uses the Bose-Einstein probabilistic distribution (B) along with
+Stirling's power approximation, the Bernoulli method to find the
+aftereffect of sampling (B) and the second wdf normalization proposed by
+Amati to normalize the wdf in the document to the length of the document
+(H2).
+
+DLHWeight
+~~~~~~~~~
+
+DLH is a parameter free weighting scheme and it should be used with query
+expansion to obtain better results. It uses the HyperGeometric Probabilistic
+model and Laplace's normalization to calculate the risk gain.
+
+DPHWeight
+~~~~~~~~~
+
+DPH is a parameter free weighting scheme and it should be used with query
+expansion to obtain better results. It uses the HyperGeometric Probabilistic
+model and Popper's normalization to calculate the risk gain.
+
+Unigram Language Modelling
+--------------------------
+
+These weighting schemes are based on the idea of statistically modelling
+human languages.  "Unigram" means that words are assumed to occur
+independently.  These schemes were developed by Bruce Croft and others.
+
+Since not all terms appear in all documents, the wdf of some terms is zero
+in some documents and we need to employ smoothing to avoid numerical problems.
+
+Xapian 2.x provides :ref:`four different smoothing types<unigramlmweight>`, 
+each implemented as a separate class.  Each takes further parameters to control
+the effects of smoothing; we have picked some default parameter values which
+should generally do a good job in each case.
+
+Xapian 1.4.x provided a single :xapian-class:`LMWeight` class, but it was
+discovered that this was using incorrect formulae for all the smoothing schemes.
+It wasn't feasible to fix in 1.4.x so once we discovered the problem we advised
+users not to use this class.
+
+LM2StageWeight
+~~~~~~~~~~~~~~
+
+This implements two-stage smoothing, as described in Zhai, C., & Lafferty, J.D.
+(2004). *A study of smoothing methods for language models applied to
+information retrieval*. ACM Trans. Inf. Syst., 22, 179-214.
+
+It takes two parameters, :math:`\lambda` and :math:`\mu`.
+
+LMAbsDiscountWeight
+~~~~~~~~~~~~~~~~~~~
+
+This implements Absolute Discount smoothing, as described in Zhai, C., &
+Lafferty, J.D.  (2004). *A study of smoothing methods for language models
+applied to information retrieval*. ACM Trans. Inf. Syst., 22, 179-214.
+
+It takes one parameter, :math:`\delta`.
+
+LMDirichletWeight
+~~~~~~~~~~~~~~~~~
+
+This implements Dirichlet smoothing, and also the Dir+ variant.  The Dirichlet
+prior method is one of the best performing language modeling approaches.  The
+modified Dir+ version improves on the original as it is particularly more
+effective across web collections including very long documents (where document
+length is much larger than average document length).
+
+Dirichlet smoothing is as described in Zhai, C., & Lafferty, J.D. (2004). *A
+study of smoothing methods for language models applied to information
+retrieval*. ACM Trans. Inf. Syst., 22, 179-214.
+
+Dir+ is described in Lv, Y., & Zhai, C. (2011). *Lower-bounding term frequency
+normalization*.  International Conference on Information and Knowledge
+Management.
+
+It takes two parameters, :math:`\mu` and :math:`\delta`.  If :math:`\delta=0`
+then you get Dirichlet smoothing, while :math:`\delta>0` gives Dir+.
+
+LMJMWeight
+~~~~~~~~~~
+
+This implements Jelinek-Mercer smoothing, as described in Zhai, C., & Lafferty,
+J.D. (2004). *A study of smoothing methods for language models applied to
+information retrieval*. ACM Trans. Inf. Syst., 22, 179-214.
+
+It takes one parameter, :math:`\lambda`.
+
+Tf-Idf models
 -------------
 
-Proposed by Lv-Zhai, PL2PlusWeight is the modified lower-bounded PL2 retrieval function of
-the Divergence from Randomness Framework with an additional parameter delta in addition to the
-parameter c from the PL2 weighting function.
-
-Parameter delta is the pseudo tf value to control the scale of the tf lower bound. It can be tuned
-for e.g from 0.1 to 1.5 in increments of 0.1 or so. Although, PL2+ works effectively across collections
-with a fixed default value of 0.8.
-
-LMWeight (Unigram language modelling)
--------------------------------------
-
-An important aspect of language model-based weighting is that, since not all
-terms appear in all documents (and hence the wdf of some terms is zero with
-respect to a given document), we have to employ smoothing to avoid problems.
-
-Xapian provides :ref:`four different smoothing types<unigramlmweight>`, which take further parameters
-to control the effects of smoothing; we have picked some default parameter
-values which do a good job, using two stage smoothing.
-
-The UnigramLM weighting formula is based on an original approach by Bruce Croft.
-It uses statistical language modelling; 'unigram' in this case means that
-words are considered to occur independently.
-
-The Dirichlet prior method is one of the best performing language modeling approaches. Xapian
-now provides support for a modified Dirichlet prior method, namely Dir+ which is an improvement over
-the original as it is particularly more effective across web collections with very long documents
-(where document length is much larger than average document length).
+.. FIXME blah blah blah!
 
 TfIdfWeight
------------
+~~~~~~~~~~~
 
 TfIdfWeight implements the support for a number of `SMART normalization variants`_ of the tf-idf
 weighting scheme. These normalizations are specified by a three character string:
@@ -156,22 +300,6 @@ by 1.4.x, it's only in git master (and will be in the next release series) - it'
 the two new parameters need to be stored by the TfIdfWeight class.
 
 .. _SMART normalization variants: https://nlp.stanford.edu/IR-book/html/htmledition/document-and-query-weighting-schemes-1.html
-
-TradWeight
-----------
-
-``TradWeight`` implements the original probabilistic weighting formula, which
-is essentially a special case of BM25 (it's BM25 with k2 = 0, k3 = 0, b =
-1, and min_normlen = 0, except that prior to Xapian 2.0.0 all the weights are
-scaled by a constant factor).
-
-Since Xapian 2.0.0, ``TradWeight`` is just a thin sub-class of ``BM25Weight``
-which sets these other parameter values (in older releases ``TradWeight`` is
-a separate subclass of ``Xapian::Weight`` - the only functional difference is
-the scaling of the returned weights by the constant factor mentioned above).
-``TradWeight`` is also deprecated as of Xapian 2.0.0 - just use ``BM25Weight``
-with the parameters shown above (which also works with all older Xapian
-releases too).
 
 BoolWeight
 ----------
