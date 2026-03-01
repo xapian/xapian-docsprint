@@ -57,14 +57,17 @@ Stub database files
 
 Xapian supports a simple text file format for listing the locations of
 a set of databases (either on the local file system, or remote databases).
-Such files are called *stub-databases*, and can be used to point to a
-database when the physical database location may vary; for example, because
-a new database is being built nightly, and is named according to the date
-on which it was built.
+Such files are called *stub-databases*.  One use to to create a named set
+of databases which can be easily opened together.  Another use is as a
+pointer when the physical database location may vary; for example, because a
+new database is being built nightly, and is named according to the date on
+which it was built.  After the new database is built, the stub database file
+can be atomically updated (at least on POSIX platforms you can write the
+new stub to a temporary file, then use ``rename()`` to replace).
 
-These files are recognised by the autodetection in the Database
-constructor or you can open them explicitly using
-``Xapian::DB_BACKEND_STUB``.
+These files are recognised by the autodetection in the :xapian-class:`Database`
+/:xapian-class:`WritableDatabase` constructor or you can open them explicitly
+using :xapian-constant:`DB_BACKEND_STUB`.
 
 If the path provided to the Database constructor is a directory
 containing a file called ``XAPIANDB``, such ``XAPIANDB`` file is
