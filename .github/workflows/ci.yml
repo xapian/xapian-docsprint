@@ -74,7 +74,7 @@ jobs:
     - name: make html
       run: make html LANGUAGE=perl
 
-  python3:
+  python:
     runs-on: 'ubuntu-22.04'
     steps:
     - name: Check out repository code
@@ -82,7 +82,7 @@ jobs:
     - name: Install CCache
       uses: hendrikmuhs/ccache-action@v1
       with:
-        key: python3
+        key: python
     - name: Install package dependencies
       run: |
         sudo apt-get update
@@ -90,7 +90,7 @@ jobs:
             python3-sphinx \
             python3-xapian
     - name: make html
-      run: make html LANGUAGE=python3
+      run: make html LANGUAGE=python
 
   ruby:
     runs-on: 'ubuntu-22.04'

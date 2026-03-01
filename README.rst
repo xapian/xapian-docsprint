@@ -19,7 +19,7 @@ but for example to generate an HTML version for C++ use:
     make html LANGUAGE=c++
 
 The default if `LANGUAGE` isn't specified (e.g. when you run just ``make
-html``) is to build for `python3`.
+html``) is to build for `python`.
 
 You can chat to us on matrix or via our mailing lists.  Links to
 these are `on our website <https://xapian.org/lists>`_.

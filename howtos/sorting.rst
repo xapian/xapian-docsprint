@@ -55,7 +55,7 @@ values:
 
     $doc->add_value(0, Xapian::sortable_serialise($price));
 
-.. xapiancodesnippet:: python3
+.. xapiancodesnippet:: python
 
     doc.add_value(0, xapian.sortable_serialise(price))
 

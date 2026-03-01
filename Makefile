@@ -12,7 +12,7 @@ LANGUAGE      = $(default_language)
 PAPEROPT_a4     = -D latex_elements.papersize=a4paper
 PAPEROPT_letter = -D latex_elements.papersize=letterpaper
 ALLSPHINXOPTS   = -q -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) -t$(LANGUAGE) .
-default_language = python3
+default_language = python
 
 # Put it first so that "make" without argument is like "make help".
 help:
@@ -36,7 +36,7 @@ clean:
 	-rm -rf $(BUILDDIR)/*
 	-rm -rf db statesdb
 	-rm -rf code/c++/built
-	-rm -f code/python3/*.pyc
+	-rm -f code/python/*.pyc
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
