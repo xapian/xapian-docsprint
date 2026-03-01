@@ -17,8 +17,8 @@ and you configure xapian-core with `--enable-64bit-docid`.
 The other is to use a special term containing your identifier, which will
 work for any type of identifier.  Typically you will prefix this (by
 convention with 'Q') to avoid collisions with other terms.  Terms have a
-limited length (245 bytes in glass and chert), so if your unique identifiers
-are really long you'll need to do something more complicated.
+limited length (245 bytes in chert, glass and honey), so if your unique
+identifiers are really long you'll need to do something more complicated.
 
 For more information on both techniques, `see our FAQ on this`_.
 

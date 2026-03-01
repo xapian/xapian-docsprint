@@ -41,17 +41,18 @@ Brass
 =====
  Brass was the current "under development" database format in Xapian 1.2.x,
  1.3.0 and 1.3.1.  It was renamed to 'glass' in Xapian 1.3.2 because we decided
- to use backend names in ascending alphabetical order to make it easier to
- understand which backend is newest, and since 'flint' was used recently, we
- skipped over 'd', 'e' and 'f'.
+ to use name backends in ascending alphabetical order to make it easier to
+ understand which backend is newest.  (Since 'flint' was used recently, we
+ skipped over 'd', 'e' and 'f'.)
 
 Chert
 =====
- Chert was the stable database format used in Xapian 1.2.x.  It is similar
- to Flint in many ways, but generally faster, and uses significantly less disk
- space.  Chert is very efficient and highly scalable.  It supports incremental
- modifications, and concurrent single-writer and multiple-reader access to a
- database.
+ Chert was the stable database format used in Xapian 1.2.x.  It was based on
+ the Flint backend format but with significant modifications to improve
+ performance and significantly reduce disk space.  Some features, such as range
+ searches, can be considerably more efficiently with Chert than with Flint.
+ Chert supports incremental modifications, and concurrent single-writer and
+ multiple-reader access to a database.
 
 Collection Frequency
 ====================

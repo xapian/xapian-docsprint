@@ -217,34 +217,6 @@ Chapter 2: Databases
        supported versions of Xapian. Note that Xapian may be compiled
        without support for some of these databases.
 
- 2.9.1 The Flint backend
-
-       In the 1.0.x release series, Flint was the default backend. It is
-       still supported for backwards compatibility in the 1.2.x release
-       series. Support is likely to be dropped at the end of the 1.2.x
-       release series.
-
-       To open a Flint database explicitly, use the Flint::open() method.
-
- 2.9.2 The Chert backend
-
-       The Chert backend is the default backend in the 1.2.x release
-       series. It was based on the Flint database format, but portions
-       of it have been modified heavily to improve performance. Database
-       sizes with flint are considerably smaller, and various additional
-       statistics are stored which allow searches to be performed faster.
-       Some features, such as range searches, can be performed considerably
-       more efficiently with Chert than with Flint, due to the format
-       changes.
-
- 2.9.3 The Brass backend
-
-       The Brass backend is currently in development - it is expected to
-       stabilise for the 1.4.x release series. Before that point, you
-       should probably only use the Brass backend if you are working on
-       development or testing of it. The format of Brass databases may be
-       changed with little or no warning until it has stabilised.
-
  2.9.4 The InMemory backend
 
        As suggested by its name, the InMemory backend holds its databases

@@ -11,20 +11,25 @@ do, but it's worth knowing about them.
 Term length
 -----------
 
-Terms are limited to 245 bytes in length (at least with the "glass" and
-"chert" backends), but each zero byte in a term is currently internally encoded
-as two bytes, so the limit is less for a term which contains zero bytes.
-It's rarely useful to have longer terms, but one situation where it can be
-is if you're using something like a URL as an ID term; `there is some
+Terms are limited to 245 bytes in length (at least with the "chert", "glass"
+and "honey" backends), but each zero byte in a term is currently internally
+encoded as two bytes, so the limit is less for a term which contains zero
+bytes.  It's rarely useful to have longer terms, but one situation where it can
+be is if you're using something like a URL as an ID term; `there is some
 discussion of this as one of our FAQs
 <https://trac.xapian.org/wiki/FAQ/UniqueIds>`_.
 
 Document data length
 --------------------
 
-The document data has a length limit which depends on the blocksize and
-some other factors, but with the default block size of 8KB, the document
-data length limit will be somewhere over 100MB.
+The block-based backends (chert and glass) impose a limit on document
+data length.  This limit depends on the blocksize and some other factors, but
+the default block size of 8KB gives a document data length limit somewhere over
+100MB.
+
+The honey format doesn't limit document data length, but it does need to be
+held in memory as a C++ ``std::string`` so available RAM will impose a
+practical limit.
 
 Document value length
 ---------------------
@@ -54,12 +59,12 @@ is too large for the type it is using.
 B-tree block number
 -------------------
 
-The B-trees use a 32-bit unsigned block count.  The default blocksize is
-8KB which limits you to 32TB tables.  You can increase the blocksize if
-this is a problem, but it's best to do it before you create the database as
-otherwise you need to use xapian-compact to make a compacted copy of the
-database with the new blocksize, and that will take a while for such a
-large database.  The maximum blocksize currently allowed is 64K, which
+The B-trees used by the disk-based backends use a 32-bit unsigned block count.
+The default blocksize is 8KB which limits you to 32TB tables.  You can increase
+the blocksize if this is a problem, but it's best to do it before you create
+the database as otherwise you need to use xapian-compact to make a compacted
+copy of the database with the new blocksize, and that will take a while for
+such a large database.  The maximum blocksize currently allowed is 64K, which
 limits you to 256TB tables.
 
 OS file size
