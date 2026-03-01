@@ -56,7 +56,7 @@ Once you have a suitable repo configured, then you can do
 one of the following depending on whether you want to work through the examples
 in Python or C++:
 
-.. code-block:: none
+.. code-block:: shell
 
     $ sudo apt-get install python3-xapian
     $ sudo apt-get install libxapian-dev

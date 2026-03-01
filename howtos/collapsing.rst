@@ -36,7 +36,9 @@ API
 
 To enable collapsing, call the method :xapian-method:`Enquire::set_collapse_key()`
 with the value slot, and optionally the number of matches with each collapse
-key to keep (this defaults to 1 if not specified), e.g.::
+key to keep (this defaults to 1 if not specified), e.g.:
+
+.. code-block:: c++
 
     // Collapse on value slot 4, leaving at most 2 documents with each
     // collapse key.
@@ -58,7 +60,9 @@ Statistics
 As well as the usual bounds and estimate of the "full" MSet size (i.e. the
 size if you'd asked for enough matches to get them all), the matcher also
 calculates bounds and an estimate for what the MSet size would be if collapsing
-had not been used - you can obtain these using these methods::
+had not been used - you can obtain these using these methods:
+
+.. code-block:: c++
 
     Xapian::doccount get_uncollapsed_matches_lower_bound() const;
     Xapian::doccount get_uncollapsed_matches_estimated() const;

@@ -3,7 +3,9 @@ Python Specific Notes
 =====================
 
 The Python bindings for Xapian are packaged in the ``xapian`` module,
-so to use them you need to add this to your code::
+so to use them you need to add this to your code:
+
+.. code-block:: python
 
   import xapian
 
@@ -29,7 +31,9 @@ As a convenience, you can also pass Python
 converted to UTF-8 encoded text.  Where `std::string` is
 returned, it's always mapped to `bytes` in Python, which you can
 convert to a Python `str` by calling `.decode('utf-8')`
-on it like so::
+on it like so:
+
+.. code-block:: python
 
   for i in doc.termlist():
     print(i.term.decode('utf-8'))
@@ -53,7 +57,8 @@ provides support for normalising unicode: you probably want the "``NFKC``"
 normalisation scheme, so for example normalising a query string prior to
 parsing it would look something like this:
 
-::
+.. code-block:: python
+
     def parse_query(query_string):
         query_string = unicodedata.normalize('NFKC', query_string)
         qp = xapian.QueryParser()
@@ -66,7 +71,9 @@ Exceptions
 ==========
 
 Xapian-specific exceptions are subclasses of the :xapian-class:`Error`
-class, so you can trap all Xapian-specific exceptions like so::
+class, so you can trap all Xapian-specific exceptions like so:
+
+.. code-block:: python
 
     try:
         do_something_with_xapian()
@@ -199,8 +206,7 @@ parameter.  In Python, this is wrapped to accept any Python sequence (for
 example a list or tuple) of terms or queries (or even a mixture of terms
 and queries).  For example:
 
-
-::
+.. code-block:: python
 
   subq = xapian.Query(xapian.Query.OP_AND, "hello", "world")
   q = xapian.Query(xapian.Query.OP_AND, [subq, "foo", xapian.Query("bar", 2)])
@@ -221,7 +227,7 @@ Custom MatchDeciders can be created in Python - subclass
 constructor, and define a ``__call__`` method that will do the work. The
 simplest example (which does nothing useful) would be as follows:
 
-::
+.. code-block:: python
 
   class mymatchdecider(xapian.MatchDecider):
     def __init__(self):
@@ -250,7 +256,7 @@ handle an offered range.
 There are several built-in ``RangeProcessor`` subclasses, but you can also
 define custom ones in python.
 
-::
+.. code-block:: python
 
   class MyRP(xapian.RangeProcessor):
       def __init__(self):

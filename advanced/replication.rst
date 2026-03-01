@@ -85,7 +85,9 @@ to serve the databases which are to be replicated.  This takes various
 parameters to control the directory that databases are found in, and the
 network interface to serve on.  The `--help` option will cause usage
 information to be displayed.  For example, if `/var/search/dbs` contains a
-set of Xapian databases to be replicated::
+set of Xapian databases to be replicated:
+
+.. code-block:: shell
 
   xapian-replicate-server /var/search/dbs -p 7010
 
@@ -96,7 +98,9 @@ individual database up-to-date.  This will contact the server on the specified
 host and port, and copy the database with the name (on the master) specified in
 the `-m` option to the client.  One non-option argument is required - this is
 the name that the database should be stored in on the replica machine.  For
-example, contacting the above server from the same machine::
+example, contacting the above server from the same machine:
+
+.. code-block:: shell
 
   xapian-replicate -h 127.0.0.1 -p 7010 -m foo foo2
 
@@ -107,7 +111,9 @@ should not create this directory yourself.
 
 As of 1.2.5, if you don't specify the master name, the same name is used
 remotely and locally, so this will replicate remote database "foo2" to
-local database "foo2"::
+local database "foo2":
+
+.. code-block:: shell
 
   xapian-replicate -h 127.0.0.1 -p 7010 foo2
 

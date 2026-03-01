@@ -19,7 +19,9 @@ and also check that you've installed Xapian as detailed there.
 .. guide. The datasets are gzipped CSV files, which should be
 .. uncompressed into the same directory. You should then open an
 .. interactive shell in that directory. For instance, if you're using
-.. Python for the examples, run something like the following::
+.. Python for the examples, run something like the following:
+..
+.. .. code-block:: shell
 .. 
 ..     $ mkdir xapian-guide
 ..     $ cd xapian-guide

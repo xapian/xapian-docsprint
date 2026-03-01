@@ -186,7 +186,9 @@ Removed Feature name                        Upgrade suggestion and comments
 ------- ----------------------------------- ----------------------------------------------------------------------------------
 1.3.0   ``MultiValueSorter`` class.         Use ``MultiValueKeyMaker`` class instead.  Note that ``MultiValueSorter::add()``
                                             becomes ``MultiValueKeyMaker::add_value()``, but the sense of the direction flag
-                                            is reversed (to be consistent with ``Enquire::set_sort_by_value()``), so::
+                                            is reversed (to be consistent with ``Enquire::set_sort_by_value()``), so:
+
+                                            .. code-block:: c++
 
                                                 MultiValueSorter sorter;
                                                 // Primary ordering is forwards on value 4.
@@ -194,7 +196,9 @@ Removed Feature name                        Upgrade suggestion and comments
                                                 // Secondary ordering is reverse on value 5.
                                                 sorter.add(5, false);
 
-                                            becomes::
+                                            becomes:
+
+                                            .. code-block:: c++
 
                                                 MultiValueKeyMaker sorter;
                                                 // Primary ordering is forwards on value 4.

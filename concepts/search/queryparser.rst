@@ -3,7 +3,9 @@ Query Parser
 
 To make searching databases simpler, Xapian provides a `QueryParser` class
 which converts a human readable query string into a Xapian Query object,
-for example::
+for example:
+
+.. code-block:: text
 
     apple AND a NEAR word OR "a phrase" NOT (too difficult) +eh
 
@@ -34,7 +36,9 @@ Operators
 ~~~~~~~~~
 
 As well as the basic logical operators, QueryParser supports the additional
-operators discussed earlier and introduces some new ones, for example::
+operators discussed earlier and introduces some new ones, for example:
+
+.. code-block:: text
 
     apple NEAR dessert
     president "united states"
@@ -43,11 +47,15 @@ operators discussed earlier and introduces some new ones, for example::
 
 The NEAR and phrase support behaves in the same way as described earlier;
 the new features are the + and - operators, which select documents based on
-the presence or absence of specified terms, for example::
+the presence or absence of specified terms, for example:
+
+.. code-block:: text
 
     "race condition" -horse
 
-Matches all documents with the phrase ``"race condition"`` but not ``horse``; and::
+Matches all documents with the phrase ``"race condition"`` but not ``horse``; and:
+
+.. code-block:: text
 
     +recipe +apple pie cake desert
 
@@ -64,16 +72,22 @@ Bracketed Expressions
 
 When queries contain both OR and AND operators, AND takes precedence.
 To change the precedence of parts of the query, brackets can be used.
-For example, with the query::
+For example, with the query:
+
+.. code-block:: text
 
     apple OR pear AND dessert
 
-The query parser will interpret this query as::
+The query parser will interpret this query as:
+
+.. code-block:: text
 
     apple OR (pear AND dessert)
 
 So to change the precedence and make the dessert a requirement, you would
-write the query initially as::
+write the query initially as:
+
+.. code-block:: text
 
     (apple OR pear) AND dessert
 
@@ -84,14 +98,18 @@ Xapian also supports a `stop word` list, which allows you to specify words
 which should be removed from a query before processing. This list can
 be overridden within user search, so stop words can still be searched for
 if desired, for example if a stop word list contained 'the' and a search
-was for::
+was for:
+
+.. code-block:: text
 
     +the +document
 
 Then the search would find relevant documents which contained both 'the'
 and 'document'.  Also, when searching for phrases, stop words do not apply,
 for example here we will retrieve documents with the exact phrase including
-'the'::
+'the':
+
+.. code-block:: text
 
     "the green space"
 
@@ -100,7 +118,9 @@ Searching with Prefixes
 
 When a database is populated using prefixed terms (for example, title,
 author) it is possible to tell the QueryParser that these fields can be
-searched for using a human-readable prefix; for example::
+searched for using a human-readable prefix; for example:
+
+.. code-block:: text
 
     author:"william shakespeare" title:juliet
 
@@ -117,7 +137,7 @@ what format a range is specified in and which value is to be searched for
 matches within that range. This then gives rise to the ability to specify
 ranges as:
 
-.. code-block:: none
+.. code-block:: text
 
     $10..50
     5..10kg

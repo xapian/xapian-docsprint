@@ -74,7 +74,9 @@ containing a file called ``XAPIANDB``, such ``XAPIANDB`` file is
 considered to be the stub database file.
 
 The stub database format specifies one database per line, prefixed by
-the type. For example::
+the type. For example:
+
+.. code-block:: text
 
   remote localhost:23876
   auto /var/spool/xapian/webindex
@@ -99,7 +101,9 @@ The current types understood by Xapian are:
 ``auto``
     This isn't an actual database format, but rather auto-detection of
     one of the disk based backends (e.g. "chert" or "glass"). It takes a
-    single specified path (which can be to a file or directory) as argument::
+    single specified path (which can be to a file or directory) as argument:
+
+    .. code-block:: text
 
       auto /var/spool/xapian/webindex
 
@@ -122,11 +126,15 @@ The current types understood by Xapian are:
     building up temporary small databases.
 
 ``remote``
-    This can specify either a "program" or TCP remote backend, for example::
+    This can specify either a "program" or TCP remote backend, for example:
+
+    .. code-block:: text
 
       remote :ssh xapian-prog.example.com xapian-progsrv /srv/xapian/db1
 
-    or::
+    or:
+
+    .. code-block:: text
 
       remote xapian-tcp.example.com:12345
 

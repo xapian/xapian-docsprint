@@ -12,7 +12,9 @@ the python package directly.
 
 You can generate versions for different programming languages (with translated
 examples and adjustments to the text).  For full details see ``make help``
-but for example to generate an HTML version for C++ use::
+but for example to generate an HTML version for C++ use:
+
+.. code-block:: shell
 
     make html LANGUAGE=c++
 

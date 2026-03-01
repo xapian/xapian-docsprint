@@ -13,7 +13,9 @@ output, while the code should deal with characters (not bytes, so a
 character with diacritics is seen a single character, not 2 or more
 bytes).
 
-Typically, this is done this way::
+Typically, this is done this way:
+
+.. code-block:: perl
 
   #!/usr/bin/env perl
   use utf8; # this says that in this file we can use unicode and will be decoded
@@ -44,7 +46,9 @@ this using serialization. The example code stores the document data
 using ``encode_json`` (which produces a byte string) and on retrieving
 it calls ``decode_json`` (which returns decoded values). When you
 store a value, you encode it with ``encode`` or with the
-``sortable_serialise``. Both functions produce bytes::
+``sortable_serialise``. Both functions produce bytes:
+
+.. code-block:: perl
 
   use Encode qw/encode decode/;
   use JSON::MaybeXS;
@@ -53,7 +57,9 @@ store a value, you encode it with ``encode`` or with the
   $doc->add_value(0, encode('UTF-8', $string));
   $doc->add_value(1, Search::Xapian::sortable_serialise($value));
 
-If you retrieve a stored value, you need to decode it::
+If you retrieve a stored value, you need to decode it:
+
+.. code-block:: perl
 
   use Encode qw/encode decode/;
   use JSON::MaybeXS;

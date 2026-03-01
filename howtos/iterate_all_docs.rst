@@ -28,7 +28,9 @@ Iterating through all documents
 -------------------------------
 
 If you do need access to all the documents in the database, it is better to use a "posting list iterator".
-Such an iterator, which returns all documents in the database, can be created using::
+Such an iterator, which returns all documents in the database, can be created using:
+
+.. code-block:: c++
 
     Xapian::Database::postlist_begin("")
 
