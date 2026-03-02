@@ -24,8 +24,8 @@ Backends
 Xapian databases store data in custom formats which allow searches to be
 performed extremely quickly; Xapian does not use a relational database as
 its datastore.  There are several database backends; the main backend in
-the 1.4 release series of Xapian is called the *Glass* backend.  This
-stores information in the filesystem (under a given path).
+the 1.4.x and 2.x release series of Xapian is called the *Glass* backend.
+This stores information in the filesystem (under a given path).
 
 It is possible to perform searches across multiple databases at once, and
 Xapian will handle merging the results together appropriately.  This
@@ -42,7 +42,7 @@ remote databases.
 On-disk databases
 -----------------
 
-As mentioned, Xapian 1.4 has a default database type called *Glass*;
+As mentioned, Xapian 1.4.x and 2.x have a default database type called *Glass*;
 :ref:`earlier formats can be upgraded using Xapian's copydatabase utility
 <upgrading-databases>`. When opening an existing database, Xapian will
 automatically figure out the backend to use.
@@ -108,7 +108,7 @@ The current types understood by Xapian are:
       auto /var/spool/xapian/webindex
 
 ``glass``
-    Glass is the default backend in Xapian 1.4.x. It supports
+    Glass is the default backend in Xapian 1.4.x and 2.x. It supports
     incremental modifications, concurrent single-writer and
     multiple-reader access to a database. It's very efficient and
     highly scalable, and more compact than chert. It takes a path as

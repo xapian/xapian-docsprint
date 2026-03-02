@@ -66,8 +66,8 @@ Database
  little more than indexed documents: this reflects the purpose of Xapian as an
  information retrieval system, rather than an information storage system.
  These may also occasionally be called Indexes.  Glass is the default backend
- in the 1.4 and 2.0 release series; Chert was the default in Xapian 1.2 and is
- still supported in 1.4 but not 2.0; Flint was the default for Xapian 1.0 and
+ in the 1.4 and 2. release series; Chert was the default in Xapian 1.2 and is
+ still supported in 1.4 but not 2; Flint was the default for Xapian 1.0 and
  supported by 1.2.  Quartz was used prior to Xapian 1.0.
 
 Divergence from Randomness (DfR)
@@ -120,7 +120,7 @@ Flint
 
 Glass
 =====
- Glass is the current default backend in Xapian 1.4.x and 2.0.x.
+ Glass is the current default backend in Xapian 1.4.x and 2.x.
  Improvements over chert are that slow cases of phrase searches are generally
  much faster, databases are smaller on disk, and free blocks are tracked in
  lists rather than bitmaps.

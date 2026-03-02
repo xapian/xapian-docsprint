@@ -30,7 +30,7 @@ Databases
 =========
 
 Xapian databases hold all the information needed to perform searches in a set
-of tables.  The default database backend for the 1.4 and 2.0 release series is
+of tables.  The default database backend for the 1.4 and 2 release series is
 called `glass`.
 
 The default backend for the 1.2 release series was called `chert`, and this is
@@ -72,13 +72,13 @@ through the Xapian API, or with the ``xapian-compact`` tool described below).
 
 Changing the blocksize may have performance implications, but it is hard to
 know whether these will be positive or negative for a particular combination
-of hardware and software without doing some profiling.
+of hardware, software and database content without doing some profiling.
 
 The `.baseA` and `.baseB` files you may remember if you've worked with older
 Xapian database backends no longer exist in glass databases - the information
-about unused blocks is stored in a freelist (itself stored in unused blocks in
-the `.glass` file, and the other information is stored in the `iamglass`
-file.
+about unused blocks is stored in a freelist (itself stored in otherwise unused
+blocks in the `.glass` file), and the other information is stored in the
+`iamglass` file.
 
 Glass also supports databases stored in a single file - currently these only
 support read operations, and have to be created by compacting an existing
@@ -258,8 +258,8 @@ this requires a lock daemon to be running.
 Which database format to use?
 -----------------------------
 
-As of release 1.4.0, you should generally use the glass format (which is now
-the default).
+Assuming you're using 1.4.0 or newer, you should generally use the glass format
+(which is now the default).
 
 Support for the pre-1.0 quartz format (deprecated in 1.0) was removed in 1.1.0.
 See below for how to convert a quartz database to a flint one.
@@ -270,6 +270,16 @@ removed in 1.3.0.  See below for how to convert a flint database to a chert one.
 The chert backend (the default for 1.2) is still supported by 1.4.x, but
 deprecated - only use it if you already have databases in this format; and plan
 to migrate away.
+
+There's also a development backend called honey in 2.x.  This currently does
+not support incremental update: you can only create a honey database by
+first creating a glass database and then converting it using ``xapian-compact
+-B honey`` (or the equivalent :xapian-class:`Compact` API).  The current honey
+index structure is also rather simple.  A honey database is typically
+significantly smaller than the equivalent glass database, so if you are shipping
+pre-built databases and size matters, current honey may be worth considering.
+Honey passes Xapian's extensive testsuite, but has seen much less real world
+use than glass.
 
 .. There's also a development backend called XXXXX.  The main distinguishing
 .. feature of this is that the format may change incompatibly from time to time.
