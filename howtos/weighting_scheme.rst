@@ -301,11 +301,32 @@ the two new parameters need to be stored by the TfIdfWeight class.
 
 .. _SMART normalization variants: https://nlp.stanford.edu/IR-book/html/htmledition/document-and-query-weighting-schemes-1.html
 
+Other weighting schemes
+-----------------------
+
+These weighting schemes don't fall into a particular family.
+
 BoolWeight
-----------
+~~~~~~~~~~
 
 BoolWeight assigns a weight of 0 to all documents, so the ordering is
 determined solely by other factors.
+
+CoordWeight
+~~~~~~~~~~~
+
+CoordWeight implements Coordinate Matching.  Each matching term scores one
+point (e.g. see Managing Gigabytes, Second Edition p181).
+
+It can be useful in some situations - for example, if you are implementing
+a tag-based search and want to rank results by the number of matching tags.
+
+DiceWeight
+~~~~~~~~~~
+
+DiceWeight ranks documents by the `Dice coefficient
+<https://en.wikipedia.org/wiki/Dice-S%C3%B8rensen_coefficient>`_
+measured between the query and each document.
 
 Other approaches
 ================
