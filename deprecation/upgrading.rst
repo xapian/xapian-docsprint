@@ -39,6 +39,24 @@ before being removed, but there's an exception to this policy:
   :xapian-class:`LM2StageWeight`, :xapian-class:`LMAbsDiscountWeight`,
   :xapian-class:`LMDirichletWeight` and :xapian-class:`LMJMWeight`.
 
+C++17
+-----
+
+C++ code built using Xapian 2 need to be built as C++17 (or newer), because
+the public C++ API now uses the C++17 feature ``std::string_view`` extensively.
+
+Modern C++ compilers typically default to the highest C++ standard version that
+they have comprehensive support for (e.g. GCC 11 and clang 16 both default to
+C++17) but you may need an option like ``-std=c++17`` to get it from older
+versions.
+
+It's best to probe if an option is needed to get C++17 support (e.g. for autotools
+the `AX_CXX_COMPILE_STDCXX <https://www.gnu.org/software/autoconf-archive/ax_cxx_compile_stdcxx.html>`_
+macro can do this).  An unhelpful pattern we've seen is ``-std=c++11``
+hard-coded in the C++ flags in application build systems from the days when you
+needed an option to get C++11 support - with modern compilers this forces a
+downgrade to C++11 which is actively unhelpful.
+
 Database API
 ------------
 
