@@ -110,11 +110,11 @@ second under `Creative Commons Attribution-Share Alike 3.0
 
 If you haven't grabbed the git repository, you can also view these
 datasets online on `github
-<https://github.com/xapian/xapian-docsprint/tree/master/data>`_:
+<https://github.com/xapian/xapian-docsprint/tree/main/data>`_:
 
- * `100-objects-v1.csv <https://raw.githubusercontent.com/xapian/xapian-docsprint/master/data/100-objects-v1.csv>`_
- * `100-objects-v2.csv <https://raw.githubusercontent.com/xapian/xapian-docsprint/master/data/100-objects-v2.csv>`_
- * `states.csv <https://raw.githubusercontent.com/xapian/xapian-docsprint/master/data/states.csv>`_
+ * `100-objects-v1.csv <https://raw.githubusercontent.com/xapian/xapian-docsprint/main/data/100-objects-v1.csv>`_
+ * `100-objects-v2.csv <https://raw.githubusercontent.com/xapian/xapian-docsprint/main/data/100-objects-v2.csv>`_
+ * `states.csv <https://raw.githubusercontent.com/xapian/xapian-docsprint/main/data/states.csv>`_
 
 As we describe how to use Xapian, and show how to use it with practical code
 examples, we provide the commands needed to compile (if necessary) and run
