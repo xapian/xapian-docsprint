@@ -34,7 +34,7 @@ sub search {
     my $db = Search::Xapian::WritableDatabase->new($db_path, DB_OPEN);
 
     # Start of adding synonyms    
-    $db->add_synonym(time => 'calendar');
+    $db->add_synonym(king => 'royal');
     # End of adding synonyms
 
     # Set up a QueryParser with a stemmer and suitable prefixes
