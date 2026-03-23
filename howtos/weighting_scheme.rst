@@ -292,12 +292,11 @@ Apart from the three character string, these normalizations can also be specifie
 
 3. | NONE
 
-More recently supported normalization in TfIdfWeight is the pivoted (piv+) retrieval function
-which represents one of the best performing vector space models. Piv+ takes two parameters; slope and delta
-which are set to their default optimal values. You may want pass different candidate values ranging from 0.1
-to 1.5 and choose one which fits best to your system based upon corpus being used.  Piv+ isn't supported
-by 1.4.x, it's only in git master (and will be in the next release series) - it's hard to backport because
-the two new parameters need to be stored by the TfIdfWeight class.
+Xapian 2.0.0 added support for the Piv+ normalisation to TfIdfWeight, which
+represents one of the best performing vector space models. Piv+ takes two
+parameters; slope and delta which are set to their default optimal values. You
+may want pass different candidate values ranging from 0.1 to 1.5 and choose one
+which fits best to your system based upon corpus being used.
 
 .. _SMART normalization variants: https://nlp.stanford.edu/IR-book/html/htmledition/document-and-query-weighting-schemes-1.html
 
