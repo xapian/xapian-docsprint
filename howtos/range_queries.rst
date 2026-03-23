@@ -79,11 +79,12 @@ We can check this has created document values using `xapian-delve`:
 
 .. code-block:: none
 
-    $ xapian-delve -V0 db | cat -v
-    Value 0 for each document: 5:M-@M-@ 8:M-HV 9:M-EM-p 10:M-MF 11:M-AM-0 12:M-AP 15:M-8^P 19:M-Dt 20:M-GM-P 21:M-E 24:M-O: 25:M-BM-@ 26:M-AM-  27:M-BX 29:M-DD 30:M-BM-^P 31:M-6@ 33:M-;` 34:M-A0 35:M-LM-l 36:M-C^P 37:M-9M-p 38:M-A( 39:M-FT 42:M-H2 45:M-N@ 46:M-AP 50:M-:M-^P 51:M-9P 52:M-LM-! 54:M-CM-( 55:M-9M-P 56:M-@P 59:M-D` 61:M-A( 62:M-;@ 64:M-:M-^P 66:M-AM-H 67:M-8` 68:M-@D33333@ 69:M-D^P 70:M-@M-H 71:M-KM-( 72:M-8^P 73:M-5M-^NfffffM-^@ 74:M-5M-^NfffffM-^@ 75:M-C$M-LM-LM-LM-LM-LM-@ 76:M-BM-?33333@ 77:M-C>33333@ 78:M-;M-^@ 79:M-E^T 80:M-9P 81:M-A@ 84:M-9M-t 86:M-L~ 87:M-BM-@ 88:M-9(M-LM-LM-LM-LM-LM-@ 89:M-:M-?33333@ 90:M-8M-C33333@ 91:M-E| 93:M-A( 94:M-@` 97:M-EM-\ 98:M-Bh 100:M-9^P
+    $ xapian-delve -VS0 db
+    Value 0 for each document: 5:152 8:555 9:380 10:1350 11:182 12:170 15:65 19:285 20:500 21:320 24:1850 25:216 26:180 27:203 29:273 30:210 31:50 33:118 34:166 35:1260 36:226 37:95 38:165 39:405 42:537 45:1600 46:170 50:105 51:85 52:1185 54:245 55:93 56:138 59:280 61:165 62:116 64:105 66:185 67:70 68:136.525 69:260 70:153 71:980 72:65 73:44.45 74:44.45 75:228.6 76:215.9 77:231.775 78:120 79:325 80:85 81:168 84:95.25 86:1150 87:216 88:82.55 89:107.95 90:76.2 91:351 93:165 94:140 97:375 98:205 100:81
 
-All the odd characters are because `xapian-delve` doesn't know to run
-`sortable_unserialise` to turn the strings back into numbers.
+Note the use of ``S`` after ``-V`` which tells `xapian-delve` to use
+:xapian-just-method:`sortable_unserialise` to turn the strings back into
+numbers (this is supported since Xapian 1.4.6).
 
 Searching with ranges
 ---------------------
