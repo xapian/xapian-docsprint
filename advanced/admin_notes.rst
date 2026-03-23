@@ -34,7 +34,7 @@ of tables.  The default database backend for the 1.4 and 2 release series is
 called `glass`.
 
 The default backend for the 1.2 release series was called `chert`, and this is
-also supported by 1.4 but not 2.0.
+also supported by Xapian 1.4 but not Xapian 2.
 
 Glass Backend
 -------------
